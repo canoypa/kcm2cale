@@ -1,0 +1,10 @@
+{
+  "name": "kcm2cale",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Cano <contact.sasasaky@gmail.com>",
+  "repository": "https://github.com/canoypa/kcm2cale.git",
+  "dependencies": {
+    "firebase": "^8.2.5"
+  }
+}
