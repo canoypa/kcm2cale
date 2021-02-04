@@ -1,3 +1,11 @@
+# firebase
+.firebaserc
+firestore.indexes.json
+firestore.rules
+
+# public
+public/
+
 # Logs
 logs
 *.log
