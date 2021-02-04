@@ -6,6 +6,9 @@ firestore.rules
 # public
 public/
 
+# private
+.private
+
 # Logs
 logs
 *.log
