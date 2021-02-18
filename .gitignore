@@ -3,8 +3,15 @@
 firestore.indexes.json
 firestore.rules
 
+# Build
+build/
+
 # public
 public/
+
+# VSCode
+.vscode/launch.json
+.vscode/tasks.json
 
 # private
 .private
