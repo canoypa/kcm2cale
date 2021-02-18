@@ -1,4 +1,6 @@
 const { resolve } = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const config = (env) => {
   const isProd = env.mode === "prod";
@@ -6,7 +8,7 @@ const config = (env) => {
   return {
     mode: isProd ? "production" : "development",
 
-    output: { filename: "[name].js", path: resolve("build") },
+    output: { filename: "[name].js", path: resolve("public") },
 
     entry: {
       index: resolve("./src/index.tsx"),
@@ -22,9 +24,17 @@ const config = (env) => {
       ],
     },
 
-    devtool: "source-map",
+    devtool: isProd ? false : "source-map",
 
     resolve: { extensions: [".js", ".ts", ".tsx"] },
+
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: resolve("src/index.html"),
+        inject: false,
+      }),
+      new CleanWebpackPlugin(),
+    ],
   };
 };
 
