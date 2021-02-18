@@ -2,6 +2,18 @@
   "private": true,
   "name": "kcm2cale",
   "version": "1.0.0",
+  "scripts": {
+    "build:prod": "webpack --env mode=prod",
+    "build:dev": "webpack --env mode=dev",
+    "build:watch": "webpack -w --env mode=dev",
+    "serve": "firebase serve",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest",
+    "lint": "npm-run-all lint:*",
+    "lint:js": "eslint src/**/*.{ts,tsx}",
+    "lint:type": "tsc --noEmit",
+    "lint:css": "stylelint src/**/*.{ts,tsx}"
+  },
   "dependencies": {
     "@emotion/css": "^11.0.0",
     "firebase": "^8.2.5",
