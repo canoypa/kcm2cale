@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // ecma version
+    "module": "ES2020",
+
+    "strict": true, // 厳密な型チェック
+    "moduleResolution": "node", // モジュールの解決方法
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve", // react の変換なし
+
+    "sourceMap": true, // ソースマップ
+    "typeRoots": ["node_modules/@types", "src/@types"] // 型定義
+  },
+  "include": ["src"],
+  "exclude": ["**/node_modules", "**/.*"]
+}

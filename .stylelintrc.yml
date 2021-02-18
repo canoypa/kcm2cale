@@ -1,0 +1,2 @@
+extends: stylelint-config-custrino
+ignoreFiles: [node_modules/**/*, build/**/*]

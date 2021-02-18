@@ -1,0 +1,12 @@
+printWidth: 80 # 最大幅
+tabWidth: 2 # タブ幅
+useTabs: false # スペースを使用
+endOfLine: lf # 改行コード \n
+semi: true # 最後にセミコロン
+singleQuote: false # ダブルクオートを使用
+jsxSingleQuote: false # jsx でもダブルクオートを使用
+quoteProps: as-needed # 必要な場合のみクオート
+trailingComma: es5 # obj, array での末尾コンマ
+bracketSpacing: true # obj カッコ間のスペース
+arrowParens: always # arrow fn の引数を括弧
+jsxBracketSameLine: false # jsx > を改行後に配置
