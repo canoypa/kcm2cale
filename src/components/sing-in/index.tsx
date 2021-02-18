@@ -29,17 +29,23 @@ export const SignIn: FC = () => {
   });
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div>
-          <div className={styles.title}>サインイン</div>
+    <>
+      {userLoadable.state === "loading" ? (
+        <div>Loading...</div>
+      ) : (
+        <div className={styles.wrapper}>
+          <div className={styles.container}>
+            <div>
+              <div className={styles.title}>サインイン</div>
+            </div>
+            <div className={styles.signInButtons}>
+              <SignInButton provider={ProviderId.Google} onClick={signIn} />
+              <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
+            </div>
+          </div>
         </div>
-        <div className={styles.signInButtons}>
-          <SignInButton provider={ProviderId.Google} onClick={signIn} />
-          <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
