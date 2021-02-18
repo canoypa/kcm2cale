@@ -6,7 +6,7 @@
   },
   "globals": {
     "ts-jest": {
-      "tsConfig": true,
+      "tsconfig": true,
       "babelConfig": true
     }
   }
