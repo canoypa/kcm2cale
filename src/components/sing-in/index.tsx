@@ -1,7 +1,7 @@
 import { FC } from "react";
+import { ProviderId, ProviderIdValue } from "../../core/firebase/auth/types";
 import { SignInButton } from "./signin-button";
 import * as styles from "./styles";
-import { ProviderId, ProviderIdValue } from "./types";
 
 export const SignIn: FC = () => {
   const signIn = (provider: ProviderIdValue) => {};
