@@ -9,10 +9,12 @@ type Props = {
 };
 export const UserIcon: FC<Props> = ({ user, size = 32 }) => (
   <div className={styles.container}>
-    {user?.photoURL ? (
-      <img src={user.photoURL} width={size} height={size} />
-    ) : (
-      <IconAccount size={size} />
-    )}
+    <div className={styles.icon}>
+      {user?.photoURL ? (
+        <img src={user.photoURL} width={size} height={size} />
+      ) : (
+        <IconAccount size={size} />
+      )}
+    </div>
   </div>
 );
