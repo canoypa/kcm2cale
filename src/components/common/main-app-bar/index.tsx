@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useUser } from "../../../core/firebase/auth/hooks";
 import { TopAppBar, TopAppBarIcon, TopAppBarSection } from "../app-bar";
-import { UserIcon } from "../avatar";
+import { UserIcon } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
 
 export const MainAppBar: FC = () => {

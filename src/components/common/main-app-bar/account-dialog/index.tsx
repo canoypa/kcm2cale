@@ -3,9 +3,9 @@ import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { firebaseAuth } from "../../../../core/firebase/auth";
 import { useUser } from "../../../../core/firebase/auth/hooks";
-import { UserIcon } from "../../avatar";
 import { Button } from "../../button";
 import { Dialog, DialogContent } from "../../dialog";
+import { UserIcon } from "../../user-icon";
 import * as styles from "./styles";
 
 type AccountHeaderProps = {
