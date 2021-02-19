@@ -7,7 +7,7 @@ type Props = {
   user: firebase.User | null;
   size?: number;
 };
-export const Avatar: FC<Props> = ({ user, size = 32 }) => (
+export const UserIcon: FC<Props> = ({ user, size = 32 }) => (
   <div className={styles.container}>
     {user?.photoURL ? (
       <img src={user.photoURL} width={size} height={size} />
