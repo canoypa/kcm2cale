@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { firebaseAuth } from "../../../../core/firebase/auth";
 import { useUser } from "../../../../core/firebase/auth/hooks";
-import { Avatar } from "../../avatar";
+import { UserIcon } from "../../avatar";
 import { Button } from "../../button";
 import { Dialog, DialogContent } from "../../dialog";
 import * as styles from "./styles";
@@ -27,7 +27,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
   return user ? (
     <>
       <div className={styles.accountHeader}>
-        <Avatar />
+        <UserIcon user={user} />
         <span>{user.displayName}</span>
       </div>
       <div className={styles.promoteSignIn}>
@@ -37,7 +37,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
   ) : (
     <>
       <div className={styles.accountHeader}>
-        <Avatar />
+        <UserIcon user={user} />
         <span>サインインしていません</span>
       </div>
       <div className={styles.promoteSignIn}>
