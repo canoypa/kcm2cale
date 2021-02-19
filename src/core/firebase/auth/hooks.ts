@@ -1,23 +1,17 @@
-import firebase from "firebase/app";
-import { selector, useRecoilValueLoadable } from "recoil";
+import { useEffect, useState } from "react";
 import { firebaseAuth } from ".";
 
-const getUser = () =>
-  new Promise<firebase.User | null>((resolve, reject) => {
-    firebaseAuth().onAuthStateChanged(
-      (user) => {
-        resolve(user);
-      },
-      (error) => {
-        reject(error);
-      }
-    );
+export const useUser = () => {
+  const [currentUser, setUser] = useState({
+    state: "loading",
+    contents: firebaseAuth().currentUser,
   });
 
-const FirebaseUser = selector<firebase.User | null>({
-  key: "FirebaseUser",
-  get: async () => await getUser(),
-  dangerouslyAllowMutability: true,
-});
+  useEffect(() => {
+    firebaseAuth().onAuthStateChanged((user) => {
+      setUser({ state: "hasValue", contents: user });
+    });
+  }, []);
 
-export const useUser = () => useRecoilValueLoadable(FirebaseUser);
+  return currentUser;
+};
