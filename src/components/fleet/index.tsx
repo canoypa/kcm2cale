@@ -24,8 +24,6 @@ export const Fleet: FC = () => {
     const loadFleet = async () => {
       const localFleetData = await LocalDatabase.getFleet(fleetId);
 
-      localFleetData || fleetIdState;
-
       // ローカルにある / 新規作成の場合初期化
       if (localFleetData || fleetIdState) {
         setPageTitle(`${localFleetData?.title || "無題の編成"} - Kcm2Cale β`);
