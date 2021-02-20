@@ -4,7 +4,6 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 import { initializeFleet } from "../../core/initialize-fleet";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { LocalDatabase } from "../../core/persistence/local-database";
-import { LocalFleetData_v1 } from "../../core/persistence/types";
 import { FleetIdState } from "../../store/organize/info";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
@@ -23,9 +22,7 @@ export const Fleet: FC = () => {
 
   useEffect(() => {
     const loadFleet = async () => {
-      const localFleetData = (await LocalDatabase.getFleet(
-        fleetId
-      )) as LocalFleetData_v1;
+      const localFleetData = await LocalDatabase.getFleet(fleetId);
 
       localFleetData || fleetIdState;
 
