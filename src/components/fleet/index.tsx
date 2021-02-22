@@ -10,17 +10,14 @@ import { LowerAppBar } from "../common/lower-app-bar";
 import { Organize } from "./organisms/organize";
 
 export const Fleet: FC = () => {
-  const { justSaveNow } = useLocalPersistence();
-
-  /* 艦隊 Id を取得 */
-  const { fleetId } = useParams<{ fleetId: string }>();
-
-  const fleetTitle = useRecoilValue(FleetNameState);
-
-  const setPageTitle = useSetPageTitle();
   const { replace, push } = useHistory();
-  const fleetIdState = useRecoilValue(FleetIdState);
+  const setPageTitle = useSetPageTitle();
+  const { justSaveNow } = useLocalPersistence();
   const initFleet = useRecoilCallback(initializeFleet);
+
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetTitle = useRecoilValue(FleetNameState);
+  const fleetIdState = useRecoilValue(FleetIdState);
 
   setPageTitle(`${fleetTitle || "無題の編成"} - Kcm2Cale β`);
 
