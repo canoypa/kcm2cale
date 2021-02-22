@@ -4,7 +4,7 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 import { initializeFleet } from "../../core/initialize-fleet";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { LocalDatabase } from "../../core/persistence/local-database";
-import { FleetIdState } from "../../store/organize/info";
+import { FleetIdState, FleetNameState } from "../../store/organize/info";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { Organize } from "./organisms/organize";
@@ -15,10 +15,14 @@ export const Fleet: FC = () => {
   /* 艦隊 Id を取得 */
   const { fleetId } = useParams<{ fleetId: string }>();
 
+  const fleetTitle = useRecoilValue(FleetNameState);
+
   const setPageTitle = useSetPageTitle();
   const { replace, push } = useHistory();
   const fleetIdState = useRecoilValue(FleetIdState);
   const initFleet = useRecoilCallback(initializeFleet);
+
+  setPageTitle(`${fleetTitle || "無題の編成"} - Kcm2Cale β`);
 
   useEffect(() => {
     const loadFleet = async () => {
@@ -26,7 +30,6 @@ export const Fleet: FC = () => {
 
       // ローカルにある / 新規作成の場合初期化
       if (localFleetData || fleetIdState) {
-        setPageTitle(`${localFleetData?.title || "無題の編成"} - Kcm2Cale β`);
         return void initFleet(localFleetData ?? null);
       }
 
