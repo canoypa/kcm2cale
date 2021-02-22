@@ -25,15 +25,19 @@ export const Fleet: FC = () => {
     const loadFleet = async () => {
       const localFleetData = await LocalDatabase.getFleet(fleetId);
 
-      // ローカルにある / 新規作成の場合初期化
-      if (localFleetData || fleetIdState) {
-        return void initFleet(localFleetData ?? null);
+      if (localFleetData) {
+        // 保存済みの編成がある場合初期化
+        initFleet(localFleetData);
+      } else {
+        // 編成が存在しない場合リダイレクト
+        replace("/");
       }
-
-      // ローカルデータ, FleetIdState 共に無ければ存在しない編成
-      return void replace("/");
     };
-    loadFleet();
+
+    // 直アクセスの場合編成初期化
+    if (!fleetIdState) {
+      loadFleet();
+    }
   }, []);
 
   const backToTopPage = () => {
