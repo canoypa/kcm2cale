@@ -1,5 +1,7 @@
 import { FC, MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilCallback } from "recoil";
+import { initializeFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import {
@@ -19,6 +21,8 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
+  const initFleet = useRecoilCallback(initializeFleet);
+
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setCoordinates({ x: event.clientX, y: event.clientY });
     setMenuOpen(true);
@@ -33,9 +37,18 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     }
   };
 
+  const openFleet = () => {
+    // 編成初期化
+    initFleet(fleetData);
+  };
+
   return (
     <>
-      <Link to={`/fleet/${fleetData.id}`} className={styles.container}>
+      <Link
+        to={`/fleet/${fleetData.id}`}
+        className={styles.container}
+        onClick={openFleet}
+      >
         <Card>
           <CardHeader>
             <CardOverline label={fleetData.updatedAt.toLocaleDateString()} />

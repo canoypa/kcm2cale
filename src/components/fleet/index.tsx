@@ -33,7 +33,11 @@ export const Fleet: FC = () => {
       // ローカルデータ, FleetIdState 共に無ければ存在しない編成
       return void replace("/");
     };
-    loadFleet();
+
+    // 直アクセスの場合編成初期化
+    if (!fleetIdState) {
+      loadFleet();
+    }
   }, []);
 
   const backToTopPage = () => {
