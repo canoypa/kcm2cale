@@ -26,11 +26,13 @@ export const SelectEquipment: FC<Props> = ({ onSelect, onCancel }) => {
 
   const handler = {
     filterChange: (_filter: string | null) => {
-      if (_filter === null) return void setTypes(null);
-
-      const filter = parseInt(_filter, 10);
-      if (isEquipmentGroupValue(filter)) {
-        setTypes(EquipmentGroupMap[filter]);
+      if (_filter === null) {
+        setTypes(null);
+      } else {
+        const filter = parseInt(_filter, 10);
+        if (isEquipmentGroupValue(filter)) {
+          setTypes(EquipmentGroupMap[filter]);
+        }
       }
     },
 
