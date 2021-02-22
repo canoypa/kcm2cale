@@ -15,7 +15,7 @@ export const container = css({
   width: "100%",
   padding: 24,
 
-  [`@media (min-width: 576px)`]: {
+  ["@media (min-width: 576px)"]: {
     border: "1px solid #e0e0e0",
     padding: 32,
     borderRadius: 4,
