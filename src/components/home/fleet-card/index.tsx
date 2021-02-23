@@ -27,7 +27,13 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   const initFleet = useRecoilCallback(initializeFleet);
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setCoordinates({ x: event.clientX, y: event.clientY });
+    const target = event.target as HTMLButtonElement;
+    const targetRect = target.getBoundingClientRect();
+
+    setCoordinates({
+      x: targetRect.left,
+      y: targetRect.top,
+    });
     setMenuOpen(true);
   };
   const closeMenu = () => {
