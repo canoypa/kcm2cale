@@ -4,41 +4,40 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 import { initializeFleet } from "../../core/initialize-fleet";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { LocalDatabase } from "../../core/persistence/local-database";
-import { LocalFleetData_v1 } from "../../core/persistence/types";
-import { FleetIdState } from "../../store/organize/info";
+import { FleetIdState, FleetNameState } from "../../store/organize/info";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { Organize } from "./organisms/organize";
 
 export const Fleet: FC = () => {
-  const { justSaveNow } = useLocalPersistence();
-
-  /* 艦隊 Id を取得 */
-  const { fleetId } = useParams<{ fleetId: string }>();
-
-  const setPageTitle = useSetPageTitle();
   const { replace, push } = useHistory();
-  const fleetIdState = useRecoilValue(FleetIdState);
+  const setPageTitle = useSetPageTitle();
+  const { justSaveNow } = useLocalPersistence();
   const initFleet = useRecoilCallback(initializeFleet);
+
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetTitle = useRecoilValue(FleetNameState);
+  const fleetIdState = useRecoilValue(FleetIdState);
+
+  setPageTitle(`${fleetTitle || "無題の編成"} - Kcm2Cale β`);
 
   useEffect(() => {
     const loadFleet = async () => {
-      const localFleetData = (await LocalDatabase.getFleet(
-        fleetId
-      )) as LocalFleetData_v1;
+      const localFleetData = await LocalDatabase.getFleet(fleetId);
 
-      localFleetData || fleetIdState;
-
-      // ローカルにある / 新規作成の場合初期化
-      if (localFleetData || fleetIdState) {
-        setPageTitle(`${localFleetData?.title || "無題の編成"} - Kcm2Cale β`);
-        return void initFleet(localFleetData ?? null);
+      if (localFleetData) {
+        // 保存済みの編成がある場合初期化
+        initFleet(localFleetData);
+      } else {
+        // 編成が存在しない場合リダイレクト
+        replace("/");
       }
-
-      // ローカルデータ, FleetIdState 共に無ければ存在しない編成
-      return void replace("/");
     };
-    loadFleet();
+
+    // 直アクセスの場合編成初期化
+    if (!fleetIdState) {
+      loadFleet();
+    }
   }, []);
 
   const backToTopPage = () => {

@@ -1,5 +1,7 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilCallback } from "recoil";
+import { initializeFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import {
@@ -12,30 +14,51 @@ import {
 } from "../../common/card";
 import { LineClamp } from "../../common/clamp";
 import { Menu } from "../../common/menu";
+import { FleetListContext } from "../fleet-list-area";
 import * as styles from "./styles";
 
 type Props = { fleetData: LocalFleetData_v1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
+  const { reloadFleet } = useContext(FleetListContext);
+
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
+  const initFleet = useRecoilCallback(initializeFleet);
+
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setCoordinates({ x: event.clientX, y: event.clientY });
+    const target = event.target as HTMLButtonElement;
+    const targetRect = target.getBoundingClientRect();
+
+    setCoordinates({
+      x: targetRect.left,
+      y: targetRect.top + 48,
+    });
     setMenuOpen(true);
   };
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
-  const menuSelectHandler = (v: string) => {
+  const menuSelectHandler = async (v: string) => {
     if (v === "delete") {
-      LocalDatabase.deleteFleet(fleetData.id);
+      await LocalDatabase.deleteFleet(fleetData.id);
+      reloadFleet();
     }
+  };
+
+  const openFleet = () => {
+    // 編成初期化
+    initFleet(fleetData);
   };
 
   return (
     <>
-      <Link to={`/fleet/${fleetData.id}`} className={styles.container}>
+      <Link
+        to={`/fleet/${fleetData.id}`}
+        className={styles.container}
+        onClick={openFleet}
+      >
         <Card>
           <CardHeader>
             <CardOverline label={fleetData.updatedAt.toLocaleDateString()} />

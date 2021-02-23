@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router";
 import { createProvider, firebaseAuth } from "../../core/firebase/auth";
 import { useUser } from "../../core/firebase/auth/hooks";
 import { ProviderId, ProviderIdValue } from "../../core/firebase/auth/types";
+import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { SignInButton } from "./signin-button";
 import * as styles from "./styles";
 
@@ -15,6 +16,8 @@ type LocationState =
 export const SignIn: FC = () => {
   const { replace } = useHistory();
   const { state } = useLocation<LocationState>();
+  const setPageTitle = useSetPageTitle();
+
   const userLoadable = useUser();
 
   const signIn = (providerId: ProviderIdValue) => {
@@ -27,6 +30,8 @@ export const SignIn: FC = () => {
       replace(state?.continue ?? "/");
     }
   });
+
+  setPageTitle("サインイン - Kcm2Cale β");
 
   return (
     <>

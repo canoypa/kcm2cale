@@ -1,2 +1,4 @@
-extends: stylelint-config-custrino
+extends:
+  - stylelint-config-custrino
+  - stylelint-config-custrino/css-in-js
 ignoreFiles: [node_modules/**/*, build/**/*]
