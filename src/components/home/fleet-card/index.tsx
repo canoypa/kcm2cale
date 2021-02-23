@@ -32,7 +32,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
     setCoordinates({
       x: targetRect.left,
-      y: targetRect.top,
+      y: targetRect.top + 48,
     });
     setMenuOpen(true);
   };
