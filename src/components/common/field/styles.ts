@@ -30,7 +30,7 @@ export const label = css(TypographyBody1, {
   lineHeight: "56px",
   fontFamily: "Noto Sans",
   color: "rgba(0, 0, 0, 60%)",
-  transition: "transform 100ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+  transition: "transform 100ms cubic-bezier(0.4, 0, 0.2, 1)",
   transformOrigin: "left",
   pointerEvents: "none",
   userSelect: "none",
@@ -58,7 +58,7 @@ export const outline = css({
   borderStyle: "solid",
   borderColor: "#e0e0e0",
   transition:
-    "border-width 100ms cubic-bezier(0.4, 0.0, 0.2, 1), border-color 100ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+    "border-width 100ms cubic-bezier(0.4, 0, 0.2, 1), border-color 100ms cubic-bezier(0.4, 0, 0.2, 1)",
 
   [`.${focusing} &`]: {
     borderWidth: 2,

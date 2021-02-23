@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
-import { useRecoilState } from "recoil";
+import { useRecoilCallback, useRecoilState } from "recoil";
+import { initializeFleet } from "../../core/initialize-fleet";
 import { FleetIdState } from "../../store/organize/info";
 
 // 編成新規作成
@@ -10,23 +11,21 @@ export const NewFleet: FC = () => {
   const { replace } = useHistory();
   const [fleetId, setFleetId] = useRecoilState(FleetIdState);
 
-  const [loadFlag, setLoadFlag] = useState(false);
+  const initFleet = useRecoilCallback(initializeFleet);
+
   const preFleetId = useRef(fleetId);
 
-  // Fixme: 呪われたコード
   useEffect(() => {
-    // 初回レンダー時
-    if (!loadFlag) {
+    if (fleetId === preFleetId.current) {
+      // 初回レンダー時
+      initFleet(null);
       const geneFleetId = nanoid(16);
       setFleetId(geneFleetId);
-      setLoadFlag(true);
-    }
-
-    // state 更新による再レンダー時
-    if (loadFlag && fleetId !== preFleetId.current) {
+    } else {
+      // fleetId 更新による再レンダー時
       replace(`/fleet/${fleetId}`);
     }
-  });
+  }, [fleetId]);
 
   return null;
 };

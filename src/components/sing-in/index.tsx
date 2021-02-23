@@ -1,10 +1,15 @@
 import { FC } from "react";
+import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { SignInButton } from "./signin-button";
 import * as styles from "./styles";
-import { Providers, ProvidersValues } from "./types";
+import { ProviderId, ProviderIdValue } from "./types";
 
 export const SignIn: FC = () => {
-  const signIn = (provider: ProvidersValues) => {};
+  const setPageTitle = useSetPageTitle();
+
+  const signIn = (provider: ProviderIdValue) => {};
+
+  setPageTitle("サインイン - Kcm2Cale β");
 
   return (
     <div className={styles.wrapper}>
@@ -13,8 +18,8 @@ export const SignIn: FC = () => {
           <div className={styles.title}>サインイン</div>
         </div>
         <div className={styles.signInButtons}>
-          <SignInButton provider={Providers.Google} onClick={signIn} />
-          <SignInButton provider={Providers.Twitter} onClick={signIn} />
+          <SignInButton provider={ProviderId.Google} onClick={signIn} />
+          <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
         </div>
       </div>
     </div>

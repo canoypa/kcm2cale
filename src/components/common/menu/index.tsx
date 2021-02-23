@@ -30,16 +30,17 @@ export const Menu: FC<Props> = ({
 
   if (!open) return null;
 
+  const top = Math.min(
+    window.innerHeight - ((containerRect?.height ?? 0) + 8),
+    coordinates.y
+  );
+  const left = Math.min(
+    window.innerWidth - ((containerRect?.width ?? 0) + 8),
+    coordinates.x
+  );
   const coordinatesStyle = css({
-    top: Math.min(
-      window.innerHeight - ((containerRect?.height ?? 0) + 8),
-      coordinates.y
-    ),
-
-    left: Math.min(
-      window.innerWidth - ((containerRect?.width ?? 0) + 8),
-      coordinates.x
-    ),
+    top,
+    left,
   });
 
   const containerClasses = classNames(styles.container, coordinatesStyle);

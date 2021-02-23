@@ -3,23 +3,21 @@ import { EnumValues } from "../../util/types";
 import { GoogleLogo } from "./logo/google";
 import { TwitterLogo } from "./logo/twitter";
 
-export const Providers = {
+export const ProviderId = {
   Google: "google",
   Twitter: "twitter",
 } as const;
-export type ProvidersValues = EnumValues<typeof Providers>;
+export type ProviderIdValue = EnumValues<typeof ProviderId>;
 
-export const PROVIDERS_NAME_MAP: ReadonlyMap<ProvidersValues, string> = new Map(
-  [
-    [Providers.Google, "Google"],
-    [Providers.Twitter, "Twitter"],
-  ]
-);
+export const ProviderNameMap: ReadonlyMap<ProviderIdValue, string> = new Map([
+  [ProviderId.Google, "Google"],
+  [ProviderId.Twitter, "Twitter"],
+]);
 
-export const PROVIDERS_LOGO_MAP: ReadonlyMap<
-  ProvidersValues,
+export const ProviderLogoMap: ReadonlyMap<
+  ProviderIdValue,
   ReactElement
 > = new Map([
-  [Providers.Google, createElement(GoogleLogo)],
-  [Providers.Twitter, createElement(TwitterLogo)],
+  [ProviderId.Google, createElement(GoogleLogo)],
+  [ProviderId.Twitter, createElement(TwitterLogo)],
 ]);

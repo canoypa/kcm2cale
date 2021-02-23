@@ -19,7 +19,8 @@ class LocalDatabaseClass {
     return result;
   };
 
-  public getFleet = (key: string) => this.fleetStore.getItem(key);
+  public getFleet = (key: string) =>
+    this.fleetStore.getItem<LocalFleetData_v1>(key);
 
   public setFleet = (key: string, data: LocalFleetData_v1) =>
     this.fleetStore.setItem(key, data);
