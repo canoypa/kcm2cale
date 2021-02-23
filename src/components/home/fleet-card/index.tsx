@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilCallback } from "recoil";
 import { initializeFleet } from "../../../core/initialize-fleet";
@@ -14,10 +14,13 @@ import {
 } from "../../common/card";
 import { LineClamp } from "../../common/clamp";
 import { Menu } from "../../common/menu";
+import { FleetListContext } from "../fleet-list-area";
 import * as styles from "./styles";
 
 type Props = { fleetData: LocalFleetData_v1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
+  const { reloadFleet } = useContext(FleetListContext);
+
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
@@ -31,9 +34,10 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const menuSelectHandler = (v: string) => {
+  const menuSelectHandler = async (v: string) => {
     if (v === "delete") {
-      LocalDatabase.deleteFleet(fleetData.id);
+      await LocalDatabase.deleteFleet(fleetData.id);
+      reloadFleet();
     }
   };
 
