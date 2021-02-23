@@ -7,6 +7,7 @@ export const container = css(Shadow8dp, {
   flexDirection: "column",
   minWidth: 112,
   borderRadius: 4,
+  overflow: "hidden",
 });
 
 export const scrim = css({
