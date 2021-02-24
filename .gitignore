@@ -1,17 +1,17 @@
 # firebase
-.firebaserc
-firestore.indexes.json
-firestore.rules
+/.firebaserc
+/firestore.indexes.json
+/firestore.rules
 
 # Build
-build/
+/build/
 
 # public
-public/
+/public/
 
 # VSCode
-.vscode/launch.json
-.vscode/tasks.json
+/.vscode/launch.json
+/.vscode/tasks.json
 
 # private
 .private
