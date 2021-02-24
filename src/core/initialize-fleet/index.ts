@@ -1,4 +1,4 @@
-import { CallbackInterface } from "recoil";
+import { CallbackInterface, useRecoilCallback } from "recoil";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
   FleetDateState,
@@ -53,4 +53,14 @@ export const initializeFleet = ({ set, reset }: CallbackInterface) => (
 
   set(RiggingState, rigging);
   set(EquipmentsState, equipments);
+};
+
+export const useInitFleet = () => {
+  const initFleetCallback = useRecoilCallback(initializeFleet);
+
+  const initFleet = (fleetData: LocalFleetData_v1 | null) => {
+    initFleetCallback(fleetData);
+  };
+
+  return initFleet;
 };
