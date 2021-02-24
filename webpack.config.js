@@ -1,6 +1,10 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
+
+const { version: appVersion } = require("./package.json");
+const variable = require("./scripts/build/variable");
 
 const config = (env) => {
   const isProd = env.mode === "prod";
@@ -29,6 +33,10 @@ const config = (env) => {
     resolve: { extensions: [".js", ".ts", ".tsx"] },
 
     plugins: [
+      new webpack.DefinePlugin({
+        __APP_NAME__: JSON.stringify(variable.appName),
+        __APP_VERSION__: JSON.stringify(appVersion),
+      }),
       new HtmlWebpackPlugin({
         template: resolve("src/index.html"),
         inject: false,
