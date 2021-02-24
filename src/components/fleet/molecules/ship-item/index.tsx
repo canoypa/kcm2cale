@@ -7,16 +7,15 @@ import * as styles from "./styles";
 
 type Props = {
   fleetPlace: FleetStateValue;
-  swapShip: () => void;
 };
-export const ShipItem: FC<Props> = memo(({ fleetPlace, swapShip }) => (
+export const ShipItem: FC<Props> = memo(({ fleetPlace }) => (
   <div className={styles.root}>
     <div className={styles.dragIndicator}>
       <IconDragIndicator />
     </div>
     <div className={styles.content}>
       <div>
-        <ShipContent fleetPlace={fleetPlace} swapShip={swapShip} />
+        <ShipContent fleetPlace={fleetPlace} />
       </div>
       <div className={styles.secondary}>
         <Rigging fleetPlace={fleetPlace} />

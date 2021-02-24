@@ -6,16 +6,21 @@ import { FleetTypeState } from "../../../../store/organize/info";
 import { SelectShip } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
+import { SwapShipContext } from "./contexts";
 import { useFleet } from "./hook";
 import * as styles from "./styles";
 import { ToggleFleet } from "./toggle-fleet";
-import { useSelectShip } from "./use-select-ship";
+import { CurrentShip, useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
   const fleetState = useFleet();
   const [selectState, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
+
+  const swapShipContextValue = (currentShip: CurrentShip) => {
+    selecting.start(currentShip);
+  };
 
   return (
     <>
@@ -25,22 +30,19 @@ export const Fleet: FC = () => {
             <ToggleFleet />
           </div>
         )}
-        <div className={styles.shipsList}>
-          {fleetState.map((fleetPlace) => {
-            const swapShip = () => selecting.start(fleetPlace);
-            const key = fleetPlace.turnNo;
+        <SwapShipContext.Provider value={swapShipContextValue}>
+          <div className={styles.shipsList}>
+            {fleetState.map((fleetPlace) => {
+              const key = fleetPlace.turnNo;
 
-            return isShipPlaced(fleetPlace) ? (
-              <ShipItem key={key} fleetPlace={fleetPlace} swapShip={swapShip} />
-            ) : (
-              <ShipSkeleton
-                key={key}
-                fleetPlace={fleetPlace}
-                setShip={swapShip}
-              />
-            );
-          })}
-        </div>
+              return isShipPlaced(fleetPlace) ? (
+                <ShipItem key={key} fleetPlace={fleetPlace} />
+              ) : (
+                <ShipSkeleton key={key} fleetPlace={fleetPlace} />
+              );
+            })}
+          </div>
+        </SwapShipContext.Provider>
       </div>
 
       {selectState.isOpen && (
