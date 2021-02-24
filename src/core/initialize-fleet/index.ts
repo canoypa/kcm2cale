@@ -11,9 +11,12 @@ import { FleetState, ShipsState } from "../../store/organize/ships";
 import { createFleetStates } from "../persistence/create-local-fleet-data";
 import { LocalFleetData_v1 } from "../persistence/types";
 
-export const initializeFleet = ({ set, reset }: CallbackInterface) => (
-  localFleetData: LocalFleetData_v1 | null
-) => {
+interface InitializeFleetArgs {
+  fleetData: LocalFleetData_v1 | null;
+}
+export const initializeFleet = ({ set, reset }: CallbackInterface) => ({
+  fleetData,
+}: InitializeFleetArgs) => {
   reset(FleetDateState);
   reset(FleetNameState);
   reset(FleetDescriptionState);
@@ -23,9 +26,9 @@ export const initializeFleet = ({ set, reset }: CallbackInterface) => (
   reset(RiggingState);
   reset(EquipmentsState);
 
-  if (localFleetData === null) return;
+  if (fleetData === null) return;
 
-  const fleetStates = createFleetStates(localFleetData);
+  const fleetStates = createFleetStates(fleetData);
 
   set(FleetIdState, fleetStates.fleetId);
   set(FleetDateState, fleetStates.fleetDate);
@@ -59,7 +62,7 @@ export const useInitFleet = () => {
   const initFleetCallback = useRecoilCallback(initializeFleet);
 
   const initFleet = (fleetData: LocalFleetData_v1 | null) => {
-    initFleetCallback(fleetData);
+    initFleetCallback({ fleetData });
   };
 
   return initFleet;
