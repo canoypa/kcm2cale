@@ -33,7 +33,11 @@ export const Fleet: FC = () => {
             return isShipPlaced(fleetPlace) ? (
               <ShipItem key={key} fleetPlace={fleetPlace} swapShip={swapShip} />
             ) : (
-              <ShipSkeleton key={key} setShip={swapShip} />
+              <ShipSkeleton
+                key={key}
+                fleetPlace={fleetPlace}
+                setShip={swapShip}
+              />
             );
           })}
         </div>
