@@ -7,7 +7,7 @@ import * as styles from "./styles";
 
 export const Home: FC = () => {
   const setPageTitle = useSetPageTitle();
-  setPageTitle("Kcm2Cale β");
+  setPageTitle(__APP_NAME__, { noSuffix: true });
 
   return (
     <div className={styles.container}>

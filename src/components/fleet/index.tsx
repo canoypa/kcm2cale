@@ -19,7 +19,7 @@ export const Fleet: FC = () => {
   const fleetTitle = useRecoilValue(FleetNameState);
   const fleetIdState = useRecoilValue(FleetIdState);
 
-  setPageTitle(`${fleetTitle || "無題の編成"} - Kcm2Cale β`);
+  setPageTitle(`${fleetTitle || "無題の編成"}`);
 
   useEffect(() => {
     const loadFleet = async () => {

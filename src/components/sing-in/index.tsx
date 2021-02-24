@@ -9,7 +9,7 @@ export const SignIn: FC = () => {
 
   const signIn = (provider: ProviderIdValue) => {};
 
-  setPageTitle("サインイン - Kcm2Cale β");
+  setPageTitle("サインイン");
 
   return (
     <div className={styles.wrapper}>
