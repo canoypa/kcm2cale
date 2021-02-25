@@ -2,7 +2,6 @@ import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Avatar } from "../../avatar";
-import { Button } from "../../button";
 import { Dialog, DialogContent } from "../../dialog";
 import * as styles from "./styles";
 
@@ -23,9 +22,9 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
           <Avatar />
           <span>サインインしていません</span>
         </div>
-        <div className={styles.promoteSignIn}>
+        {/* <div className={styles.promoteSignIn}>
           <Button type="outline" label="サインイン" onClick={singIn} />
-        </div>
+        </div> */}
         <div>
           <Link to="/about">{__APP_NAME__} について</Link>
         </div>
