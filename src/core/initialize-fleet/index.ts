@@ -1,4 +1,8 @@
-import { CallbackInterface } from "recoil";
+import {
+  CallbackInterface,
+  useGotoRecoilSnapshot,
+  useRecoilCallback,
+} from "recoil";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
   FleetDateState,
@@ -11,27 +15,28 @@ import { FleetState, ShipsState } from "../../store/organize/ships";
 import { createFleetStates } from "../persistence/create-local-fleet-data";
 import { LocalFleetData_v1 } from "../persistence/types";
 
-export const initializeFleet = ({ set, reset }: CallbackInterface) => (
-  localFleetData: LocalFleetData_v1 | null
-) => {
-  reset(FleetDateState);
-  reset(FleetNameState);
-  reset(FleetDescriptionState);
-  reset(FleetTypeState);
-  reset(FleetState);
-  reset(ShipsState);
-  reset(RiggingState);
-  reset(EquipmentsState);
+interface InitializeFleetArgs {
+  fleetData: LocalFleetData_v1 | null;
+}
+export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
+  fleetData,
+}: InitializeFleetArgs) => {
+  // Fixme
+  // eslint-disable-next-line array-callback-return
+  const initSnapshot = snapshot.map(({ reset }) => {
+    reset(FleetDateState);
+    reset(FleetNameState);
+    reset(FleetDescriptionState);
+    reset(FleetTypeState);
+    reset(FleetState);
+    reset(ShipsState);
+    reset(RiggingState);
+    reset(EquipmentsState);
+  });
 
-  if (localFleetData === null) return;
+  if (fleetData === null) return initSnapshot;
 
-  const fleetStates = createFleetStates(localFleetData);
-
-  set(FleetIdState, fleetStates.fleetId);
-  set(FleetDateState, fleetStates.fleetDate);
-  set(FleetNameState, fleetStates.fleetName);
-  set(FleetDescriptionState, fleetStates.fleetDescription);
-  set(FleetTypeState, fleetStates.fleetType);
+  const fleetStates = createFleetStates(fleetData);
 
   const fleet: FleetState = [];
   const ships = new Map();
@@ -48,9 +53,33 @@ export const initializeFleet = ({ set, reset }: CallbackInterface) => (
     equipments.set(k, v);
   });
 
-  set(FleetState, fleet);
-  set(ShipsState, ships);
+  // Fixme
+  // eslint-disable-next-line array-callback-return
+  const loadedSnapshot = initSnapshot.map(({ set }) => {
+    set(FleetIdState, fleetStates.fleetId);
+    set(FleetDateState, fleetStates.fleetDate);
+    set(FleetNameState, fleetStates.fleetName);
+    set(FleetDescriptionState, fleetStates.fleetDescription);
+    set(FleetTypeState, fleetStates.fleetType);
 
-  set(RiggingState, rigging);
-  set(EquipmentsState, equipments);
+    set(FleetState, fleet);
+    set(ShipsState, ships);
+
+    set(RiggingState, rigging);
+    set(EquipmentsState, equipments);
+  });
+
+  return loadedSnapshot;
+};
+
+export const useInitFleet = () => {
+  const gotoSnapshot = useGotoRecoilSnapshot();
+  const initFleetCallback = useRecoilCallback(initializeFleet);
+
+  const initFleet = (fleetData: LocalFleetData_v1 | null) => {
+    const snapshot = initFleetCallback({ fleetData });
+    gotoSnapshot(snapshot);
+  };
+
+  return initFleet;
 };

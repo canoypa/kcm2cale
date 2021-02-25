@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
 import { useUser } from "../../../../core/firebase/auth/hooks";
 import { Button } from "../../button";
@@ -60,6 +61,9 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
         {userLoadable.state === "hasValue" && (
           <AccountHeader user={userLoadable.contents} onClose={onClose} />
         )}
+        <div>
+          <Link to="/about">{__APP_NAME__} について</Link>
+        </div>
       </DialogContent>
     </Dialog>
   );

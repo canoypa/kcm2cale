@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useRecoilCallback, useRecoilValue } from "recoil";
-import { initializeFleet } from "../../core/initialize-fleet";
+import { useRecoilValue } from "recoil";
+import { useInitFleet } from "../../core/initialize-fleet";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { LocalDatabase } from "../../core/persistence/local-database";
 import { FleetIdState, FleetNameState } from "../../store/organize/info";
@@ -13,13 +13,13 @@ export const Fleet: FC = () => {
   const { replace, push } = useHistory();
   const setPageTitle = useSetPageTitle();
   const { justSaveNow } = useLocalPersistence();
-  const initFleet = useRecoilCallback(initializeFleet);
+  const initFleet = useInitFleet();
 
   const { fleetId } = useParams<{ fleetId: string }>();
   const fleetTitle = useRecoilValue(FleetNameState);
   const fleetIdState = useRecoilValue(FleetIdState);
 
-  setPageTitle(`${fleetTitle || "無題の編成"} - Kcm2Cale β`);
+  setPageTitle(`${fleetTitle || "無題の編成"}`);
 
   useEffect(() => {
     const loadFleet = async () => {

@@ -7,7 +7,7 @@ export const NotFound: FC = () => {
   const setPageTitle = useSetPageTitle();
   const { pathname } = useLocation();
 
-  setPageTitle("Page Not Found - Kcm2Cale β");
+  setPageTitle("Page Not Found");
 
   return (
     <div className={styles.container}>

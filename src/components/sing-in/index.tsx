@@ -31,7 +31,7 @@ export const SignIn: FC = () => {
     }
   });
 
-  setPageTitle("サインイン - Kcm2Cale β");
+  setPageTitle("サインイン");
 
   return (
     <>
