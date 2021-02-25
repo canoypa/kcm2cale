@@ -7,8 +7,11 @@ const dotenv = require("dotenv");
 const config = (env) => {
   const isProd = env.mode === "prod";
 
+  const envFilePath = isProd
+    ? "./.env/firebase-config.env"
+    : "./.env/firebase-config-dev.env";
   dotenv.config({
-    path: resolve(`./.env/firebase-config${!isProd && "-dev"}.env`),
+    path: resolve(envFilePath),
   });
 
   return {
