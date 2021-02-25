@@ -1,5 +1,9 @@
 import { FC } from "react";
-import { ProviderIdValue, ProviderLogoMap, ProviderNameMap } from "../types";
+import {
+  ProviderIdValue,
+  ProviderLogoMap,
+  ProviderNameMap,
+} from "../../../core/firebase/auth/types";
 import * as styles from "./styles";
 
 type Props = {
