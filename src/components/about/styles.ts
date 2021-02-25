@@ -18,4 +18,8 @@ export const aboutContainer = css({
   "section:not(:last-child)": {
     marginBottom: "2em",
   },
+
+  footer: {
+    borderTop: "1px solid #e0e0e0",
+  },
 });

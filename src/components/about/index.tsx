@@ -145,6 +145,15 @@ export const About: FC = () => {
           </p>
         </section>
       </div>
+      <footer>
+        <section>
+          <p>
+            <span>{__APP_NAME__}</span>
+            <span> / </span>
+            <span>v{__APP_VERSION__}</span>
+          </p>
+        </section>
+      </footer>
     </div>
   );
 };
