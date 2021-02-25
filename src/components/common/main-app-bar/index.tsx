@@ -1,17 +1,16 @@
 import { FC, useState } from "react";
-import { useUser } from "../../../core/firebase/auth/hooks";
 import { TopAppBar, TopAppBarIcon, TopAppBarSection } from "../app-bar";
 import { UserIcon } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
 
 export const MainAppBar: FC = () => {
-  const userLoadable = useUser();
+  // const userLoadable = useUser();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
-  const user = userLoadable.state === "hasValue" ? userLoadable.contents : null;
+  // const user = userLoadable.state === "hasValue" ? userLoadable.contents : null;
 
   return (
     <>
@@ -19,7 +18,7 @@ export const MainAppBar: FC = () => {
         <TopAppBarSection align="end">
           <TopAppBarIcon>
             <div onClick={openDialog}>
-              <UserIcon user={user} />
+              <UserIcon user={null} />
             </div>
           </TopAppBarIcon>
         </TopAppBarSection>

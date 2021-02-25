@@ -3,8 +3,6 @@ import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
-import { useUser } from "../../../../core/firebase/auth/hooks";
-import { Button } from "../../button";
 import { Dialog, DialogContent } from "../../dialog";
 import { UserIcon } from "../../user-icon";
 import * as styles from "./styles";
@@ -25,25 +23,17 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
     onClose();
   };
 
-  return user ? (
-    <>
-      <div className={styles.accountHeader}>
-        <UserIcon user={user} />
-        <span>{user.displayName}</span>
-      </div>
-      <div className={styles.promoteSignIn}>
-        <Button type="outline" label="サインアウト" onClick={signOut} />
-      </div>
-    </>
-  ) : (
+  // return s
+
+  return (
     <>
       <div className={styles.accountHeader}>
         <UserIcon user={user} />
         <span>サインインしていません</span>
       </div>
-      <div className={styles.promoteSignIn}>
+      {/* <div className={styles.promoteSignIn}>
         <Button type="outline" label="サインイン" onClick={singIn} />
-      </div>
+      </div> */}
     </>
   );
 };
@@ -53,14 +43,14 @@ type Props = {
   onClose: () => void;
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
-  const userLoadable = useUser();
+  // const userLoadable = useUser();
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
-        {userLoadable.state === "hasValue" && (
-          <AccountHeader user={userLoadable.contents} onClose={onClose} />
-        )}
+        {/* {userLoadable.state === "hasValue" && ( */}
+        <AccountHeader user={null} onClose={onClose} />
+        {/* )} */}
         <div>
           <Link to="/about">{__APP_NAME__} について</Link>
         </div>
