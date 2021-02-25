@@ -31,6 +31,7 @@ export const About: FC = () => {
           <h1>{__APP_NAME__}</h1>
           <p>{__APP_NAME__} は 「艦隊これくしょん」の編成保存ツールです。</p>
         </section>
+
         <section>
           <h2>このサイトについて</h2>
 
@@ -54,6 +55,7 @@ export const About: FC = () => {
             </ul>
           </section>
         </section>
+
         <section>
           <h2>FAQ</h2>
 
@@ -104,6 +106,27 @@ export const About: FC = () => {
               </li>
             </ul>
           </section>
+        </section>
+
+        <section>
+          <h2>プライバシーと規約</h2>
+          <p>
+            このサイトでは、アクセス解析のため Google Analytics
+            を使用しています。
+          </p>
+          <p>
+            Cookie
+            を使用して特定の情報が送信されますが、個人を特定するものではありません。
+          </p>
+          <p>
+            データが収集、処理される仕組みについて、詳しくは以下のページをご覧ください
+          </p>
+          <p>
+            <ExternalLink
+              href="https://policies.google.com/technologies/partner-sites"
+              text="Google のサービスを使用するサイトやアプリから収集した情報の Google による使用"
+            />
+          </p>
         </section>
 
         <section>
