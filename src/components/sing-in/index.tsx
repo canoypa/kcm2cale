@@ -1,5 +1,6 @@
 import { FC, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
+import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { createProvider, firebaseAuth } from "../../core/firebase/auth";
 import { useUser } from "../../core/firebase/auth/hooks";
 import { ProviderId, ProviderIdValue } from "../../core/firebase/auth/types";
@@ -14,6 +15,8 @@ type LocationState =
   | undefined;
 
 export const SignIn: FC = () => {
+  usePageViewLog("Sign In");
+
   const { replace } = useHistory();
   const { state } = useLocation<LocationState>();
   const setPageTitle = useSetPageTitle();

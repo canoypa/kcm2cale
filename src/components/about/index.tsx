@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import * as styles from "./styles";
 
@@ -14,6 +15,8 @@ const ExternalLink: FC<ExternalLink> = ({ href, text }) => (
 );
 
 export const About: FC = () => {
+  usePageViewLog("About");
+
   const setPageTitle = useSetPageTitle();
 
   setPageTitle("About");
