@@ -15,7 +15,7 @@ export const aboutContainer = css({
     borderBottom: "1px solid #e0e0e0",
   },
 
-  "section:not(:last-child)": {
+  "main section": {
     marginBottom: "2em",
   },
 

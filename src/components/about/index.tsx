@@ -26,7 +26,8 @@ export const About: FC = () => {
       <header>
         <Link to="/">トップページへ</Link>
       </header>
-      <div>
+
+      <main>
         <section>
           <h1>{__APP_NAME__}</h1>
           <p>{__APP_NAME__} は 「艦隊これくしょん」の編成保存ツールです。</p>
@@ -144,7 +145,8 @@ export const About: FC = () => {
             <span> などに。</span>
           </p>
         </section>
-      </div>
+      </main>
+
       <footer>
         <section>
           <p>
