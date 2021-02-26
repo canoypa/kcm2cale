@@ -26,15 +26,18 @@ export const Fleet: FC = () => {
 
   useEffect(() => {
     const loadFleet = async () => {
-      const localFleetData = await LocalDatabase.getFleet(fleetId);
+      if (fleetId !== undefined) {
+        const localFleetData = await LocalDatabase.getFleet(fleetId);
 
-      if (localFleetData) {
-        // 保存済みの編成がある場合初期化
-        initFleet(localFleetData);
-      } else {
-        // 編成が存在しない場合リダイレクト
-        replace("/");
+        if (localFleetData) {
+          // 保存済みの編成がある場合初期化
+          initFleet(localFleetData);
+          return;
+        }
       }
+
+      // 編成が存在しない場合リダイレクト
+      replace("/");
     };
 
     // 直アクセスの場合編成初期化
