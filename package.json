@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "kcm2cale",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
     "build:prod": "webpack --env mode=prod",
     "build:dev": "webpack --env mode=dev",
@@ -48,6 +48,7 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
     "eslint": "^7.2.0",
     "eslint-config-custrino": "^2.0.1",
     "firebase-admin": "^9.4.2",

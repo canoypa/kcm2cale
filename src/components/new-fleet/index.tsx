@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
 import { FC, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
-import { useRecoilCallback, useRecoilState } from "recoil";
-import { initializeFleet } from "../../core/initialize-fleet";
+import { useRecoilState } from "recoil";
+import { useInitFleet } from "../../core/initialize-fleet";
 import { FleetIdState } from "../../store/organize/info";
 
 // 編成新規作成
@@ -11,7 +11,7 @@ export const NewFleet: FC = () => {
   const { replace } = useHistory();
   const [fleetId, setFleetId] = useRecoilState(FleetIdState);
 
-  const initFleet = useRecoilCallback(initializeFleet);
+  const initFleet = useInitFleet();
 
   const preFleetId = useRef(fleetId);
 
