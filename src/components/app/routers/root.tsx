@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router";
+import { Route, Switch } from "react-router";
 
 const Home = lazy(() => import("../../home"));
 const About = lazy(() => import("../../about"));
@@ -16,11 +16,8 @@ export const RootRouter: FC = () => (
         <Route exact path="/about" component={About} />
         {/* <Route exact path="/sign-in" component={SignIn} /> */}
         <Route exact path="/new" component={NewFleet} />
-        <Route path="/fleet/:fleetId" component={Fleet} />
+        <Route path={["/fleet/:fleetId", "/fleet"]} component={Fleet} />
 
-        <Route path="/fleet">
-          <Redirect to="/" />
-        </Route>
         <Route component={NotFound} />
       </Switch>
     </Suspense>
