@@ -116,6 +116,7 @@ export type ShipStatus = {
 };
 
 export type ShipData = {
+  id: number;
   no: string;
   type: ShipTypeValues;
   name: string;

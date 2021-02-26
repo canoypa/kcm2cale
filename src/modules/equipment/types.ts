@@ -169,6 +169,7 @@ export type Fittable = {
 };
 
 export type EquipmentData = {
+  id: number;
   no: number;
   type: EquipmentTypeValues;
   name: string;
