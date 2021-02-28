@@ -15,7 +15,7 @@ type LocationState =
   | undefined;
 
 export const SignIn: FC = () => {
-  usePageViewLog("Sign In");
+  const pageViewLog = usePageViewLog();
 
   const { replace } = useHistory();
   const { state } = useLocation<LocationState>();
@@ -35,6 +35,10 @@ export const SignIn: FC = () => {
   });
 
   setPageTitle("サインイン");
+
+  useEffect(() => {
+    pageViewLog("Sign In");
+  }, []);
 
   return (
     <>

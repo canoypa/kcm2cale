@@ -10,7 +10,7 @@ import { useInitializeCallback } from "./hooks";
 import { Organize } from "./organisms/organize";
 
 export const Fleet: FC = () => {
-  usePageViewLog("Fleet View");
+  const pageViewLog = usePageViewLog();
 
   const { push } = useHistory();
   const setPageTitle = useSetPageTitle();
@@ -24,6 +24,8 @@ export const Fleet: FC = () => {
   setPageTitle(`${fleetTitle || "無題の編成"}`);
 
   useEffect(() => {
+    pageViewLog("Fleet View");
+
     // 直アクセスの場合編成初期化
     if (!fleetIdState) initFleet({ fleetId });
   }, []);
