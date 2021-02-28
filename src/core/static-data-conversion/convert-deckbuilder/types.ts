@@ -6,7 +6,7 @@ type DeckbuilderEquipment = {
   /** 改修 */
   rf?: NumberOrString<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>;
   /** 熟練度 */
-  mas?: NumberOrString<1 | 2 | 3 | 4 | 5 | 6 | 7>;
+  mas?: NumberOrString<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>;
 };
 
 type DeckbuilderRigging = Partial<{
