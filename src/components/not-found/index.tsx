@@ -6,13 +6,12 @@ import * as styles from "./styles";
 
 export const NotFound: FC = () => {
   const pageViewLog = usePageViewLog();
-
   const setPageTitle = useSetPageTitle();
+
   const { pathname } = useLocation();
 
-  setPageTitle("Page Not Found");
-
   useEffect(() => {
+    setPageTitle("Page Not Found");
     pageViewLog("Not Found");
   }, []);
 

@@ -11,9 +11,9 @@ import { Organize } from "./organisms/organize";
 
 export const Fleet: FC = () => {
   const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
 
   const { push } = useHistory();
-  const setPageTitle = useSetPageTitle();
   const { justSaveNow } = useLocalPersistence();
   const initFleet = useInitializeCallback();
 
@@ -21,9 +21,8 @@ export const Fleet: FC = () => {
   const fleetTitle = useRecoilValue(FleetNameState);
   const fleetIdState = useRecoilValue(FleetIdState);
 
-  setPageTitle(`${fleetTitle || "無題の編成"}`);
-
   useEffect(() => {
+    setPageTitle(`${fleetTitle || "無題の編成"}`);
     pageViewLog("Fleet View");
 
     // 直アクセスの場合編成初期化

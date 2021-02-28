@@ -16,12 +16,10 @@ const ExternalLink: FC<ExternalLink> = ({ href, text }) => (
 
 export const About: FC = () => {
   const pageViewLog = usePageViewLog();
-
   const setPageTitle = useSetPageTitle();
 
-  setPageTitle("About");
-
   useEffect(() => {
+    setPageTitle("About");
     pageViewLog("About");
   }, []);
 

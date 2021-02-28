@@ -8,11 +8,10 @@ import * as styles from "./styles";
 
 export const Home: FC = () => {
   const pageViewLog = usePageViewLog();
-
   const setPageTitle = useSetPageTitle();
-  setPageTitle(__APP_NAME__, { noSuffix: true });
 
   useEffect(() => {
+    setPageTitle(__APP_NAME__, { noSuffix: true });
     pageViewLog("Home");
   }, []);
 
