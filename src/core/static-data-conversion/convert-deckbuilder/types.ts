@@ -9,6 +9,15 @@ type DeckbuilderEquipment = {
   mas?: NumberOrString<1 | 2 | 3 | 4 | 5 | 6 | 7>;
 };
 
+type DeckbuilderRigging = Partial<{
+  i1: DeckbuilderEquipment;
+  i2: DeckbuilderEquipment;
+  i3: DeckbuilderEquipment;
+  i4: DeckbuilderEquipment;
+  i5: DeckbuilderEquipment;
+  ix: DeckbuilderEquipment;
+}>;
+
 type DeckbuilderShip = {
   /** Api id */
   id: NumberOrString;
@@ -21,14 +30,7 @@ type DeckbuilderShip = {
    * 装備リスト
    * i[slot number], ix (補強増設)
    */
-  items: Partial<{
-    i1: DeckbuilderEquipment;
-    i2: DeckbuilderEquipment;
-    i3: DeckbuilderEquipment;
-    i4: DeckbuilderEquipment;
-    i5: DeckbuilderEquipment;
-    ix: DeckbuilderEquipment;
-  }>;
+  items: DeckbuilderRigging;
 };
 
 type DeckbuilderFleet = Partial<{
@@ -41,21 +43,23 @@ type DeckbuilderFleet = Partial<{
   s7: DeckbuilderShip;
 }>;
 
+type DeckbuilderFleet_ = Partial<{
+  f1: DeckbuilderFleet;
+  f2: DeckbuilderFleet;
+  f3: DeckbuilderFleet;
+  f4: DeckbuilderFleet;
+}>;
+
 export type DeckbuilderFleetFormat = {
   /**
    * フォーマットバージョン
    * 現在 4
    */
   version: 4;
-} & Partial<{
+
   /**
    * 提督レベル
    * 反映はされない
    */
-  hqlv: NumberOrString;
-
-  f1: DeckbuilderFleet;
-  f2: DeckbuilderFleet;
-  f3: DeckbuilderFleet;
-  f4: DeckbuilderFleet;
-}>;
+  hqlv?: NumberOrString;
+} & DeckbuilderFleet_;
