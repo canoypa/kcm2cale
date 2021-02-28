@@ -4,7 +4,7 @@ import { LocalDatabase } from "../../core/persistence/local-database";
 
 interface InitializeCallbackInterface {
   /** ロードする艦隊 Id */
-  fleetId: string | undefined;
+  fleetId?: string;
 }
 export const useInitializeCallback = () => {
   const { replace } = useHistory();
