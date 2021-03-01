@@ -22,12 +22,15 @@ class FleetStateObserver {
     if (!isFleetStateModified(snapshot)) return;
 
     // 保存関数を更新
-    this.saveFn = () => {
+    this.saveFn = async () => {
       this.saveFn = null;
-      saveToLocal(snapshot);
+      await saveToLocal(snapshot);
+
+      this.disablePreventBeforeSaveUnload();
     };
 
     // 保存をスケジューリング
+    this.enablePreventBeforeSaveUnload();
     this.resetTimer();
   };
 
@@ -47,6 +50,24 @@ class FleetStateObserver {
         timeout ?? this.SAVE_TIMEOUT
       );
     }
+  };
+
+  /** 保存前のページ離脱を防止 */
+  private preventBeforeSaveUnload = (event: BeforeUnloadEvent) => {
+    // 離脱防止
+    event.preventDefault();
+    event.returnValue = "";
+
+    // タイムアウトを待たずに保存
+    this.justSaveNow();
+  };
+
+  private enablePreventBeforeSaveUnload = () => {
+    window.addEventListener("beforeunload", this.preventBeforeSaveUnload);
+  };
+
+  private disablePreventBeforeSaveUnload = () => {
+    window.removeEventListener("beforeunload", this.preventBeforeSaveUnload);
   };
 }
 
