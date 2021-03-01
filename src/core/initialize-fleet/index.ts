@@ -12,7 +12,7 @@ import {
   FleetTypeState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { createFleetStates } from "../persistence/create-local-fleet-data";
+import { decodeFleetStates } from "../persistence/local-fleet-data";
 import { LocalFleetData_v1 } from "../persistence/types";
 
 interface InitializeFleetArgs {
@@ -36,7 +36,7 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
 
   if (fleetData === null) return initSnapshot;
 
-  const fleetStates = createFleetStates(fleetData);
+  const fleetStates = decodeFleetStates(fleetData);
 
   const fleet: FleetState = [];
   const ships = new Map();

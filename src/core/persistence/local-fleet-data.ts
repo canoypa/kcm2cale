@@ -7,7 +7,7 @@ import { FleetStates } from "./create-fleet-states";
 import { LocalFleetData_v1 } from "./types";
 
 /** 諸々から保存用データを作成 */
-export const createLocalFleetData = (
+export const encodeLocalFleetData = (
   fleetStates: FleetStates
 ): LocalFleetData_v1 => {
   const {
@@ -41,7 +41,7 @@ export const createLocalFleetData = (
   };
 };
 
-export const createFleetStates = (
+export const decodeFleetStates = (
   localFleetData: LocalFleetData_v1
 ): FleetStates => {
   const fleetId = localFleetData.id;

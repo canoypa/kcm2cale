@@ -1,8 +1,8 @@
 import { Snapshot } from "recoil";
 import { FleetDateState } from "../../store/organize/info";
 import { createFleetStates } from "./create-fleet-states";
-import { createLocalFleetData } from "./create-local-fleet-data";
 import { LocalDatabase } from "./local-database";
+import { encodeLocalFleetData } from "./local-fleet-data";
 
 export const saveToLocal = async (_snapshot: Snapshot) => {
   // Fixme
@@ -16,6 +16,6 @@ export const saveToLocal = async (_snapshot: Snapshot) => {
 
   await LocalDatabase.setFleet(
     fleetStates.fleetId,
-    createLocalFleetData(fleetStates)
+    encodeLocalFleetData(fleetStates)
   );
 };
