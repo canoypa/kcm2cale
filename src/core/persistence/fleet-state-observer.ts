@@ -4,17 +4,10 @@ import {
   useRecoilCallback,
   useRecoilTransactionObserver_UNSTABLE,
 } from "recoil";
-import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
-import {
-  FleetDateState,
-  FleetDescriptionState,
-  FleetIdState,
-  FleetNameState,
-  FleetTypeState,
-} from "../../store/organize/info";
-import { FleetState, ShipsState } from "../../store/organize/ships";
+import { FleetDateState } from "../../store/organize/info";
 import { createFleetStates } from "./create-fleet-states";
 import { createLocalFleetData } from "./create-local-fleet-data";
+import { isFleetStateModified } from "./is-fleet-state-modified";
 import { LocalDatabase } from "./local-database";
 
 /** 編成の変更を検知し保存 */
@@ -30,7 +23,7 @@ class FleetStateObserver {
     createFleetStates(snapshot);
 
     // 対象が更新されて無ければ return
-    if (!this.isFleetStateModified(snapshot)) return;
+    if (!isFleetStateModified(snapshot)) return;
 
     // Update updatedAt
     const updatedAt = new Date();
@@ -45,32 +38,6 @@ class FleetStateObserver {
   public justSaveNow = ({ snapshot }: CallbackInterface) => () => {
     window.clearTimeout(this.saveTimeoutId);
     this.saveToLocal(snapshot);
-  };
-
-  private isFleetStateModified = (snapshot: Snapshot) => {
-    // 更新検知対象 State
-    const fleetStateAtoms = [
-      FleetIdState.key,
-      FleetNameState.key,
-      FleetDescriptionState.key,
-      FleetTypeState.key,
-      FleetState.key,
-      ShipsState.key,
-      RiggingState.key,
-      EquipmentsState.key,
-    ];
-
-    // 全ての更新された State
-    const modifiedStates = [
-      ...snapshot.getNodes_UNSTABLE({ isModified: true }),
-    ];
-
-    // 対象が更新されているか
-    const isFleetStateModified = modifiedStates.some(({ key }) =>
-      fleetStateAtoms.some((targetKey) => key === targetKey)
-    );
-
-    return isFleetStateModified;
   };
 
   /** ローカル保存 */
