@@ -3,8 +3,6 @@ import {
   useRecoilCallback,
   useRecoilTransactionObserver_UNSTABLE,
 } from "recoil";
-import { FleetDateState } from "../../store/organize/info";
-import { createFleetStates } from "./create-fleet-states";
 import { isFleetStateModified } from "./is-fleet-state-modified";
 import { saveToLocal } from "./save-to-local";
 
@@ -17,15 +15,9 @@ class FleetStateObserver {
   private saveTimeoutId: number = 0;
 
   /** atom の変更を受け取り */
-  public observer = ({ snapshot, set }: CallbackInterface) => () => {
-    createFleetStates(snapshot);
-
+  public observer = ({ snapshot }: CallbackInterface) => () => {
     // 対象が更新されて無ければ return
     if (!isFleetStateModified(snapshot)) return;
-
-    // Update updatedAt
-    const updatedAt = new Date();
-    set(FleetDateState, ({ createdAt }) => ({ createdAt, updatedAt }));
 
     // 保存をスケジューリング
     const saveFn = () => saveToLocal(snapshot);
