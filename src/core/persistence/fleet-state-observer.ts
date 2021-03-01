@@ -32,7 +32,7 @@ class FleetStateObserver {
   };
 
   /** 今すぐに保存 */
-  public justSaveNow = () => () => {
+  public justSaveNow = () => {
     window.clearTimeout(this.saveTimeoutId);
     this.saveFn?.();
   };
@@ -51,9 +51,10 @@ const fleetStateObserver = new FleetStateObserver();
 
 export const useLocalPersistence = () => {
   const observer = useRecoilCallback(fleetStateObserver.observer);
-  const justSaveNow = useRecoilCallback(fleetStateObserver.justSaveNow);
 
   useRecoilTransactionObserver_UNSTABLE(observer);
 
-  return { justSaveNow };
+  return {
+    justSaveNow: fleetStateObserver.justSaveNow,
+  };
 };
