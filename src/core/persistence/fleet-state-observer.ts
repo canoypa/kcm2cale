@@ -33,16 +33,19 @@ class FleetStateObserver {
 
   /** 今すぐに保存 */
   public justSaveNow = () => {
-    window.clearTimeout(this.saveTimeoutId);
-    this.saveFn?.();
+    // タイムアウトを 0s に設定
+    this.resetTimer(0);
   };
 
   /** 保存までのタイムアウトをリセット */
-  private resetTimer = () => {
+  private resetTimer = (timeout?: number) => {
     window.clearTimeout(this.saveTimeoutId);
 
     if (this.saveFn) {
-      this.saveTimeoutId = window.setTimeout(this.saveFn, this.SAVE_TIMEOUT);
+      this.saveTimeoutId = window.setTimeout(
+        this.saveFn,
+        timeout ?? this.SAVE_TIMEOUT
+      );
     }
   };
 }
