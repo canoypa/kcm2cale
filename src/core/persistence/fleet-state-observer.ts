@@ -13,6 +13,7 @@ import {
   FleetTypeState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
+import { createFleetStates } from "./create-fleet-states";
 import { createLocalFleetData } from "./create-local-fleet-data";
 import { LocalDatabase } from "./local-database";
 
@@ -26,6 +27,8 @@ class FleetStateObserver {
 
   /** atom の変更を受け取り */
   public observer = ({ snapshot, set }: CallbackInterface) => () => {
+    createFleetStates(snapshot);
+
     // 対象が更新されて無ければ return
     if (!this.isFleetStateModified(snapshot)) return;
 
@@ -72,37 +75,11 @@ class FleetStateObserver {
 
   /** ローカル保存 */
   private saveToLocal = async (snapshot: Snapshot) => {
-    const fleetStates = await Promise.all([
-      snapshot.getPromise(FleetIdState),
-      snapshot.getPromise(FleetDateState),
-      snapshot.getPromise(FleetNameState),
-      snapshot.getPromise(FleetDescriptionState),
-      snapshot.getPromise(FleetTypeState),
-      snapshot.getPromise(ShipsState),
-      snapshot.getPromise(EquipmentsState),
-    ]);
-
-    const [
-      fleetId,
-      fleetDate,
-      fleetName,
-      fleetDescription,
-      fleetType,
-      ships,
-      equipments,
-    ] = fleetStates;
+    const fleetStates = await createFleetStates(snapshot);
 
     await LocalDatabase.setFleet(
-      fleetId,
-      createLocalFleetData({
-        fleetId,
-        fleetDate,
-        fleetName,
-        fleetDescription,
-        fleetType,
-        ships,
-        equipments,
-      })
+      fleetStates.fleetId,
+      createLocalFleetData(fleetStates)
     );
   };
 
