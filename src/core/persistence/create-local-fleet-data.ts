@@ -2,25 +2,10 @@ import { nanoid } from "nanoid";
 import { EquipmentsData } from "../../data/equipment";
 import { ShipsData } from "../../data/ship";
 import { EquipmentsState } from "../../store/organize/equipments";
-import {
-  FleetDateState,
-  FleetDescriptionState,
-  FleetIdState,
-  FleetNameState,
-  FleetTypeState,
-} from "../../store/organize/info";
 import { ShipsState } from "../../store/organize/ships";
+import { FleetStates } from "./create-fleet-states";
 import { LocalFleetData_v1 } from "./types";
 
-type FleetStates = {
-  fleetId: FleetIdState;
-  fleetDate: FleetDateState;
-  fleetName: FleetNameState;
-  fleetDescription: FleetDescriptionState;
-  fleetType: FleetTypeState;
-  ships: ShipsState;
-  equipments: EquipmentsState;
-};
 /** 諸々から保存用データを作成 */
 export const createLocalFleetData = (
   fleetStates: FleetStates
