@@ -1,14 +1,12 @@
 import {
   CallbackInterface,
-  Snapshot,
   useRecoilCallback,
   useRecoilTransactionObserver_UNSTABLE,
 } from "recoil";
 import { FleetDateState } from "../../store/organize/info";
 import { createFleetStates } from "./create-fleet-states";
-import { createLocalFleetData } from "./create-local-fleet-data";
 import { isFleetStateModified } from "./is-fleet-state-modified";
-import { LocalDatabase } from "./local-database";
+import { saveToLocal } from "./save-to-local";
 
 /** 編成の変更を検知し保存 */
 class FleetStateObserver {
@@ -30,24 +28,14 @@ class FleetStateObserver {
     set(FleetDateState, ({ createdAt }) => ({ createdAt, updatedAt }));
 
     // 保存をスケジューリング
-    const saveToLocal = () => this.saveToLocal(snapshot);
-    this.resetTimer(saveToLocal);
+    const saveFn = () => saveToLocal(snapshot);
+    this.resetTimer(saveFn);
   };
 
   /** 今すぐに保存 */
   public justSaveNow = ({ snapshot }: CallbackInterface) => () => {
     window.clearTimeout(this.saveTimeoutId);
-    this.saveToLocal(snapshot);
-  };
-
-  /** ローカル保存 */
-  private saveToLocal = async (snapshot: Snapshot) => {
-    const fleetStates = await createFleetStates(snapshot);
-
-    await LocalDatabase.setFleet(
-      fleetStates.fleetId,
-      createLocalFleetData(fleetStates)
-    );
+    saveToLocal(snapshot);
   };
 
   /** 保存までのタイムアウトをリセット */
