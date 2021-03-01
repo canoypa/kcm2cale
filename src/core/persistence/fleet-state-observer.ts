@@ -14,26 +14,36 @@ class FleetStateObserver {
   /** TimeoutId */
   private saveTimeoutId: number = 0;
 
+  private saveFn: (() => void) | null = null;
+
   /** atom の変更を受け取り */
   public observer = ({ snapshot }: CallbackInterface) => () => {
     // 対象が更新されて無ければ return
     if (!isFleetStateModified(snapshot)) return;
 
+    // 保存関数を更新
+    this.saveFn = () => {
+      this.saveFn = null;
+      saveToLocal(snapshot);
+    };
+
     // 保存をスケジューリング
-    const saveFn = () => saveToLocal(snapshot);
-    this.resetTimer(saveFn);
+    this.resetTimer();
   };
 
   /** 今すぐに保存 */
-  public justSaveNow = ({ snapshot }: CallbackInterface) => () => {
+  public justSaveNow = () => () => {
     window.clearTimeout(this.saveTimeoutId);
-    saveToLocal(snapshot);
+    this.saveFn?.();
   };
 
   /** 保存までのタイムアウトをリセット */
-  private resetTimer = (fn: () => void) => {
+  private resetTimer = () => {
     window.clearTimeout(this.saveTimeoutId);
-    this.saveTimeoutId = window.setTimeout(fn, this.SAVE_TIMEOUT);
+
+    if (this.saveFn) {
+      this.saveTimeoutId = window.setTimeout(this.saveFn, this.SAVE_TIMEOUT);
+    }
   };
 }
 
