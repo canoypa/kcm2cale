@@ -44,8 +44,8 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
       setTempDescription(e.target.value);
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLSelectElement>) => {
-      if (!isFleetType(e.target.value)) throw new Error("Error: 無効な値");
-      setTempType(e.target.value);
+      const value = e.target.value;
+      setTempType(isFleetType(value) ? value : "Normal");
     },
 
     onSubmit: () => {
