@@ -2016,4 +2016,14 @@ export const EquipmentsData: EquipmentData[] = [
     type: EquipmentType.MediumCaliberMainGun,
     name: "15.2cm連装砲改二",
   },
+  {
+    no: 408,
+    type: EquipmentType.LandingCraft,
+    name: "装甲艇(AB艇)",
+  },
+  {
+    no: 409,
+    type: EquipmentType.LandingCraft,
+    name: "武装大発",
+  },
 ];
