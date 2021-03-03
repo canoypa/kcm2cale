@@ -167,6 +167,7 @@ export const useSelectStyles = () => {
         boxSizing: "border-box",
         outline: "none",
         fontFamily: "Noto Sans",
+        color: "rgba(0, 0, 0, 0.87)",
       }),
 
       options: css({
