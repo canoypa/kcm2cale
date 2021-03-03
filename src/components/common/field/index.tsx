@@ -1,5 +1,5 @@
+import { cx } from "@emotion/css";
 import { cloneElement, FC, ReactElement, useState } from "react";
-import { classNames } from "../../../util/class-names";
 import { useStyles } from "./styles";
 
 type Props = {
@@ -32,15 +32,13 @@ export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
         {cloneElement(children, { value })}
         <label className={styles.label}>{label}</label>
         <div className={styles.outlineContainer}>
-          <div
-            className={classNames(styles.outline, styles.outlineStart)}
-          ></div>
+          <div className={cx(styles.outline, styles.outlineStart)}></div>
           {label && (
-            <div className={classNames(styles.outline, styles.outlineCenter)}>
+            <div className={cx(styles.outline, styles.outlineCenter)}>
               <div className={styles.labelSizing}>{label}</div>
             </div>
           )}
-          <div className={classNames(styles.outline, styles.outlineEnd)}></div>
+          <div className={cx(styles.outline, styles.outlineEnd)}></div>
         </div>
       </div>
     </div>
