@@ -1,6 +1,6 @@
 import { cloneElement, FC, ReactElement, useState } from "react";
 import { classNames } from "../../../util/class-names";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type Props = {
   label?: string;
@@ -11,19 +11,19 @@ type Props = {
 export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
   const [isFocusin, setIsFocusin] = useState(false);
 
+  const styles = useStyles({
+    isFullWidth: Boolean(fullWidth),
+    isFocusing: isFocusin,
+    hasValue: Boolean(value),
+  });
+
   const handlers = {
     focusin: () => setIsFocusin(true),
     focusout: () => setIsFocusin(false),
   };
 
-  const wrapperClassNames = classNames(styles.wrapper, {
-    [styles.focusing]: isFocusin,
-    [styles.hasValue]: Boolean(value),
-    [styles.fullWidth]: Boolean(fullWidth),
-  });
-
   return (
-    <div className={wrapperClassNames}>
+    <div className={styles.wrapper}>
       <div
         className={styles.container}
         onFocus={handlers.focusin}
