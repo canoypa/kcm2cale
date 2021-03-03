@@ -6,9 +6,15 @@ type Props = {
   isFullWidth: boolean;
   isFocusing: boolean;
   hasValue: boolean;
+  isError: boolean;
 };
 
-export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
+export const useStyles = ({
+  isFullWidth,
+  isFocusing,
+  hasValue,
+  isError,
+}: Props) => {
   return useMemo(
     () => ({
       wrapper: css(
@@ -39,7 +45,8 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
           lineHeight: "56px",
           fontFamily: "Noto Sans",
           color: "rgba(0, 0, 0, 60%)",
-          transition: "transform 100ms cubic-bezier(0.4, 0, 0.2, 1)",
+          transition:
+            "transform 100ms cubic-bezier(0.4, 0, 0.2, 1), color 100ms cubic-bezier(0.4, 0, 0.2, 1)",
           transformOrigin: "left",
           pointerEvents: "none",
           userSelect: "none",
@@ -50,6 +57,10 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
 
         isFocusing && {
           color: "#5C6BC0",
+        },
+
+        isError && {
+          color: "#b00020",
         }
       ),
 
@@ -73,6 +84,9 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
         isFocusing && {
           borderWidth: 2,
           borderColor: "#5C6BC0",
+        },
+        isError && {
+          borderColor: "#b00020",
         }
       ),
       outlineStart: css({
@@ -103,11 +117,17 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
         visibility: "hidden",
       }),
 
-      helperArea: css(TypographyBody2, {
-        display: "flex",
-        padding: "0 16px",
-        lineHeight: "1.5em",
-      }),
+      helperArea: css(
+        TypographyBody2,
+        {
+          display: "flex",
+          padding: "0 16px",
+          lineHeight: "1.5em",
+        },
+        isError && {
+          color: "#b00020",
+        }
+      ),
 
       helperText: css({
         flexGrow: 1,
@@ -118,7 +138,7 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
         textAlign: "end",
       }),
     }),
-    [hasValue, isFocusing, isFullWidth]
+    [hasValue, isError, isFocusing, isFullWidth]
   );
 };
 
