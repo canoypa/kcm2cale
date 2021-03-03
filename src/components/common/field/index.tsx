@@ -6,15 +6,27 @@ type Props = {
   label?: string;
   value?: string;
   fullWidth?: boolean;
+  helper?: string;
+  counter?: string;
+  error?: boolean;
   children: ReactElement;
 };
-export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
+export const Field: FC<Props> = ({
+  label,
+  value,
+  fullWidth,
+  children,
+  helper,
+  counter,
+  error,
+}) => {
   const [isFocusin, setIsFocusin] = useState(false);
 
   const styles = useStyles({
     isFullWidth: Boolean(fullWidth),
     isFocusing: isFocusin,
     hasValue: Boolean(value),
+    isError: Boolean(error),
   });
 
   const handlers = {
@@ -41,6 +53,12 @@ export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
           <div className={cx(styles.outline, styles.outlineEnd)}></div>
         </div>
       </div>
+      {(helper || counter) && (
+        <div className={styles.helperArea}>
+          {helper && <div className={styles.helperText}>{helper}</div>}
+          {counter && <div className={styles.counter}>{counter}</div>}
+        </div>
+      )}
     </div>
   );
 };
