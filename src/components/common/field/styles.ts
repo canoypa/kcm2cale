@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import { useMemo } from "react";
-import { TypographyBody1 } from "../typography";
+import { TypographyBody1, TypographyBody2 } from "../typography";
 
 type Props = {
   isFullWidth: boolean;
@@ -14,6 +14,7 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
       wrapper: css(
         {
           display: "inline-flex",
+          flexDirection: "column",
           padding: 8,
           minWidth: 280,
           boxSizing: "border-box",
@@ -100,6 +101,21 @@ export const useStyles = ({ isFullWidth, isFocusing, hasValue }: Props) => {
         fontSize: 16 * 0.75,
         padding: 4,
         visibility: "hidden",
+      }),
+
+      helperArea: css(TypographyBody2, {
+        display: "flex",
+        padding: "0 16px",
+        lineHeight: "1.5em",
+      }),
+
+      helperText: css({
+        flexGrow: 1,
+      }),
+
+      counter: css({
+        flexGrow: 1,
+        textAlign: "end",
       }),
     }),
     [hasValue, isFocusing, isFullWidth]
