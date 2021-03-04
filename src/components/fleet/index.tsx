@@ -50,9 +50,12 @@ export const FleetPage: FC = () => {
   const fleetTitle = useRecoilValue(FleetNameState);
 
   useEffect(() => {
-    setPageTitle(`${fleetTitle || "無題の編成"}`);
     pageViewLog("Fleet View");
   }, []);
+
+  useEffect(() => {
+    setPageTitle(`${fleetTitle || "無題の編成"}`);
+  }, [fleetTitle]);
 
   return isExistFleet ? <Fleet /> : <LoadFleet />;
 };
