@@ -14,10 +14,10 @@ const TitleCharCount = 256;
 const DescriptionCharCount = 512;
 
 type Props = {
-  editing: boolean;
-  endEdit: () => void;
+  open: boolean;
+  onEnd: () => void;
 };
-export const Editing: FC<Props> = ({ editing, endEdit }) => {
+export const Editing: FC<Props> = ({ open, onEnd }) => {
   const {
     title,
     description,
@@ -49,12 +49,12 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
 
     onSubmit: () => {
       submit();
-      endEdit();
+      onEnd();
     },
   };
 
   return (
-    <Dialog open={editing} onClose={endEdit}>
+    <Dialog open={open} onClose={onEnd}>
       <DialogContent>
         <Field
           fullWidth
@@ -88,7 +88,7 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
         </Field>
       </DialogContent>
       <DialogActions>
-        <Button label="キャンセル" onClick={endEdit} />
+        <Button label="キャンセル" onClick={onEnd} />
         <Button
           type="outline"
           label="保存する"
