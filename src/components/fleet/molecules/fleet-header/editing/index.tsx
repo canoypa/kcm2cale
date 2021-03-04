@@ -51,9 +51,6 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
       submit();
       endEdit();
     },
-    onCancel: () => {
-      endEdit();
-    },
   };
 
   return (
@@ -91,7 +88,7 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
         </Field>
       </DialogContent>
       <DialogActions>
-        <Button label="キャンセル" onClick={handler.onCancel} />
+        <Button label="キャンセル" onClick={endEdit} />
         <Button
           type="outline"
           label="保存する"
