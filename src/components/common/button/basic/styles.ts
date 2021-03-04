@@ -8,23 +8,25 @@ const primaryColor = "#5c6bc0";
 
 type Props = {
   type: ButtonType;
+  isDisabled: boolean;
 };
-export const useStyles = ({ type }: Props) => ({
-  container: css({
-    // reset
-    padding: 0,
-    border: "none",
-    backgroundColor: "transparent",
-    outline: "none",
+export const useStyles = ({ type, isDisabled }: Props) => ({
+  container: css([
+    {
+      // reset
+      padding: 0,
+      border: "none",
+      backgroundColor: "transparent",
+      outline: "none",
 
-    height: "48px",
-
-    "&:disabled": {
+      height: "48px",
+    },
+    isDisabled && {
       pointerEvents: "none",
     },
-  }),
+  ]),
 
-  root: css(
+  root: css([
     TypographyButton,
     {
       display: "inline-flex",
@@ -39,49 +41,58 @@ export const useStyles = ({ type }: Props) => ({
       letterSpacing: "0.075rem",
       overflow: "hidden",
 
-      "&:disabled": {
-        color: "rgba(0, 0, 0, 0.37)",
-      },
-
-      "&:not(:disabled):hover": {
+      ":hover": {
         cursor: "pointer",
       },
     },
 
-    type === "text" && {
-      padding: "0 8px",
-      color: primaryColor,
-      fill: primaryColor,
-    },
+    (type === "text" || type === "outline") && [
+      {
+        color: primaryColor,
+        fill: primaryColor,
+      },
+      isDisabled && {
+        color: "rgba(0, 0, 0, 0.37)",
+        fill: "rgba(0, 0, 0, 0.37)",
+      },
+    ],
 
-    type === "outline" && {
-      padding: "0 15px",
-      color: primaryColor,
-      fill: primaryColor,
-      border: `1px solid ${primaryColor}`,
+    type === "text" && [
+      {
+        padding: "0 8px",
+      },
+    ],
 
-      "&:disabled": {
+    type === "outline" && [
+      {
+        padding: "0 15px",
+        border: `1px solid ${primaryColor}`,
+      },
+      isDisabled && {
         borderColor: "rgba(0, 0, 0, 0.12)",
       },
-    },
+    ],
 
-    type === "contained" && {
-      ...Shadow2dp,
+    type === "contained" && [
+      {
+        ...Shadow2dp,
 
-      padding: "0 16px",
-      backgroundColor: primaryColor,
-      color: "white",
-      fill: "white",
-      transition: "box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1)",
+        padding: "0 16px",
+        backgroundColor: primaryColor,
+        color: "white",
+        fill: "white",
+        transition: "box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1)",
 
-      "&:disabled": {
+        "&:hover": Shadow4dp,
+      },
+      isDisabled && {
         boxShadow: "none",
+        color: "rgba(0, 0, 0, 0.37)",
+        fill: "rgba(0, 0, 0, 0.37)",
         backgroundColor: "rgba(0, 0, 0, 0.12)",
       },
-
-      "&:hover": Shadow4dp,
-    }
-  ),
+    ],
+  ]),
 
   icon: css({
     marginLeft: -4,

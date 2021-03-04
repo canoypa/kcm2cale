@@ -10,6 +10,9 @@ type LabelPropType = RequireOne<{
 export type Props = {
   type?: "text" | "outline" | "contained";
   icon?: ReactElement;
+
+  disabled?: boolean;
+
   onClick?: () => void;
 } & LabelPropType;
 export const Button: FC<Props> = ({
@@ -17,14 +20,25 @@ export const Button: FC<Props> = ({
   icon,
   children,
   label,
+  disabled,
   onClick,
 }) => {
   const styles = useStyles({
     type,
+    isDisabled: Boolean(disabled),
   });
 
+  const handlerOnClick = () => {
+    if (disabled) return;
+    onClick?.();
+  };
+
   return (
-    <button className={styles.container} onClick={onClick}>
+    <button
+      className={styles.container}
+      onClick={handlerOnClick}
+      disabled={disabled}
+    >
       <div className={styles.root}>
         {icon && (
           <i className={styles.icon} aria-hidden="true">
