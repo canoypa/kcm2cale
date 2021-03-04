@@ -38,8 +38,12 @@ export const useStyles = ({ type, isDisabled }: Props) => ({
       boxSizing: "border-box",
       borderRadius: "4px",
       verticalAlign: "middle",
-      letterSpacing: "0.075rem",
       overflow: "hidden",
+
+      transitionProperty:
+        "box-shadow, border-color, background-color, color, fill",
+      transitionDuration: "0.1s",
+      transitionTimingFunction: "cubic-bezier(0.4, 0.0, 0.2, 1)",
 
       ":hover": {
         cursor: "pointer",
@@ -57,11 +61,9 @@ export const useStyles = ({ type, isDisabled }: Props) => ({
       },
     ],
 
-    type === "text" && [
-      {
-        padding: "0 8px",
-      },
-    ],
+    type === "text" && {
+      padding: "0 8px",
+    },
 
     type === "outline" && [
       {
@@ -74,22 +76,20 @@ export const useStyles = ({ type, isDisabled }: Props) => ({
     ],
 
     type === "contained" && [
+      Shadow2dp,
       {
-        ...Shadow2dp,
-
         padding: "0 16px",
         backgroundColor: primaryColor,
         color: "white",
         fill: "white",
-        transition: "box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1)",
 
         "&:hover": Shadow4dp,
       },
       isDisabled && {
         boxShadow: "none",
+        backgroundColor: "rgba(0, 0, 0, 0.12)",
         color: "rgba(0, 0, 0, 0.37)",
         fill: "rgba(0, 0, 0, 0.37)",
-        backgroundColor: "rgba(0, 0, 0, 0.12)",
       },
     ],
   ]),
