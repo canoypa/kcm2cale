@@ -1,7 +1,6 @@
 import { FC, ReactElement } from "react";
-import { classNames } from "../../../../util/class-names";
 import { RequireOne } from "../../../../util/types";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type LabelPropType = RequireOne<{
   label: string;
@@ -20,16 +19,13 @@ export const Button: FC<Props> = ({
   label,
   onClick,
 }) => {
-  const classnames = classNames(
-    styles.root,
-    { [styles.text]: type === "text" },
-    { [styles.outline]: type === "outline" },
-    { [styles.contained]: type === "contained" }
-  );
+  const styles = useStyles({
+    type,
+  });
 
   return (
     <button className={styles.container} onClick={onClick}>
-      <div className={classnames}>
+      <div className={styles.root}>
         {icon && (
           <i className={styles.icon} aria-hidden="true">
             {icon}
