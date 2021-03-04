@@ -1,12 +1,6 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { ChangeEvent, FC } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetType,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../store/organize/info";
 import { Button } from "../../../../common/button";
 import {
   Dialog,
@@ -14,44 +8,37 @@ import {
   DialogContent,
 } from "../../../../common/dialog";
 import { Field, Select, Textarea, TextInput } from "../../../../common/field";
+import { useEditFleetInfo } from "./hooks";
 
 type Props = {
   editing: boolean;
   endEdit: () => void;
 };
 export const Editing: FC<Props> = ({ editing, endEdit }) => {
-  const [title, setTitle] = useRecoilState(FleetNameState);
-  const [description, setDescription] = useRecoilState(FleetDescriptionState);
-  const [type, setType] = useRecoilState(FleetTypeState);
-
-  const [tempTitle, setTempTitle] = useState<FleetNameState>(title);
-  const [tempDescription, setTempDescription] = useState<FleetDescriptionState>(
-    description
-  );
-  const [tempType, setTempType] = useState<FleetTypeState>(type);
-
-  useEffect(() => {
-    setTempTitle(title);
-    setTempDescription(description);
-    setTempType(type);
-  }, [description, editing, title, type]);
+  const {
+    title,
+    description,
+    type,
+    setTitle,
+    setDescription,
+    setType,
+    submit,
+  } = useEditFleetInfo();
 
   const handler = {
     onFleetTitleChange: (e: ChangeEvent<HTMLInputElement>) => {
-      setTempTitle(e.target.value);
+      setTitle(e.target.value);
     },
     onFleetDescriptionChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setTempDescription(e.target.value);
+      setDescription(e.target.value);
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLSelectElement>) => {
       const value = e.target.value;
-      setTempType(isFleetType(value) ? value : "Normal");
+      setType(isFleetType(value) ? value : "Normal");
     },
 
     onSubmit: () => {
-      setTitle(tempTitle);
-      setDescription(tempDescription);
-      setType(tempType);
+      submit();
       endEdit();
     },
     onCancel: () => {
@@ -62,13 +49,13 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
   return (
     <Dialog open={editing} onClose={endEdit}>
       <DialogContent>
-        <Field fullWidth label="題名" value={tempTitle}>
+        <Field fullWidth label="題名" value={title}>
           <TextInput onChange={handler.onFleetTitleChange} />
         </Field>
-        <Field fullWidth label="說明" value={tempDescription}>
+        <Field fullWidth label="說明" value={description}>
           <Textarea onChange={handler.onFleetDescriptionChange} />
         </Field>
-        <Field fullWidth label="艦隊編成" value={tempType}>
+        <Field fullWidth label="艦隊編成" value={type}>
           <Select
             options={[
               { label: "通常艦隊", value: FleetType.Normal },
