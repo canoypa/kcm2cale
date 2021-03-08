@@ -2,13 +2,6 @@ import { FC } from "react";
 import { root } from "./styles";
 import { MaterialIconNames } from "./types";
 
-export * from "./action";
-export * from "./content";
-export * from "./editor";
-export * from "./Image";
-export * from "./maps";
-export * from "./navigation";
-
 type Props = {
   icon: MaterialIconNames;
   size?: number;
