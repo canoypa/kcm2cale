@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const variable = require("./scripts/build/variable");
 
 const config = (env) => {
-  const isProd = env.mode === "prod";
+  const isProd = env.mode === "production";
 
   const envFilePath = isProd
     ? "./.env/firebase-config.env"
@@ -17,7 +17,7 @@ const config = (env) => {
   });
 
   return {
-    mode: isProd ? "production" : "development",
+    mode: env.mode,
 
     output: { filename: "[name].js", path: resolve("public") },
 

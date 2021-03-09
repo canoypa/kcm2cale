@@ -3,9 +3,9 @@
   "name": "kcm2cale",
   "version": "0.0.0",
   "scripts": {
-    "build:prod": "webpack --env mode=prod",
-    "build:dev": "webpack --env mode=dev",
-    "build:watch": "webpack -w --env mode=dev",
+    "build:prod": "webpack --env mode=production",
+    "build:dev": "webpack --env mode=development",
+    "build:watch": "webpack -w --env mode=development",
     "serve": "firebase serve",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
