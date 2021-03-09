@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 
-const { version: appVersion } = require("./package.json");
 const variable = require("./scripts/build/variable");
 
 const config = (env) => {
@@ -43,7 +42,7 @@ const config = (env) => {
     plugins: [
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(variable.appName),
-        __APP_VERSION__: JSON.stringify(appVersion),
+        __APP_VERSION__: JSON.stringify(variable.appVersion),
 
         __FIREBASE_CONFIG__: process.env.FIREBASE_CONFIG,
       }),
