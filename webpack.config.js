@@ -1,6 +1,7 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 
@@ -51,6 +52,12 @@ const config = (env) => {
         inject: false,
       }),
       new CleanWebpackPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: "json",
+        reportFilename: resolve("report/bundle-analyzer.json"),
+        generateStatsFile: true,
+        statsFilename: resolve("report/webpack-stats.json"),
+      }),
     ],
   };
 };
