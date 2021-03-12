@@ -10,12 +10,14 @@ const variable = require("./scripts/build/variable");
 const config = (env) => {
   const isProd = env.mode === "production";
 
-  const envFilePath = isProd
-    ? "./.env/firebase-config.env"
-    : "./.env/firebase-config-dev.env";
-  dotenv.config({
-    path: resolve(envFilePath),
-  });
+  if (!env.IS_GITHUB_ACTIONS) {
+    const envFilePath = isProd
+      ? "./.env/firebase-config.env"
+      : "./.env/firebase-config-dev.env";
+    dotenv.config({
+      path: resolve(envFilePath),
+    });
+  }
 
   return {
     mode: env.mode,
