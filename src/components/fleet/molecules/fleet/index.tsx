@@ -13,7 +13,7 @@ import { ToggleFleet } from "./toggle-fleet";
 import { CurrentShip, useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
-  const fleetState = useFleet();
+  const { fleet: fleetState, sort } = useFleet();
   const [selectState, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
