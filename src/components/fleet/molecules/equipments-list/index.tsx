@@ -23,12 +23,13 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
     swapEquipment(slotNo, preEquipmentId);
   };
 
-  const items = shipEquipments.map((riggingPlace) => {
-    const equipment = equipments.get(riggingPlace);
+  const items = shipEquipments.map(({ equipmentId }) => {
+    const equipment = equipments.find((v) => v.equipmentId === equipmentId)
+      ?.equipment;
     if (!equipment) throw new Error("Error: 装備が見つからない");
 
     return {
-      value: riggingPlace.equipmentId,
+      value: equipmentId,
       label: <span className={styles.chipLabel}>{equipment.name}</span>,
     };
   });
