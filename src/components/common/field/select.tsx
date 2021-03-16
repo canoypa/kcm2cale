@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, useEffect, useRef, useState } from "react";
 import { IconDropDown } from "../icons";
-import * as styles from "./styles";
+import { useSelectStyles } from "./styles";
 
 type Option = { label: string; value: string };
 type OptionsOrOptGroup = Array<Option | { label: string; options: Option[] }>;
@@ -25,6 +25,8 @@ export const Select: FC<Props> = ({ value, options, onChange }) => {
   const ref = useRef<HTMLSelectElement>(null);
 
   const [label, setLabel] = useState<string>("");
+
+  const styles = useSelectStyles();
 
   useEffect(() => {
     if (ref.current) {

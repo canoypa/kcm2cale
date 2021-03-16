@@ -10,11 +10,11 @@ import { LineClamp } from "../../../../common/clamp";
 import * as styles from "./styles";
 
 const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
-  ["Normal", "通常艦隊"],
-  ["Carrier", "空母機動部隊"],
-  ["Surface", "水上打撃部隊"],
-  ["Transport", "輸送護衛部隊"],
-  ["StrikingForce", "遊撃部隊"],
+  [FleetType.Normal, "通常艦隊"],
+  [FleetType.Carrier, "空母機動部隊"],
+  [FleetType.Surface, "水上打撃部隊"],
+  [FleetType.Transport, "輸送護衛部隊"],
+  [FleetType.StrikingForce, "遊撃部隊"],
 ]);
 
 export const Info: FC = () => {

@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ShipData } from "../../../../../modules/ship";
 import {
   EquipmentsState,
@@ -16,12 +16,15 @@ export const useRemoveEquipments = () => {
   const setRigging = useSetRecoilState(RiggingState);
   const setEquipment = useSetRecoilState(EquipmentsState);
 
+  const rigging = useRecoilValue(RiggingState);
+
   return (shipId: string) => {
     setRigging((state) => state.filter((v) => v.shipId !== shipId));
-    setEquipment(
-      (state) =>
-        new Map([...state.entries()].filter(([v]) => v.shipId !== shipId))
-    );
+    rigging.forEach(({ equipmentId }) => {
+      setEquipment((state) =>
+        state.filter((v) => v.equipmentId !== equipmentId)
+      );
+    });
   };
 };
 

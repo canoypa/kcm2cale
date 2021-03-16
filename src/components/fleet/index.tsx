@@ -2,46 +2,30 @@ import { FC, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useInitFleet } from "../../core/initialize-fleet";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
-import { LocalDatabase } from "../../core/persistence/local-database";
 import { FleetIdState, FleetNameState } from "../../store/organize/info";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
+import { useInitializeCallback } from "./hooks";
 import { Organize } from "./organisms/organize";
 
-export const Fleet: FC = () => {
-  usePageViewLog("Fleet View");
-
-  const { replace, push } = useHistory();
-  const setPageTitle = useSetPageTitle();
-  const { justSaveNow } = useLocalPersistence();
-  const initFleet = useInitFleet();
+const LoadFleet: FC = () => {
+  const initFleet = useInitializeCallback();
 
   const { fleetId } = useParams<{ fleetId: string }>();
-  const fleetTitle = useRecoilValue(FleetNameState);
-  const fleetIdState = useRecoilValue(FleetIdState);
-
-  setPageTitle(`${fleetTitle || "無題の編成"}`);
+  const isExistFleet = useRecoilValue(FleetIdState);
 
   useEffect(() => {
-    const loadFleet = async () => {
-      const localFleetData = await LocalDatabase.getFleet(fleetId);
-
-      if (localFleetData) {
-        // 保存済みの編成がある場合初期化
-        initFleet(localFleetData);
-      } else {
-        // 編成が存在しない場合リダイレクト
-        replace("/");
-      }
-    };
-
     // 直アクセスの場合編成初期化
-    if (!fleetIdState) {
-      loadFleet();
-    }
+    if (!isExistFleet) initFleet({ fleetId });
   }, []);
+
+  return null;
+};
+
+const Fleet: FC = () => {
+  const { push } = useHistory();
+  const { justSaveNow } = useLocalPersistence();
 
   const backToTopPage = () => {
     justSaveNow();
@@ -58,4 +42,22 @@ export const Fleet: FC = () => {
   );
 };
 
-export default Fleet;
+export const FleetPage: FC = () => {
+  const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
+
+  const isExistFleet = useRecoilValue(FleetIdState);
+  const fleetTitle = useRecoilValue(FleetNameState);
+
+  useEffect(() => {
+    pageViewLog("Fleet View");
+  }, []);
+
+  useEffect(() => {
+    setPageTitle(`${fleetTitle || "無題の編成"}`);
+  }, [fleetTitle]);
+
+  return isExistFleet ? <Fleet /> : <LoadFleet />;
+};
+
+export default FleetPage;
