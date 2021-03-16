@@ -7,12 +7,13 @@ export const useSetShip = () => {
   const setFleet = useSetRecoilState(FleetState);
   const setShip = useSetRecoilState(ShipsState);
 
-  return (fleetNo: number, turnNo: number, newShip: ShipData) => {
+  return (fleetNo: number, turnNo: number, ship: ShipData) => {
     const shipId = nanoid(8);
     const newFleet = { fleetNo, turnNo, shipId };
+    const newShip = { shipId, ship };
 
     setFleet((state) => [...state, newFleet]);
-    setShip((state) => new Map(state.set(newFleet, newShip)));
+    setShip((state) => [...state, newShip]);
   };
 };
 
@@ -22,9 +23,6 @@ export const useRemoveShip = () => {
 
   return (shipId: string) => {
     setFleet((state) => state.filter((v) => v.shipId !== shipId));
-    setShip(
-      (state) =>
-        new Map([...state.entries()].filter(([v]) => v.shipId !== shipId))
-    );
+    setShip((state) => state.filter((v) => v.shipId !== shipId));
   };
 };

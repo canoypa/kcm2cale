@@ -78,7 +78,9 @@ class FleetStateObserver {
       snapshot.getPromise(FleetNameState),
       snapshot.getPromise(FleetDescriptionState),
       snapshot.getPromise(FleetTypeState),
+      snapshot.getPromise(FleetState),
       snapshot.getPromise(ShipsState),
+      snapshot.getPromise(RiggingState),
       snapshot.getPromise(EquipmentsState),
     ]);
 
@@ -88,7 +90,9 @@ class FleetStateObserver {
       fleetName,
       fleetDescription,
       fleetType,
+      fleet,
       ships,
+      rigging,
       equipments,
     ] = fleetStates;
 
@@ -100,7 +104,9 @@ class FleetStateObserver {
         fleetName,
         fleetDescription,
         fleetType,
+        fleet,
         ships,
+        rigging,
         equipments,
       })
     );
