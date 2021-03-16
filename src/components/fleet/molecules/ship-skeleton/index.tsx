@@ -13,7 +13,8 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
   const swapShipHandler = () => swapShip(fleetPlace);
 
   return (
-    <div className={styles.root} onClick={swapShipHandler}>
+    // role=button: ドラッグを防止
+    <div className={styles.root} onClick={swapShipHandler} role="button">
       <div className={styles.icon}>
         <IconAdd size={24} />
       </div>

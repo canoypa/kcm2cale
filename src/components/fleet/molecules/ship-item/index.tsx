@@ -10,7 +10,8 @@ type Props = {
 };
 export const ShipItem: FC<Props> = memo(({ fleetPlace }) => (
   <div className={styles.root}>
-    <div className={styles.dragIndicator}>
+    {/* data-movable-handle: ドラッグハンドルの指定 */}
+    <div className={styles.dragIndicator} data-movable-handle>
       <IconDragIndicator />
     </div>
     <div className={styles.content}>

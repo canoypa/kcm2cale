@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { List } from "react-movable";
 import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
@@ -31,17 +32,26 @@ export const Fleet: FC = () => {
           </div>
         )}
         <SwapShipContext.Provider value={swapShipContextValue}>
-          <div className={styles.shipsList}>
-            {fleetState.map((fleetPlace) => {
-              const key = fleetPlace.turnNo;
-
-              return isShipPlaced(fleetPlace) ? (
-                <ShipItem key={key} fleetPlace={fleetPlace} />
-              ) : (
-                <ShipSkeleton key={key} fleetPlace={fleetPlace} />
-              );
-            })}
-          </div>
+          <List
+            values={fleetState}
+            onChange={({ oldIndex, newIndex }) => {
+              sort(oldIndex, newIndex);
+            }}
+            renderList={({ children, props }) => (
+              <div className={styles.shipsList} {...props}>
+                {children}
+              </div>
+            )}
+            renderItem={({ value: fleetPlace, props }) => (
+              <div {...props}>
+                {isShipPlaced(fleetPlace) ? (
+                  <ShipItem fleetPlace={fleetPlace} />
+                ) : (
+                  <ShipSkeleton fleetPlace={fleetPlace} />
+                )}
+              </div>
+            )}
+          />
         </SwapShipContext.Provider>
       </div>
 
