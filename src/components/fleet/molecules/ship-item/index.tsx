@@ -1,18 +1,22 @@
 import { FC, memo } from "react";
 import { FleetStateValue } from "../../../../store/organize/ships";
+import { IconDragIndicator } from "../../../common/icons";
 import { Rigging } from "../rigging";
 import { ShipContent } from "./ship-content";
 import * as styles from "./styles";
 
 type Props = {
   fleetPlace: FleetStateValue;
-  swapShip: () => void;
 };
-export const ShipItem: FC<Props> = memo(({ fleetPlace, swapShip }) => (
+export const ShipItem: FC<Props> = memo(({ fleetPlace }) => (
   <div className={styles.root}>
+    {/* data-movable-handle: ドラッグハンドルの指定 */}
+    <div className={styles.dragIndicator} data-movable-handle>
+      <IconDragIndicator />
+    </div>
     <div className={styles.content}>
       <div>
-        <ShipContent fleetPlace={fleetPlace} swapShip={swapShip} />
+        <ShipContent fleetPlace={fleetPlace} />
       </div>
       <div className={styles.secondary}>
         <Rigging fleetPlace={fleetPlace} />
