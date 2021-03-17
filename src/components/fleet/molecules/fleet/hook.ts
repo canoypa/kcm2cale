@@ -1,4 +1,5 @@
 import { selector, useRecoilState, useRecoilValue } from "recoil";
+import { sortFleet } from "../../../../core/sort-fleet";
 import {
   ActiveFleetNoState,
   FleetType,
@@ -15,25 +16,8 @@ const isStrikingForceSelector = selector({
 const useSortFleetShip = () => {
   const [fleetState, setFleetState] = useRecoilState(FleetState);
 
-  return (oldIndex: number, newIndex: number) => {
-    const newFleet = fleetState.map((v) => {
-      const target = fleetState.find(({ turnNo }) => turnNo === oldIndex);
-
-      const start = oldIndex < newIndex ? oldIndex + 1 : newIndex;
-      const end = oldIndex < newIndex ? newIndex : oldIndex - 1;
-      const move = oldIndex < newIndex ? -1 : 1;
-
-      if (target && v.turnNo === target.turnNo) {
-        return { ...v, turnNo: newIndex };
-      }
-
-      if (start <= v.turnNo && v.turnNo <= end) {
-        return { ...v, turnNo: v.turnNo + move };
-      }
-
-      return v;
-    });
-
+  return (fromTurnNo: number, toTurnNo: number) => {
+    const newFleet = sortFleet(fleetState, fromTurnNo, toTurnNo);
     setFleetState(newFleet);
   };
 };
