@@ -1,23 +1,30 @@
-import { FleetState } from "../../store/organize/ships";
+import { FleetState, FleetStateValue } from "../../store/organize/ships";
+
+export type PartialFleetPlace = Omit<FleetStateValue, "shipId">;
 
 export const sortFleet = (
   fleet: FleetState,
-  from: number,
-  to: number
+  from: PartialFleetPlace,
+  to: PartialFleetPlace
 ): FleetState => {
   return fleet.map((v) => {
-    const target = fleet.find(({ turnNo }) => turnNo === from);
+    const fromTurnNo = from.turnNo;
+    const toTurnNo = to.turnNo;
 
-    const start = from < to ? from + 1 : to;
-    const end = from < to ? to : from - 1;
-    const move = from < to ? -1 : 1;
+    const target = fleet.find(({ turnNo }) => turnNo === fromTurnNo);
 
-    if (target && v.turnNo === target.turnNo) {
-      return { ...v, turnNo: to };
-    }
+    const start = fromTurnNo < toTurnNo ? fromTurnNo + 1 : toTurnNo;
+    const end = fromTurnNo < toTurnNo ? toTurnNo : fromTurnNo - 1;
+    const move = fromTurnNo < toTurnNo ? -1 : 1;
 
-    if (start <= v.turnNo && v.turnNo <= end) {
-      return { ...v, turnNo: v.turnNo + move };
+    if (v.fleetNo === from.fleetNo) {
+      if (target && v.turnNo === target.turnNo) {
+        return { ...v, turnNo: toTurnNo };
+      }
+
+      if (start <= v.turnNo && v.turnNo <= end) {
+        return { ...v, turnNo: v.turnNo + move };
+      }
     }
 
     return v;

@@ -1,5 +1,5 @@
 import { selector, useRecoilState, useRecoilValue } from "recoil";
-import { sortFleet } from "../../../../core/sort-fleet";
+import { PartialFleetPlace, sortFleet } from "../../../../core/sort-fleet";
 import {
   ActiveFleetNoState,
   FleetType,
@@ -14,10 +14,20 @@ const isStrikingForceSelector = selector({
 });
 
 const useSortFleetShip = () => {
+  const activeFleetNo = useRecoilValue(ActiveFleetNoState);
   const [fleetState, setFleetState] = useRecoilState(FleetState);
 
   return (fromTurnNo: number, toTurnNo: number) => {
-    const newFleet = sortFleet(fleetState, fromTurnNo, toTurnNo);
+    const from: PartialFleetPlace = {
+      fleetNo: activeFleetNo,
+      turnNo: fromTurnNo,
+    };
+    const to: PartialFleetPlace = {
+      fleetNo: activeFleetNo,
+      turnNo: toTurnNo,
+    };
+
+    const newFleet = sortFleet(fleetState, from, to);
     setFleetState(newFleet);
   };
 };
