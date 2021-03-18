@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { FleetStateValue } from "../../../../store/organize/ships";
-import { IconDragIndicator } from "../../../common/icons";
+import { MaterialIcon } from "../../../common/icons";
 import { Rigging } from "../rigging";
 import { ShipContent } from "./ship-content";
 import * as styles from "./styles";
@@ -12,7 +12,7 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => (
   <div className={styles.root}>
     {/* data-movable-handle: ドラッグハンドルの指定 */}
     <div className={styles.dragIndicator} data-movable-handle>
-      <IconDragIndicator />
+      <MaterialIcon icon="drag_indicator" />
     </div>
     <div className={styles.content}>
       <div>

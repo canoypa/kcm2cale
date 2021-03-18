@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IconButton } from "../../../../common/button";
-import { IconCreate } from "../../../../common/icons";
+import { MaterialIcon } from "../../../../common/icons";
 import { container } from "./styles";
 
 type Props = {
@@ -11,7 +11,7 @@ export const Actions: FC<Props> = ({ startEdit }) => {
 
   return (
     <div className={container}>
-      <IconButton icon={<IconCreate />} onClick={editFleetInfo} />
+      <IconButton icon={<MaterialIcon icon="edit" />} onClick={editFleetInfo} />
     </div>
   );
 };

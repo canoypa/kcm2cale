@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { IconAdd } from "../../../common/icons";
+import { MaterialIcon } from "../../../common/icons";
 import { SwapShipContext } from "../fleet/contexts";
 import { CurrentShip } from "../fleet/use-select-ship";
 import * as styles from "./styles";
@@ -16,7 +16,7 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
     // role=button: ドラッグを防止
     <div className={styles.root} onClick={swapShipHandler} role="button">
       <div className={styles.icon}>
-        <IconAdd size={24} />
+        <MaterialIcon icon="add" size={24} />
       </div>
     </div>
   );
