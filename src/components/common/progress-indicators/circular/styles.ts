@@ -2,27 +2,23 @@ import { css, keyframes } from "@emotion/css";
 
 const rotate = keyframes({
   to: {
-    transform: "rotate(360deg)",
-  },
-});
-
-const rota = keyframes({
-  to: {
-    transform: "rotate(18deg)",
+    transform: "rotate(378deg)",
   },
 });
 
 const fillUnFill = keyframes({
   from: {
-    strokeDashoffset: 39.6,
+    strokeDasharray: "2.83 53.69",
   },
 
   "50%": {
+    strokeDasharray: "42.39 14.13",
     strokeDashoffset: 0,
   },
 
   to: {
-    strokeDashoffset: -39.6,
+    strokeDasharray: "2.83 53.69",
+    strokeDashoffset: -39.69,
   },
 });
 
@@ -32,26 +28,35 @@ const rot = keyframes({
   },
 });
 
-export const useStyles = () => ({
-  svg: css({
-    transformOrigin: "center",
-    animation: `${rotate} 1.25s infinite linear`,
-  }),
+type Props = {
+  determinate: boolean;
+};
+export const useStyles = ({ determinate }: Props) => ({
+  g: css([
+    {
+      transformOrigin: "center",
+    },
+    determinate && {
+      animation: `${rotate} 1.25s infinite linear`,
+    },
+  ]),
 
-  g: css({
-    transformOrigin: "center",
-    animation: `${rota} 1.25s infinite linear`,
-  }),
+  path: css([
+    {
+      fill: "none",
+      stroke: "#5c6bc0",
+      strokeWidth: 2,
 
-  path: css({
-    fill: "none",
-    stroke: "#5c6bc0",
-    strokeWidth: 2,
+      strokeDasharray: "56.52 0",
+      strokeDashoffset: 0,
 
-    strokeDasharray: 42.4,
-    strokeDashoffset: 39.6,
-
-    transformOrigin: "center",
-    animation: `${fillUnFill} 1.25s infinite cubic-bezier(0.4, 0, 0.2, 1), ${rot} 5s infinite steps(4)`,
-  }),
+      transformOrigin: "center",
+    },
+    !determinate && {
+      animation: `${fillUnFill} 1.25s infinite cubic-bezier(0.4, 0, 0.2, 1), ${rot} 5s infinite steps(4)`,
+    },
+    // determinate && {
+    //   strokeDasharray: "_VALUE_ 56.52",
+    // },
+  ]),
 });
