@@ -3,8 +3,8 @@ import { FleetStateValue, ShipsState } from "../../../../store/organize/ships";
 
 const shipSelector = selectorFamily({
   key: "ShipSelector",
-  get: (fleetPlace: FleetStateValue) => ({ get }) =>
-    get(ShipsState).get(fleetPlace),
+  get: ({ shipId }: FleetStateValue) => ({ get }) =>
+    get(ShipsState).find((v) => v.shipId === shipId)?.ship,
 });
 
 export const useShip = (fleetPlace: FleetStateValue) => {
