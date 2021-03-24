@@ -1,5 +1,7 @@
+export type ThemeType = "light" | "dark";
+
 export type Theme = {
-  label: "light" | "dark";
+  label: ThemeType;
 
   palette: {
     primary: {
