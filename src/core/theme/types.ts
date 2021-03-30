@@ -10,9 +10,9 @@ export type Theme = {
       dark: string;
     };
     onPrimary: {
-      HighEmphasis: string;
-      MediumEmphasis: string;
-      Disable: string;
+      highEmphasis: string;
+      mediumEmphasis: string;
+      disable: string;
     };
 
     surface: string;

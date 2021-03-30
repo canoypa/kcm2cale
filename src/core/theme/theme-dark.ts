@@ -10,9 +10,9 @@ export const ThemeDark: Theme = {
       dark: "#3949AB",
     },
     onPrimary: {
-      HighEmphasis: "#ffffff",
-      MediumEmphasis: "rgba(255,255,255,0.74)",
-      Disable: "rgba(255,255,255,0.38)",
+      highEmphasis: "#ffffff",
+      mediumEmphasis: "rgba(255,255,255,0.74)",
+      disable: "rgba(255,255,255,0.38)",
     },
 
     surface: "#121212",
