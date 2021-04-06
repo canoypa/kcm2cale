@@ -37,6 +37,9 @@ export const SignIn: FC = () => {
   useEffect(() => {
     setPageTitle("サインイン");
     pageViewLog("Sign In");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

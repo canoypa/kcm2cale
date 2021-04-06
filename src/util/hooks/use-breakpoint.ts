@@ -14,7 +14,7 @@ export const useBreakpoint = (type: string, value: string | number) => {
   useEffect(() => {
     isMatchMedia.addEventListener("change", changeHandler);
     return () => void isMatchMedia.removeEventListener("change", changeHandler);
-  }, []);
+  }, [isMatchMedia]);
 
   return GTWidth;
 };
