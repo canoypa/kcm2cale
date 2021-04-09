@@ -1,5 +1,5 @@
 import { FC, MouseEvent, useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
@@ -19,8 +19,6 @@ import * as styles from "./styles";
 type Props = { fleetData: LocalFleetData_v1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
-
-  const { push } = useHistory();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -51,13 +49,9 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     }
   };
 
-  // Fixme: ctrl+ でのアクションなども抑止される
-  const openFleet = (event: MouseEvent) => {
-    event.preventDefault();
-
+  const openFleet = () => {
     // 編成初期化
     initFleet(fleetData);
-    push(`/fleet/${fleetData.id}`);
   };
 
   return (
