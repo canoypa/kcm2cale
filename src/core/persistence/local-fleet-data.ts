@@ -1,11 +1,28 @@
 import { nanoid } from "nanoid";
 import { EquipmentsData } from "../../data/equipment";
 import { ShipsData } from "../../data/ship";
-import { EquipmentsState } from "../../store/organize/equipments";
-import { ShipsState } from "../../store/organize/ships";
-import { FleetStates } from "./create-fleet-states";
+import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
+import {
+  FleetDateState,
+  FleetDescriptionState,
+  FleetIdState,
+  FleetNameState,
+  FleetTypeState,
+} from "../../store/organize/info";
+import { FleetState, ShipsState } from "../../store/organize/ships";
 import { LocalFleetData_v1 } from "./types";
 
+type FleetStates = {
+  fleetId: FleetIdState;
+  fleetDate: FleetDateState;
+  fleetName: FleetNameState;
+  fleetDescription: FleetDescriptionState;
+  fleetType: FleetTypeState;
+  fleet: FleetState;
+  ships: ShipsState;
+  rigging: RiggingState;
+  equipments: EquipmentsState;
+};
 /** 諸々から保存用データを作成 */
 export const encodeLocalFleetData = (
   fleetStates: FleetStates
@@ -16,7 +33,9 @@ export const encodeLocalFleetData = (
     fleetName,
     fleetDescription,
     fleetType,
+    fleet,
     ships,
+    rigging,
     equipments,
   } = fleetStates;
 
@@ -28,16 +47,20 @@ export const encodeLocalFleetData = (
     type: fleetType,
     createdAt: fleetDate.createdAt,
     updatedAt: fleetDate.updatedAt,
-    ships: [...ships.entries()].map(
-      ([{ fleetNo, turnNo, shipId }, { no: shipNo }]) => ({
-        fleetNo: fleetNo,
-        turnNo: turnNo,
-        no: shipNo,
-        equipments: [...equipments.entries()]
-          .filter(([{ shipId: rgShipId }]) => rgShipId === shipId)
-          .map(([{ slotNo }, { no: eqNo }]) => ({ slotNo, no: eqNo })),
-      })
-    ),
+    ships: fleet.map(({ fleetNo, turnNo, shipId }) => {
+      const ship = ships.find((v) => v.shipId === shipId);
+      const shipRigging = rigging.filter((v) => v.shipId === shipId);
+      const shipEquipments = shipRigging?.map((v) => {
+        const eq = equipments.find((e) => v.equipmentId === e.equipmentId);
+        if (!eq) throw new Error("Error");
+        return { slotNo: v.slotNo, no: eq.equipment.no };
+      });
+
+      if (!ship) throw new Error("Error");
+      const shipNo = ship.ship.no;
+
+      return { fleetNo, turnNo, no: shipNo, equipments: shipEquipments };
+    }),
   };
 };
 
@@ -53,34 +76,33 @@ export const decodeFleetStates = (
   const fleetDescription = localFleetData.description;
   const fleetType = localFleetData.type;
 
-  const ships: ShipsState = new Map();
-  const equipments: EquipmentsState = new Map();
+  const fleet: FleetState = [];
+  const ships: ShipsState = [];
+  const rigging: RiggingState = [];
+  const equipments: EquipmentsState = [];
 
   localFleetData.ships.forEach((v) => {
     const shipId = nanoid(8);
 
-    const fleetPlace = {
-      fleetNo: v.fleetNo,
-      turnNo: v.turnNo,
-      shipId: shipId,
-    };
     const shipData = ShipsData.find((s) => s.no === v.no);
 
     if (!shipData) throw new Error("Error: ");
-    ships.set(fleetPlace, shipData);
+    fleet.push({ fleetNo: v.fleetNo, turnNo: v.turnNo, shipId: shipId });
+    ships.push({ shipId, ship: shipData });
 
     v.equipments.forEach((e) => {
       const equipmentId = nanoid(8);
 
-      const rigging = {
-        shipId: shipId,
-        slotNo: e.slotNo,
-        equipmentId: equipmentId,
-      };
       const eqData = EquipmentsData.find((eq) => eq.no === e.no);
 
       if (!eqData) throw new Error("Error: ");
-      equipments.set(rigging, eqData);
+
+      rigging.push({
+        shipId: shipId,
+        slotNo: e.slotNo,
+        equipmentId: equipmentId,
+      });
+      equipments.push({ equipmentId, equipment: eqData });
     });
   });
 
@@ -90,7 +112,9 @@ export const decodeFleetStates = (
     fleetName,
     fleetDescription,
     fleetType,
+    fleet,
     ships,
+    rigging,
     equipments,
   };
 };

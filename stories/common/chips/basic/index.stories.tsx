@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import { Chip, ChipProps } from "../../../../src/components/common/chip";
-import { IconAdd } from "../../../../src/components/common/icons";
+import { MaterialIcon } from "../../../../src/components/common/icons";
 
 export default {
   title: "Common/Chips",
@@ -10,7 +10,7 @@ export default {
 export const Basic: Story<ChipProps> = (props) => (
   <>
     <Chip label={props.label} />
-    <Chip label={props.label} icon={<IconAdd />} />
+    <Chip label={props.label} icon={<MaterialIcon icon="add" />} />
   </>
 );
 Basic.args = {
