@@ -1,5 +1,5 @@
 import { Snapshot } from "recoil";
-import { EquipmentsState } from "../../store/organize/equipments";
+import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
   FleetDateState,
   FleetDescriptionState,
@@ -7,7 +7,7 @@ import {
   FleetNameState,
   FleetTypeState,
 } from "../../store/organize/info";
-import { ShipsState } from "../../store/organize/ships";
+import { FleetState, ShipsState } from "../../store/organize/ships";
 
 export type FleetStates = {
   fleetId: FleetIdState;
@@ -15,7 +15,9 @@ export type FleetStates = {
   fleetName: FleetNameState;
   fleetDescription: FleetDescriptionState;
   fleetType: FleetTypeState;
+  fleet: FleetState;
   ships: ShipsState;
+  rigging: RiggingState;
   equipments: EquipmentsState;
 };
 
@@ -28,7 +30,9 @@ export const createFleetStates = async (
     snapshot.getPromise(FleetNameState),
     snapshot.getPromise(FleetDescriptionState),
     snapshot.getPromise(FleetTypeState),
+    snapshot.getPromise(FleetState),
     snapshot.getPromise(ShipsState),
+    snapshot.getPromise(RiggingState),
     snapshot.getPromise(EquipmentsState),
   ]);
 
@@ -38,7 +42,9 @@ export const createFleetStates = async (
     fleetName,
     fleetDescription,
     fleetType,
+    fleet,
     ships,
+    rigging,
     equipments,
   ] = states;
 
@@ -48,7 +54,9 @@ export const createFleetStates = async (
     fleetName,
     fleetDescription,
     fleetType,
+    fleet,
     ships,
+    rigging,
     equipments,
   };
 };

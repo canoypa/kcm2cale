@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import { Meta, Story } from "@storybook/react";
 import { Button, Props } from "../../../../src/components/common/button";
-import { IconAdd } from "../../../../src/components/common/icons";
+import { MaterialIcon } from "../../../../src/components/common/icons";
 
 export default {
   title: "Common/Button/Basic",
@@ -17,7 +17,7 @@ const buttonListStyle = css({
 export const Basic: Story<Props> = (props) => (
   <div className={buttonListStyle}>
     <Button {...props} />
-    <Button icon={<IconAdd />} {...props} />
+    <Button icon={<MaterialIcon icon="add" />} {...props} />
   </div>
 );
 Basic.args = {
@@ -32,9 +32,17 @@ export const All: Story<Props> = () => (
       <Button type="contained" label="Button" />
     </div>
     <div className={buttonListStyle}>
-      <Button type="text" icon={<IconAdd />} label="Button" />
-      <Button type="outline" icon={<IconAdd />} label="Button" />
-      <Button type="contained" icon={<IconAdd />} label="Button" />
+      <Button type="text" icon={<MaterialIcon icon="add" />} label="Button" />
+      <Button
+        type="outline"
+        icon={<MaterialIcon icon="add" />}
+        label="Button"
+      />
+      <Button
+        type="contained"
+        icon={<MaterialIcon icon="add" />}
+        label="Button"
+      />
     </div>
   </>
 );

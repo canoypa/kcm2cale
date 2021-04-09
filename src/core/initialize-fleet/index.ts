@@ -39,18 +39,22 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   const fleetStates = decodeFleetStates(fleetData);
 
   const fleet: FleetState = [];
-  const ships = new Map();
+  const ships: ShipsState = [];
   const rigging: RiggingState = [];
-  const equipments = new Map();
+  const equipments: EquipmentsState = [];
 
-  fleetStates.ships.forEach((v, k) => {
-    fleet.push(k);
-    ships.set(k, v);
+  fleetStates.fleet.forEach((v) => {
+    fleet.push(v);
+  });
+  fleetStates.ships.forEach((v) => {
+    ships.push(v);
   });
 
-  fleetStates.equipments.forEach((v, k) => {
-    rigging.push(k);
-    equipments.set(k, v);
+  fleetStates.rigging.forEach((v) => {
+    rigging.push(v);
+  });
+  fleetStates.equipments.forEach((v) => {
+    equipments.push(v);
   });
 
   // Fixme

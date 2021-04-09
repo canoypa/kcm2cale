@@ -9,25 +9,23 @@ import { LowerAppBar } from "../common/lower-app-bar";
 import { useInitializeCallback } from "./hooks";
 import { Organize } from "./organisms/organize";
 
-export const Fleet: FC = () => {
-  const pageViewLog = usePageViewLog();
-  const setPageTitle = useSetPageTitle();
-
-  const { push } = useHistory();
-  const { justSaveNow } = useLocalPersistence();
+const LoadFleet: FC = () => {
   const initFleet = useInitializeCallback();
 
   const { fleetId } = useParams<{ fleetId: string }>();
-  const fleetTitle = useRecoilValue(FleetNameState);
-  const fleetIdState = useRecoilValue(FleetIdState);
+  const isExistFleet = useRecoilValue(FleetIdState);
 
   useEffect(() => {
-    setPageTitle(`${fleetTitle || "無題の編成"}`);
-    pageViewLog("Fleet View");
-
     // 直アクセスの場合編成初期化
-    if (!fleetIdState) initFleet({ fleetId });
+    if (!isExistFleet) initFleet({ fleetId });
   }, []);
+
+  return null;
+};
+
+const Fleet: FC = () => {
+  const { push } = useHistory();
+  const { justSaveNow } = useLocalPersistence();
 
   const backToTopPage = () => {
     justSaveNow();
@@ -44,4 +42,22 @@ export const Fleet: FC = () => {
   );
 };
 
-export default Fleet;
+export const FleetPage: FC = () => {
+  const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
+
+  const isExistFleet = useRecoilValue(FleetIdState);
+  const fleetTitle = useRecoilValue(FleetNameState);
+
+  useEffect(() => {
+    pageViewLog("Fleet View");
+  }, []);
+
+  useEffect(() => {
+    setPageTitle(`${fleetTitle || "無題の編成"}`);
+  }, [fleetTitle]);
+
+  return isExistFleet ? <Fleet /> : <LoadFleet />;
+};
+
+export default FleetPage;
