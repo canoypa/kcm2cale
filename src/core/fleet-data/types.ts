@@ -11,6 +11,11 @@ export interface FleetData {
   /** Fleet description */
   description: string;
 
+  /** Create Date */
+  createdAt: Date;
+  /** Update Date */
+  updatedAt: Date;
+
   /** Ships */
   ships: Array<{
     /** Fleet No */
