@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import {
   CallbackInterface,
   useGotoRecoilSnapshot,
@@ -23,7 +24,7 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
 }: InitializeFleetArgs) => {
   // Fixme
   // eslint-disable-next-line array-callback-return
-  const initSnapshot = snapshot.map(({ reset }) => {
+  const initSnapshot = snapshot.map(({ reset, set }) => {
     reset(FleetDateState);
     reset(FleetNameState);
     reset(FleetDescriptionState);
@@ -32,9 +33,16 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
     reset(ShipsState);
     reset(RiggingState);
     reset(EquipmentsState);
+
+    if (fleetData === null) {
+      const geneFleetId = nanoid(16);
+      set(FleetIdState, geneFleetId);
+    }
   });
 
-  if (fleetData === null) return initSnapshot;
+  if (fleetData === null) {
+    return initSnapshot;
+  }
 
   const fleetStates = decodeFleetStates(fleetData);
 

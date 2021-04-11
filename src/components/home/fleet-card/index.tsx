@@ -1,10 +1,8 @@
-import { FC, MouseEvent, useContext, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { FC, MouseEvent, useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
-import { FleetIdState } from "../../../store/organize/info";
 import {
   Card,
   CardHeader,
@@ -22,14 +20,8 @@ type Props = { fleetData: LocalFleetData_v1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
 
-  const { push } = useHistory();
-
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-
-  // Fleet state 更新確認用
-  const currentFleetId = useRecoilValue(FleetIdState);
-  const [isOpeningFleet, setIsOpeningFleet] = useState<boolean>(false);
 
   const initFleet = useInitFleet();
 
@@ -57,20 +49,10 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     }
   };
 
-  // Fixme: ctrl+ でのアクションなども抑止される
-  const openFleet = (event: MouseEvent) => {
-    event.preventDefault();
-
+  const openFleet = () => {
     // 編成初期化
     initFleet(fleetData);
-    setIsOpeningFleet(true);
   };
-
-  useEffect(() => {
-    if (isOpeningFleet && currentFleetId === fleetData.id) {
-      push(`/fleet/${fleetData.id}`);
-    }
-  }, [currentFleetId, isOpeningFleet]);
 
   return (
     <>
