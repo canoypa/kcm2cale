@@ -10,7 +10,9 @@ import {
   FleetTypeState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { LocalFleetData_v1 } from "./types";
+import { FleetData } from "../fleet-data/types";
+
+type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
 
 type FleetStates = {
   fleetId: FleetIdState;
@@ -26,10 +28,9 @@ type FleetStates = {
 /** 諸々から保存用データを作成 */
 export const encodeLocalFleetData = (
   fleetStates: FleetStates
-): LocalFleetData_v1 => {
+): FleetDataOmitDate => {
   const {
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,
@@ -40,13 +41,10 @@ export const encodeLocalFleetData = (
   } = fleetStates;
 
   return {
-    version: 1,
     id: fleetId,
     title: fleetName,
     description: fleetDescription,
     type: fleetType,
-    createdAt: fleetDate.createdAt,
-    updatedAt: fleetDate.updatedAt,
     ships: fleet.map(({ fleetNo, turnNo, shipId }) => {
       const ship = ships.find((v) => v.shipId === shipId);
       const shipRigging = rigging.filter((v) => v.shipId === shipId);
