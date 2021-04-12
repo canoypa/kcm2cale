@@ -10,6 +10,7 @@ import {
   FleetIdState,
   FleetNameState,
   FleetTypeState,
+  IsNewFleetState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
 import { decodeFleetStates } from "../persistence/local-fleet-data";
@@ -24,6 +25,7 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   // Fixme
   // eslint-disable-next-line array-callback-return
   const initSnapshot = snapshot.map(({ reset }) => {
+    reset(IsNewFleetState);
     reset(FleetDateState);
     reset(FleetNameState);
     reset(FleetDescriptionState);
@@ -60,6 +62,8 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   // Fixme
   // eslint-disable-next-line array-callback-return
   const loadedSnapshot = initSnapshot.map(({ set }) => {
+    set(IsNewFleetState, false);
+
     set(FleetIdState, fleetStates.fleetId);
     set(FleetDateState, fleetStates.fleetDate);
     set(FleetNameState, fleetStates.fleetName);
