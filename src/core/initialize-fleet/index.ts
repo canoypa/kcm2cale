@@ -13,11 +13,11 @@ import {
   IsNewFleetState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
+import { FleetData } from "../fleet-data/types";
 import { decodeFleetStates } from "../persistence/local-fleet-data";
-import { LocalFleetData_v1 } from "../persistence/types";
 
 interface InitializeFleetArgs {
-  fleetData: LocalFleetData_v1 | null;
+  fleetData: FleetData | null;
 }
 export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   fleetData,
@@ -84,7 +84,7 @@ export const useInitFleet = () => {
   const gotoSnapshot = useGotoRecoilSnapshot();
   const initFleetCallback = useRecoilCallback(initializeFleet);
 
-  const initFleet = (fleetData: LocalFleetData_v1 | null) => {
+  const initFleet = (fleetData: FleetData | null) => {
     const snapshot = initFleetCallback({ fleetData });
     gotoSnapshot(snapshot);
   };

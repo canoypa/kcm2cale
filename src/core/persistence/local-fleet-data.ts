@@ -64,9 +64,7 @@ export const encodeLocalFleetData = (
   };
 };
 
-export const decodeFleetStates = (
-  localFleetData: LocalFleetData_v1
-): FleetStates => {
+export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
   const fleetId = localFleetData.id;
   const fleetDate = {
     createdAt: localFleetData.createdAt,
