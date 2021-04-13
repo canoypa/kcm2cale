@@ -5,7 +5,7 @@ import { LocalDatabase } from "./local-database";
 import { encodeLocalFleetData } from "./local-fleet-data";
 
 export const saveToLocal = async (snapshot: Snapshot) => {
-  const isNewFleet = snapshot.getPromise(IsNewFleetState);
+  const isNewFleet = await snapshot.getPromise(IsNewFleetState);
 
   const fleetStates = await createFleetStates(snapshot);
 
