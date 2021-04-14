@@ -32,7 +32,7 @@ export const SignIn: FC = () => {
     if (userLoadable.state === "hasValue" && userLoadable.contents !== null) {
       replace(state?.continue ?? "/");
     }
-  });
+  }, [replace, state?.continue, userLoadable.contents, userLoadable.state]);
 
   useEffect(() => {
     setPageTitle("サインイン");

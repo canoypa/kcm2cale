@@ -22,6 +22,9 @@ export const NewFleet: FC = () => {
       // fleetId 更新による再レンダー時
       replace(`/fleet/${fleetId}`);
     }
+
+    // initFleet は不要
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fleetId]);
 
   return null;
