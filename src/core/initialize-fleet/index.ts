@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import {
   CallbackInterface,
   useGotoRecoilSnapshot,
@@ -10,20 +11,22 @@ import {
   FleetIdState,
   FleetNameState,
   FleetTypeState,
+  IsNewFleetState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { createFleetStates } from "../persistence/create-local-fleet-data";
-import { LocalFleetData_v1 } from "../persistence/types";
+import { FleetData } from "../fleet-data/types";
+import { decodeFleetStates } from "../persistence/local-fleet-data";
 
 interface InitializeFleetArgs {
-  fleetData: LocalFleetData_v1 | null;
+  fleetData: FleetData | null;
 }
 export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   fleetData,
 }: InitializeFleetArgs) => {
   // Fixme
   // eslint-disable-next-line array-callback-return
-  const initSnapshot = snapshot.map(({ reset }) => {
+  const initSnapshot = snapshot.map(({ reset, set }) => {
+    reset(IsNewFleetState);
     reset(FleetDateState);
     reset(FleetNameState);
     reset(FleetDescriptionState);
@@ -32,11 +35,18 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
     reset(ShipsState);
     reset(RiggingState);
     reset(EquipmentsState);
+
+    if (fleetData === null) {
+      const geneFleetId = nanoid(16);
+      set(FleetIdState, geneFleetId);
+    }
   });
 
-  if (fleetData === null) return initSnapshot;
+  if (fleetData === null) {
+    return initSnapshot;
+  }
 
-  const fleetStates = createFleetStates(fleetData);
+  const fleetStates = decodeFleetStates(fleetData);
 
   const fleet: FleetState = [];
   const ships: ShipsState = [];
@@ -60,6 +70,8 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   // Fixme
   // eslint-disable-next-line array-callback-return
   const loadedSnapshot = initSnapshot.map(({ set }) => {
+    set(IsNewFleetState, false);
+
     set(FleetIdState, fleetStates.fleetId);
     set(FleetDateState, fleetStates.fleetDate);
     set(FleetNameState, fleetStates.fleetName);
@@ -80,7 +92,7 @@ export const useInitFleet = () => {
   const gotoSnapshot = useGotoRecoilSnapshot();
   const initFleetCallback = useRecoilCallback(initializeFleet);
 
-  const initFleet = (fleetData: LocalFleetData_v1 | null) => {
+  const initFleet = (fleetData: FleetData | null) => {
     const snapshot = initFleetCallback({ fleetData });
     gotoSnapshot(snapshot);
   };

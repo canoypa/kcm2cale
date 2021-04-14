@@ -50,3 +50,9 @@ export const FleetDateState = atom<FleetDateState>({
     updatedAt: new Date(),
   },
 });
+
+export type IsNewFleetState = boolean;
+export const IsNewFleetState = atom<IsNewFleetState>({
+  key: "IsNewFleetState",
+  default: true,
+});
