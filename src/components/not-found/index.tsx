@@ -13,6 +13,9 @@ export const NotFound: FC = () => {
   useEffect(() => {
     setPageTitle("Page Not Found");
     pageViewLog("Not Found");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

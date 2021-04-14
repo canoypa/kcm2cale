@@ -83,7 +83,10 @@ export const ChoiceChips: FC<Props> = (props) => {
       if (props.multiple) props.onChangeValue(arrayValues);
       else props.onChangeValue(arrayValues[0]);
     }
-  }, [values]);
+
+    // 依存した値のみ
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values, props.onChangeValue, props.multiple]);
 
   const itemsPram = props.items.map((item) => {
     const value = item.value.toString();

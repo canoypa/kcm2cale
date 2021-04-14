@@ -13,6 +13,9 @@ export const Home: FC = () => {
   useEffect(() => {
     setPageTitle(__APP_NAME__, { noSuffix: true });
     pageViewLog("Home");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

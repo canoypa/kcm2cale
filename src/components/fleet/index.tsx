@@ -51,10 +51,16 @@ export const FleetPage: FC = () => {
 
   useEffect(() => {
     pageViewLog("Fleet View");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setPageTitle(`${fleetTitle || "無題の編成"}`);
+
+    // タイトル変更時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fleetTitle]);
 
   return isExistFleet ? <Fleet /> : <LoadFleet />;
