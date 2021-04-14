@@ -1,7 +1,7 @@
 import {
   CallbackInterface,
   useRecoilCallback,
-  useRecoilTransactionObserver_UNSTABLE,
+  useRecoilTransactionObserver_UNSTABLE
 } from "recoil";
 import { isFleetStateModified } from "./is-fleet-state-modified";
 import { saveToLocal } from "./save-to-local";
