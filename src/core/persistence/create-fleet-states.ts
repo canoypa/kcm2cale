@@ -1,7 +1,6 @@
 import { Snapshot } from "recoil";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
-  FleetDateState,
   FleetDescriptionState,
   FleetIdState,
   FleetNameState,
@@ -11,7 +10,6 @@ import { FleetState, ShipsState } from "../../store/organize/ships";
 
 export type FleetStates = {
   fleetId: FleetIdState;
-  fleetDate: FleetDateState;
   fleetName: FleetNameState;
   fleetDescription: FleetDescriptionState;
   fleetType: FleetTypeState;
@@ -26,7 +24,6 @@ export const createFleetStates = async (
 ): Promise<FleetStates> => {
   const states = await Promise.all([
     snapshot.getPromise(FleetIdState),
-    snapshot.getPromise(FleetDateState),
     snapshot.getPromise(FleetNameState),
     snapshot.getPromise(FleetDescriptionState),
     snapshot.getPromise(FleetTypeState),
@@ -38,7 +35,6 @@ export const createFleetStates = async (
 
   const [
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,
@@ -50,7 +46,6 @@ export const createFleetStates = async (
 
   return {
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,

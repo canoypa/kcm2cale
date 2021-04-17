@@ -39,18 +39,6 @@ export const FleetTypeState = atom<FleetTypeState>({
   default: FleetType.Normal,
 });
 
-export type FleetDateState = {
-  createdAt: Date;
-  updatedAt: Date;
-};
-export const FleetDateState = atom<FleetDateState>({
-  key: "FleetDateState",
-  default: {
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-});
-
 export type IsNewFleetState = boolean;
 export const IsNewFleetState = atom<IsNewFleetState>({
   key: "IsNewFleetState",
