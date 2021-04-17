@@ -6,7 +6,6 @@ import {
 } from "recoil";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
-  FleetDateState,
   FleetDescriptionState,
   FleetIdState,
   FleetNameState,
@@ -27,7 +26,6 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   // eslint-disable-next-line array-callback-return
   const initSnapshot = snapshot.map(({ reset, set }) => {
     reset(IsNewFleetState);
-    reset(FleetDateState);
     reset(FleetNameState);
     reset(FleetDescriptionState);
     reset(FleetTypeState);
@@ -73,7 +71,6 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
     set(IsNewFleetState, false);
 
     set(FleetIdState, fleetStates.fleetId);
-    set(FleetDateState, fleetStates.fleetDate);
     set(FleetNameState, fleetStates.fleetName);
     set(FleetDescriptionState, fleetStates.fleetDescription);
     set(FleetTypeState, fleetStates.fleetType);

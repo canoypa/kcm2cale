@@ -3,7 +3,6 @@ import { EquipmentsData } from "../../data/equipment";
 import { ShipsData } from "../../data/ship";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
-  FleetDateState,
   FleetDescriptionState,
   FleetIdState,
   FleetNameState,
@@ -16,7 +15,6 @@ type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
 
 type FleetStates = {
   fleetId: FleetIdState;
-  fleetDate: FleetDateState;
   fleetName: FleetNameState;
   fleetDescription: FleetDescriptionState;
   fleetType: FleetTypeState;
@@ -64,10 +62,6 @@ export const encodeLocalFleetData = (
 
 export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
   const fleetId = localFleetData.id;
-  const fleetDate = {
-    createdAt: localFleetData.createdAt,
-    updatedAt: localFleetData.updatedAt,
-  };
   const fleetName = localFleetData.title;
   const fleetDescription = localFleetData.description;
   const fleetType = localFleetData.type;
@@ -104,7 +98,6 @@ export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
 
   return {
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,
