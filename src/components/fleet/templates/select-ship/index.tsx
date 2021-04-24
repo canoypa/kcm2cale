@@ -2,7 +2,7 @@ import { FC, useCallback } from "react";
 import {
   shipGroupFilter,
   ShipSearchGroupMap,
-  ShipSearchGroupValues,
+  ShipSearchGroupValues
 } from "../../../../core/filters/ship";
 import { ShipSearch } from "../../../../core/search/ship";
 import { ShipData } from "../../../../modules/ship";
@@ -20,9 +20,9 @@ const isShipGroupValue = (n: number): n is ShipSearchGroupValues =>
 type Props = {
   open: boolean;
   onSelect: (shipData: ShipData) => void;
-  onEnd: () => void;
+  onClose: () => void;
 };
-export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
+export const SelectShip: FC<Props> = ({ open, onSelect, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
 
   const handler = {
@@ -59,7 +59,7 @@ export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
   return (
     <FloatingLayout>
       <div className={styles.root}>
-        <LowerAppBar title="艦娘を選択" onNavClick={onEnd} />
+        <LowerAppBar title="艦娘を選択" onNavClick={onClose} />
         <div className={classNames(styles.list, styles.searchAdjust)}>
           <SearchShipsList shipsList={shipsList} onSelect={handler.onSelect} />
         </div>

@@ -58,7 +58,7 @@ export const Fleet: FC = () => {
       <SelectShip
         open={isSelectOpen}
         onSelect={selecting.onSelect}
-        onEnd={selecting.end}
+        onClose={selecting.end}
       />
     </>
   );
