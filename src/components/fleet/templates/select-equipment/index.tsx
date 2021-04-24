@@ -2,7 +2,7 @@ import { FC, useCallback } from "react";
 import {
   equipmentGroupFilter,
   EquipmentGroupMap,
-  EquipmentGroupValues
+  EquipmentGroupValues,
 } from "../../../../core/filters/equipment";
 import { EquipmentSearch } from "../../../../core/search/equipment";
 import { EquipmentData } from "../../../../modules/equipment/types";
@@ -45,8 +45,6 @@ export const SelectEquipment: FC<Props> = ({ onSelect, onClose }) => {
       (equipmentData: EquipmentData) => onSelect(equipmentData),
       [onSelect]
     ),
-
-    onCancel: useCallback(() => onClose(), [onClose]),
   };
 
   const equipmentsList = EquipmentSearch.search(searchQuery);
