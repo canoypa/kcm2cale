@@ -48,8 +48,6 @@ export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
       },
       [onSelect]
     ),
-
-    onCancel: useCallback(() => onEnd(), [onEnd]),
   };
 
   const shipsList = ShipSearch.search(searchQuery);
@@ -61,7 +59,7 @@ export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
   return (
     <FloatingLayout>
       <div className={styles.root}>
-        <LowerAppBar title="艦娘を選択" onNavClick={handler.onCancel} />
+        <LowerAppBar title="艦娘を選択" onNavClick={onEnd} />
         <div className={classNames(styles.list, styles.searchAdjust)}>
           <SearchShipsList shipsList={shipsList} onSelect={handler.onSelect} />
         </div>
