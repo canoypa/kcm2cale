@@ -3211,4 +3211,14 @@ export const ShipsData: ShipData[] = [
     type: ShipType.Destroyer,
     name: "曙改二",
   },
+  {
+    no: "483a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二戊",
+  },
+  {
+    no: "488a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二",
+  },
 ];
