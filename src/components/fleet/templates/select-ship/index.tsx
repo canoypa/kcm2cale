@@ -45,9 +45,8 @@ export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
     onSelect: useCallback(
       (shipData: ShipData) => {
         onSelect(shipData);
-        onEnd();
       },
-      [onEnd, onSelect]
+      [onSelect]
     ),
 
     onCancel: useCallback(() => onEnd(), [onEnd]),
