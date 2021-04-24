@@ -15,7 +15,7 @@ import { CurrentShip, useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
   const { fleet: fleetState, sort } = useFleet();
-  const [selectState, selecting] = useSelectShip();
+  const [isSelectOpen, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
 
@@ -55,12 +55,11 @@ export const Fleet: FC = () => {
         </SwapShipContext.Provider>
       </div>
 
-      {selectState.isOpen && (
-        <SelectShip
-          currentShip={selectState.currentShip}
-          onEnd={selecting.end}
-        />
-      )}
+      <SelectShip
+        open={isSelectOpen}
+        onSelect={selecting.onSelect}
+        onEnd={selecting.end}
+      />
     </>
   );
 };

@@ -10,27 +10,20 @@ import { classNames } from "../../../../util/class-names";
 import { FloatingLayout } from "../../../common/layout/fixed-layout";
 import { LowerAppBar } from "../../../common/lower-app-bar";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
-import { useSearchQuery, useSelectShip } from "./hooks";
+import { useSearchQuery } from "./hooks";
 import { SearchShipsList } from "./search-ships-list";
 import * as styles from "./styles";
 
 const isShipGroupValue = (n: number): n is ShipSearchGroupValues =>
   n >= 0 && n <= 8;
 
-type CurrentShip = {
-  fleetNo: number;
-  turnNo: number;
-  shipId: string | null;
-};
-
 type Props = {
+  open: boolean;
+  onSelect: (shipData: ShipData) => void;
   onEnd: () => void;
-
-  currentShip: CurrentShip;
 };
-export const SelectShip: FC<Props> = ({ onEnd, currentShip }) => {
+export const SelectShip: FC<Props> = ({ open, onSelect, onEnd }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
-  const { onSelect } = useSelectShip(currentShip);
 
   const handler = {
     filterChange: useCallback(
@@ -61,6 +54,10 @@ export const SelectShip: FC<Props> = ({ onEnd, currentShip }) => {
   };
 
   const shipsList = ShipSearch.search(searchQuery);
+
+  if (!open) {
+    return null;
+  }
 
   return (
     <FloatingLayout>
