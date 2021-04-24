@@ -44,7 +44,7 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
       </div>
 
       {isOpenDialog && (
-        <SelectEquipment onSelect={selecting.end} onCancel={selecting.cancel} />
+        <SelectEquipment onSelect={selecting.end} onClose={selecting.cancel} />
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { FC, useCallback } from "react";
 import {
   equipmentGroupFilter,
   EquipmentGroupMap,
-  EquipmentGroupValues,
+  EquipmentGroupValues
 } from "../../../../core/filters/equipment";
 import { EquipmentSearch } from "../../../../core/search/equipment";
 import { EquipmentData } from "../../../../modules/equipment/types";
@@ -19,9 +19,9 @@ const isEquipmentGroupValue = (n: number): n is EquipmentGroupValues =>
 
 type Props = {
   onSelect: (equipmentData: EquipmentData) => void;
-  onCancel: () => void;
+  onClose: () => void;
 };
-export const SelectEquipment: FC<Props> = ({ onSelect, onCancel }) => {
+export const SelectEquipment: FC<Props> = ({ onSelect, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
 
   const handler = {
@@ -46,7 +46,7 @@ export const SelectEquipment: FC<Props> = ({ onSelect, onCancel }) => {
       [onSelect]
     ),
 
-    onCancel: useCallback(() => onCancel(), [onCancel]),
+    onCancel: useCallback(() => onClose(), [onClose]),
   };
 
   const equipmentsList = EquipmentSearch.search(searchQuery);
@@ -54,7 +54,7 @@ export const SelectEquipment: FC<Props> = ({ onSelect, onCancel }) => {
   return (
     <FloatingLayout>
       <div className={styles.root}>
-        <LowerAppBar title="装備を選択" onNavClick={onCancel} />
+        <LowerAppBar title="装備を選択" onNavClick={onClose} />
         <div className={classNames(styles.list, styles.searchAdjust)}>
           <SearchEquipmentsList
             equipmentsList={equipmentsList}
