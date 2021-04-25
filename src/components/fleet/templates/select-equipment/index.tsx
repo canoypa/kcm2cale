@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import {
   equipmentGroupFilter,
   EquipmentGroupMap,
@@ -25,22 +25,28 @@ export const SelectEquipment: FC<Props> = ({ onSelect, onCancel }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
 
   const handler = {
-    filterChange: (_filter: string | null) => {
-      if (_filter === null) {
-        setTypes(null);
-      } else {
-        const filter = parseInt(_filter, 10);
-        if (isEquipmentGroupValue(filter)) {
-          setTypes(EquipmentGroupMap[filter]);
+    filterChange: useCallback(
+      (_filter: string | null) => {
+        if (_filter === null) {
+          setTypes(null);
+        } else {
+          const filter = parseInt(_filter, 10);
+          if (isEquipmentGroupValue(filter)) {
+            setTypes(EquipmentGroupMap[filter]);
+          }
         }
-      }
-    },
+      },
+      [setTypes]
+    ),
 
-    onChangeQuery: (value: string) => setQuery(value),
+    onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
-    onSelect: (equipmentData: EquipmentData) => onSelect(equipmentData),
+    onSelect: useCallback(
+      (equipmentData: EquipmentData) => onSelect(equipmentData),
+      [onSelect]
+    ),
 
-    onCancel: () => onCancel(),
+    onCancel: useCallback(() => onCancel(), [onCancel]),
   };
 
   const equipmentsList = EquipmentSearch.search(searchQuery);

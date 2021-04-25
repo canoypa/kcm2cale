@@ -1,5 +1,5 @@
 import { FC, FormEventHandler, useRef } from "react";
-import { IconSearch } from "../../../../common/icons";
+import { MaterialIcon } from "../../../../common/icons";
 import * as styles from "./styles";
 
 // Todo: 汎用化
@@ -22,7 +22,7 @@ export const SearchBox: FC<Props> = ({ onSubmit }) => {
     <form onSubmit={handlerSubmit}>
       <div className={styles.container}>
         <IconLayout>
-          <IconSearch width={20} height={20} />
+          <MaterialIcon icon="search" size={20} />
         </IconLayout>
         <input ref={inputRef} type="text" className={styles.input} />
       </div>

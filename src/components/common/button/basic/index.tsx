@@ -1,7 +1,6 @@
 import { FC, ReactElement } from "react";
-import { classNames } from "../../../../util/class-names";
 import { RequireOne } from "../../../../util/types";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type LabelPropType = RequireOne<{
   label: string;
@@ -11,6 +10,9 @@ type LabelPropType = RequireOne<{
 export type Props = {
   type?: "text" | "outline" | "contained";
   icon?: ReactElement;
+
+  disabled?: boolean;
+
   onClick?: () => void;
 } & LabelPropType;
 export const Button: FC<Props> = ({
@@ -18,18 +20,26 @@ export const Button: FC<Props> = ({
   icon,
   children,
   label,
+  disabled,
   onClick,
 }) => {
-  const classnames = classNames(
-    styles.root,
-    { [styles.text]: type === "text" },
-    { [styles.outline]: type === "outline" },
-    { [styles.contained]: type === "contained" }
-  );
+  const styles = useStyles({
+    type,
+    isDisabled: Boolean(disabled),
+  });
+
+  const handlerOnClick = () => {
+    if (disabled) return;
+    onClick?.();
+  };
 
   return (
-    <button className={styles.container} onClick={onClick}>
-      <div className={classnames}>
+    <button
+      className={styles.container}
+      onClick={handlerOnClick}
+      disabled={disabled}
+    >
+      <div className={styles.root}>
         {icon && (
           <i className={styles.icon} aria-hidden="true">
             {icon}

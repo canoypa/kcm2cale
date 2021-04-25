@@ -1,7 +1,6 @@
-import { nanoid } from "nanoid";
 import { FC, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useInitFleet } from "../../core/initialize-fleet";
 import { FleetIdState } from "../../store/organize/info";
 
@@ -9,7 +8,7 @@ import { FleetIdState } from "../../store/organize/info";
 // id を生成してリダイレクト
 export const NewFleet: FC = () => {
   const { replace } = useHistory();
-  const [fleetId, setFleetId] = useRecoilState(FleetIdState);
+  const fleetId = useRecoilValue(FleetIdState);
 
   const initFleet = useInitFleet();
 
@@ -19,12 +18,13 @@ export const NewFleet: FC = () => {
     if (fleetId === preFleetId.current) {
       // 初回レンダー時
       initFleet(null);
-      const geneFleetId = nanoid(16);
-      setFleetId(geneFleetId);
     } else {
       // fleetId 更新による再レンダー時
       replace(`/fleet/${fleetId}`);
     }
+
+    // initFleet は不要
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fleetId]);
 
   return null;

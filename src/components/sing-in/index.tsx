@@ -15,11 +15,11 @@ type LocationState =
   | undefined;
 
 export const SignIn: FC = () => {
-  usePageViewLog("Sign In");
+  const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
 
   const { replace } = useHistory();
   const { state } = useLocation<LocationState>();
-  const setPageTitle = useSetPageTitle();
 
   const userLoadable = useUser();
 
@@ -32,9 +32,15 @@ export const SignIn: FC = () => {
     if (userLoadable.state === "hasValue" && userLoadable.contents !== null) {
       replace(state?.continue ?? "/");
     }
-  });
+  }, [replace, state?.continue, userLoadable.contents, userLoadable.state]);
 
-  setPageTitle("サインイン");
+  useEffect(() => {
+    setPageTitle("サインイン");
+    pageViewLog("Sign In");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

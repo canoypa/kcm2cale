@@ -26,6 +26,9 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   const initFleet = useInitFleet();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    // openFleet の作動を抑制
+    event.stopPropagation();
+
     const target = event.target as HTMLButtonElement;
     const targetRect = target.getBoundingClientRect();
 

@@ -1,8 +1,10 @@
 import { createContext, FC, useEffect, useRef, useState } from "react";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
+import { CircularProgressIndicators } from "../../common/progress-indicators/circular";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
+import * as styles from "./styles";
 
 export const FleetListContext = createContext({ reloadFleet: () => {} });
 
@@ -35,7 +37,9 @@ export const FleetListArea: FC = () => {
             <EmptyState />
           )
         ) : (
-          <div>Loading...</div>
+          <div className={styles.loadingContainer}>
+            <CircularProgressIndicators />
+          </div>
         )}
       </div>
     </FleetListContext.Provider>

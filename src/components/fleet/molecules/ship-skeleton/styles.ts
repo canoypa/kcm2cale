@@ -13,6 +13,8 @@ export const root = css({
 
   boxSizing: "border-box",
   height: "64px",
+
+  margin: "4px 0",
 });
 
 export const icon = css({

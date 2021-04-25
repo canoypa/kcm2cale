@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import {
   shipGroupFilter,
   ShipSearchGroupMap,
@@ -33,25 +33,31 @@ export const SelectShip: FC<Props> = ({ onEnd, currentShip }) => {
   const { onSelect } = useSelectShip(currentShip);
 
   const handler = {
-    filterChange: (_filter: string | null) => {
-      if (_filter === null) {
-        setTypes(null);
-      } else {
-        const filter = parseInt(_filter, 10);
-        if (isShipGroupValue(filter)) {
-          setTypes(ShipSearchGroupMap[filter]);
+    filterChange: useCallback(
+      (_filter: string | null) => {
+        if (_filter === null) {
+          setTypes(null);
+        } else {
+          const filter = parseInt(_filter, 10);
+          if (isShipGroupValue(filter)) {
+            setTypes(ShipSearchGroupMap[filter]);
+          }
         }
-      }
-    },
+      },
+      [setTypes]
+    ),
 
-    onChangeQuery: (value: string) => setQuery(value),
+    onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
-    onSelect: (shipData: ShipData) => {
-      onSelect(shipData);
-      onEnd();
-    },
+    onSelect: useCallback(
+      (shipData: ShipData) => {
+        onSelect(shipData);
+        onEnd();
+      },
+      [onEnd, onSelect]
+    ),
 
-    onCancel: () => onEnd(),
+    onCancel: useCallback(() => onEnd(), [onEnd]),
   };
 
   const shipsList = ShipSearch.search(searchQuery);

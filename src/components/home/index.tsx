@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { MainAppBar } from "../common/main-app-bar";
@@ -7,10 +7,16 @@ import { FleetListArea } from "./fleet-list-area";
 import * as styles from "./styles";
 
 export const Home: FC = () => {
-  usePageViewLog("Home");
-
+  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
-  setPageTitle(__APP_NAME__, { noSuffix: true });
+
+  useEffect(() => {
+    setPageTitle(__APP_NAME__, { noSuffix: true });
+    pageViewLog("Home");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>
