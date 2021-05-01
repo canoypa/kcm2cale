@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import { FC } from "react";
-import { IconAccount } from "../icons";
+import { MaterialIcon } from "../icons";
 import * as styles from "./styles";
 
 type Props = {
@@ -13,7 +13,7 @@ export const UserIcon: FC<Props> = ({ user, size = 32 }) => (
       {user?.photoURL ? (
         <img src={user.photoURL} width={size} height={size} />
       ) : (
-        <IconAccount size={size} />
+        <MaterialIcon icon="account_circle" size={size} />
       )}
     </div>
   </div>

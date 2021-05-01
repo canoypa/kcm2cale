@@ -6,7 +6,7 @@ import {
   TopAppBarTitle,
 } from "../app-bar";
 import { IconButton } from "../button";
-import { IconArrowBack } from "../icons";
+import { MaterialIcon } from "../icons";
 
 type Props = {
   title?: string;
@@ -16,7 +16,10 @@ export const LowerAppBar: FC<Props> = ({ title, onNavClick }) => (
   <TopAppBar>
     <TopAppBarSection align="start">
       <TopAppBarIcon>
-        <IconButton icon={<IconArrowBack />} onClick={onNavClick} />
+        <IconButton
+          icon={<MaterialIcon icon="navigate_before" />}
+          onClick={onNavClick}
+        />
       </TopAppBarIcon>
       {title && <TopAppBarTitle>{title}</TopAppBarTitle>}
     </TopAppBarSection>

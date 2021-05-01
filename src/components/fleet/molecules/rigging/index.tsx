@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FleetStateValue } from "../../../../store/organize/ships";
 import { Chip } from "../../../common/chip";
-import { IconAdd } from "../../../common/icons";
+import { MaterialIcon } from "../../../common/icons";
 import { SelectEquipment } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useRigging } from "./hook";
@@ -35,7 +35,7 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
         {isCanAddNewEquipment && (
           <div className={styles.addEquipmentButtonArea}>
             <Chip
-              icon={<IconAdd />}
+              icon={<MaterialIcon icon="add" />}
               label="装備を追加"
               onActivated={handlerAddNewEquipment}
             />

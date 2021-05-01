@@ -2804,6 +2804,12 @@ export const ShipsData: ShipData[] = [
     name: "神威改母",
   },
   {
+    id: 501,
+    no: "301a",
+    type: ShipType.LightCruiser,
+    name: "最上改二",
+  },
+  {
     id: 503,
     no: "303a",
     type: ShipType.AviationCruiser,
@@ -3834,5 +3840,29 @@ export const ShipsData: ShipData[] = [
     no: "462a",
     type: ShipType.LightCruiser,
     name: "能代改二",
+  },
+  {
+    id: 663,
+    no: "463a",
+    type: ShipType.LightCruiser,
+    name: "矢矧改二",
+  },
+  {
+    id: 665,
+    no: "465a",
+    type: ShipType.Destroyer,
+    name: "曙改二",
+  },
+  {
+    id: 883,
+    no: "483a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二戊",
+  },
+  {
+    id: 888,
+    no: "488a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二",
   },
 ];

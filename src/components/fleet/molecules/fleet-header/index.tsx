@@ -17,7 +17,7 @@ export const FleetHeader: FC = () => {
         <Info />
       </div>
 
-      <Editing editing={isEditing} endEdit={endEdit} />
+      <Editing open={isEditing} onEnd={endEdit} />
     </>
   );
 };

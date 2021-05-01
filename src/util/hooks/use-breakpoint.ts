@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const useBreakpoint = (type: string, value: string | number) => {
-  const ifNumAddUnit = typeof value === "number" ? `${value}px` : value;
+  const ifNumAddUnit = useMemo(
+    () => (typeof value === "number" ? `${value}px` : value),
+    [value]
+  );
 
-  const isMatchMedia = matchMedia(
-    `(${type}${value ? `: ${ifNumAddUnit}` : ""})`
+  const isMatchMedia = useMemo(
+    () => matchMedia(`(${type}${value ? `: ${ifNumAddUnit}` : ""})`),
+    [type, value, ifNumAddUnit]
   );
 
   const [GTWidth, setGTWidth] = useState(isMatchMedia.matches);
@@ -14,7 +18,7 @@ export const useBreakpoint = (type: string, value: string | number) => {
   useEffect(() => {
     isMatchMedia.addEventListener("change", changeHandler);
     return () => void isMatchMedia.removeEventListener("change", changeHandler);
-  }, []);
+  }, [isMatchMedia]);
 
   return GTWidth;
 };

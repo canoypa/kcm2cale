@@ -1,6 +1,6 @@
 import { FC, MouseEvent, MouseEventHandler } from "react";
 import { IconButton } from "../button";
-import { IconMoreVert } from "../icons";
+import { MaterialIcon } from "../icons";
 import * as styles from "./styles";
 
 export const Card: FC = ({ children }) => (
@@ -17,7 +17,10 @@ export const CardOverflowMenu: FC<OverflowMenuProps> = ({ onClick }) => {
   };
   return (
     <div className={styles.overflowMenu}>
-      <IconButton icon={<IconMoreVert />} onClick={clickHandler} />
+      <IconButton
+        icon={<MaterialIcon icon="more_vert" />}
+        onClick={clickHandler}
+      />
     </div>
   );
 };

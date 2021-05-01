@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type CurrentShip = {
+export type CurrentShip = {
   fleetNo: number;
   turnNo: number;
   shipId: string | null;

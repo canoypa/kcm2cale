@@ -4,7 +4,7 @@ import {
   IconButton,
   IconButtonProps,
 } from "../../../../src/components/common/button";
-import { IconAdd } from "../../../../src/components/common/icons";
+import { MaterialIcon } from "../../../../src/components/common/icons";
 
 export default {
   title: "Common/Button/Icon",
@@ -15,5 +15,5 @@ export const Basic: Story<IconButtonProps> = (props) => (
   <IconButton {...props} />
 );
 Basic.args = {
-  icon: <IconAdd />,
+  icon: <MaterialIcon icon="add" />,
 };

@@ -17,19 +17,14 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
   filterGroup,
   changeFilter,
   changeQuery,
-}) => {
-  const handlerChangeFilter = (value: string | null) => changeFilter(value);
-  const handlerChangeQuery = (value: string) => changeQuery(value);
-
-  return (
-    <div className={styles.organizeSelectSearchRenderer}>
-      <div className={styles.wrapper}>
-        <div className={styles.filterArea}>
-          <Filter items={filterGroup} onFilterChange={handlerChangeFilter} />
-        </div>
-        {/* search box here... */}
-        <SearchBox onSubmit={handlerChangeQuery} />
+}) => (
+  <div className={styles.organizeSelectSearchRenderer}>
+    <div className={styles.wrapper}>
+      <div className={styles.filterArea}>
+        <Filter items={filterGroup} onFilterChange={changeFilter} />
       </div>
+      {/* search box here... */}
+      <SearchBox onSubmit={changeQuery} />
     </div>
-  );
-};
+  </div>
+);

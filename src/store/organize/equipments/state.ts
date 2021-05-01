@@ -1,10 +1,17 @@
 import { atom } from "recoil";
 import { EquipmentData } from "../../../modules/equipment/types";
 
+type EquipmentId = string;
+
 export type RiggingStateValue = {
   shipId: string;
   slotNo: number;
-  equipmentId: string;
+  equipmentId: EquipmentId;
+};
+
+export type EquipmentsStateValue = {
+  equipmentId: EquipmentId;
+  equipment: EquipmentData;
 };
 
 export type RiggingState = RiggingStateValue[];
@@ -13,8 +20,8 @@ export const RiggingState = atom<RiggingState>({
   default: [],
 });
 
-export type EquipmentsState = Map<RiggingStateValue, EquipmentData>;
+export type EquipmentsState = EquipmentsStateValue[];
 export const EquipmentsState = atom<EquipmentsState>({
   key: "EquipmentsState",
-  default: new Map(),
+  default: [],
 });

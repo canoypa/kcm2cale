@@ -1,12 +1,6 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { ChangeEvent, FC, useMemo } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetType,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../store/organize/info";
 import { Button } from "../../../../common/button";
 import {
   Dialog,
@@ -14,61 +8,73 @@ import {
   DialogContent,
 } from "../../../../common/dialog";
 import { Field, Select, Textarea, TextInput } from "../../../../common/field";
+import { useCountValid, useEditFleetInfo } from "./hooks";
+
+const TitleCharCount = 256;
+const DescriptionCharCount = 512;
 
 type Props = {
-  editing: boolean;
-  endEdit: () => void;
+  open: boolean;
+  onEnd: () => void;
 };
-export const Editing: FC<Props> = ({ editing, endEdit }) => {
-  const [title, setTitle] = useRecoilState(FleetNameState);
-  const [description, setDescription] = useRecoilState(FleetDescriptionState);
-  const [type, setType] = useRecoilState(FleetTypeState);
+export const Editing: FC<Props> = ({ open, onEnd }) => {
+  const {
+    title,
+    description,
+    type,
+    setTitle,
+    setDescription,
+    setType,
+    submit,
+  } = useEditFleetInfo();
 
-  const [tempTitle, setTempTitle] = useState<FleetNameState>(title);
-  const [tempDescription, setTempDescription] = useState<FleetDescriptionState>(
-    description
+  const titleValid = useCountValid(title, TitleCharCount);
+  const descriptionValid = useCountValid(description, DescriptionCharCount);
+  const isValidInfo = useMemo(
+    () => titleValid.error || descriptionValid.error,
+    [titleValid, descriptionValid]
   );
-  const [tempType, setTempType] = useState<FleetTypeState>(type);
-
-  useEffect(() => {
-    setTempTitle(title);
-    setTempDescription(description);
-    setTempType(type);
-  }, [description, editing, title, type]);
 
   const handler = {
     onFleetTitleChange: (e: ChangeEvent<HTMLInputElement>) => {
-      setTempTitle(e.target.value);
+      setTitle(e.target.value);
     },
     onFleetDescriptionChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setTempDescription(e.target.value);
+      setDescription(e.target.value);
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLSelectElement>) => {
-      if (!isFleetType(e.target.value)) throw new Error("Error: 無効な値");
-      setTempType(e.target.value);
+      const value = e.target.value;
+      setType(isFleetType(value) ? value : "Normal");
     },
 
     onSubmit: () => {
-      setTitle(tempTitle);
-      setDescription(tempDescription);
-      setType(tempType);
-      endEdit();
-    },
-    onCancel: () => {
-      endEdit();
+      submit();
+      onEnd();
     },
   };
 
   return (
-    <Dialog open={editing} onClose={endEdit}>
+    <Dialog open={open} onClose={onEnd}>
       <DialogContent>
-        <Field fullWidth label="題名" value={tempTitle}>
+        <Field
+          fullWidth
+          label="題名"
+          value={title}
+          error={titleValid.error}
+          counter={titleValid.countText}
+        >
           <TextInput onChange={handler.onFleetTitleChange} />
         </Field>
-        <Field fullWidth label="說明" value={tempDescription}>
+        <Field
+          fullWidth
+          label="說明"
+          value={description}
+          error={descriptionValid.error}
+          counter={descriptionValid.countText}
+        >
           <Textarea onChange={handler.onFleetDescriptionChange} />
         </Field>
-        <Field fullWidth label="艦隊編成" value={tempType}>
+        <Field fullWidth label="艦隊編成" value={type}>
           <Select
             options={[
               { label: "通常艦隊", value: FleetType.Normal },
@@ -82,8 +88,13 @@ export const Editing: FC<Props> = ({ editing, endEdit }) => {
         </Field>
       </DialogContent>
       <DialogActions>
-        <Button label="キャンセル" onClick={handler.onCancel} />
-        <Button type="outline" label="保存する" onClick={handler.onSubmit} />
+        <Button label="キャンセル" onClick={onEnd} />
+        <Button
+          type="outline"
+          label="保存する"
+          onClick={handler.onSubmit}
+          disabled={isValidInfo}
+        />
       </DialogActions>
     </Dialog>
   );

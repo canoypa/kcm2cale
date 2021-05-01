@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { firebaseAnalytics } from ".";
 
-export const usePageViewLog = (title: string) => {
-  useEffect(() => {
+export const usePageViewLog = () => {
+  return useCallback((title: string) => {
     firebaseAnalytics.logEvent("page_view", {
       page_title: title,
       page_location: window.location.href,
       page_path: window.location.pathname,
     });
-  });
+  }, []);
 };

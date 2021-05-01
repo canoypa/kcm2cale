@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useHistory } from "react-router";
 import { FloatingActionButton } from "../../common/button/floating";
-import { IconAdd } from "../../common/icons";
+import { MaterialIcon } from "../../common/icons";
 import * as styles from "./styles";
 
 export const CreateNewFleet: FC = () => {
@@ -12,7 +12,7 @@ export const CreateNewFleet: FC = () => {
     <div className={styles.container}>
       <FloatingActionButton
         type="extended"
-        icon={<IconAdd />}
+        icon={<MaterialIcon icon="add" />}
         label={"編成を作成"}
         onClick={linkToFleet}
       />

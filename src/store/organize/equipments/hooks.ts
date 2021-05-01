@@ -7,12 +7,13 @@ export const useSetEquipment = () => {
   const setRigging = useSetRecoilState(RiggingState);
   const setEquipment = useSetRecoilState(EquipmentsState);
 
-  return (shipId: string, slotNo: number, newEquipment: EquipmentData) => {
+  return (shipId: string, slotNo: number, equipment: EquipmentData) => {
     const equipmentId = nanoid(8);
     const newRigging = { shipId, slotNo, equipmentId };
+    const newEquipment = { equipmentId, equipment };
 
     setRigging((state) => [...state, newRigging]);
-    setEquipment((state) => new Map(state.set(newRigging, newEquipment)));
+    setEquipment((state) => [...state, newEquipment]);
   };
 };
 
@@ -22,11 +23,6 @@ export const useRemoveEquipment = () => {
 
   return (equipmentId: string) => {
     setRigging((state) => state.filter((v) => v.equipmentId !== equipmentId));
-    setEquipment(
-      (state) =>
-        new Map(
-          [...state.entries()].filter(([v]) => v.equipmentId !== equipmentId)
-        )
-    );
+    setEquipment((state) => state.filter((v) => v.equipmentId !== equipmentId));
   };
 };

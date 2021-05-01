@@ -1,10 +1,17 @@
 import { atom } from "recoil";
 import { ShipData } from "../../../modules/ship";
 
+export type ShipId = string;
+
 export type FleetStateValue = {
   fleetNo: number;
   turnNo: number;
-  shipId: string;
+  shipId: ShipId;
+};
+
+export type ShipsStateValue = {
+  shipId: ShipId;
+  ship: ShipData;
 };
 
 export type FleetState = FleetStateValue[];
@@ -13,8 +20,8 @@ export const FleetState = atom<FleetState>({
   default: [],
 });
 
-export type ShipsState = Map<FleetStateValue, ShipData>;
+export type ShipsState = ShipsStateValue[];
 export const ShipsState = atom<ShipsState>({
   key: "Ships",
-  default: new Map(),
+  default: [],
 });

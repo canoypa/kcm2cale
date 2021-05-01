@@ -4,11 +4,12 @@ import {
   BottomNavigation as MDCBottomNavigation,
   BottomNavigationItem as MDCBottomNavigationItem,
 } from "../../../common/bottom-navigation";
-import {
-  IconBarChartOutlined,
-  IconFlagOutlined,
-  IconNavigationOutlined,
-} from "../../../common/icons";
+import { MaterialIcon } from "../../../common/icons";
+
+// Fixme
+const IconFlagOutlined: FC = () => <MaterialIcon icon="flag" />;
+const IconBarChartOutlined: FC = () => <MaterialIcon icon="bar_chart" />;
+const IconNavigationOutlined: FC = () => <MaterialIcon icon="navigation" />;
 
 type Props = {
   basePath: string;

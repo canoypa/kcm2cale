@@ -1,29 +1,41 @@
+import { cx } from "@emotion/css";
 import { cloneElement, FC, ReactElement, useState } from "react";
-import { classNames } from "../../../util/class-names";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type Props = {
   label?: string;
   value?: string;
   fullWidth?: boolean;
+  helper?: string;
+  counter?: string;
+  error?: boolean;
   children: ReactElement;
 };
-export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
+export const Field: FC<Props> = ({
+  label,
+  value,
+  fullWidth,
+  children,
+  helper,
+  counter,
+  error,
+}) => {
   const [isFocusin, setIsFocusin] = useState(false);
+
+  const styles = useStyles({
+    isFullWidth: Boolean(fullWidth),
+    isFocusing: isFocusin,
+    hasValue: Boolean(value),
+    isError: Boolean(error),
+  });
 
   const handlers = {
     focusin: () => setIsFocusin(true),
     focusout: () => setIsFocusin(false),
   };
 
-  const wrapperClassNames = classNames(styles.wrapper, {
-    [styles.focusing]: isFocusin,
-    [styles.hasValue]: Boolean(value),
-    [styles.fullWidth]: Boolean(fullWidth),
-  });
-
   return (
-    <div className={wrapperClassNames}>
+    <div className={styles.wrapper}>
       <div
         className={styles.container}
         onFocus={handlers.focusin}
@@ -32,17 +44,21 @@ export const Field: FC<Props> = ({ label, value, fullWidth, children }) => {
         {cloneElement(children, { value })}
         <label className={styles.label}>{label}</label>
         <div className={styles.outlineContainer}>
-          <div
-            className={classNames(styles.outline, styles.outlineStart)}
-          ></div>
+          <div className={cx(styles.outline, styles.outlineStart)}></div>
           {label && (
-            <div className={classNames(styles.outline, styles.outlineCenter)}>
+            <div className={cx(styles.outline, styles.outlineCenter)}>
               <div className={styles.labelSizing}>{label}</div>
             </div>
           )}
-          <div className={classNames(styles.outline, styles.outlineEnd)}></div>
+          <div className={cx(styles.outline, styles.outlineEnd)}></div>
         </div>
       </div>
+      {(helper || counter) && (
+        <div className={styles.helperArea}>
+          {helper && <div className={styles.helperText}>{helper}</div>}
+          {counter && <div className={styles.counter}>{counter}</div>}
+        </div>
+      )}
     </div>
   );
 };
