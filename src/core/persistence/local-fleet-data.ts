@@ -3,18 +3,18 @@ import { EquipmentsData } from "../../data/equipment";
 import { ShipsData } from "../../data/ship";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
 import {
-  FleetDateState,
   FleetDescriptionState,
   FleetIdState,
   FleetNameState,
   FleetTypeState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { LocalFleetData_v1 } from "./types";
+import { FleetData } from "../fleet-data/types";
+
+type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
 
 type FleetStates = {
   fleetId: FleetIdState;
-  fleetDate: FleetDateState;
   fleetName: FleetNameState;
   fleetDescription: FleetDescriptionState;
   fleetType: FleetTypeState;
@@ -24,12 +24,11 @@ type FleetStates = {
   equipments: EquipmentsState;
 };
 /** 諸々から保存用データを作成 */
-export const createLocalFleetData = (
+export const encodeLocalFleetData = (
   fleetStates: FleetStates
-): LocalFleetData_v1 => {
+): FleetDataOmitDate => {
   const {
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,
@@ -40,13 +39,10 @@ export const createLocalFleetData = (
   } = fleetStates;
 
   return {
-    version: 1,
     id: fleetId,
     title: fleetName,
     description: fleetDescription,
     type: fleetType,
-    createdAt: fleetDate.createdAt,
-    updatedAt: fleetDate.updatedAt,
     ships: fleet.map(({ fleetNo, turnNo, shipId }) => {
       const ship = ships.find((v) => v.shipId === shipId);
       const shipRigging = rigging.filter((v) => v.shipId === shipId);
@@ -64,14 +60,8 @@ export const createLocalFleetData = (
   };
 };
 
-export const createFleetStates = (
-  localFleetData: LocalFleetData_v1
-): FleetStates => {
+export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
   const fleetId = localFleetData.id;
-  const fleetDate = {
-    createdAt: localFleetData.createdAt,
-    updatedAt: localFleetData.updatedAt,
-  };
   const fleetName = localFleetData.title;
   const fleetDescription = localFleetData.description;
   const fleetType = localFleetData.type;
@@ -108,7 +98,6 @@ export const createFleetStates = (
 
   return {
     fleetId,
-    fleetDate,
     fleetName,
     fleetDescription,
     fleetType,

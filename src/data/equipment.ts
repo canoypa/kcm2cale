@@ -2026,4 +2026,24 @@ export const EquipmentsData: EquipmentData[] = [
     type: EquipmentType.LandingCraft,
     name: "武装大発",
   },
+  {
+    no: 411,
+    type: EquipmentType.LargeRadar,
+    name: "21号対空電探改二",
+  },
+  {
+    no: 411,
+    type: EquipmentType.LargeRadar,
+    name: "42号対空電探改二",
+  },
+  {
+    no: 412,
+    type: EquipmentType.ShipPersonnel,
+    name: "水雷戦隊 熟練見張員",
+  },
+  {
+    no: 414,
+    type: EquipmentType.ReconnaissanceSeaplane,
+    name: "SOC Seagull",
+  },
 ];

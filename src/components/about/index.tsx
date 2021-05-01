@@ -21,6 +21,9 @@ export const About: FC = () => {
   useEffect(() => {
     setPageTitle("About");
     pageViewLog("About");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

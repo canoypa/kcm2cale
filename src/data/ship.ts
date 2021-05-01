@@ -2337,6 +2337,11 @@ export const ShipsData: ShipData[] = [
     name: "神威改母",
   },
   {
+    no: "301a",
+    type: ShipType.LightCruiser,
+    name: "最上改二",
+  },
+  {
     no: "303a",
     type: ShipType.AviationCruiser,
     name: "鈴谷改二",
@@ -3197,8 +3202,23 @@ export const ShipsData: ShipData[] = [
     name: "能代改二",
   },
   {
+    no: "463a",
+    type: ShipType.LightCruiser,
+    name: "矢矧改二",
+  },
+  {
     no: "465a",
     type: ShipType.Destroyer,
     name: "曙改二",
+  },
+  {
+    no: "483a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二戊",
+  },
+  {
+    no: "488a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二",
   },
 ];
