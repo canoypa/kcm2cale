@@ -30,7 +30,7 @@ export const Map: FC = () => {
 
     const drawing = new TestCanvasDrawing(testCanvas.current);
     return () => drawing.destroy();
-  });
+  }, [testCanvas]);
 
   return (
     <div>

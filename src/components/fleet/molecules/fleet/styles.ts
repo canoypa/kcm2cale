@@ -7,5 +7,5 @@ export const toggleFleetArea = css({
 export const shipsList = css({
   display: "flex",
   flexDirection: "column",
-  rowGap: 8,
+  // rowGap: 8,
 });

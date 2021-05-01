@@ -1,4 +1,4 @@
-import { Reducer, useReducer } from "react";
+import { Reducer, useCallback, useReducer } from "react";
 import { SearchEquipmentRequest } from "../../../../core/search/equipment";
 import { EquipmentTypeValues } from "../../../../modules/equipment/types";
 
@@ -30,10 +30,16 @@ const searchQueryReducer: Reducer<State, Actions> = (state, action) => {
 export const useSearchQuery = (): SearchQuery => {
   const [query, dispatchQuery] = useReducer(searchQueryReducer, {});
 
-  const setQuery = (q: string) => dispatchQuery({ type: "Query", value: q });
+  const setQuery = useCallback(
+    (q: string) => dispatchQuery({ type: "Query", value: q }),
+    []
+  );
 
-  const setTypes = (types: EquipmentTypeValues[] | null) =>
-    dispatchQuery({ type: "Types", value: types });
+  const setTypes = useCallback(
+    (types: EquipmentTypeValues[] | null) =>
+      dispatchQuery({ type: "Types", value: types }),
+    []
+  );
 
   return {
     query,

@@ -8,6 +8,8 @@ export const root = css({
   borderRadius: "4px",
   backgroundColor: "#fff",
   color: "#212121",
+
+  margin: "4px 0",
 });
 
 export const dragIndicator = css({

@@ -32,11 +32,14 @@ export const SignIn: FC = () => {
     if (userLoadable.state === "hasValue" && userLoadable.contents !== null) {
       replace(state?.continue ?? "/");
     }
-  });
+  }, [replace, state?.continue, userLoadable.contents, userLoadable.state]);
 
   useEffect(() => {
     setPageTitle("サインイン");
     pageViewLog("Sign In");
+
+    // マウント時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
