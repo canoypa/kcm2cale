@@ -32,7 +32,7 @@ export const Select: FC<Props> = ({ value, options, onChange }) => {
     if (ref.current) {
       setLabel(ref.current.options[ref.current.selectedIndex].label);
     }
-  }, []);
+  }, [value]);
 
   return (
     <>
