@@ -1,15 +1,10 @@
+import { PaletteMode } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { PALETTE_DARK, PALETTE_LIGHT } from "./palette";
 
-export const createTheme = () =>
+export const createTheme = (mode: PaletteMode) =>
   createMuiTheme({
-    palette: {
-      primary: {
-        main: "#6876bd",
-        light: "#6876bd",
-        dark: "#6876bd",
-        contrastText: "rgba(255, 255, 255, 0.87)",
-      },
-    },
+    palette: mode === "dark" ? PALETTE_DARK : PALETTE_LIGHT,
 
     typography: {
       button: {
