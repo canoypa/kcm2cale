@@ -1,12 +1,18 @@
 import {
+  AppBar,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   MenuItem,
   TextField,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
+import { NavigateBefore } from "@material-ui/icons";
 import { ChangeEvent, FC, useMemo } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
 import { FleetType } from "../../../../../store/organize/info";
@@ -46,6 +52,9 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     [titleValid, descriptionValid]
   );
 
+  const theme = useTheme();
+  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
+
   const classes = useStyles();
 
   const handler = {
@@ -67,7 +76,16 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onEnd}>
+    <Dialog open={open} onClose={onEnd} fullScreen={fullScreenBreakPoint}>
+      {fullScreenBreakPoint && (
+        <AppBar position="static" elevation={0} color="transparent">
+          <Toolbar>
+            <IconButton onClick={onEnd}>
+              <NavigateBefore />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      )}
       <DialogTitle>編成を編集</DialogTitle>
       <DialogContent>
         <TextField
