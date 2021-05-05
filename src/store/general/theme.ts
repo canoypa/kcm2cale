@@ -1,24 +1,15 @@
+import { PaletteMode } from "@material-ui/core";
 import { atom, AtomEffect } from "recoil";
 import { AppSettings } from "../../core/app-settings";
-import { ThemeDark } from "../../core/theme/theme-dark";
-import { ThemeLight } from "../../core/theme/theme-light";
-import { Theme, ThemeType } from "../../core/theme/types";
 
-const getTheme = (type: ThemeType) => {
-  if (type === "dark") return ThemeDark;
-  if (type === "light") return ThemeLight;
-  throw new Error("Error: Invalid theme type");
-};
-
-const loadConfig: AtomEffect<Theme> = ({ setSelf }) => {
+const loadConfig: AtomEffect<PaletteMode> = ({ setSelf }) => {
   AppSettings.get("theme").then((value) => {
-    const theme = getTheme(value);
-    setSelf(theme);
+    setSelf(value);
   });
 };
 
-export const ThemeState = atom<Theme>({
+export const ThemeState = atom<PaletteMode>({
   key: "ThemeState",
-  default: ThemeLight,
+  default: "light",
   effects_UNSTABLE: [loadConfig],
 });
