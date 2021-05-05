@@ -1,16 +1,10 @@
+import { Card, CardContent, IconButton, Typography } from "@material-ui/core";
+import { MoreVert } from "@material-ui/icons";
 import { FC, MouseEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
-import {
-  Card,
-  CardHeader,
-  CardOverflowMenu,
-  CardOverline,
-  CardSubTitle,
-  CardTitle,
-} from "../../common/card";
 import { LineClamp } from "../../common/clamp";
 import { Menu } from "../../common/menu";
 import { FleetListContext } from "../fleet-list-area";
@@ -25,9 +19,12 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
   const initFleet = useInitFleet();
 
+  const classes = styles.useStyles();
+
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
     event.stopPropagation();
+    event.preventDefault();
 
     const target = event.target as HTMLButtonElement;
     const targetRect = target.getBoundingClientRect();
@@ -61,17 +58,31 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
         className={styles.container}
         onClick={openFleet}
       >
-        <Card>
-          <CardHeader>
-            <CardOverline label={fleetData.updatedAt.toLocaleDateString()} />
-            <CardTitle>
+        <Card variant="outlined">
+          <CardContent className={classes.cardContent}>
+            <Typography
+              variant="overline"
+              color="textSecondary"
+              className={classes.overline}
+            >
+              {fleetData.updatedAt.toLocaleDateString()}
+            </Typography>
+            <Typography variant="h6" className={classes.title}>
               <LineClamp clamp={1}>{fleetData.title || "無題の編成"}</LineClamp>
-            </CardTitle>
-            <CardSubTitle>
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="textSecondary"
+              className={classes.description}
+            >
               <LineClamp clamp={2}>{fleetData.description}</LineClamp>
-            </CardSubTitle>
-            <CardOverflowMenu onClick={openMenu} />
-          </CardHeader>
+            </Typography>
+            <div className={classes.menuArea}>
+              <IconButton onClick={openMenu}>
+                <MoreVert />
+              </IconButton>
+            </div>
+          </CardContent>
         </Card>
       </Link>
 
