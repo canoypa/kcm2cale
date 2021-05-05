@@ -8,8 +8,8 @@ const loadConfig: AtomEffect<PaletteMode> = ({ setSelf }) => {
   });
 };
 
-export const ThemeState = atom<PaletteMode>({
-  key: "ThemeState",
+export const PaletteModeState = atom<PaletteMode>({
+  key: "PaletteModeState",
   default: "light",
   effects_UNSTABLE: [loadConfig],
 });
