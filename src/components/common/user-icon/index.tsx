@@ -1,6 +1,6 @@
+import { AccountCircleOutlined } from "@material-ui/icons";
 import firebase from "firebase/app";
 import { FC } from "react";
-import { MaterialIcon } from "../icons";
 import * as styles from "./styles";
 
 type Props = {
@@ -13,7 +13,7 @@ export const UserIcon: FC<Props> = ({ user, size = 32 }) => (
       {user?.photoURL ? (
         <img src={user.photoURL} width={size} height={size} />
       ) : (
-        <MaterialIcon icon="account_circle" size={size} />
+        <AccountCircleOutlined style={{ fontSize: size }} />
       )}
     </div>
   </div>
