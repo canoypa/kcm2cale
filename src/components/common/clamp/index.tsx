@@ -12,5 +12,7 @@ export const LineClamp: FC<Props> = ({ children, clamp = 4 }) => {
     WebkitLineClamp: clamp,
   });
 
-  return <div className={classNames(styles.container, style)}>{children}</div>;
+  return (
+    <span className={classNames(styles.container, style)}>{children}</span>
+  );
 };
