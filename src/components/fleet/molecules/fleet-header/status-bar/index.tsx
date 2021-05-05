@@ -1,6 +1,6 @@
+import { IconButton } from "@material-ui/core";
+import { EditOutlined } from "@material-ui/icons";
 import { FC } from "react";
-import { IconButton } from "../../../../common/button";
-import { MaterialIcon } from "../../../../common/icons";
 import { container } from "./styles";
 
 type Props = {
@@ -11,7 +11,9 @@ export const Actions: FC<Props> = ({ startEdit }) => {
 
   return (
     <div className={container}>
-      <IconButton icon={<MaterialIcon icon="edit" />} onClick={editFleetInfo} />
+      <IconButton onClick={editFleetInfo}>
+        <EditOutlined />
+      </IconButton>
     </div>
   );
 };
