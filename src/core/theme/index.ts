@@ -12,3 +12,5 @@ export const createTheme = (mode: PaletteMode) =>
       },
     },
   });
+
+export { useTheme } from "./hooks";
