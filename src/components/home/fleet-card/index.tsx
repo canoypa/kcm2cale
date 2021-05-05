@@ -1,12 +1,18 @@
-import { Card, CardContent, IconButton, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
-import { FC, MouseEvent, useContext, useState } from "react";
+import { FC, MouseEvent, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import { LineClamp } from "../../common/clamp";
-import { Menu } from "../../common/menu";
 import { FleetListContext } from "../fleet-list-area";
 import * as styles from "./styles";
 
@@ -15,9 +21,10 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
 
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   const initFleet = useInitFleet();
+
+  const menuAnchorEl = useRef<HTMLButtonElement>(null);
 
   const classes = styles.useStyles();
 
@@ -26,24 +33,15 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     event.stopPropagation();
     event.preventDefault();
 
-    const target = event.target as HTMLButtonElement;
-    const targetRect = target.getBoundingClientRect();
-
-    setCoordinates({
-      x: targetRect.left,
-      y: targetRect.top + 48,
-    });
     setMenuOpen(true);
   };
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
-  const menuSelectHandler = async (v: string) => {
-    if (v === "delete") {
-      await LocalDatabase.deleteFleet(fleetData.id);
-      reloadFleet();
-    }
+  const deleteFleet = async () => {
+    await LocalDatabase.deleteFleet(fleetData.id);
+    reloadFleet();
   };
 
   const openFleet = () => {
@@ -78,7 +76,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
               <LineClamp clamp={2}>{fleetData.description}</LineClamp>
             </Typography>
             <div className={classes.menuArea}>
-              <IconButton onClick={openMenu}>
+              <IconButton onClick={openMenu} ref={menuAnchorEl}>
                 <MoreVert />
               </IconButton>
             </div>
@@ -88,11 +86,11 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
       <Menu
         open={isMenuOpen}
-        coordinates={coordinates}
-        items={[{ label: "削除", value: "delete" }]}
-        onSelect={menuSelectHandler}
         onClose={closeMenu}
-      />
+        anchorEl={menuAnchorEl.current}
+      >
+        <MenuItem onClick={deleteFleet}>削除</MenuItem>
+      </Menu>
     </>
   );
 };
