@@ -57,7 +57,7 @@ export const SelectEquipment: FC<Props> = ({ open, onSelect, onCancel }) => {
   const equipmentsList = EquipmentSearch.search(searchQuery);
 
   return (
-    <Dialog fullScreen open={open}>
+    <Dialog fullScreen open={open} onClose={onCancel}>
       <AppBar position="sticky" color="inherit">
         <Toolbar>
           <IconButton edge="start" onClick={onCancel}>

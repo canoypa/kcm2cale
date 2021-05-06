@@ -68,7 +68,7 @@ export const SelectShip: FC<Props> = ({ open, onEnd, currentShip }) => {
   const shipsList = ShipSearch.search(searchQuery);
 
   return (
-    <Dialog fullScreen open={open}>
+    <Dialog fullScreen open={open} onClose={onEnd}>
       <AppBar position="sticky" color="inherit">
         <Toolbar>
           <IconButton edge="start" onClick={onEnd}>
