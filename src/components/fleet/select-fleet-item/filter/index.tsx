@@ -1,5 +1,5 @@
+import { Chip } from "@material-ui/core";
 import { FC } from "react";
-import { ChoiceChips } from "../../../common/chip/choice";
 import { FilterGroup } from "../types";
 
 type Props = {
@@ -7,5 +7,17 @@ type Props = {
   onFilterChange: (filters: string | null) => void;
 };
 export const Filter: FC<Props> = ({ items, onFilterChange }) => (
-  <ChoiceChips scroll items={items.filters} onChangeValue={onFilterChange} />
+  <div>
+    {items.filters.map((v) => {
+      const _onFilterChange = () => onFilterChange(v.value.toString());
+      return (
+        <Chip
+          key={v.value}
+          variant="outlined"
+          label={v.label}
+          onClick={_onFilterChange}
+        />
+      );
+    })}
+  </div>
 );
