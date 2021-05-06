@@ -3,17 +3,10 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      position: "fixed",
-      left: 0,
-      bottom: 0,
-      display: "flex",
-      justifyContent: "center",
-      padding: 24,
-      width: "100%",
-      boxSizing: "border-box",
+      padding: theme.spacing(3),
 
       ["@media (max-width: 719px)"]: {
-        padding: 16,
+        padding: theme.spacing(2),
       },
     },
 

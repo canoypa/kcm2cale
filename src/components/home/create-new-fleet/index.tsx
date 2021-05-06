@@ -1,4 +1,4 @@
-import { Fab } from "@material-ui/core";
+import { Fab, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { useHistory } from "react-router";
@@ -11,11 +11,11 @@ export const CreateNewFleet: FC = () => {
   const linkToFleet = () => push("/new");
 
   return (
-    <div className={classes.container}>
+    <Grid container justifyContent="center" className={classes.container}>
       <Fab variant="extended" color="primary" onClick={linkToFleet}>
         <Add className={classes.extendedIcon} />
         編成を作成
       </Fab>
-    </div>
+    </Grid>
   );
 };
