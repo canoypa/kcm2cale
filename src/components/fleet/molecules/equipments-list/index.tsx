@@ -39,7 +39,7 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
       {items.map((v) => {
         const _handlerEquipmentClick = () => handlerEquipmentClick(v.value);
         return (
-          <Grid item>
+          <Grid key={v.value} item>
             <Chip
               variant="outlined"
               label={v.label}
