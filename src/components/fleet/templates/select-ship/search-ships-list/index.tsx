@@ -1,6 +1,6 @@
+import { List, ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import { ShipData } from "../../../../../modules/ship";
-import { List } from "../../../../common/list";
 
 type Props = {
   shipsList: ShipData[];
@@ -15,5 +15,17 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
     label: shipData.name,
   }));
 
-  return <List onSelect={handlerOnSelect} items={items} />;
+  return (
+    <List>
+      {items.map((v) => {
+        const _handlerOnSelect = () => handlerOnSelect(v.value);
+
+        return (
+          <ListItem key={v.key} button onClick={_handlerOnSelect}>
+            <ListItemText primary={v.label} />
+          </ListItem>
+        );
+      })}
+    </List>
+  );
 };
