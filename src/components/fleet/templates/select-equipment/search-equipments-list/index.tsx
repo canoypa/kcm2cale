@@ -1,6 +1,6 @@
+import { Box, List, ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import { EquipmentData } from "../../../../../modules/equipment/types";
-import { List } from "../../../../common/list";
 
 type Props = {
   equipmentsList: EquipmentData[];
@@ -19,5 +19,19 @@ export const SearchEquipmentsList: FC<Props> = ({
     label: equipmentData.name,
   }));
 
-  return <List onSelect={handlerOnSelect} items={items} />;
+  return (
+    <Box flexGrow={1}>
+      <List>
+        {items.map((v) => {
+          const _handlerOnSelect = () => handlerOnSelect(v.value);
+
+          return (
+            <ListItem key={v.key} button onClick={_handlerOnSelect}>
+              <ListItemText primary={v.label} />
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
+  );
 };
