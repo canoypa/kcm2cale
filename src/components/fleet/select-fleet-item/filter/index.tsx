@@ -21,7 +21,7 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
       {items.filters.map((v) => {
         const _onFilterChange = () => onFilterChange(v.value.toString());
         return (
-          <Grid item>
+          <Grid item key={v.value}>
             <Chip
               key={v.value}
               variant="outlined"
