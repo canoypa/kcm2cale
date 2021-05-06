@@ -1,7 +1,7 @@
+import { AppBar, Box } from "@material-ui/core";
 import { FC } from "react";
 import { Filter } from "../filter";
 import { SearchBox } from "./search-box";
-import * as styles from "./styles";
 
 type Props = {
   filterGroup: {
@@ -18,13 +18,15 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
   changeFilter,
   changeQuery,
 }) => (
-  <div className={styles.organizeSelectSearchRenderer}>
-    <div className={styles.wrapper}>
-      <div className={styles.filterArea}>
-        <Filter items={filterGroup} onFilterChange={changeFilter} />
-      </div>
-      {/* search box here... */}
-      <SearchBox onSubmit={changeQuery} />
-    </div>
-  </div>
+  <AppBar position="sticky" color="inherit" style={{ bottom: 0 }}>
+    <Box padding={1}>
+      <Box maxWidth={800}>
+        <Box marginBottom={1}>
+          <Filter items={filterGroup} onFilterChange={changeFilter} />
+        </Box>
+        {/* search box here... */}
+        <SearchBox onSubmit={changeQuery} />
+      </Box>
+    </Box>
+  </AppBar>
 );
