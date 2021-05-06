@@ -29,19 +29,17 @@ export const FleetListArea: FC = () => {
 
   return (
     <FleetListContext.Provider value={contextValue.current}>
-      <div>
-        {fleetList ? (
-          fleetList.length ? (
-            <FleetList fleetList={fleetList} />
-          ) : (
-            <EmptyState />
-          )
+      {fleetList ? (
+        fleetList.length ? (
+          <FleetList fleetList={fleetList} />
         ) : (
-          <div className={styles.loadingContainer}>
-            <CircularProgressIndicators />
-          </div>
-        )}
-      </div>
+          <EmptyState />
+        )
+      ) : (
+        <div className={styles.loadingContainer}>
+          <CircularProgressIndicators />
+        </div>
+      )}
     </FleetListContext.Provider>
   );
 };
