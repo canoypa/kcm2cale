@@ -1,11 +1,11 @@
+import { Chip, Grid } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { FleetStateValue } from "../../../../store/organize/ships";
-import { Chip } from "../../../common/chip";
-import { MaterialIcon } from "../../../common/icons";
 import { SelectEquipment } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useRigging } from "./hook";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 import { useSelectEquipment } from "./use-select-equipment";
 
 type Props = {
@@ -19,6 +19,8 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
     newEquipmentSlotNo,
   } = useRigging(fleetPlace);
 
+  const classes = useStyles();
+
   const handlerAddEquipment = (slotNo: number, equipmentId: string | null) =>
     selecting.start({ shipId: fleetPlace.shipId, slotNo, equipmentId });
 
@@ -27,21 +29,30 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
 
   return (
     <>
-      <div className={styles.root}>
-        <EquipmentList
-          shipEquipments={shipEquipments}
-          swapEquipment={handlerAddEquipment}
-        />
+      <Grid
+        container
+        columnGap={1}
+        wrap="nowrap"
+        overflow="auto"
+        className={classes.root}
+      >
+        <Grid item>
+          <EquipmentList
+            shipEquipments={shipEquipments}
+            swapEquipment={handlerAddEquipment}
+          />
+        </Grid>
         {isCanAddNewEquipment && (
-          <div className={styles.addEquipmentButtonArea}>
+          <Grid item>
             <Chip
-              icon={<MaterialIcon icon="add" />}
+              variant="outlined"
+              icon={<Add />}
               label="装備を追加"
-              onActivated={handlerAddNewEquipment}
+              onClick={handlerAddNewEquipment}
             />
-          </div>
+          </Grid>
         )}
-      </div>
+      </Grid>
 
       {isOpenDialog && (
         <SelectEquipment

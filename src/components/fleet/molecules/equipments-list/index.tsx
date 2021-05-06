@@ -1,7 +1,7 @@
+import { Chip, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { EquipmentsState } from "../../../../store/organize/equipments";
-import { ChipSet } from "../../../common/chip";
 import * as styles from "./styles";
 
 type Props = {
@@ -34,5 +34,20 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
     };
   });
 
-  return <ChipSet nowrap items={items} onSelect={handlerEquipmentClick} />;
+  return (
+    <Grid container columnGap={1} wrap="nowrap">
+      {items.map((v) => {
+        const _handlerEquipmentClick = () => handlerEquipmentClick(v.value);
+        return (
+          <Grid item>
+            <Chip
+              variant="outlined"
+              label={v.label}
+              onClick={_handlerEquipmentClick}
+            />
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
 };
