@@ -1,3 +1,4 @@
+import { Grid } from "@material-ui/core";
 import { createContext, FC, useEffect, useRef, useState } from "react";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
@@ -29,16 +30,23 @@ export const FleetListArea: FC = () => {
 
   return (
     <FleetListContext.Provider value={contextValue.current}>
-      {fleetList ? (
-        fleetList.length ? (
-          <FleetList fleetList={fleetList} />
-        ) : (
-          <EmptyState />
-        )
+      {fleetList?.length ? (
+        <FleetList fleetList={fleetList} />
       ) : (
-        <div className={styles.loadingContainer}>
-          <CircularProgressIndicators />
-        </div>
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
+          {fleetList ? (
+            <EmptyState />
+          ) : (
+            <div className={styles.loadingContainer}>
+              <CircularProgressIndicators />
+            </div>
+          )}
+        </Grid>
       )}
     </FleetListContext.Provider>
   );

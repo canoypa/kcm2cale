@@ -6,14 +6,7 @@ export const EmptyState: FC = () => {
   const classes = useStyles();
 
   return (
-    <Grid
-      container
-      direction="column"
-      rowGap={2}
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
-    >
+    <Grid container direction="column" rowGap={2} alignItems="center">
       <Typography variant="h6" className={classes.paragraph}>
         まだ編成がありません
       </Typography>
