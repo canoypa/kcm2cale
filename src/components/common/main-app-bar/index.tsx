@@ -24,7 +24,11 @@ export const MainAppBar: FC = () => {
 
   return (
     <>
-      <AppBar color="inherit" elevation={elevateTrigger ? 4 : 0}>
+      <AppBar
+        position="sticky"
+        color="inherit"
+        elevation={elevateTrigger ? 4 : 0}
+      >
         <Toolbar>
           <div style={{ flexGrow: 1 }}></div>
           <IconButton edge="end" onClick={openDialog}>
@@ -32,7 +36,6 @@ export const MainAppBar: FC = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Toolbar />
 
       <AccountDialog open={isDialogOpen} onClose={closeDialog} />
     </>
