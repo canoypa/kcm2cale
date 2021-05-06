@@ -24,11 +24,12 @@ type CurrentShip = {
 };
 
 type Props = {
+  open: boolean;
   onEnd: () => void;
 
   currentShip: CurrentShip;
 };
-export const SelectShip: FC<Props> = ({ onEnd, currentShip }) => {
+export const SelectShip: FC<Props> = ({ open, onEnd, currentShip }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
   const { onSelect } = useSelectShip(currentShip);
 

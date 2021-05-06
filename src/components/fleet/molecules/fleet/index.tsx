@@ -57,6 +57,7 @@ export const Fleet: FC = () => {
 
       {selectState.isOpen && (
         <SelectShip
+          open={selectState.isOpen}
           currentShip={selectState.currentShip}
           onEnd={selecting.end}
         />
