@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Box, List, ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import { ShipData } from "../../../../../modules/ship";
 
@@ -16,16 +16,18 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
   }));
 
   return (
-    <List>
-      {items.map((v) => {
-        const _handlerOnSelect = () => handlerOnSelect(v.value);
+    <Box flexGrow={1}>
+      <List>
+        {items.map((v) => {
+          const _handlerOnSelect = () => handlerOnSelect(v.value);
 
-        return (
-          <ListItem key={v.key} button onClick={_handlerOnSelect}>
-            <ListItemText primary={v.label} />
-          </ListItem>
-        );
-      })}
-    </List>
+          return (
+            <ListItem key={v.key} button onClick={_handlerOnSelect}>
+              <ListItemText primary={v.label} />
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
   );
 };
