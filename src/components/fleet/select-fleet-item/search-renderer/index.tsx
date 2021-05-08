@@ -1,4 +1,4 @@
-import { AppBar, Box } from "@material-ui/core";
+import { AppBar, Box, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { Filter } from "../filter";
 import { SearchBox } from "./search-box";
@@ -19,7 +19,7 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
   changeQuery,
 }) => (
   <AppBar position="sticky" color="inherit" style={{ bottom: 0 }}>
-    <Box padding={1}>
+    <Grid container padding={1} justifyContent="center">
       <Box maxWidth={800}>
         <Box marginBottom={1}>
           <Filter items={filterGroup} onFilterChange={changeFilter} />
@@ -27,6 +27,6 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
         {/* search box here... */}
         <SearchBox onSubmit={changeQuery} />
       </Box>
-    </Box>
+    </Grid>
   </AppBar>
 );
