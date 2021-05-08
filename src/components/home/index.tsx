@@ -19,7 +19,12 @@ export const Home: FC = () => {
   }, []);
 
   return (
-    <Grid container direction="column" style={{ height: "100vh" }}>
+    <Grid
+      container
+      direction="column"
+      wrap="nowrap"
+      style={{ height: "100vh" }}
+    >
       <MainAppBar />
       <Box flexGrow={1}>
         <FleetListArea />
