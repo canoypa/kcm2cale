@@ -24,7 +24,12 @@ export const Home: FC = () => {
       <Box flexGrow={1}>
         <FleetListArea />
       </Box>
-      <AppBar position="sticky" style={{ bottom: 0, background: "none" }}>
+      <AppBar
+        position="sticky"
+        elevation={0}
+        color="transparent"
+        style={{ bottom: 0 }}
+      >
         <CreateNewFleet />
       </AppBar>
     </Grid>
