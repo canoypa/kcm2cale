@@ -1,20 +1,22 @@
 import {
-  experimentalStyled,
   FormControl,
   OutlinedInput as MuiOutlinedInput,
+  withStyles,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import { FC, KeyboardEventHandler } from "react";
 
-const Input = experimentalStyled(MuiOutlinedInput)(() => ({
-  borderRadius: 24,
+const Input = withStyles({
+  root: {
+    borderRadius: 24,
+  },
 
-  ".MuiOutlinedInput-input": {
+  input: {
     padding: 0,
     paddingLeft: 8,
     height: 48,
   },
-}));
+})(MuiOutlinedInput);
 
 type Props = {
   onSubmit: (value: string) => void;

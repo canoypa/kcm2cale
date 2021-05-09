@@ -27,13 +27,13 @@ export const NotFound: FC = () => {
         <Box padding="1rem" borderBottom={1} borderColor="divider">
           <Typography variant="h2">:(</Typography>
         </Box>
-        <Typography marginTop={2} marginBottom={2}>
+        <Typography variant="body1" style={{ marginTop: 2, marginBottom: 2 }}>
           404 Page Not Found
         </Typography>
-        <Typography marginTop={2} marginBottom={2}>
+        <Typography variant="body1" style={{ marginTop: 2, marginBottom: 2 }}>
           リクエストされた URL {pathname} はこのサイトに存在しません
         </Typography>
-        <Typography marginTop={2} marginBottom={2}>
+        <Typography variant="body1" style={{ marginTop: 2, marginBottom: 2 }}>
           <Link to="/">トップページへ</Link>
         </Typography>
       </Box>

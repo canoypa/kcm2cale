@@ -1,6 +1,6 @@
-import { PaletteMode } from "@material-ui/core";
+import { PaletteType } from "@material-ui/core";
 
-export type ThemeModeSetting = PaletteMode | "system";
+export type ThemeModeSetting = PaletteType | "system";
 
 export type AppSettingsScheme = {
   theme: ThemeModeSetting;

@@ -18,6 +18,14 @@ import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-ren
 import { useSearchQuery } from "./hooks";
 import { SearchEquipmentsList } from "./search-equipments-list";
 
+/**
+ * 原因不明のエラー
+ * `Uncaught TypeError: Cannot read property 'getAttribute' of null`
+ *
+ * - keyDown で発生
+ * - いずれかの要素に focus されているとエラーにならない
+ */
+
 const isEquipmentGroupValue = (n: number): n is EquipmentGroupValues =>
   n >= 0 && n <= 21;
 

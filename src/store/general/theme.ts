@@ -1,4 +1,4 @@
-import { PaletteMode } from "@material-ui/core";
+import { PaletteType } from "@material-ui/core";
 import { atom, AtomEffect } from "recoil";
 import { AppSettings } from "../../core/app-settings";
 
@@ -10,7 +10,7 @@ const getDefaultThemeMode = () => {
   return getThemeMediaQuery().matches ? "dark" : "light";
 };
 
-const loadConfig: AtomEffect<PaletteMode> = ({ setSelf }) => {
+const loadConfig: AtomEffect<PaletteType> = ({ setSelf }) => {
   const themeMatchMedia = getThemeMediaQuery();
 
   const updateWithSystemTheme = () => {
@@ -31,7 +31,7 @@ const loadConfig: AtomEffect<PaletteMode> = ({ setSelf }) => {
   };
 };
 
-export const PaletteModeState = atom<PaletteMode>({
+export const PaletteModeState = atom<PaletteType>({
   key: "PaletteModeState",
   default: "light",
   effects_UNSTABLE: [loadConfig],

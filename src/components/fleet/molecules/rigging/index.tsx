@@ -31,10 +31,12 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
     <>
       <Grid
         container
-        columnGap={1}
+        spacing={1}
         wrap="nowrap"
-        overflow="auto"
         className={classes.root}
+        style={{
+          overflow: "auto",
+        }}
       >
         <Grid item>
           <EquipmentList

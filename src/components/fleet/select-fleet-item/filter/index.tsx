@@ -13,10 +13,12 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
   return (
     <Grid
       container
-      columnGap={1}
+      spacing={1}
       wrap="nowrap"
-      overflow="auto"
       className={classes.root}
+      style={{
+        overflow: "auto",
+      }}
     >
       {items.filters.map((v) => {
         const _onFilterChange = () => onFilterChange(v.value.toString());

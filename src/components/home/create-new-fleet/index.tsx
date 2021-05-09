@@ -11,7 +11,7 @@ export const CreateNewFleet: FC = () => {
   const linkToFleet = () => push("/new");
 
   return (
-    <Grid container justifyContent="center" className={classes.container}>
+    <Grid container justify="center" className={classes.container}>
       <Fab variant="extended" color="primary" onClick={linkToFleet}>
         <Add className={classes.extendedIcon} />
         編成を作成

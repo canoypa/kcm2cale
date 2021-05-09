@@ -1,10 +1,13 @@
-import { ToggleButton, ToggleButtonGroup } from "@material-ui/core";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { FC, MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 import { ActiveFleetNoState } from "../../../../../store/organize/info";
+import { useStyles } from "./styles";
 
 export const ToggleFleet: FC = () => {
   const [activeFleetNo, setActiveFleetNo] = useRecoilState(ActiveFleetNoState);
+
+  const classes = useStyles();
 
   const handlerOnSelect = (_: MouseEvent, fleetNo: number) => {
     if (fleetNo !== null) {
@@ -16,10 +19,10 @@ export const ToggleFleet: FC = () => {
     <ToggleButtonGroup
       value={activeFleetNo}
       exclusive
-      fullWidth
       size="small"
       color="primary"
       onChange={handlerOnSelect}
+      className={classes.root}
     >
       <ToggleButton value={0}>第一艦隊</ToggleButton>
       <ToggleButton value={1}>第二艦隊</ToggleButton>

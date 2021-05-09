@@ -53,7 +53,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   );
 
   const theme = useTheme();
-  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("xs"));
 
   const classes = useStyles();
 
@@ -89,6 +89,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
       <DialogTitle>編成を編集</DialogTitle>
       <DialogContent>
         <TextField
+          variant="outlined"
           label="編成名"
           value={title}
           helperText={titleValid.countText}
@@ -99,6 +100,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
           className={classes.titleFieldMargin}
         />
         <TextField
+          variant="outlined"
           label="説明"
           value={description}
           helperText={descriptionValid.countText}
@@ -109,6 +111,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
           className={classes.descriptionFieldMargin}
         />
         <TextField
+          variant="outlined"
           select
           label="艦隊編成"
           value={type}

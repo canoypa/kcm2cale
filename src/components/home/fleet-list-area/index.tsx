@@ -33,9 +33,9 @@ export const FleetListArea: FC = () => {
       ) : (
         <Grid
           container
-          justifyContent="center"
+          justify="center"
           alignItems="center"
-          height="100%"
+          style={{ height: "100%" }}
         >
           {fleetList ? <EmptyState /> : <CircularProgress size={24} />}
         </Grid>

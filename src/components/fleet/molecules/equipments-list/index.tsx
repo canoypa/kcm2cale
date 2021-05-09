@@ -35,7 +35,7 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
   });
 
   return (
-    <Grid container columnGap={1} wrap="nowrap">
+    <Grid container spacing={1} wrap="nowrap">
       {items.map((v) => {
         const _handlerEquipmentClick = () => handlerEquipmentClick(v.value);
         return (
