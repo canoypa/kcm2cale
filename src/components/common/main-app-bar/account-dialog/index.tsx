@@ -1,9 +1,9 @@
+import { Dialog, DialogContent } from "@material-ui/core";
 import firebase from "firebase/app";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
-import { Dialog, DialogContent } from "../../dialog";
 import { UserIcon } from "../../user-icon";
 import * as styles from "./styles";
 
@@ -44,15 +44,16 @@ type Props = {
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   // const userLoadable = useUser();
+  const classes = styles.useStyles();
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
-        {/* {userLoadable.state === "hasValue" && ( */}
         <AccountHeader user={null} onClose={onClose} />
-        {/* )} */}
         <div>
-          <Link to="/about">{__APP_NAME__} について</Link>
+          <Link to="/about" className={classes.link}>
+            {__APP_NAME__} について
+          </Link>
         </div>
       </DialogContent>
     </Dialog>
