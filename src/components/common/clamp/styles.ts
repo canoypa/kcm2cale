@@ -9,6 +9,7 @@ export const useLineClampStyles = makeStyles<Theme, LineClampProps>(
       display: "-webkit-box",
       WebkitBoxOrient: "vertical",
       overflow: "hidden",
+      wordBreak: "break-word",
       overflowWrap: "break-word",
 
       WebkitLineClamp: (props) => props.count,
