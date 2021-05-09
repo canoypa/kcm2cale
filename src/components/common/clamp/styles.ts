@@ -14,3 +14,19 @@ export const useLineClampStyles = makeStyles<Theme, LineClampProps>(
     },
   })
 );
+
+type CharClampProps = {
+  count: number;
+};
+export const useCharClampStyles = makeStyles<Theme, CharClampProps>(
+  createStyles({
+    root: {
+      display: "block",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+
+      width: (props) => `${props.count}em`,
+    },
+  })
+);
