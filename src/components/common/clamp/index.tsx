@@ -1,11 +1,11 @@
-import { FC, VFC } from "react";
+import { VFC } from "react";
 import { useCharClampStyles, useLineClampStyles } from "./styles";
 
 type Props = {
   count: number;
   children: string;
 };
-export const LineClamp: FC<Props> = ({ count, children }) => {
+export const LineClamp: VFC<Props> = ({ count, children }) => {
   const classes = useLineClampStyles({ count });
   return <span className={classes.root}>{children}</span>;
 };
