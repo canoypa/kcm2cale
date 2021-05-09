@@ -27,7 +27,7 @@ export const useCharClampStyles = makeStyles<Theme, CharClampProps>(
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
 
-      width: (props) => `${props.count}em`,
+      maxWidth: (props) => `${props.count}em`,
     },
   })
 );
