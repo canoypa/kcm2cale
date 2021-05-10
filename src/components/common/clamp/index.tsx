@@ -1,18 +1,20 @@
-import { css } from "@emotion/css";
-import { FC } from "react";
-import { classNames } from "../../../util/class-names";
-import * as styles from "./styles";
+import { VFC } from "react";
+import { useCharClampStyles, useLineClampStyles } from "./styles";
 
-type Props = {
+type LineClampProps = {
+  count: number;
   children: string;
-  clamp?: number;
 };
-export const LineClamp: FC<Props> = ({ children, clamp = 4 }) => {
-  const style = css({
-    WebkitLineClamp: clamp,
-  });
+export const LineClamp: VFC<LineClampProps> = ({ count, children }) => {
+  const classes = useLineClampStyles({ count });
+  return <span className={classes.root}>{children}</span>;
+};
 
-  return (
-    <span className={classNames(styles.container, style)}>{children}</span>
-  );
+type CharClampProps = {
+  count: number;
+  children: string;
+};
+export const CharClamp: VFC<CharClampProps> = ({ count, children }) => {
+  const classes = useCharClampStyles({ count });
+  return <span className={classes.root}>{children}</span>;
 };

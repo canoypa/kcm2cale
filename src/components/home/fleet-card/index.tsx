@@ -66,14 +66,14 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
               {fleetData.updatedAt.toLocaleDateString()}
             </Typography>
             <Typography variant="h6" className={classes.title}>
-              <LineClamp clamp={1}>{fleetData.title || "無題の編成"}</LineClamp>
+              <LineClamp count={1}>{fleetData.title || "無題の編成"}</LineClamp>
             </Typography>
             <Typography
               variant="subtitle1"
               color="textSecondary"
               className={classes.description}
             >
-              <LineClamp clamp={2}>{fleetData.description}</LineClamp>
+              <LineClamp count={2}>{fleetData.description}</LineClamp>
             </Typography>
             <div className={classes.menuArea}>
               <IconButton onClick={openMenu} ref={menuAnchorEl}>

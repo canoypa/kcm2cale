@@ -27,10 +27,10 @@ export const Info: FC = () => {
   return (
     <div>
       <Typography variant="h4" paragraph>
-        <LineClamp clamp={2}>{fleetName || "無題の編成"}</LineClamp>
+        <LineClamp count={2}>{fleetName || "無題の編成"}</LineClamp>
       </Typography>
       <Typography variant="body1" paragraph color="textSecondary">
-        <LineClamp clamp={4}>{fleetDescription}</LineClamp>
+        <LineClamp count={4}>{fleetDescription}</LineClamp>
       </Typography>
       <Typography variant="body1" color="textSecondary">
         {namedFleetType}

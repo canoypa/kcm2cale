@@ -2,7 +2,7 @@ import { Chip, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { EquipmentsState } from "../../../../store/organize/equipments";
-import * as styles from "./styles";
+import { CharClamp } from "../../../common/clamp";
 
 type Props = {
   shipEquipments: Array<{
@@ -30,7 +30,7 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
 
     return {
       value: equipmentId,
-      label: <span className={styles.chipLabel}>{equipment.name}</span>,
+      label: <CharClamp count={20}>{equipment.name}</CharClamp>,
     };
   });
 
