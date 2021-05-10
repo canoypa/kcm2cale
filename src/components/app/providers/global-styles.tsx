@@ -1,23 +1,26 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { CssBaseline as MuiCssBaseline, withStyles } from "@material-ui/core";
 import { ReactNode, VFC } from "react";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const CssBaseline = withStyles((theme) => ({
   "@global": {
-    body: {
-      margin: 0,
-      padding: 0,
+    html: {
+      colorScheme: "dark light",
       WebkitTapHighlightColor: "transparent",
-      backgroundColor: theme.palette.background.default,
-      color: theme.palette.text.primary,
+    },
+    body: {
+      ...theme.typography.body1,
     },
   },
-}));
+}))(MuiCssBaseline);
 
 type Props = {
   children: ReactNode;
 };
 export const GlobalStyles: VFC<Props> = ({ children }) => {
-  useStyles();
-
-  return <>{children}</>;
+  return (
+    <>
+      <CssBaseline />
+      {children}
+    </>
+  );
 };
