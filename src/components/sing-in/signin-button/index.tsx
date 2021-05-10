@@ -1,10 +1,10 @@
+import { Button } from "@material-ui/core";
 import { FC } from "react";
 import {
   ProviderIdValue,
   ProviderLogoMap,
   ProviderNameMap,
 } from "../../../core/firebase/auth/types";
-import * as styles from "./styles";
 
 type Props = {
   provider: ProviderIdValue;
@@ -12,14 +12,20 @@ type Props = {
 };
 export const SignInButton: FC<Props> = ({ provider, onClick }) => {
   const providerName = ProviderNameMap.get(provider);
-  const providerLogo = ProviderLogoMap.get(provider);
+  const ProviderLogo = ProviderLogoMap.get(provider);
 
   const handlerClick = () => onClick(provider);
 
   return (
-    <button className={styles.container} onClick={handlerClick}>
-      <div className={styles.providerIcon}>{providerLogo}</div>
-      <div>{providerName} でサインイン</div>
-    </button>
+    <>
+      <Button
+        variant="outlined"
+        size="large"
+        startIcon={ProviderLogo}
+        onClick={handlerClick}
+      >
+        {providerName} でサインイン
+      </Button>
+    </>
   );
 };

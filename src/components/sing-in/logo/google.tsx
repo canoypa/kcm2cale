@@ -1,7 +1,8 @@
+import { SvgIcon } from "@material-ui/core";
 import { FC } from "react";
 
 export const GoogleLogo: FC = () => (
-  <svg viewBox="0 0 48 48">
+  <SvgIcon viewBox="0 0 48 48">
     <path
       fill="#FBBC05"
       d="M43.61 20.08H42V20H24v8h11.3a12 12 0 11-3.34-12.96l5.66-5.66a20 20 0 106 10.7z"
@@ -18,5 +19,5 @@ export const GoogleLogo: FC = () => (
       fill="#4285F4"
       d="M43.61 20.08H42V20H24v8h11.3a12.04 12.04 0 01-4.08 5.57l6.19 5.24C36.97 39.2 44 34 44 24c0-1.34-.14-2.65-.39-3.92z"
     />
-  </svg>
+  </SvgIcon>
 );
