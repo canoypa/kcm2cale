@@ -2,33 +2,33 @@ import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 
 const PALETTE_BASE: PaletteOptions = {
   primary: {
-    main: "#6876bd",
-    light: "#6876bd",
-    dark: "#6876bd",
+    main: "#5c6bc0",
+    light: "#5c6bc0",
+    dark: "#5c6bc0",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   info: {
-    main: "#2196F3",
-    light: "#2196F3",
-    dark: "#2196F3",
+    main: "#03a9f4",
+    light: "#03a9f4",
+    dark: "#03a9f4",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   warning: {
-    main: "#FFEB3B",
-    light: "#FFEB3B",
-    dark: "#FFEB3B",
+    main: "#ffc107",
+    light: "#ffc107",
+    dark: "#ffc107",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   error: {
-    main: "#b00020",
-    light: "#b00020",
-    dark: "#b00020",
+    main: "#f44336",
+    light: "#f44336",
+    dark: "#f44336",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   success: {
-    main: "#4caf50",
-    light: "#4caf50",
-    dark: "#4caf50",
+    main: "#8bc34a",
+    light: "#8bc34a",
+    dark: "#8bc34a",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
 };
