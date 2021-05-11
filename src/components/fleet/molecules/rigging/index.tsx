@@ -56,13 +56,11 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
         )}
       </Grid>
 
-      {isOpenDialog && (
-        <SelectEquipment
-          open={isOpenDialog}
-          onSelect={selecting.end}
-          onClose={selecting.cancel}
-        />
-      )}
+      <SelectEquipment
+        open={isOpenDialog}
+        onSelect={selecting.end}
+        onClose={selecting.cancel}
+      />
     </>
   );
 };
