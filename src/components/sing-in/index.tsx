@@ -1,3 +1,4 @@
+import { Box, Typography } from "@material-ui/core";
 import { FC, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
@@ -6,7 +7,7 @@ import { useUser } from "../../core/firebase/auth/hooks";
 import { ProviderId, ProviderIdValue } from "../../core/firebase/auth/types";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { SignInButton } from "./signin-button";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type LocationState =
   | {
@@ -22,6 +23,8 @@ export const SignIn: FC = () => {
   const { state } = useLocation<LocationState>();
 
   const userLoadable = useUser();
+
+  const classes = useStyles();
 
   const signIn = (providerId: ProviderIdValue) => {
     const provider = createProvider(providerId);
@@ -47,12 +50,12 @@ export const SignIn: FC = () => {
       {userLoadable.state === "loading" ? (
         <div>Loading...</div>
       ) : (
-        <div className={styles.wrapper}>
-          <div className={styles.container}>
-            <div>
-              <div className={styles.title}>サインイン</div>
-            </div>
-            <div className={styles.signInButtons}>
+        <div className={classes.root}>
+          <div className={classes.container}>
+            <Box display="flex" justifyContent="center">
+              <Typography variant="h4">サインイン</Typography>
+            </Box>
+            <div className={classes.actions}>
               <SignInButton provider={ProviderId.Google} onClick={signIn} />
               <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
             </div>

@@ -3147,6 +3147,16 @@ export const ShipsData: ShipData[] = [
     name: "竹改",
   },
   {
+    no: "444a",
+    type: ShipType.Destroyer,
+    name: "桃",
+  },
+  {
+    no: "444b",
+    type: ShipType.Destroyer,
+    name: "桃改",
+  },
+  {
     no: "446a",
     type: ShipType.AircraftCarrier,
     name: "加賀改二護",
@@ -3182,6 +3192,11 @@ export const ShipsData: ShipData[] = [
     name: "Washington",
   },
   {
+    no: "455a",
+    type: ShipType.LightCruiser,
+    name: "Northampton",
+  },
+  {
     no: "456a",
     type: ShipType.Destroyer,
     name: "雪風改二",
@@ -3197,6 +3212,11 @@ export const ShipsData: ShipData[] = [
     name: "Washington改",
   },
   {
+    no: "460a",
+    type: ShipType.LightCruiser,
+    name: "Northampton改",
+  },
+  {
     no: "462a",
     type: ShipType.LightCruiser,
     name: "能代改二",
@@ -3210,5 +3230,35 @@ export const ShipsData: ShipData[] = [
     no: "465a",
     type: ShipType.Destroyer,
     name: "曙改二",
+  },
+  {
+    no: "471a",
+    type: ShipType.Destroyer,
+    name: "巻波",
+  },
+  {
+    no: "471b",
+    type: ShipType.Destroyer,
+    name: "巻波改",
+  },
+  {
+    no: "482a",
+    type: ShipType.Submarine,
+    name: "伊203",
+  },
+  {
+    no: "483a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二戊",
+  },
+  {
+    no: "487a",
+    type: ShipType.Submarine,
+    name: "伊203改",
+  },
+  {
+    no: "488a",
+    type: ShipType.LightAircraftCarrier,
+    name: "龍鳳改二",
   },
 ];

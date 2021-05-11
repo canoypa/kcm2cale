@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "kcm2cale",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "build:prod": "webpack --env mode=prod",
     "build:dev": "webpack --env mode=dev",
@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@emotion/css": "^11.0.0",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "firebase": "^8.2.5",
     "fuse.js": "^6.4.3",
     "localforage": "^1.9.0",
@@ -25,7 +28,7 @@
     "react-movable": "^2.5.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "recoil": "^0.1.2"
+    "recoil": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -45,10 +48,8 @@
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
-    "autoprefixer": "^10.2.4",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "cssnano": "^4.1.10",
     "dotenv": "^8.2.0",
     "eslint": "^7.2.0",
     "eslint-config-custrino": "^2.0.1",
@@ -56,12 +57,11 @@
     "html-webpack-plugin": "^5.1.0",
     "jest": "^26.0.1",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.1.7",
     "prettier": "^2.0.1",
     "stylelint": "^13.2.1",
     "stylelint-config-custrino": "^2.0.0",
     "ts-jest": "^26.1.0",
-    "ts-loader": "^8.0.11",
+    "ts-loader": "^9.1.1",
     "typescript": "^4.0.2",
     "webpack": "^5.10.1",
     "webpack-cli": "^4.2.0",

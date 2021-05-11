@@ -1,10 +1,9 @@
+import { CircularProgress, Grid } from "@material-ui/core";
 import { createContext, FC, useEffect, useRef, useState } from "react";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
-import { CircularProgressIndicators } from "../../common/progress-indicators/circular";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
-import * as styles from "./styles";
 
 export const FleetListContext = createContext({ reloadFleet: () => {} });
 
@@ -29,19 +28,18 @@ export const FleetListArea: FC = () => {
 
   return (
     <FleetListContext.Provider value={contextValue.current}>
-      <div>
-        {fleetList ? (
-          fleetList.length ? (
-            <FleetList fleetList={fleetList} />
-          ) : (
-            <EmptyState />
-          )
-        ) : (
-          <div className={styles.loadingContainer}>
-            <CircularProgressIndicators />
-          </div>
-        )}
-      </div>
+      {fleetList?.length ? (
+        <FleetList fleetList={fleetList} />
+      ) : (
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
+          {fleetList ? <EmptyState /> : <CircularProgress size={24} />}
+        </Grid>
+      )}
     </FleetListContext.Provider>
   );
 };
