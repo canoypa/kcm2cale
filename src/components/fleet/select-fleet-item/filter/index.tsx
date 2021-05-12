@@ -20,16 +20,11 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
         overflow: "auto",
       }}
     >
-      {items.filters.map((v) => {
-        const _onFilterChange = () => onFilterChange(v.value.toString());
+      {items.map(({ label, value }) => {
+        const _onFilterChange = () => onFilterChange(value.toString());
         return (
-          <Grid item key={v.value}>
-            <Chip
-              key={v.value}
-              variant="outlined"
-              label={v.label}
-              onClick={_onFilterChange}
-            />
+          <Grid item key={value}>
+            <Chip variant="outlined" label={label} onClick={_onFilterChange} />
           </Grid>
         );
       })}
