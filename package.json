@@ -6,7 +6,7 @@
     "build:prod": "webpack --env mode=prod",
     "build:dev": "webpack --env mode=dev",
     "build:watch": "webpack -w --env mode=dev",
-    "serve": "firebase serve",
+    "start": "firebase emulators:start --import=debug/emulators --export-on-exit",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "lint": "npm-run-all lint:*",
