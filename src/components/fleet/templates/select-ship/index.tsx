@@ -30,11 +30,10 @@ const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
 
   const handler = {
     filterChange: useCallback(
-      (_filter: string | null) => {
-        if (_filter === null) {
+      (filter: number | null) => {
+        if (filter === null) {
           setTypes(null);
         } else {
-          const filter = parseInt(_filter, 10);
           if (isShipGroupValue(filter)) {
             setTypes(ShipSearchGroupMap[filter]);
           }

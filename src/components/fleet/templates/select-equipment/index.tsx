@@ -38,11 +38,10 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
 
   const handler = {
     filterChange: useCallback(
-      (_filter: string | null) => {
-        if (_filter === null) {
+      (filter: number | null) => {
+        if (filter === null) {
           setTypes(null);
         } else {
-          const filter = parseInt(_filter, 10);
           if (isEquipmentGroupValue(filter)) {
             setTypes(EquipmentGroupMap[filter]);
           }

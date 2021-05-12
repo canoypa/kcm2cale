@@ -7,7 +7,7 @@ import { SearchBox } from "./search-box";
 type Props = {
   filterGroup: SearchFilters;
 
-  changeFilter: (value: string | null) => void;
+  changeFilter: (value: number | null) => void;
   changeQuery: (value: string) => void;
 };
 export const OrganizeSelectSearchRenderer: FC<Props> = ({

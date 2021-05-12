@@ -5,7 +5,7 @@ import { useStyles } from "./styles";
 
 type Props = {
   items: SearchFilters;
-  onFilterChange: (filters: string | null) => void;
+  onFilterChange: (filters: number | null) => void;
 };
 export const Filter: FC<Props> = ({ items, onFilterChange }) => {
   const classes = useStyles();
@@ -21,7 +21,7 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
       }}
     >
       {items.map(({ label, value }) => {
-        const _onFilterChange = () => onFilterChange(value.toString());
+        const _onFilterChange = () => onFilterChange(value);
         return (
           <Grid item key={value}>
             <Chip variant="outlined" label={label} onClick={_onFilterChange} />
