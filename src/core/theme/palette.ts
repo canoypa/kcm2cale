@@ -2,35 +2,27 @@ import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 
 const PALETTE_BASE: PaletteOptions = {
   primary: {
-    main: "#6876bd",
-    light: "#6876bd",
-    dark: "#6876bd",
+    main: "#3f51b5",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   info: {
-    main: "#2196F3",
-    light: "#2196F3",
-    dark: "#2196F3",
+    main: "#03a9f4",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   warning: {
-    main: "#FFEB3B",
-    light: "#FFEB3B",
-    dark: "#FFEB3B",
+    main: "#ffc107",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   error: {
-    main: "#b00020",
-    light: "#b00020",
-    dark: "#b00020",
+    main: "#f44336",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
   success: {
-    main: "#4caf50",
-    light: "#4caf50",
-    dark: "#4caf50",
+    main: "#8bc34a",
     contrastText: "rgba(255, 255, 255, 0.87)",
   },
+
+  tonalOffset: 0.1,
 };
 
 export const PALETTE_LIGHT: PaletteOptions = {
@@ -43,9 +35,6 @@ export const PALETTE_LIGHT: PaletteOptions = {
     secondary: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.38)",
   },
-  // Todo: なんの値かわかったら追加して
-  //   action: {
-  //   },
   background: {
     default: "#ffffff",
   },
@@ -62,9 +51,6 @@ export const PALETTE_DARK: PaletteOptions = {
     secondary: "rgba(255, 255, 255, 0.6)",
     disabled: "rgba(255, 255, 255, 0.38)",
   },
-  // Todo: なんの値かわかったら追加して
-  //   action: {
-  //   },
   background: {
     default: "#121212",
   },
