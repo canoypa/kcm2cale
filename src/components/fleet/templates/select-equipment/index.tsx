@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
-import { FC, useCallback } from "react";
+import { FC, useCallback, VFC } from "react";
 import {
   equipmentGroupFilter,
   EquipmentGroupMap,
@@ -29,21 +29,19 @@ import { SearchEquipmentsList } from "./search-equipments-list";
 const isEquipmentGroupValue = (n: number): n is EquipmentGroupValues =>
   n >= 0 && n <= 21;
 
-type Props = {
-  open: boolean;
+type SelectEquipmentProps = {
   onSelect: (equipmentData: EquipmentData) => void;
-  onCancel: () => void;
+  onClose: () => void;
 };
-export const SelectEquipment: FC<Props> = ({ open, onSelect, onCancel }) => {
+const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
 
   const handler = {
     filterChange: useCallback(
-      (_filter: string | null) => {
-        if (_filter === null) {
+      (filter: number | null) => {
+        if (filter === null) {
           setTypes(null);
         } else {
-          const filter = parseInt(_filter, 10);
           if (isEquipmentGroupValue(filter)) {
             setTypes(EquipmentGroupMap[filter]);
           }
@@ -58,17 +56,15 @@ export const SelectEquipment: FC<Props> = ({ open, onSelect, onCancel }) => {
       (equipmentData: EquipmentData) => onSelect(equipmentData),
       [onSelect]
     ),
-
-    onCancel: useCallback(() => onCancel(), [onCancel]),
   };
 
   const equipmentsList = EquipmentSearch.search(searchQuery);
 
   return (
-    <Dialog fullScreen open={open} onClose={onCancel}>
+    <>
       <AppBar position="sticky" color="inherit">
         <Toolbar>
-          <IconButton edge="start" onClick={onCancel}>
+          <IconButton edge="start" onClick={onClose}>
             <NavigateBefore />
           </IconButton>
           <Typography variant="h6">装備を選択</Typography>
@@ -83,6 +79,23 @@ export const SelectEquipment: FC<Props> = ({ open, onSelect, onCancel }) => {
         changeFilter={handler.filterChange}
         changeQuery={handler.onChangeQuery}
       />
+    </>
+  );
+};
+
+type SelectEquipmentDialogProps = {
+  open: boolean;
+  onSelect: (equipmentData: EquipmentData) => void;
+  onClose: () => void;
+};
+export const SelectEquipmentDialog: VFC<SelectEquipmentDialogProps> = ({
+  open,
+  onSelect,
+  onClose,
+}) => {
+  return (
+    <Dialog fullScreen open={open} onClose={onClose}>
+      <SelectEquipment onSelect={onSelect} onClose={onClose} />
     </Dialog>
   );
 };

@@ -1,16 +1,13 @@
 import { AppBar, Box, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { Filter } from "../filter";
+import { SearchFilters } from "../types";
 import { SearchBox } from "./search-box";
 
 type Props = {
-  filterGroup: {
-    id: string;
-    title: string;
-    filters: Array<{ value: number; label: string }>;
-  };
+  filterGroup: SearchFilters;
 
-  changeFilter: (value: string | null) => void;
+  changeFilter: (value: number | null) => void;
   changeQuery: (value: string) => void;
 };
 export const OrganizeSelectSearchRenderer: FC<Props> = ({

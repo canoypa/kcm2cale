@@ -2,7 +2,7 @@ import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { FleetStateValue } from "../../../../store/organize/ships";
-import { SelectEquipment } from "../../templates/select-equipment";
+import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useRigging } from "./hook";
 import { useStyles } from "./styles";
@@ -56,13 +56,11 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
         )}
       </Grid>
 
-      {isOpenDialog && (
-        <SelectEquipment
-          open={isOpenDialog}
-          onSelect={selecting.end}
-          onCancel={selecting.cancel}
-        />
-      )}
+      <SelectEquipmentDialog
+        open={isOpenDialog}
+        onSelect={selecting.end}
+        onClose={selecting.cancel}
+      />
     </>
   );
 };

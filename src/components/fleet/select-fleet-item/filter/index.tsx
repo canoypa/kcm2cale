@@ -1,14 +1,22 @@
 import { Chip, Grid } from "@material-ui/core";
-import { FC } from "react";
-import { FilterGroup } from "../types";
+import { FC, useState } from "react";
+import { SearchFilters } from "../types";
 import { useStyles } from "./styles";
 
 type Props = {
-  items: FilterGroup;
-  onFilterChange: (filters: string | null) => void;
+  items: SearchFilters;
+  onFilterChange: (filters: number | null) => void;
 };
 export const Filter: FC<Props> = ({ items, onFilterChange }) => {
+  const [state, setState] = useState<number | null>(null);
+
   const classes = useStyles();
+
+  const onChange = (value: number) => {
+    const newState = value === state ? null : value;
+    setState(newState);
+    onFilterChange(newState);
+  };
 
   return (
     <Grid
@@ -20,15 +28,16 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
         overflow: "auto",
       }}
     >
-      {items.filters.map((v) => {
-        const _onFilterChange = () => onFilterChange(v.value.toString());
+      {items.map(({ label, value }) => {
+        const _onChange = () => onChange(value);
+        const selectedColor = value === state ? "primary" : "default";
         return (
-          <Grid item key={v.value}>
+          <Grid item key={value}>
             <Chip
-              key={v.value}
               variant="outlined"
-              label={v.label}
-              onClick={_onFilterChange}
+              color={selectedColor}
+              label={label}
+              onClick={_onChange}
             />
           </Grid>
         );

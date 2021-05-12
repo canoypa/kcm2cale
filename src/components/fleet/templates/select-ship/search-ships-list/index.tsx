@@ -1,5 +1,7 @@
-import { Box, List, ListItem, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
+import Measure from "react-measure";
+import { FixedSizeList } from "react-window";
 import { ShipData } from "../../../../../modules/ship";
 
 type Props = {
@@ -16,18 +18,33 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
   }));
 
   return (
-    <Box flexGrow={1}>
-      <List>
-        {items.map((v) => {
-          const _handlerOnSelect = () => handlerOnSelect(v.value);
+    <Measure bounds>
+      {({ measureRef, contentRect }) => (
+        <div style={{ flexGrow: 1 }} ref={measureRef}>
+          <FixedSizeList
+            width={contentRect.bounds?.width || 0}
+            height={contentRect.bounds?.height || 0}
+            itemCount={items.length}
+            itemSize={48}
+          >
+            {({ index, style }) => {
+              const item = items[index];
+              const _handlerOnSelect = () => handlerOnSelect(item.value);
 
-          return (
-            <ListItem key={v.key} button onClick={_handlerOnSelect}>
-              <ListItemText primary={v.label} />
-            </ListItem>
-          );
-        })}
-      </List>
-    </Box>
+              return (
+                <ListItem
+                  key={item.key}
+                  button
+                  style={style}
+                  onClick={_handlerOnSelect}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItem>
+              );
+            }}
+          </FixedSizeList>
+        </div>
+      )}
+    </Measure>
   );
 };

@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import { FleetTypeState } from "../../../../store/organize/info";
-import { SelectShip } from "../../templates/select-ship";
+import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
@@ -15,7 +15,7 @@ import { CurrentShip, useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
   const { fleet: fleetState, sort } = useFleet();
-  const [selectState, selecting] = useSelectShip();
+  const [isSelectOpen, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
 
@@ -55,13 +55,11 @@ export const Fleet: FC = () => {
         </SwapShipContext.Provider>
       </div>
 
-      {selectState.isOpen && (
-        <SelectShip
-          open={selectState.isOpen}
-          currentShip={selectState.currentShip}
-          onEnd={selecting.end}
-        />
-      )}
+      <SelectShipDialog
+        open={isSelectOpen}
+        onSelect={selecting.onSelect}
+        onClose={selecting.end}
+      />
     </>
   );
 };
