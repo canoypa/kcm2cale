@@ -1,10 +1,10 @@
 import { Chip, Grid } from "@material-ui/core";
 import { FC } from "react";
-import { FilterGroup } from "../types";
+import { SearchFilters } from "../types";
 import { useStyles } from "./styles";
 
 type Props = {
-  items: FilterGroup;
+  items: SearchFilters;
   onFilterChange: (filters: string | null) => void;
 };
 export const Filter: FC<Props> = ({ items, onFilterChange }) => {
