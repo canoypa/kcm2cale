@@ -9,6 +9,7 @@
 
 # Build
 /build/
+/report/
 
 # public
 /public/

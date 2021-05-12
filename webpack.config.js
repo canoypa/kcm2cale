@@ -1,16 +1,16 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
 
-const { version: appVersion } = require("./package.json");
 const variable = require("./scripts/build/variable");
 
 const config = (env) => {
-  const isProd = env.mode === "prod";
+  const isProd = env.mode === "production";
 
   return {
-    mode: isProd ? "production" : "development",
+    mode: env.mode,
 
     output: { filename: "[name].js", path: resolve("public") },
 
@@ -35,13 +35,19 @@ const config = (env) => {
     plugins: [
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(variable.appName),
-        __APP_VERSION__: JSON.stringify(appVersion),
+        __APP_VERSION__: JSON.stringify(variable.appVersion),
       }),
       new HtmlWebpackPlugin({
         template: resolve("src/index.html"),
         inject: false,
       }),
       new CleanWebpackPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: "json",
+        reportFilename: resolve("report/bundle-analyzer.json"),
+        generateStatsFile: true,
+        statsFilename: resolve("report/webpack-stats.json"),
+      }),
     ],
   };
 };
