@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 interface ExternalLink {
   href: string;
@@ -18,6 +18,8 @@ export const About: FC = () => {
   const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
+  const classes = useStyles();
+
   useEffect(() => {
     setPageTitle("About");
     pageViewLog("About");
@@ -27,7 +29,7 @@ export const About: FC = () => {
   }, []);
 
   return (
-    <div className={styles.aboutContainer}>
+    <div className={classes.root}>
       <header>
         <Link to="/">トップページへ</Link>
       </header>

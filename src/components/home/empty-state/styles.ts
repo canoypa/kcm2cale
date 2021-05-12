@@ -1,21 +1,14 @@
-import { css } from "@emotion/css";
-import { TypographyBody1, TypographyHeadline6 } from "../../common/typography";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export const container = css({
-  display: "grid",
-  placeItems: "center",
-  rowGap: 16,
-});
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paragraph: {
+      margin: 0,
+      color: theme.palette.text.secondary,
+    },
 
-export const paragraph = css({
-  margin: 0,
-  color: "rgba(0, 0, 0, 0.6)",
-});
-
-export const title = css(TypographyHeadline6);
-
-export const text = css(TypographyBody1);
-
-export const prom = css({
-  fontWeight: 500,
-});
+    prom: {
+      fontWeight: theme.typography.fontWeightBold,
+    },
+  })
+);

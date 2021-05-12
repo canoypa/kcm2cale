@@ -2027,7 +2027,7 @@ export const EquipmentsData: EquipmentData[] = [
     name: "武装大発",
   },
   {
-    no: 411,
+    no: 410,
     type: EquipmentType.LargeRadar,
     name: "21号対空電探改二",
   },

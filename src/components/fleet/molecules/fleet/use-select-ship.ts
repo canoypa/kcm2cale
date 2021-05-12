@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { ShipData } from "../../../../modules/ship";
+import { useRemoveShip, useSetShip } from "../../../../store/organize/ships";
+import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 
 export type CurrentShip = {
   fleetNo: number;
@@ -10,13 +13,18 @@ type SelectState =
   | { isOpen: true; currentShip: CurrentShip }
   | { isOpen: false; currentShip: null };
 type SelectShip = [
-  SelectState,
+  boolean,
   {
     start: (currentShip: CurrentShip) => void;
+    onSelect: (shipData: ShipData) => void;
     end: () => void;
   }
 ];
 export const useSelectShip = (): SelectShip => {
+  const setShip = useSetShip();
+  const removeShip = useRemoveShip();
+  const removeShipEquipments = useRemoveEquipments();
+
   const initialSelectState: SelectState = {
     isOpen: false,
     currentShip: null,
@@ -33,10 +41,25 @@ export const useSelectShip = (): SelectShip => {
     setSelectState(initialSelectState);
   };
 
+  const onSelect = (shipData: ShipData) => {
+    if (!selectState.isOpen) throw new Error("Error: start 未実行");
+
+    const { fleetNo, turnNo, shipId } = selectState.currentShip;
+
+    setShip(fleetNo, turnNo, shipData);
+    if (shipId) {
+      removeShip(shipId);
+      removeShipEquipments(shipId);
+    }
+
+    endSelecting();
+  };
+
   return [
-    selectState,
+    selectState.isOpen,
     {
       start: startSelecting,
+      onSelect: onSelect,
       end: endSelecting,
     },
   ];

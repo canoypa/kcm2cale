@@ -1,16 +1,13 @@
+import { AppBar, Box, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { Filter } from "../filter";
+import { SearchFilters } from "../types";
 import { SearchBox } from "./search-box";
-import * as styles from "./styles";
 
 type Props = {
-  filterGroup: {
-    id: string;
-    title: string;
-    filters: Array<{ value: number; label: string }>;
-  };
+  filterGroup: SearchFilters;
 
-  changeFilter: (value: string | null) => void;
+  changeFilter: (value: number | null) => void;
   changeQuery: (value: string) => void;
 };
 export const OrganizeSelectSearchRenderer: FC<Props> = ({
@@ -18,13 +15,15 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
   changeFilter,
   changeQuery,
 }) => (
-  <div className={styles.organizeSelectSearchRenderer}>
-    <div className={styles.wrapper}>
-      <div className={styles.filterArea}>
-        <Filter items={filterGroup} onFilterChange={changeFilter} />
-      </div>
-      {/* search box here... */}
-      <SearchBox onSubmit={changeQuery} />
-    </div>
-  </div>
+  <AppBar position="sticky" color="inherit" style={{ bottom: 0 }}>
+    <Grid container justify="center" style={{ padding: 8 }}>
+      <Box maxWidth={800} width="100%" overflow="hidden">
+        <Box marginBottom={1}>
+          <Filter items={filterGroup} onFilterChange={changeFilter} />
+        </Box>
+        {/* search box here... */}
+        <SearchBox onSubmit={changeQuery} />
+      </Box>
+    </Grid>
+  </AppBar>
 );

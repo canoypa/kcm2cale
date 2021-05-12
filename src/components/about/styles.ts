@@ -1,25 +1,33 @@
-import { css } from "@emotion/css";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export const aboutContainer = css({
-  padding: 24,
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      padding: 24,
 
-  "*": {
-    color: "rgba(0, 0, 0, 0.87)",
-  },
+      "*": {
+        color: theme.palette.text.primary,
+      },
 
-  "h1, h2, h3, h4, h5, h6": {
-    lineHeight: "2em",
-  },
+      "& a": {
+        color: theme.palette.primary.main,
+      },
 
-  "h1, h2": {
-    borderBottom: "1px solid #e0e0e0",
-  },
+      "& h1, & h2, & h3, & h4, & h5, & h6": {
+        lineHeight: "2em",
+      },
 
-  "main section": {
-    marginBottom: "2em",
-  },
+      "& h1, & h2": {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+      },
 
-  footer: {
-    borderTop: "1px solid #e0e0e0",
-  },
-});
+      "& main section": {
+        marginBottom: "2em",
+      },
+
+      "& footer": {
+        borderTop: `1px solid ${theme.palette.divider}`,
+      },
+    },
+  })
+);
