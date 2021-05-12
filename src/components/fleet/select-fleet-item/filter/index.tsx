@@ -30,9 +30,15 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
     >
       {items.map(({ label, value }) => {
         const _onChange = () => onChange(value);
+        const selectedColor = value === state ? "primary" : "default";
         return (
           <Grid item key={value}>
-            <Chip variant="outlined" label={label} onClick={_onChange} />
+            <Chip
+              variant="outlined"
+              color={selectedColor}
+              label={label}
+              onClick={_onChange}
+            />
           </Grid>
         );
       })}
