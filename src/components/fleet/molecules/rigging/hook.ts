@@ -24,9 +24,9 @@ export const useRigging = (fleetPlace: FleetStateValue): Rigging => {
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
   const shipEquipmentsState = useRecoilValue(RiggingState);
-  const shipEquipments = shipEquipmentsState.filter(
-    (v) => v.shipId === fleetPlace.shipId
-  );
+  const shipEquipments = shipEquipmentsState
+    .filter((v) => v.shipId === fleetPlace.shipId)
+    .sort((a, b) => a.slotNo - b.slotNo);
 
   const equippedLength = shipEquipments.length;
 
