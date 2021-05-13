@@ -31,7 +31,11 @@ export const MainAppBar: FC = () => {
       >
         <Toolbar>
           <div style={{ flexGrow: 1 }}></div>
-          <IconButton edge="end" onClick={openDialog}>
+          <IconButton
+            edge="end"
+            onClick={openDialog}
+            aria-label="アカウントメニュー"
+          >
             <UserIcon user={null} size={24} />
           </IconButton>
         </Toolbar>

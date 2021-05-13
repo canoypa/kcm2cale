@@ -80,7 +80,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
       {fullScreenBreakPoint && (
         <AppBar position="static" elevation={0} color="transparent">
           <Toolbar>
-            <IconButton onClick={onEnd}>
+            <IconButton onClick={onEnd} aria-label="戻る">
               <NavigateBefore />
             </IconButton>
           </Toolbar>

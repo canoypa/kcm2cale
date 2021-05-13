@@ -22,7 +22,7 @@ export const LowerAppBar: FC<Props> = ({ title, onNavClick }) => {
     <>
       <AppBar color="inherit" elevation={elevateTrigger ? 4 : 0}>
         <Toolbar>
-          <IconButton edge="start" onClick={onNavClick}>
+          <IconButton edge="start" onClick={onNavClick} aria-label="戻る">
             <NavigateBefore />
           </IconButton>
           {title && <Typography variant="h6">{title}</Typography>}
