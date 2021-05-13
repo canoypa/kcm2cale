@@ -11,7 +11,7 @@ export const Actions: FC<Props> = ({ startEdit }) => {
 
   return (
     <div className={container}>
-      <IconButton onClick={editFleetInfo}>
+      <IconButton onClick={editFleetInfo} aria-label="編成情報の編集">
         <EditOutlined />
       </IconButton>
     </div>

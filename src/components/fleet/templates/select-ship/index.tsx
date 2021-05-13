@@ -58,7 +58,7 @@ const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
     <>
       <AppBar position="sticky" color="inherit">
         <Toolbar>
-          <IconButton edge="start" onClick={onClose}>
+          <IconButton edge="start" onClick={onClose} aria-label="戻る">
             <NavigateBefore />
           </IconButton>
           <Typography variant="h6">{"艦娘を選択"}</Typography>

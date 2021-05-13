@@ -76,7 +76,11 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
               <LineClamp count={2}>{fleetData.description}</LineClamp>
             </Typography>
             <div className={classes.menuArea}>
-              <IconButton onClick={openMenu} ref={menuAnchorEl}>
+              <IconButton
+                onClick={openMenu}
+                ref={menuAnchorEl}
+                aria-label="アクションメニュー"
+              >
                 <MoreVert />
               </IconButton>
             </div>

@@ -64,7 +64,7 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
     <>
       <AppBar position="sticky" color="inherit">
         <Toolbar>
-          <IconButton edge="start" onClick={onClose}>
+          <IconButton edge="start" onClick={onClose} aria-label="戻る">
             <NavigateBefore />
           </IconButton>
           <Typography variant="h6">装備を選択</Typography>
