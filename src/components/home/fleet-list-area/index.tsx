@@ -12,7 +12,10 @@ export const FleetListArea: FC = () => {
 
   // 保存済みの編成を読み込み state に保存
   const getAllFleet = async () => {
-    const allFleets = await LocalDatabase.getAllFleet();
+    const _allFleets = await LocalDatabase.getAllFleet();
+    const allFleets = _allFleets.sort((a, b) =>
+      a.updatedAt > b.updatedAt ? -1 : 1
+    );
     setFleetList(allFleets);
   };
 
