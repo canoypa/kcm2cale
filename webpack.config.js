@@ -8,9 +8,10 @@ const variable = require("./scripts/build/variable");
 
 const config = (env) => {
   const isProd = env.mode === "production";
+  const mode = isProd ? "production" : "development";
 
   return {
-    mode: env.mode,
+    mode: mode,
 
     output: { filename: "[name].js", path: resolve("public") },
 
@@ -36,6 +37,9 @@ const config = (env) => {
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(variable.appName),
         __APP_VERSION__: JSON.stringify(variable.appVersion),
+
+        "process.env.NODE_ENV": JSON.stringify(mode),
+        __IS_PRODUCTION__: isProd,
       }),
       new HtmlWebpackPlugin({
         template: resolve("src/index.html"),
