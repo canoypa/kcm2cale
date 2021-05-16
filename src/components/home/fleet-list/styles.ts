@@ -1,14 +1,5 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const container = css({
-  display: "flex",
-  justifyContent: "center",
-});
-
-export const content = css({
-  display: "grid",
-  rowGap: 16,
-  padding: 24,
-  width: "100%",
-  maxWidth: 1200,
-});
+export const useStyles = makeStyles((theme) => ({
+  root: { display: "grid", rowGap: theme.spacing(2) },
+}));
