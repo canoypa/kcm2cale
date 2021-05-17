@@ -5,7 +5,7 @@ import { SearchFleetRequest } from "./types";
 
 const dateSortFn = (a: LocalFleetData_v1, b: LocalFleetData_v1): number => {
   const [aDate, bDate] = [a.updatedAt, b.updatedAt];
-  const dateOrder = aDate < bDate ? 1 : aDate > bDate ? 1 : 0;
+  const dateOrder = aDate < bDate ? 1 : aDate > bDate ? -1 : 0;
   return dateOrder;
 };
 
