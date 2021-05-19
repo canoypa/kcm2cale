@@ -1,8 +1,8 @@
+import { Box } from "@material-ui/core";
 import { FC, useState } from "react";
 import { Editing } from "./editing";
 import { Info } from "./info";
 import { Actions } from "./status-bar";
-import { useStyles } from "./styles";
 
 export const FleetHeader: FC = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,14 +10,12 @@ export const FleetHeader: FC = () => {
   const startEdit = () => setIsEditing(true);
   const endEdit = () => setIsEditing(false);
 
-  const classes = useStyles();
-
   return (
     <>
-      <div className={classes.container}>
+      <Box padding={2}>
         <Actions startEdit={startEdit} />
         <Info />
-      </div>
+      </Box>
 
       <Editing open={isEditing} onEnd={endEdit} />
     </>

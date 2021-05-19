@@ -1,17 +1,15 @@
+import { Box, Container } from "@material-ui/core";
 import { FC } from "react";
 import { Fleet } from "../../molecules/fleet";
 import { FleetHeader } from "../../molecules/fleet-header";
-import { useStyles } from "./styles";
 
 export const Organize: FC = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.container}>
-      <FleetHeader />
-      <div className={classes.fleetArea}>
+    <Container maxWidth="md">
+      <Box display="grid" gridRowGap={16} paddingY={3}>
+        <FleetHeader />
         <Fleet />
-      </div>
-    </div>
+      </Box>
+    </Container>
   );
 };

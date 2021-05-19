@@ -22,7 +22,12 @@ export const NotFound: FC = () => {
   }, []);
 
   return (
-    <Box padding={3} justifyContent="center" className={classes.root}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      padding={3}
+      className={classes.root}
+    >
       <Box maxWidth={599}>
         <Box padding="1rem" borderBottom={1} borderColor="divider">
           <Typography variant="h2">:(</Typography>
