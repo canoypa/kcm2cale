@@ -9,7 +9,7 @@ import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
 import { useFleet } from "./hook";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 import { ToggleFleet } from "./toggle-fleet";
 import { CurrentShip, useSelectShip } from "./use-select-ship";
 
@@ -19,6 +19,8 @@ export const Fleet: FC = () => {
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
 
+  const classes = useStyles();
+
   const swapShipContextValue = (currentShip: CurrentShip) => {
     selecting.start(currentShip);
   };
@@ -27,7 +29,7 @@ export const Fleet: FC = () => {
     <>
       <div>
         {isCombined && (
-          <div className={styles.toggleFleetArea}>
+          <div className={classes.toggleFleetArea}>
             <ToggleFleet />
           </div>
         )}
@@ -38,7 +40,7 @@ export const Fleet: FC = () => {
               sort(oldIndex, newIndex);
             }}
             renderList={({ children, props }) => (
-              <div className={styles.shipsList} {...props}>
+              <div className={classes.shipsList} {...props}>
                 {children}
               </div>
             )}

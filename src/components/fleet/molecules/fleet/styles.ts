@@ -1,11 +1,13 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const toggleFleetArea = css({
-  margin: "0px 8px 8px",
-});
+export const useStyles = makeStyles(() => ({
+  toggleFleetArea: {
+    margin: "0px 8px 8px",
+  },
 
-export const shipsList = css({
-  display: "flex",
-  flexDirection: "column",
-  // rowGap: 8,
-});
+  shipsList: {
+    display: "flex",
+    flexDirection: "column",
+    // rowGap: 8,
+  },
+}));

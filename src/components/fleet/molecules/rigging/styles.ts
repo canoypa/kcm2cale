@@ -1,4 +1,3 @@
-import { css } from "@emotion/css";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(() =>
@@ -11,12 +10,3 @@ export const useStyles = makeStyles(() =>
     },
   })
 );
-
-export const root = css({
-  display: "flex",
-  overflowX: "auto",
-});
-
-export const addEquipmentButtonArea = css({
-  flexShrink: 0,
-});

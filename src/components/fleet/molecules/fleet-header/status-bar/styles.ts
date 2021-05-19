@@ -1,6 +1,8 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const container = css({
-  display: "flex",
-  justifyContent: "flex-end",
-});
+export const useStyles = makeStyles(() => ({
+  container: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+}));

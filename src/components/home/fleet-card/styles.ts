@@ -1,4 +1,3 @@
-import { css } from "@emotion/css";
 import { createStyles, makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(() =>
@@ -20,10 +19,10 @@ export const useStyles = makeStyles(() =>
     menuArea: {
       gridArea: "1/2/4/3",
     },
+
+    container: {
+      color: "initial",
+      textDecoration: "none",
+    },
   })
 );
-
-export const container = css({
-  color: "initial",
-  textDecoration: "none",
-});

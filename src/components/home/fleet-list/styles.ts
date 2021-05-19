@@ -1,14 +1,16 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const container = css({
-  display: "flex",
-  justifyContent: "center",
-});
+export const useStyles = makeStyles(() => ({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+  },
 
-export const content = css({
-  display: "grid",
-  rowGap: 16,
-  padding: 24,
-  width: "100%",
-  maxWidth: 1200,
-});
+  content: {
+    display: "grid",
+    rowGap: 16,
+    padding: 24,
+    width: "100%",
+    maxWidth: 1200,
+  },
+}));

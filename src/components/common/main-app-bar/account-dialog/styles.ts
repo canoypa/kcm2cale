@@ -1,4 +1,3 @@
-import { css } from "@emotion/css";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -7,16 +6,15 @@ export const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       textDecoration: "none",
     },
+    accountHeader: {
+      display: "flex",
+      alignItems: "center",
+      columnGap: 16,
+    },
+
+    promoteSignIn: {
+      display: "flex",
+      justifyContent: "center",
+    },
   })
 );
-
-export const accountHeader = css({
-  display: "flex",
-  alignItems: "center",
-  columnGap: 16,
-});
-
-export const promoteSignIn = css({
-  display: "flex",
-  justifyContent: "center",
-});

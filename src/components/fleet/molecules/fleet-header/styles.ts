@@ -1,9 +1,11 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const container = css({
-  padding: 32,
+export const useStyles = makeStyles(() => ({
+  container: {
+    padding: 32,
 
-  ["@media(max-width: 719px)"]: {
-    padding: 24,
+    ["@media(max-width: 719px)"]: {
+      padding: 24,
+    },
   },
-});
+}));
