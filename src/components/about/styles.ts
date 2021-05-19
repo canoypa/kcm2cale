@@ -1,33 +1,31 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      padding: 24,
+export const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    padding: 24,
 
-      "*": {
-        color: theme.palette.text.primary,
-      },
-
-      "& a": {
-        color: theme.palette.info.main,
-      },
-
-      "& h1, & h2, & h3, & h4, & h5, & h6": {
-        lineHeight: "2em",
-      },
-
-      "& h1, & h2": {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-      },
-
-      "& main section": {
-        marginBottom: "2em",
-      },
-
-      "& footer": {
-        borderTop: `1px solid ${theme.palette.divider}`,
-      },
+    "*": {
+      color: theme.palette.text.primary,
     },
-  })
-);
+
+    "& a": {
+      color: theme.palette.info.main,
+    },
+
+    "& h1, & h2, & h3, & h4, & h5, & h6": {
+      lineHeight: "2em",
+    },
+
+    "& h1, & h2": {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+
+    "& main section": {
+      marginBottom: "2em",
+    },
+
+    "& footer": {
+      borderTop: `1px solid ${theme.palette.divider}`,
+    },
+  },
+}));

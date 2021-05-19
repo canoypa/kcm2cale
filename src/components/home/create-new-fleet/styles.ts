@@ -1,17 +1,15 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      padding: theme.spacing(3),
+export const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    padding: theme.spacing(3),
 
-      ["@media (max-width: 719px)"]: {
-        padding: theme.spacing(2),
-      },
+    ["@media (max-width: 719px)"]: {
+      padding: theme.spacing(2),
     },
+  },
 
-    extendedIcon: {
-      marginRight: theme.spacing(1),
-    },
-  })
-);
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
