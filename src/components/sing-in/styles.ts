@@ -1,35 +1,33 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+  },
+
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 56,
+    width: "100%",
+    padding: 24,
+
+    [theme.breakpoints.up("sm")]: {
+      border: "1px solid",
+      borderColor: theme.palette.divider,
+      padding: 32,
+      borderRadius: 4,
+      maxWidth: 480,
+      boxSizing: "border-box",
     },
+  },
 
-    container: {
-      display: "flex",
-      flexDirection: "column",
-      rowGap: 56,
-      width: "100%",
-      padding: 24,
-
-      [theme.breakpoints.up("sm")]: {
-        border: "1px solid",
-        borderColor: theme.palette.divider,
-        padding: 32,
-        borderRadius: 4,
-        maxWidth: 480,
-        boxSizing: "border-box",
-      },
-    },
-
-    actions: {
-      display: "flex",
-      flexDirection: "column",
-      rowGap: 16,
-    },
-  })
-);
+  actions: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 16,
+  },
+}));

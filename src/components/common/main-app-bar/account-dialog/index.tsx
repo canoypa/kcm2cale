@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
 import { UserIcon } from "../../user-icon";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type AccountHeaderProps = {
   user: firebase.User | null;
@@ -15,6 +15,8 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
   const { push } = useHistory();
   const { pathname } = useLocation();
 
+  const classes = useStyles();
+
   const singIn = () => {
     push("/sign-in", { continue: pathname });
   };
@@ -23,11 +25,9 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
     onClose();
   };
 
-  // return s
-
   return (
     <>
-      <div className={styles.accountHeader}>
+      <div className={classes.accountHeader}>
         <UserIcon user={user} />
         <span>サインインしていません</span>
       </div>
@@ -44,7 +44,7 @@ type Props = {
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   // const userLoadable = useUser();
-  const classes = styles.useStyles();
+  const classes = useStyles();
 
   return (
     <Dialog open={open} onClose={onClose}>
