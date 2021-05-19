@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme) =>
   createStyles({
     link: {
       color: theme.palette.text.secondary,
