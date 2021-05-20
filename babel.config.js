@@ -1,5 +1,8 @@
 module.exports = (api) => {
-  const isProd = api.env("production");
+  const env = api.env();
+
+  const isProd = env === "production";
+  const isDev = env === "development";
 
   return {
     presets: [
@@ -11,7 +14,7 @@ module.exports = (api) => {
 
     plugins: [
       // fast refresh
-      !isProd && "react-refresh/babel",
+      isDev && "react-refresh/babel",
       // クラス構文
       "@babel/plugin-proposal-class-properties",
       // スプレッド構文

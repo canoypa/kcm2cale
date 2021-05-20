@@ -43,7 +43,7 @@ const config = (env) => {
             {
               loader: "ts-loader",
               options: {
-                transpileOnly: true,
+                transpileOnly: !isProd,
               },
             },
           ],
