@@ -6,7 +6,7 @@ import {
 } from "../../../modules/equipment/types";
 import { SearchEquipmentRequest } from "./types";
 
-export { SearchEquipmentRequest } from "./types";
+export * from "./types";
 
 class FuseSearch {
   private options = { keys: ["name"], includeScore: true };
