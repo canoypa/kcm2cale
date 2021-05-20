@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const variable = require("./scripts/build/variable");
 
@@ -16,7 +17,7 @@ const config = (env) => {
     output: { filename: "[name].js", path: resolve("public") },
 
     entry: {
-      index: resolve("./src/index.tsx"),
+      index: ["webpack-dev-server/client", resolve("./src/index.tsx")],
     },
 
     module: {
@@ -24,16 +25,32 @@ const config = (env) => {
         {
           test: /\.tsx?$/,
           exclude: /(node_modules)/,
-          use: ["babel-loader", "ts-loader"],
+          use: [
+            {
+              loader: "babel-loader",
+              options: {
+                plugins: [require("react-refresh/babel")],
+              },
+            },
+            "ts-loader",
+          ],
         },
       ],
     },
 
     devtool: isProd ? false : "source-map",
 
+    devServer: {
+      historyApiFallback: true,
+      hotOnly: true,
+    },
+
     resolve: { extensions: [".js", ".ts", ".tsx"] },
 
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new ReactRefreshWebpackPlugin(),
+
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(variable.appName),
         __APP_VERSION__: JSON.stringify(variable.appVersion),
