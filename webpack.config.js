@@ -11,13 +11,21 @@ const config = (env) => {
   const isProd = env.mode === "production";
   const mode = isProd ? "production" : "development";
 
+  // babel とか用
+  if (isProd) {
+    process.env.NODE_ENV = "production";
+  }
+
   return {
     mode: mode,
 
     output: { filename: "[name].js", path: resolve("public") },
 
     entry: {
-      index: ["webpack-dev-server/client", resolve("./src/index.tsx")],
+      index: [
+        !isProd && "webpack-dev-server/client",
+        resolve("./src/index.tsx"),
+      ].filter(Boolean),
     },
 
     module: {
@@ -29,16 +37,21 @@ const config = (env) => {
             {
               loader: "babel-loader",
               options: {
-                plugins: [require("react-refresh/babel")],
+                cacheDirectory: true,
               },
             },
-            "ts-loader",
+            {
+              loader: "ts-loader",
+              options: {
+                transpileOnly: true,
+              },
+            },
           ],
         },
       ],
     },
 
-    devtool: isProd ? false : "source-map",
+    devtool: isProd ? false : "eval-source-map",
 
     devServer: {
       historyApiFallback: true,
@@ -48,8 +61,8 @@ const config = (env) => {
     resolve: { extensions: [".js", ".ts", ".tsx"] },
 
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new ReactRefreshWebpackPlugin(),
+      !isProd && new webpack.HotModuleReplacementPlugin(),
+      !isProd && new ReactRefreshWebpackPlugin(),
 
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(variable.appName),
@@ -63,13 +76,14 @@ const config = (env) => {
         inject: false,
       }),
       new CleanWebpackPlugin(),
-      new BundleAnalyzerPlugin({
-        analyzerMode: "json",
-        reportFilename: resolve("report/bundle-analyzer.json"),
-        generateStatsFile: true,
-        statsFilename: resolve("report/webpack-stats.json"),
-      }),
-    ],
+      isProd &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: "json",
+          reportFilename: resolve("report/bundle-analyzer.json"),
+          generateStatsFile: true,
+          statsFilename: resolve("report/webpack-stats.json"),
+        }),
+    ].filter(Boolean),
   };
 };
 
