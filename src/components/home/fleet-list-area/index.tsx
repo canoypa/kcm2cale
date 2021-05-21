@@ -1,4 +1,4 @@
-import { CircularProgress, Grid as Box } from "@material-ui/core";
+import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
 import { FC, Suspense } from "react";
 import { useIsExistFleet } from "../../../core/search/fleet";
 import { EmptyState } from "../empty-state";
@@ -23,22 +23,20 @@ export const FleetListArea: FC = () => {
         </Box>
       }
     >
-      <div className={classes.root}>
-        <div className={classes.container}>
-          {isExistFleetList ? (
-            <FleetList />
-          ) : (
-            <Box
-              container
-              justify="center"
-              alignItems="center"
-              style={{ height: "100%" }}
-            >
-              <EmptyState />
-            </Box>
-          )}
-        </div>
-      </div>
+      <Container maxWidth="md" className={classes.root}>
+        {isExistFleetList ? (
+          <FleetList />
+        ) : (
+          <Box
+            container
+            justify="center"
+            alignItems="center"
+            style={{ height: "100%" }}
+          >
+            <EmptyState />
+          </Box>
+        )}
+      </Container>
     </Suspense>
   );
 };

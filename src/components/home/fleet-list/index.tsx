@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Grid } from "@material-ui/core";
+import { Box, CircularProgress, Grid } from "@material-ui/core";
 import { ChangeEventHandler, createContext, FC, Suspense, useRef } from "react";
 import {
   useFleetList,
@@ -13,33 +13,33 @@ export const FleetListContext = createContext({ reloadFleet: () => {} });
 
 export const FleetListView: FC = () => {
   const fleetList = useFleetList();
+  const reloadFleet = useRefreshFleetList();
+
+  // 編成削除時のリロード用 context value
+  const contextValue = useRef({ reloadFleet });
 
   return (
-    <Container maxWidth="md">
-      <Box display="grid" gridRowGap={16} paddingTop={3} paddingBottom={3}>
+    <FleetListContext.Provider value={contextValue.current}>
+      <Box display="grid" gridRowGap={16}>
         {fleetList.map((v) => (
           <FleetCard key={v.id} fleetData={v} />
         ))}
       </Box>
-    </Container>
+    </FleetListContext.Provider>
   );
 };
 
 export const FleetList: FC = () => {
-  const reloadFleet = useRefreshFleetList();
   const [query, setQuery] = useSearchFleetQuery();
 
   const classes = useStyles();
-
-  // 編成削除時のリロード用 context value
-  const contextValue = useRef({ reloadFleet });
 
   const changeQuery: ChangeEventHandler<HTMLInputElement> = (event) => {
     setQuery(event.target.value);
   };
 
   return (
-    <FleetListContext.Provider value={contextValue.current}>
+    <div>
       <div className={classes.searchBoxArea}>
         <SearchBox
           fullWidth
@@ -63,6 +63,6 @@ export const FleetList: FC = () => {
       >
         <FleetListView />
       </Suspense>
-    </FleetListContext.Provider>
+    </div>
   );
 };
