@@ -74,5 +74,9 @@ class LocalDatabaseClass implements LocalDatabase {
   public deleteFleet = async (key: string) => {
     await this.fleetStore.removeItem(key);
   };
+
+  public fleetLength = async () => {
+    return await this.fleetStore.length();
+  };
 }
 export const LocalDatabase = new LocalDatabaseClass();
