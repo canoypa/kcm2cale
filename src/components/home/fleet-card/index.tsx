@@ -13,7 +13,7 @@ import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import { LineClamp } from "../../common/clamp";
-import { FleetListContext } from "../fleet-list-area";
+import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
 
 type Props = { fleetData: LocalFleetData_v1 };

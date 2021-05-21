@@ -14,8 +14,4 @@ export const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 1200,
   },
-
-  searchBoxArea: {
-    marginBottom: theme.spacing(2),
-  },
 }));
