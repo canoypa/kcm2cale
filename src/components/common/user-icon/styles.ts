@@ -1,13 +1,8 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const container = css({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-});
-
-export const icon = css({
-  display: "inline-flex",
-  borderRadius: 16,
-  overflow: "hidden",
-});
+export const useStyles = makeStyles(() => ({
+  root: {
+    backgroundColor: "inherit",
+    color: "inherit",
+  },
+}));

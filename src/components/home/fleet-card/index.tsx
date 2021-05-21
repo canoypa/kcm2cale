@@ -14,7 +14,7 @@ import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import { LineClamp } from "../../common/clamp";
 import { FleetListContext } from "../fleet-list-area";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type Props = { fleetData: LocalFleetData_v1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
@@ -26,7 +26,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
 
-  const classes = styles.useStyles();
+  const classes = useStyles();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
@@ -53,7 +53,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     <>
       <Link
         to={`/fleet/${fleetData.id}`}
-        className={styles.container}
+        className={classes.container}
         onClick={openFleet}
       >
         <Card variant="outlined">

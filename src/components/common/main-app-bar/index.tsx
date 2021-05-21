@@ -1,11 +1,6 @@
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  useScrollTrigger,
-} from "@material-ui/core";
+import { AppBar, Toolbar, useScrollTrigger } from "@material-ui/core";
 import { FC, useState } from "react";
-import { UserIcon } from "../user-icon";
+import { UserIconButton } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
 
 export const MainAppBar: FC = () => {
@@ -31,13 +26,12 @@ export const MainAppBar: FC = () => {
       >
         <Toolbar>
           <div style={{ flexGrow: 1 }}></div>
-          <IconButton
+          <UserIconButton
             edge="end"
+            user={null}
             onClick={openDialog}
             aria-label="アカウントメニュー"
-          >
-            <UserIcon user={null} size={24} />
-          </IconButton>
+          />
         </Toolbar>
       </AppBar>
 

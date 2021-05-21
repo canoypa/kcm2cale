@@ -1,3 +1,4 @@
+import { Box } from "@material-ui/core";
 import { FC } from "react";
 import { List } from "react-movable";
 import { useRecoilValue } from "recoil";
@@ -9,7 +10,6 @@ import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
 import { useFleet } from "./hook";
-import * as styles from "./styles";
 import { ToggleFleet } from "./toggle-fleet";
 import { CurrentShip, useSelectShip } from "./use-select-ship";
 
@@ -27,9 +27,9 @@ export const Fleet: FC = () => {
     <>
       <div>
         {isCombined && (
-          <div className={styles.toggleFleetArea}>
+          <Box marginBottom={2}>
             <ToggleFleet />
-          </div>
+          </Box>
         )}
         <SwapShipContext.Provider value={swapShipContextValue}>
           <List
@@ -38,9 +38,9 @@ export const Fleet: FC = () => {
               sort(oldIndex, newIndex);
             }}
             renderList={({ children, props }) => (
-              <div className={styles.shipsList} {...props}>
+              <Box display="flex" flexDirection="column" {...props}>
                 {children}
-              </div>
+              </Box>
             )}
             renderItem={({ value: fleetPlace, props }) => (
               <div {...props}>

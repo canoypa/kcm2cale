@@ -1,19 +1,19 @@
+import { Box, Container } from "@material-ui/core";
 import { FC } from "react";
 import { LocalFleetData_v1 } from "../../../core/persistence/types";
 import { FleetCard } from "../fleet-card";
-import { useStyles } from "./styles";
 
 type Props = {
   fleetList: LocalFleetData_v1[];
 };
 export const FleetList: FC<Props> = ({ fleetList }) => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      {fleetList.map((v) => (
-        <FleetCard key={v.id} fleetData={v} />
-      ))}
-    </div>
+    <Container maxWidth="md">
+      <Box display="grid" gridRowGap={16} paddingTop={3} paddingBottom={3}>
+        {fleetList.map((v) => (
+          <FleetCard key={v.id} fleetData={v} />
+        ))}
+      </Box>
+    </Container>
   );
 };
