@@ -1,5 +1,5 @@
-import { Box, Container } from "@material-ui/core";
-import { ChangeEventHandler, createContext, FC, useRef } from "react";
+import { Box, CircularProgress, Container, Grid } from "@material-ui/core";
+import { ChangeEventHandler, createContext, FC, Suspense, useRef } from "react";
 import {
   useFleetList,
   useRefreshFleetList,
@@ -11,8 +11,21 @@ import { useStyles } from "./styles";
 
 export const FleetListContext = createContext({ reloadFleet: () => {} });
 
-export const FleetList: FC = () => {
+export const FleetListView: FC = () => {
   const fleetList = useFleetList();
+
+  return (
+    <Container maxWidth="md">
+      <Box display="grid" gridRowGap={16} paddingTop={3} paddingBottom={3}>
+        {fleetList.map((v) => (
+          <FleetCard key={v.id} fleetData={v} />
+        ))}
+      </Box>
+    </Container>
+  );
+};
+
+export const FleetList: FC = () => {
   const reloadFleet = useRefreshFleetList();
   const [query, setQuery] = useSearchFleetQuery();
 
@@ -36,13 +49,20 @@ export const FleetList: FC = () => {
         />
       </div>
 
-      <Container maxWidth="md">
-        <Box display="grid" gridRowGap={16} paddingTop={3} paddingBottom={3}>
-          {fleetList.map((v) => (
-            <FleetCard key={v.id} fleetData={v} />
-          ))}
-        </Box>
-      </Container>
+      <Suspense
+        fallback={
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            style={{ height: "100%" }}
+          >
+            <CircularProgress size={24} />
+          </Grid>
+        }
+      >
+        <FleetListView />
+      </Suspense>
     </FleetListContext.Provider>
   );
 };
