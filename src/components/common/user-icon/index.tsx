@@ -29,7 +29,7 @@ type UserIconButtonProps = IconButtonProps & {
 export const UserIconButton: FC<UserIconButtonProps> = ({ user, ...props }) => {
   return (
     <IconButton style={{ padding: 8 }} {...props}>
-      <UserIcon user={null} size={32} />
+      <UserIcon user={user} size={32} />
     </IconButton>
   );
 };
