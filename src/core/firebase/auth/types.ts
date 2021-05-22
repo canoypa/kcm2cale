@@ -1,6 +1,6 @@
 import { createElement, ReactElement } from "react";
-import { GoogleLogo } from "../../../components/sing-in/logo/google";
-import { TwitterLogo } from "../../../components/sing-in/logo/twitter";
+import { GoogleLogo } from "../../../components/singin/logo/google";
+import { TwitterLogo } from "../../../components/singin/logo/twitter";
 import { EnumValues } from "../../../util/types";
 
 export const ProviderId = {

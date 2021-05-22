@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router";
 
 const Home = lazy(() => import("../../home"));
 const About = lazy(() => import("../../about"));
-const SignIn = lazy(() => import("../../sing-in"));
+const SignIn = lazy(() => import("../../singin"));
 const NewFleet = lazy(() => import("../../new-fleet"));
 const Fleet = lazy(() => import("../../fleet"));
 const NotFound = lazy(() => import("../../not-found"));
