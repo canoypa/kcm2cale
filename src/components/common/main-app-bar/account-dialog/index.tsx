@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
 import { useUser } from "../../../../core/firebase/auth/hooks";
+import { LineClamp } from "../../clamp";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
 
@@ -30,7 +31,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
     <div>
       <div className={classes.accountHeader}>
         <UserIcon user={user} />
-        <span>{user.displayName}</span>
+        <LineClamp count={1}>{user.displayName ?? ""}</LineClamp>
       </div>
       <Box display="flex" justifyContent="center">
         <Button variant="outlined" onClick={signOut}>
@@ -62,7 +63,7 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogContent>
         <AccountHeader user={userLoadable.contents} onClose={onClose} />
         <div>
