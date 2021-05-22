@@ -56,6 +56,7 @@ const config = (env) => {
     devServer: {
       historyApiFallback: true,
       hotOnly: true,
+      port: 5000,
     },
 
     resolve: { extensions: [".js", ".ts", ".tsx"] },
