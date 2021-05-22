@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@material-ui/core";
+import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import firebase from "firebase/app";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
@@ -47,15 +47,16 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogContent>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+      <Box padding={2}>
         <AccountHeader user={null} onClose={onClose} />
-        <div>
-          <Link to="/about" className={classes.link}>
-            {__APP_NAME__} について
-          </Link>
-        </div>
-      </DialogContent>
+      </Box>
+      <Divider variant="middle" />
+      <Box paddingY={1} paddingX={2}>
+        <Link to="/about" className={classes.link}>
+          <Button size="small">{__APP_NAME__} について</Button>
+        </Link>
+      </Box>
     </Dialog>
   );
 };
