@@ -1,3 +1,4 @@
+import { Box } from "@material-ui/core";
 import { FC, ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
@@ -37,6 +38,23 @@ export const About: FC = () => {
       <main>
         <section>
           <h1>{__APP_NAME__}</h1>
+
+          <Box display="flex" gridColumnGap={8} flexWrap="wrap">
+            <ExternalLink
+              href={`https://github.com/canoypa/kcm2cale/releases/tag/v${__APP_VERSION__}`}
+            >
+              <img
+                src={`https://img.shields.io/badge/release-v${__APP_VERSION__}-blue`}
+              />
+            </ExternalLink>
+            <ExternalLink href="https://github.com/canoypa/kcm2cale">
+              <img src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github" />
+            </ExternalLink>
+
+            <ExternalLink href="https://twitter.com/canoypa">
+              <img src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
+            </ExternalLink>
+          </Box>
           <p>{__APP_NAME__} は 「艦隊これくしょん」の編成保存ツールです。</p>
         </section>
 
