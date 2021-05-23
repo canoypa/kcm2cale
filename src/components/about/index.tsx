@@ -148,31 +148,7 @@ export const About: FC = () => {
             </ExternalLink>
           </p>
         </section>
-
-        <section>
-          <h2>連絡先</h2>
-          <p>
-            <ExternalLink href="https://github.com/canoypa/kcm2cale">
-              GitHub (canoypa/kcm2cale)
-            </ExternalLink>
-            <span> や </span>
-            <ExternalLink href="https://twitter.com/canoypa">
-              Twitter (@canoypa)
-            </ExternalLink>
-            <span> などに。</span>
-          </p>
-        </section>
       </main>
-
-      <footer>
-        <section>
-          <p>
-            <span>{__APP_NAME__}</span>
-            <span> / </span>
-            <span>v{__APP_VERSION__}</span>
-          </p>
-        </section>
-      </footer>
     </div>
   );
 };
