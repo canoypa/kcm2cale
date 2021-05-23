@@ -20,5 +20,17 @@ module.exports = (api) => {
       // スプレッド構文
       "@babel/plugin-proposal-object-rest-spread",
     ].filter(Boolean),
+
+    env: {
+      // テスト
+      test: {
+        presets: [
+          // commonjs に変換
+          ["@babel/preset-env", { modules: "commonjs" }],
+          // TypeScript 型を削除
+          "@babel/preset-typescript",
+        ],
+      },
+    },
   };
 };
