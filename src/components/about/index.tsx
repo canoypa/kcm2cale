@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
@@ -6,11 +6,11 @@ import { useStyles } from "./styles";
 
 interface ExternalLink {
   href: string;
-  text: string;
+  children: ReactNode;
 }
-const ExternalLink: FC<ExternalLink> = ({ href, text }) => (
+const ExternalLink: FC<ExternalLink> = ({ href, children }) => (
   <a href={href} target="_blank" rel="noopener noreferrer">
-    {text}
+    {children}
   </a>
 );
 
@@ -49,16 +49,14 @@ export const About: FC = () => {
             <p>使用するデータは以下のサイトに基づいています。</p>
             <ul>
               <li>
-                <ExternalLink
-                  href="https://wikiwiki.jp/kancolle/"
-                  text="艦隊これくしょん -艦これ- 攻略 Wiki*"
-                />
+                <ExternalLink href="https://wikiwiki.jp/kancolle/">
+                  艦隊これくしょん -艦これ- 攻略 Wiki*
+                </ExternalLink>
               </li>
               <li>
-                <ExternalLink
-                  href="https://kancolle.fandom.com/wiki/KanColle_Wiki"
-                  text="KanColle Wiki | Fandom"
-                />
+                <ExternalLink href="https://kancolle.fandom.com/wiki/KanColle_Wiki">
+                  KanColle Wiki | Fandom
+                </ExternalLink>
               </li>
             </ul>
           </section>
@@ -89,28 +87,24 @@ export const About: FC = () => {
             </p>
             <ul>
               <li>
-                <ExternalLink
-                  href="https://www.google.com/chrome/"
-                  text="Chrome"
-                />
+                <ExternalLink href="https://www.google.com/chrome/">
+                  Chrome
+                </ExternalLink>
               </li>
               <li>
-                <ExternalLink
-                  href="https://www.mozilla.org/firefox/new/"
-                  text="Firefox"
-                />
+                <ExternalLink href="https://www.mozilla.org/firefox/new/">
+                  Firefox
+                </ExternalLink>
               </li>
               <li>
-                <ExternalLink
-                  href="https://www.microsoft.com/edge/"
-                  text="Edge"
-                />
+                <ExternalLink href="https://www.microsoft.com/edge/">
+                  Edge
+                </ExternalLink>
               </li>
               <li>
-                <ExternalLink
-                  href="https://www.apple.com/safari/"
-                  text="Safari"
-                />
+                <ExternalLink href="https://www.apple.com/safari/">
+                  Safari
+                </ExternalLink>
               </li>
             </ul>
           </section>
@@ -130,25 +124,23 @@ export const About: FC = () => {
             データが収集、処理される仕組みについて、詳しくは以下のページをご覧ください。
           </p>
           <p>
-            <ExternalLink
-              href="https://policies.google.com/technologies/partner-sites"
-              text="Google のサービスを使用するサイトやアプリから収集した情報の Google による使用"
-            />
+            <ExternalLink href="https://policies.google.com/technologies/partner-sites">
+              Google のサービスを使用するサイトやアプリから収集した情報の Google
+              による使用
+            </ExternalLink>
           </p>
         </section>
 
         <section>
           <h2>連絡先</h2>
           <p>
-            <ExternalLink
-              href="https://github.com/canoypa/kcm2cale"
-              text="GitHub (canoypa/kcm2cale)"
-            />
+            <ExternalLink href="https://github.com/canoypa/kcm2cale">
+              GitHub (canoypa/kcm2cale)
+            </ExternalLink>
             <span> や </span>
-            <ExternalLink
-              href="https://twitter.com/canoypa"
-              text="Twitter (@canoypa)"
-            />
+            <ExternalLink href="https://twitter.com/canoypa">
+              Twitter (@canoypa)
+            </ExternalLink>
             <span> などに。</span>
           </p>
         </section>
