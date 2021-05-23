@@ -55,15 +55,22 @@ export const About: FC = () => {
               <img src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
             </ExternalLink>
           </Box>
-          <p>{__APP_NAME__} は 「艦隊これくしょん」の編成保存ツールです。</p>
+          <p>
+            {__APP_NAME__}{" "}
+            は、ゲーム「艦隊これくしょん」向けの編成管理ツールです。
+          </p>
         </section>
 
         <section>
           <h2>このサイトについて</h2>
 
-          <section>(β公開につき動作保証はいたしかねます。)</section>
+          <div>
+            <p>
+              開発中につき、変な動きをしたり、突然大幅な変更が加えられたりするかもしれません。
+            </p>
+          </div>
 
-          <section>
+          <div>
             <p>使用するデータは以下のサイトに基づいています。</p>
             <ul>
               <li>
@@ -77,7 +84,7 @@ export const About: FC = () => {
                 </ExternalLink>
               </li>
             </ul>
-          </section>
+          </div>
         </section>
 
         <section>
@@ -91,62 +98,43 @@ export const About: FC = () => {
 
           <section>
             <h3>編成は共有できますか？</h3>
-            <p>編成の共有機能は未実装です。</p>
+            <p>現時点では出来ません。</p>
             <p>
-              いかにも共有できそうな URL
-              も生成されますが、編成は端末に保存され他の人が見ることは出来ません。
+              URL
+              を見る限り共有できそうですが、編成のデータは端末に保存され他の人が見ることは出来ません。
             </p>
-          </section>
-
-          <section>
-            <h3>どのブラウザに対応していますか？</h3>
-            <p>
-              次のブラウザの最新バージョンと、1つ前のバージョンに対応しているつもりです。
-            </p>
-            <ul>
-              <li>
-                <ExternalLink href="https://www.google.com/chrome/">
-                  Chrome
-                </ExternalLink>
-              </li>
-              <li>
-                <ExternalLink href="https://www.mozilla.org/firefox/new/">
-                  Firefox
-                </ExternalLink>
-              </li>
-              <li>
-                <ExternalLink href="https://www.microsoft.com/edge/">
-                  Edge
-                </ExternalLink>
-              </li>
-              <li>
-                <ExternalLink href="https://www.apple.com/safari/">
-                  Safari
-                </ExternalLink>
-              </li>
-            </ul>
           </section>
         </section>
 
         <section>
           <h2>プライバシーと規約</h2>
-          <p>
-            このサイトでは、アクセス解析のため Google Analytics
-            を使用しています。
-          </p>
-          <p>
-            Cookie
-            を使用して特定の情報が送信されますが、個人を特定するものではありません。
-          </p>
-          <p>
-            データが収集、処理される仕組みについて、詳しくは以下のページをご覧ください。
-          </p>
-          <p>
-            <ExternalLink href="https://policies.google.com/technologies/partner-sites">
-              Google のサービスを使用するサイトやアプリから収集した情報の Google
-              による使用
-            </ExternalLink>
-          </p>
+          <p>最終更新: 2021/05/25</p>
+
+          <section>
+            <h3>Google Analytics</h3>
+            <p>
+              このサイトでは、アクセス解析のため Google Analytics
+              を使用しています。
+            </p>
+            <p>
+              Cookie
+              を使用して特定の情報が送信されますが、個人を特定するものではありません。
+            </p>
+            <p>
+              データの収集, 処理について、詳しくは以下のページをご覧ください。
+            </p>
+            <p>
+              <ExternalLink href="https://policies.google.com/technologies/partner-sites">
+                Google のサービスを使用するサイトやアプリから収集した情報の
+                Google による使用
+              </ExternalLink>
+            </p>
+          </section>
+
+          <section>
+            <h3>免責事項</h3>
+            <p>このサイトの利用は自己責任とし、一切の責任を負いません。</p>
+          </section>
         </section>
       </main>
     </div>
