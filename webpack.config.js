@@ -7,14 +7,12 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 
 const variable = require("./scripts/build/variable");
 
-const config = (env) => {
-  const isProd = env.mode === "production";
-  const mode = isProd ? "production" : "development";
+const config = (_, args) => {
+  const mode = args.mode || "development";
+  const isProd = mode === "production";
 
   // babel とか用
-  if (isProd) {
-    process.env.NODE_ENV = "production";
-  }
+  process.env.NODE_ENV = mode;
 
   return {
     mode: mode,
