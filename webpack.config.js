@@ -1,6 +1,5 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
@@ -17,7 +16,11 @@ const config = (_, args) => {
   return {
     mode: mode,
 
-    output: { filename: "[name].js", path: resolve("public") },
+    output: {
+      filename: "[name].js",
+      path: resolve("public"),
+      clean: true,
+    },
 
     entry: {
       index: [
@@ -74,7 +77,6 @@ const config = (_, args) => {
         template: resolve("src/index.html"),
         inject: false,
       }),
-      new CleanWebpackPlugin(),
       isProd &&
         new BundleAnalyzerPlugin({
           analyzerMode: "json",
