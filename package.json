@@ -10,7 +10,7 @@
     "start": "firebase emulators:start --import=debug/emulators --export-on-exit",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
-    "lint": "npm-run-all lint:*",
+    "lint": "run-p lint:*",
     "lint:js": "eslint src/**/*.{ts,tsx}",
     "lint:type": "tsc --noEmit",
     "lint:css": "stylelint src/**/*.{ts,tsx}"
