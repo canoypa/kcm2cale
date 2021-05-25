@@ -1,6 +1,8 @@
+import { ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
+import Measure from "react-measure";
+import { FixedSizeList } from "react-window";
 import { EquipmentData } from "../../../../../modules/equipment/types";
-import { List } from "../../../../common/list";
 
 type Props = {
   equipmentsList: EquipmentData[];
@@ -19,5 +21,34 @@ export const SearchEquipmentsList: FC<Props> = ({
     label: equipmentData.name,
   }));
 
-  return <List onSelect={handlerOnSelect} items={items} />;
+  return (
+    <Measure bounds>
+      {({ measureRef, contentRect }) => (
+        <div style={{ flexGrow: 1 }} ref={measureRef}>
+          <FixedSizeList
+            width={contentRect.bounds?.width || 0}
+            height={contentRect.bounds?.height || 0}
+            itemCount={items.length}
+            itemSize={48}
+          >
+            {({ index, style }) => {
+              const item = items[index];
+              const _handlerOnSelect = () => handlerOnSelect(item.value);
+
+              return (
+                <ListItem
+                  key={item.key}
+                  button
+                  style={style}
+                  onClick={_handlerOnSelect}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItem>
+              );
+            }}
+          </FixedSizeList>
+        </div>
+      )}
+    </Measure>
+  );
 };

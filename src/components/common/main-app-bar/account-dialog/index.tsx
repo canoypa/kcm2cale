@@ -1,11 +1,11 @@
+import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import firebase from "firebase/app";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { firebaseAuth } from "../../../../core/firebase/auth";
-import { Dialog, DialogContent } from "../../dialog";
 import { UserIcon } from "../../user-icon";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 type AccountHeaderProps = {
   user: firebase.User | null;
@@ -15,6 +15,8 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
   const { push } = useHistory();
   const { pathname } = useLocation();
 
+  const classes = useStyles();
+
   const singIn = () => {
     push("/sign-in", { continue: pathname });
   };
@@ -23,11 +25,9 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
     onClose();
   };
 
-  // return s
-
   return (
     <>
-      <div className={styles.accountHeader}>
+      <div className={classes.accountHeader}>
         <UserIcon user={user} />
         <span>サインインしていません</span>
       </div>
@@ -44,17 +44,19 @@ type Props = {
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   // const userLoadable = useUser();
+  const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogContent>
-        {/* {userLoadable.state === "hasValue" && ( */}
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+      <Box padding={2}>
         <AccountHeader user={null} onClose={onClose} />
-        {/* )} */}
-        <div>
-          <Link to="/about">{__APP_NAME__} について</Link>
-        </div>
-      </DialogContent>
+      </Box>
+      <Divider variant="middle" />
+      <Box paddingY={1} paddingX={2}>
+        <Link to="/about" className={classes.link}>
+          <Button size="small">{__APP_NAME__} について</Button>
+        </Link>
+      </Box>
     </Dialog>
   );
 };

@@ -1,22 +1,25 @@
-import { FC, useEffect } from "react";
+import { Box } from "@material-ui/core";
+import { FC, ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
 interface ExternalLink {
   href: string;
-  text: string;
+  children: ReactNode;
 }
-const ExternalLink: FC<ExternalLink> = ({ href, text }) => (
+const ExternalLink: FC<ExternalLink> = ({ href, children }) => (
   <a href={href} target="_blank" rel="noopener noreferrer">
-    {text}
+    {children}
   </a>
 );
 
 export const About: FC = () => {
   const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
+
+  const classes = useStyles();
 
   useEffect(() => {
     setPageTitle("About");
@@ -27,7 +30,7 @@ export const About: FC = () => {
   }, []);
 
   return (
-    <div className={styles.aboutContainer}>
+    <div className={classes.root}>
       <header>
         <Link to="/">トップページへ</Link>
       </header>
@@ -35,31 +38,53 @@ export const About: FC = () => {
       <main>
         <section>
           <h1>{__APP_NAME__}</h1>
-          <p>{__APP_NAME__} は 「艦隊これくしょん」の編成保存ツールです。</p>
+
+          <Box display="flex" gridColumnGap={8} flexWrap="wrap">
+            <ExternalLink
+              href={`https://github.com/canoypa/kcm2cale/releases/tag/v${__APP_VERSION__}`}
+            >
+              <img
+                src={`https://img.shields.io/badge/release-v${__APP_VERSION__}-blue`}
+              />
+            </ExternalLink>
+            <ExternalLink href="https://github.com/canoypa/kcm2cale">
+              <img src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github" />
+            </ExternalLink>
+
+            <ExternalLink href="https://twitter.com/canoypa">
+              <img src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
+            </ExternalLink>
+          </Box>
+          <p>
+            {__APP_NAME__}{" "}
+            は、ゲーム「艦隊これくしょん」向けの編成管理ツールです。
+          </p>
         </section>
 
         <section>
           <h2>このサイトについて</h2>
 
-          <section>(β公開につき動作保証はいたしかねます。)</section>
+          <div>
+            <p>
+              開発中につき、変な動きをしたり、突然大幅な変更が加えられたりするかもしれません。
+            </p>
+          </div>
 
-          <section>
+          <div>
             <p>使用するデータは以下のサイトに基づいています。</p>
             <ul>
               <li>
-                <ExternalLink
-                  href="https://wikiwiki.jp/kancolle/"
-                  text="艦隊これくしょん -艦これ- 攻略 Wiki*"
-                />
+                <ExternalLink href="https://wikiwiki.jp/kancolle/">
+                  艦隊これくしょん -艦これ- 攻略 Wiki*
+                </ExternalLink>
               </li>
               <li>
-                <ExternalLink
-                  href="https://kancolle.fandom.com/wiki/KanColle_Wiki"
-                  text="KanColle Wiki | Fandom"
-                />
+                <ExternalLink href="https://kancolle.fandom.com/wiki/KanColle_Wiki">
+                  KanColle Wiki | Fandom
+                </ExternalLink>
               </li>
             </ul>
-          </section>
+          </div>
         </section>
 
         <section>
@@ -73,94 +98,45 @@ export const About: FC = () => {
 
           <section>
             <h3>編成は共有できますか？</h3>
-            <p>編成の共有機能は未実装です。</p>
+            <p>現時点では出来ません。</p>
             <p>
-              いかにも共有できそうな URL
-              も生成されますが、編成は端末に保存され他の人が見ることは出来ません。
+              URL
+              を見る限り共有できそうですが、編成のデータは端末に保存され他の人が見ることは出来ません。
             </p>
-          </section>
-
-          <section>
-            <h3>どのブラウザに対応していますか？</h3>
-            <p>
-              次のブラウザの最新バージョンと、1つ前のバージョンに対応しているつもりです。
-            </p>
-            <ul>
-              <li>
-                <ExternalLink
-                  href="https://www.google.com/chrome/"
-                  text="Chrome"
-                />
-              </li>
-              <li>
-                <ExternalLink
-                  href="https://www.mozilla.org/firefox/new/"
-                  text="Firefox"
-                />
-              </li>
-              <li>
-                <ExternalLink
-                  href="https://www.microsoft.com/edge/"
-                  text="Edge"
-                />
-              </li>
-              <li>
-                <ExternalLink
-                  href="https://www.apple.com/safari/"
-                  text="Safari"
-                />
-              </li>
-            </ul>
           </section>
         </section>
 
         <section>
           <h2>プライバシーと規約</h2>
-          <p>
-            このサイトでは、アクセス解析のため Google Analytics
-            を使用しています。
-          </p>
-          <p>
-            Cookie
-            を使用して特定の情報が送信されますが、個人を特定するものではありません。
-          </p>
-          <p>
-            データが収集、処理される仕組みについて、詳しくは以下のページをご覧ください。
-          </p>
-          <p>
-            <ExternalLink
-              href="https://policies.google.com/technologies/partner-sites"
-              text="Google のサービスを使用するサイトやアプリから収集した情報の Google による使用"
-            />
-          </p>
-        </section>
+          <p>最終更新: 2021/05/25</p>
 
-        <section>
-          <h2>連絡先</h2>
-          <p>
-            <ExternalLink
-              href="https://github.com/canoypa/kcm2cale"
-              text="GitHub (canoypa/kcm2cale)"
-            />
-            <span> や </span>
-            <ExternalLink
-              href="https://twitter.com/canoypa"
-              text="Twitter (@canoypa)"
-            />
-            <span> などに。</span>
-          </p>
+          <section>
+            <h3>Google Analytics</h3>
+            <p>
+              このサイトでは、アクセス解析のため Google Analytics
+              を使用しています。
+            </p>
+            <p>
+              Cookie
+              を使用して特定の情報が送信されますが、個人を特定するものではありません。
+            </p>
+            <p>
+              データの収集, 処理について、詳しくは以下のページをご覧ください。
+            </p>
+            <p>
+              <ExternalLink href="https://policies.google.com/technologies/partner-sites">
+                Google のサービスを使用するサイトやアプリから収集した情報の
+                Google による使用
+              </ExternalLink>
+            </p>
+          </section>
+
+          <section>
+            <h3>免責事項</h3>
+            <p>このサイトの利用は自己責任とし、一切の責任を負いません。</p>
+          </section>
         </section>
       </main>
-
-      <footer>
-        <section>
-          <p>
-            <span>{__APP_NAME__}</span>
-            <span> / </span>
-            <span>v{__APP_VERSION__}</span>
-          </p>
-        </section>
-      </footer>
     </div>
   );
 };

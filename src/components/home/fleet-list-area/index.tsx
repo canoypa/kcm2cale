@@ -1,47 +1,42 @@
-import { createContext, FC, useEffect, useRef, useState } from "react";
-import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetData_v1 } from "../../../core/persistence/types";
-import { CircularProgressIndicators } from "../../common/progress-indicators/circular";
+import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
+import { FC, Suspense } from "react";
+import { useIsExistFleet } from "../../../core/search/fleet";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
-import * as styles from "./styles";
-
-export const FleetListContext = createContext({ reloadFleet: () => {} });
+import { useStyles } from "./styles";
 
 export const FleetListArea: FC = () => {
-  const [fleetList, setFleetList] = useState<LocalFleetData_v1[]>();
+  const isExistFleetList = useIsExistFleet();
 
-  // 保存済みの編成を読み込み state に保存
-  const getAllFleet = async () => {
-    const allFleets = await LocalDatabase.getAllFleet();
-    setFleetList(allFleets);
-  };
-
-  // 編成削除時のリロード用 context value
-  const contextValue = useRef({
-    reloadFleet: getAllFleet,
-  });
-
-  // 初回レンダー時編成読み込み
-  useEffect(() => {
-    getAllFleet();
-  }, []);
+  const classes = useStyles();
 
   return (
-    <FleetListContext.Provider value={contextValue.current}>
-      <div>
-        {fleetList ? (
-          fleetList.length ? (
-            <FleetList fleetList={fleetList} />
-          ) : (
-            <EmptyState />
-          )
+    <Suspense
+      fallback={
+        <Box
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
+          <CircularProgress size={24} />
+        </Box>
+      }
+    >
+      <Container maxWidth="md" className={classes.root}>
+        {isExistFleetList ? (
+          <FleetList />
         ) : (
-          <div className={styles.loadingContainer}>
-            <CircularProgressIndicators />
-          </div>
+          <Box
+            container
+            justify="center"
+            alignItems="center"
+            style={{ height: "100%" }}
+          >
+            <EmptyState />
+          </Box>
         )}
-      </div>
-    </FleetListContext.Provider>
+      </Container>
+    </Suspense>
   );
 };

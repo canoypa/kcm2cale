@@ -1,21 +1,21 @@
+import { Box } from "@material-ui/core";
 import { FC } from "react";
 import { List } from "react-movable";
 import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import { FleetTypeState } from "../../../../store/organize/info";
-import { SelectShip } from "../../templates/select-ship";
+import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
 import { useFleet } from "./hook";
-import * as styles from "./styles";
 import { ToggleFleet } from "./toggle-fleet";
 import { CurrentShip, useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
   const { fleet: fleetState, sort } = useFleet();
-  const [selectState, selecting] = useSelectShip();
+  const [isSelectOpen, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
 
@@ -27,9 +27,9 @@ export const Fleet: FC = () => {
     <>
       <div>
         {isCombined && (
-          <div className={styles.toggleFleetArea}>
+          <Box marginBottom={2}>
             <ToggleFleet />
-          </div>
+          </Box>
         )}
         <SwapShipContext.Provider value={swapShipContextValue}>
           <List
@@ -38,9 +38,9 @@ export const Fleet: FC = () => {
               sort(oldIndex, newIndex);
             }}
             renderList={({ children, props }) => (
-              <div className={styles.shipsList} {...props}>
+              <Box display="flex" flexDirection="column" {...props}>
                 {children}
-              </div>
+              </Box>
             )}
             renderItem={({ value: fleetPlace, props }) => (
               <div {...props}>
@@ -55,12 +55,11 @@ export const Fleet: FC = () => {
         </SwapShipContext.Provider>
       </div>
 
-      {selectState.isOpen && (
-        <SelectShip
-          currentShip={selectState.currentShip}
-          onEnd={selecting.end}
-        />
-      )}
+      <SelectShipDialog
+        open={isSelectOpen}
+        onSelect={selecting.onSelect}
+        onClose={selecting.end}
+      />
     </>
   );
 };

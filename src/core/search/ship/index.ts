@@ -3,7 +3,7 @@ import { ShipsData } from "../../../data/ship";
 import { ShipData, ShipTypeValues } from "../../../modules/ship";
 import { SearchShipRequest } from "./types";
 
-export { SearchShipRequest } from "./types";
+export * from "./types";
 
 class FuseSearch {
   private options = { keys: ["name"], includeScore: true };
