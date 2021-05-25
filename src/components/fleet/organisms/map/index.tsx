@@ -18,6 +18,7 @@ class TestCanvasDrawing {
     this.ctx.fillRect(10, 10, 20, 20);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   destroy() {}
 }
 

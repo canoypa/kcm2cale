@@ -1,6 +1,6 @@
 import { createInstance } from "localforage";
 import { FleetData } from "../fleet-data/types";
-import { LocalFleetData_v1 } from "./types";
+import { LocalFleetDataV1 } from "./types";
 
 type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
 
@@ -23,8 +23,8 @@ class LocalDatabaseClass implements LocalDatabase {
   });
 
   public getAllFleet = async () => {
-    const result: LocalFleetData_v1[] = [];
-    await this.fleetStore.iterate<LocalFleetData_v1, unknown>((v) => {
+    const result: LocalFleetDataV1[] = [];
+    await this.fleetStore.iterate<LocalFleetDataV1, unknown>((v) => {
       result.push(v);
     });
     return result;
@@ -33,7 +33,7 @@ class LocalDatabaseClass implements LocalDatabase {
   // Todo: ちゃんとした変換処理作れ
   // 変換するので LocalFleetData は圧縮か？
   public getFleet = async (key: string) => {
-    const fleet = await this.fleetStore.getItem<LocalFleetData_v1>(key);
+    const fleet = await this.fleetStore.getItem<LocalFleetDataV1>(key);
     if (!fleet) return null;
 
     const { version, ...fleetData } = fleet;
@@ -43,13 +43,13 @@ class LocalDatabaseClass implements LocalDatabase {
 
   public setFleet = async (key: string, data: FleetDataOmitDate) => {
     const date = new Date();
-    const newFleetData: LocalFleetData_v1 = {
+    const newFleetData: LocalFleetDataV1 = {
       version: 1,
       createdAt: date,
       updatedAt: date,
       ...data,
     };
-    await this.fleetStore.setItem<LocalFleetData_v1>(key, newFleetData);
+    await this.fleetStore.setItem<LocalFleetDataV1>(key, newFleetData);
   };
 
   public updateFleet = async (
@@ -58,17 +58,17 @@ class LocalDatabaseClass implements LocalDatabase {
   ) => {
     const date = new Date();
 
-    const preFleetData = await this.fleetStore.getItem<LocalFleetData_v1>(key);
+    const preFleetData = await this.fleetStore.getItem<LocalFleetDataV1>(key);
     if (preFleetData === null) {
       throw new Error("Error: 更新対象の艦隊データが存在しない");
     }
 
-    const newFleetData: LocalFleetData_v1 = {
+    const newFleetData: LocalFleetDataV1 = {
       ...preFleetData,
       ...data,
       updatedAt: date,
     };
-    await this.fleetStore.setItem<LocalFleetData_v1>(key, newFleetData);
+    await this.fleetStore.setItem<LocalFleetDataV1>(key, newFleetData);
   };
 
   public deleteFleet = async (key: string) => {
