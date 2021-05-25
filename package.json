@@ -12,8 +12,7 @@
     "test": "jest",
     "lint": "run-p lint:*",
     "lint:js": "eslint src/**/*.{ts,tsx}",
-    "lint:type": "tsc --noEmit",
-    "lint:css": "stylelint src/**/*.{ts,tsx}"
+    "lint:type": "tsc --noEmit"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
@@ -64,8 +63,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.1",
     "react-refresh": "^0.10.0",
-    "stylelint": "^13.2.1",
-    "stylelint-config-custrino": "^2.0.0",
     "ts-loader": "^9.1.1",
     "typescript": "^4.0.2",
     "webpack": "^5.10.1",
