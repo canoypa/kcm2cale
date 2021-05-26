@@ -76,6 +76,9 @@ const config = (_, args) => {
       new HtmlWebpackPlugin({
         template: resolve("src/index.html"),
         inject: false,
+        minify: {
+          minifyCSS: true,
+        },
       }),
       isProd &&
         new BundleAnalyzerPlugin({
