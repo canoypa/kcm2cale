@@ -17,10 +17,10 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
 
   const classes = useStyles();
 
-  const singIn = () => {
+  const _singIn = () => {
     push("/sign-in", { continue: pathname });
   };
-  const signOut = async () => {
+  const _signOut = async () => {
     await firebaseAuth().signOut();
     onClose();
   };

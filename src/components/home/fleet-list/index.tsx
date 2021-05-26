@@ -9,7 +9,10 @@ import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 import { useStyles } from "./styles";
 
-export const FleetListContext = createContext({ reloadFleet: () => {} });
+export const FleetListContext = createContext({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  reloadFleet: () => {},
+});
 
 export const FleetListView: FC = () => {
   const fleetList = useFleetList();

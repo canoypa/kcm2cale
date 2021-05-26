@@ -6,7 +6,7 @@ const DUMMY_SLOT_SIZE = 4;
 
 const slotSizeSelector = selectorFamily({
   key: "ShipSlotSize",
-  get: (fleetPlace: FleetStateValue) => ({ get }) => DUMMY_SLOT_SIZE,
+  get: (_fleetPlace: FleetStateValue) => () => DUMMY_SLOT_SIZE,
   // get(ShipsState).get(fleetPlace)?.status.slotSize,
 });
 
