@@ -1,5 +1,5 @@
 import { EquipmentSearch } from ".";
-import { EquipmentType } from "../../../modules/equipment/types";
+import { EquipmentType } from "../../../models/equipment/types";
 
 describe("Search: Equipment", () => {
   it("Type", () => {

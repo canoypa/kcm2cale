@@ -1,6 +1,6 @@
 import { PaletteType } from "@material-ui/core";
 import { atom, AtomEffect } from "recoil";
-import { AppSettings } from "../../core/app-settings";
+import { AppSettings } from "../../core/settings";
 
 const getThemeMediaQuery = () => {
   return window.matchMedia("(prefers-color-scheme:dark)");
