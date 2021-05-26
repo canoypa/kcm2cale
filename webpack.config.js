@@ -77,6 +77,13 @@ const config = (_, args) => {
         template: resolve("src/index.html"),
         inject: false,
         minify: {
+          collapseWhitespace: true,
+          keepClosingSlash: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
           minifyCSS: true,
         },
       }),
