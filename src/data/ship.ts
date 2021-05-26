@@ -1,4 +1,4 @@
-import { ShipData, ShipType } from "../modules/ship";
+import { ShipData, ShipType } from "../models/ship";
 
 export const ShipsData: ShipData[] = [
   {

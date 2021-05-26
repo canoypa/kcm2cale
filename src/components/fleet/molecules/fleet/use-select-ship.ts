@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShipData } from "../../../../modules/ship";
+import { ShipData } from "../../../../models/ship";
 import { useRemoveShip, useSetShip } from "../../../../store/organize/ships";
 import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 

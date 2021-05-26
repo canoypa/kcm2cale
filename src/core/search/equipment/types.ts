@@ -1,4 +1,4 @@
-import { EquipmentTypeValues } from "../../../modules/equipment/types";
+import { EquipmentTypeValues } from "../../../models/equipment/types";
 
 /** 検索クエリ */
 export type SearchEquipmentQuery = string;
