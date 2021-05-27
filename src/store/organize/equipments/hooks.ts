@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { useSetRecoilState } from "recoil";
-import { EquipmentData } from "../../../modules/equipment/types";
+import { EquipmentData } from "../../../models/equipment/types";
 import { EquipmentsState, RiggingState } from "./state";
 
 export const useSetEquipment = () => {

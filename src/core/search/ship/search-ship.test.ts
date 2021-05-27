@@ -1,5 +1,5 @@
 import { ShipSearch } from ".";
-import { ShipType } from "../../../modules/ship";
+import { ShipType } from "../../../models/ship";
 
 describe("Search: Ship", () => {
   it("Type", () => {

@@ -6,7 +6,7 @@ const DUMMY_SLOT_SIZE = 4;
 
 const slotSizeSelector = selectorFamily({
   key: "ShipSlotSize",
-  get: (fleetPlace: FleetStateValue) => ({ get }) => DUMMY_SLOT_SIZE,
+  get: (_fleetPlace: FleetStateValue) => () => DUMMY_SLOT_SIZE,
   // get(ShipsState).get(fleetPlace)?.status.slotSize,
 });
 
@@ -24,9 +24,9 @@ export const useRigging = (fleetPlace: FleetStateValue): Rigging => {
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
   const shipEquipmentsState = useRecoilValue(RiggingState);
-  const shipEquipments = shipEquipmentsState.filter(
-    (v) => v.shipId === fleetPlace.shipId
-  );
+  const shipEquipments = shipEquipmentsState
+    .filter((v) => v.shipId === fleetPlace.shipId)
+    .sort((a, b) => a.slotNo - b.slotNo);
 
   const equippedLength = shipEquipments.length;
 

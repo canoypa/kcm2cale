@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { EquipmentData } from "../../../modules/equipment/types";
+import { EquipmentData } from "../../../models/equipment/types";
 
 type EquipmentId = string;
 

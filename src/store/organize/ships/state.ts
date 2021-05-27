@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { ShipData } from "../../../modules/ship";
+import { ShipData } from "../../../models/ship";
 
 export type ShipId = string;
 

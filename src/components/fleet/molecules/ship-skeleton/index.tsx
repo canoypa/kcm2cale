@@ -1,8 +1,8 @@
+import { Box } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import { FC, useContext } from "react";
-import { MaterialIcon } from "../../../common/icons";
 import { SwapShipContext } from "../fleet/contexts";
 import { CurrentShip } from "../fleet/use-select-ship";
-import * as styles from "./styles";
 
 type Props = {
   fleetPlace: CurrentShip;
@@ -14,10 +14,24 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
 
   return (
     // role=button: ドラッグを防止
-    <div className={styles.root} onClick={swapShipHandler} role="button">
-      <div className={styles.icon}>
-        <MaterialIcon icon="add" size={24} />
-      </div>
-    </div>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      border={1}
+      borderColor="divider"
+      borderRadius={1}
+      margin="4px 0"
+      height="64px"
+      bgcolor="background.default"
+      color="text.secondary"
+      style={{
+        cursor: "pointer",
+      }}
+      role="button"
+      onClick={swapShipHandler}
+    >
+      <Add />
+    </Box>
   );
 };

@@ -1,15 +1,24 @@
+import { Box, Typography } from "@material-ui/core";
 import { FC } from "react";
-import { classNames } from "../../../util/class-names";
-import * as styles from "./styles";
+import { useStyles } from "./styles";
 
-export const EmptyState: FC = () => (
-  <div className={styles.container}>
-    <p className={classNames(styles.paragraph, styles.title)}>
-      まだ編成がありません
-    </p>
-    <p className={classNames(styles.paragraph, styles.text)}>
-      <span className={styles.prom}>編成を作成</span>{" "}
-      をタップして編成を作成します
-    </p>
-  </div>
-);
+export const EmptyState: FC = () => {
+  const classes = useStyles();
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      gridRowGap={8}
+    >
+      <Typography variant="h6" color="textSecondary">
+        まだ編成がありません
+      </Typography>
+      <Typography variant="body1" color="textSecondary">
+        <span className={classes.prom}>編成を作成</span>{" "}
+        をタップして編成を作成します
+      </Typography>
+    </Box>
+  );
+};

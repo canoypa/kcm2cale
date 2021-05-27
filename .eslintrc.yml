@@ -1,10 +1,67 @@
-parserOptions:
-  ecmaVersion: 2020
-  sourceType: module
+root: true
+
 env:
   browser: true
   es6: true
+  node: true
+
+parserOptions:
+  ecmaVersion: 2020
+  sourceType: module
+
 extends:
-  - custrino
-  - custrino/typescript
-  - custrino/react
+  - eslint:recommended
+  - google
+  - prettier
+
+overrides:
+  # TypeScript
+  - files: ["*.ts", "*.tsx"]
+    extends:
+      - plugin:@typescript-eslint/eslint-recommended
+      - plugin:@typescript-eslint/recommended
+    plugins:
+      - "@typescript-eslint"
+    parser: "@typescript-eslint/parser"
+    rules:
+      # 保留: 戻り値の明示的指定
+      "@typescript-eslint/explicit-module-boundary-types": off
+      # _ から始まるもの、スプレッドによるプロパティ削除を許容
+      "@typescript-eslint/no-unused-vars":
+        - warn
+        - varsIgnorePattern: "^_"
+          argsIgnorePattern: "^_"
+          ignoreRestSiblings: true
+
+  # React
+  - files: ["*.jsx", "*.tsx"]
+    extends:
+      - plugin:react/recommended
+      - plugin:react-hooks/recommended
+    settings:
+      react:
+        version: detect
+    rules:
+      # 新しい変換方法により不要
+      react/jsx-uses-react: off
+      react/react-in-jsx-scope: off
+      # props の強固な型 TypeScript で対応
+      react/prop-types: off
+      # 保留: デバッグ用表示名
+      react/display-name: off
+
+  # Jest
+  # expect 等々...
+  - files: ["*.test.ts", "*.test.tsx"]
+    extends:
+      - plugin:jest/recommended
+    plugins:
+      - jest
+
+# 保留
+rules:
+  # jsdoc を書く
+  valid-jsdoc: 0
+  require-jsdoc: 0
+  # class 内の this (?)
+  no-invalid-this: 0

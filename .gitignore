@@ -4,8 +4,12 @@
 /firestore.indexes.json
 /firestore.rules
 
+# Debug
+/debug/
+
 # Build
 /build/
+/report/
 
 # public
 /public/

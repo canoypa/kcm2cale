@@ -1,10 +1,10 @@
+import { AppBar, Box, Grid } from "@material-ui/core";
 import { FC, useEffect } from "react";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { MainAppBar } from "../common/main-app-bar";
 import { CreateNewFleet } from "./create-new-fleet";
 import { FleetListArea } from "./fleet-list-area";
-import * as styles from "./styles";
 
 export const Home: FC = () => {
   const pageViewLog = usePageViewLog();
@@ -19,11 +19,25 @@ export const Home: FC = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <Grid
+      container
+      direction="column"
+      wrap="nowrap"
+      style={{ height: "100vh" }}
+    >
       <MainAppBar />
-      <FleetListArea />
-      <CreateNewFleet />
-    </div>
+      <Box flexGrow={1}>
+        <FleetListArea />
+      </Box>
+      <AppBar
+        position="sticky"
+        elevation={0}
+        color="transparent"
+        style={{ bottom: 0 }}
+      >
+        <CreateNewFleet />
+      </AppBar>
+    </Grid>
   );
 };
 

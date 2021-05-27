@@ -1,4 +1,4 @@
-import { ShipData, ShipType } from "../modules/ship";
+import { ShipData, ShipType } from "../models/ship";
 
 export const ShipsData: ShipData[] = [
   {
@@ -3489,6 +3489,16 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 604,
+    no: "398a",
+    type: ShipType.LightCruiser,
+    name: "Honolulu",
+  },
+  {
+    no: "398b",
+    type: ShipType.LightCruiser,
+    name: "Honolulu改",
+  },
+  {
     no: "399a",
     type: ShipType.LightCruiser,
     name: "De Ruyter",
@@ -3555,6 +3565,11 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 599,
+    no: "408a",
+    type: ShipType.Oiler,
+    name: "宗谷",
+  },
+  {
     no: "409a",
     type: ShipType.AircraftCarrier,
     name: "赤城改二戊",
@@ -3777,6 +3792,21 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 646,
+    no: "444a",
+    type: ShipType.Destroyer,
+    name: "桃",
+  },
+  {
+    no: "444b",
+    type: ShipType.Destroyer,
+    name: "桃改",
+  },
+  {
+    no: "445a",
+    type: ShipType.Oiler,
+    name: "宗谷",
+  },
+  {
     no: "446a",
     type: ShipType.AircraftCarrier,
     name: "加賀改二護",
@@ -3789,6 +3819,11 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 651,
+    no: "450a",
+    type: ShipType.Oiler,
+    name: "宗谷",
+  },
+  {
     no: "451a",
     type: ShipType.Destroyer,
     name: "丹陽",
@@ -3819,6 +3854,11 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 656,
+    no: "455a",
+    type: ShipType.LightCruiser,
+    name: "Northampton",
+  },
+  {
     no: "456a",
     type: ShipType.Destroyer,
     name: "雪風改二",
@@ -3837,6 +3877,11 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 662,
+    no: "460a",
+    type: ShipType.LightCruiser,
+    name: "Northampton改",
+  },
+  {
     no: "462a",
     type: ShipType.LightCruiser,
     name: "能代改二",
@@ -3855,14 +3900,44 @@ export const ShipsData: ShipData[] = [
   },
   {
     id: 883,
+    no: "471a",
+    type: ShipType.Destroyer,
+    name: "巻波",
+  },
+  {
+    no: "471b",
+    type: ShipType.Destroyer,
+    name: "巻波改",
+  },
+  {
+    no: "482a",
+    type: ShipType.Submarine,
+    name: "伊203",
+  },
+  {
     no: "483a",
     type: ShipType.LightAircraftCarrier,
     name: "龍鳳改二戊",
   },
   {
     id: 888,
+    no: "487a",
+    type: ShipType.Submarine,
+    name: "伊203改",
+  },
+  {
     no: "488a",
     type: ShipType.LightAircraftCarrier,
     name: "龍鳳改二",
+  },
+  {
+    no: "475a",
+    type: ShipType.Destroyer,
+    name: "涼波",
+  },
+  {
+    no: "475b",
+    type: ShipType.Destroyer,
+    name: "涼波",
   },
 ];

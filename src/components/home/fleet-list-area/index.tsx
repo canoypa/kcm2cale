@@ -1,47 +1,51 @@
-import { createContext, FC, useEffect, useRef, useState } from "react";
-import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetData_v1 } from "../../../core/persistence/types";
-import { CircularProgressIndicators } from "../../common/progress-indicators/circular";
+import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
+import { FC, Suspense, useEffect } from "react";
+import {
+  useIsExistFleet,
+  useRefreshFleetList,
+} from "../../../core/search/fleet";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
-import * as styles from "./styles";
-
-export const FleetListContext = createContext({ reloadFleet: () => {} });
+import { useStyles } from "./styles";
 
 export const FleetListArea: FC = () => {
-  const [fleetList, setFleetList] = useState<LocalFleetData_v1[]>();
+  const isExistFleetList = useIsExistFleet();
+  const refreshFleet = useRefreshFleetList();
 
-  // 保存済みの編成を読み込み state に保存
-  const getAllFleet = async () => {
-    const allFleets = await LocalDatabase.getAllFleet();
-    setFleetList(allFleets);
-  };
+  const classes = useStyles();
 
-  // 編成削除時のリロード用 context value
-  const contextValue = useRef({
-    reloadFleet: getAllFleet,
-  });
-
-  // 初回レンダー時編成読み込み
+  // 初回リフレッシュ
   useEffect(() => {
-    getAllFleet();
+    refreshFleet();
   }, []);
 
   return (
-    <FleetListContext.Provider value={contextValue.current}>
-      <div>
-        {fleetList ? (
-          fleetList.length ? (
-            <FleetList fleetList={fleetList} />
-          ) : (
-            <EmptyState />
-          )
+    <Suspense
+      fallback={
+        <Box
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
+          <CircularProgress size={24} />
+        </Box>
+      }
+    >
+      <Container maxWidth="md" className={classes.root}>
+        {isExistFleetList ? (
+          <FleetList />
         ) : (
-          <div className={styles.loadingContainer}>
-            <CircularProgressIndicators />
-          </div>
+          <Box
+            container
+            justify="center"
+            alignItems="center"
+            style={{ height: "100%" }}
+          >
+            <EmptyState />
+          </Box>
         )}
-      </div>
-    </FleetListContext.Provider>
+      </Container>
+    </Suspense>
   );
 };

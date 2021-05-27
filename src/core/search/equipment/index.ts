@@ -3,10 +3,10 @@ import { EquipmentsData } from "../../../data/equipment";
 import {
   EquipmentData,
   EquipmentTypeValues,
-} from "../../../modules/equipment/types";
+} from "../../../models/equipment/types";
 import { SearchEquipmentRequest } from "./types";
 
-export { SearchEquipmentRequest } from "./types";
+export * from "./types";
 
 class FuseSearch {
   private options = { keys: ["name"], includeScore: true };

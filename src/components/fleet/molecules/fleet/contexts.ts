@@ -6,5 +6,6 @@ interface SwapShipContextInterface {
 }
 
 export const SwapShipContext = createContext<SwapShipContextInterface>(
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   () => {}
 );

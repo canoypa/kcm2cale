@@ -1,31 +1,37 @@
-import { FC, FormEventHandler, useRef } from "react";
-import { MaterialIcon } from "../../../../common/icons";
-import * as styles from "./styles";
+import {
+  FormControl,
+  OutlinedInput as MuiOutlinedInput,
+  withStyles,
+} from "@material-ui/core";
+import { Search } from "@material-ui/icons";
+import { FC, KeyboardEventHandler } from "react";
 
-// Todo: 汎用化
-const IconLayout: FC = ({ children }) => (
-  <div className={styles.iconLayout}>{children}</div>
-);
+const Input = withStyles({
+  root: {
+    borderRadius: 24,
+  },
+
+  input: {
+    padding: 0,
+    paddingLeft: 8,
+    height: 48,
+  },
+})(MuiOutlinedInput);
 
 type Props = {
   onSubmit: (value: string) => void;
 };
 export const SearchBox: FC<Props> = ({ onSubmit }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handlerSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    onSubmit(inputRef.current?.value ?? "");
+  const handlerSubmit: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      onSubmit(event.currentTarget?.value ?? "");
+    }
   };
 
   return (
-    <form onSubmit={handlerSubmit}>
-      <div className={styles.container}>
-        <IconLayout>
-          <MaterialIcon icon="search" size={20} />
-        </IconLayout>
-        <input ref={inputRef} type="text" className={styles.input} />
-      </div>
-    </form>
+    <FormControl variant="outlined" fullWidth>
+      <Input startAdornment={<Search />} onKeyDown={handlerSubmit} />
+    </FormControl>
   );
 };

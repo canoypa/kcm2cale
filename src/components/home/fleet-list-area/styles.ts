@@ -1,6 +1,11 @@
-import { css } from "@emotion/css";
+import { makeStyles } from "@material-ui/core";
 
-export const loadingContainer = css({
-  display: "grid",
-  placeItems: "center",
-});
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    height: "100%",
+  },
+}));

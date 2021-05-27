@@ -18,6 +18,8 @@ const LoadFleet: FC = () => {
   useEffect(() => {
     // 直アクセスの場合編成初期化
     if (!isExistFleet) initFleet({ fleetId });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

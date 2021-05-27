@@ -1,7 +1,7 @@
 import {
   EquipmentType,
   EquipmentTypeValues,
-} from "../../../modules/equipment/types";
+} from "../../../models/equipment/types";
 import { EnumValues } from "../../../util/types";
 
 export const EquipmentGroupMap: Record<

@@ -1,7 +1,7 @@
 import { FleetType } from "../../store/organize/info";
 
 /** ローカル保存用データ構造 */
-export type LocalFleetData_v1 = {
+export type LocalFleetDataV1 = {
   /** Data Version */
   version: 1;
   /** Fleet Id */

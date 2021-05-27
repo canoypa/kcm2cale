@@ -1,4 +1,4 @@
-import { ShipTypeValues } from "../../../modules/ship";
+import { ShipTypeValues } from "../../../models/ship";
 
 /** 検索クエリ */
 export type SearchShipQuery = string;

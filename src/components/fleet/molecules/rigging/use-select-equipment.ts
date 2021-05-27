@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EquipmentData } from "../../../../modules/equipment/types";
+import { EquipmentData } from "../../../../models/equipment/types";
 import {
   useRemoveEquipment,
   useSetEquipment,

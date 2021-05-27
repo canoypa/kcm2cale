@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { useSetRecoilState } from "recoil";
-import { ShipData } from "../../../modules/ship";
+import { ShipData } from "../../../models/ship";
 import { FleetState, ShipsState } from "./state";
 
 export const useSetShip = () => {
