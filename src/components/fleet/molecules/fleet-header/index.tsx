@@ -13,8 +13,8 @@ export const FleetHeader: FC = () => {
   return (
     <>
       <Box padding={2}>
-        <Actions startEdit={startEdit} />
         <Info />
+        <Actions startEdit={startEdit} />
       </Box>
 
       <Editing open={isEditing} onEnd={endEdit} />
