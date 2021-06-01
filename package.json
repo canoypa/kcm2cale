@@ -3,10 +3,9 @@
   "name": "kcm2cale",
   "version": "0.2.1",
   "scripts": {
-    "build:prod": "webpack --mode=production",
-    "build:dev": "webpack",
-    "build:watch": "webpack -w",
-    "serve": "webpack serve",
+    "next-dev": "next dev",
+    "next-build": "next build",
+    "next-start": "next start",
     "start": "firebase emulators:start --import=debug/emulators --export-on-exit",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
