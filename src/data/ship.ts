@@ -3187,6 +3187,11 @@ export const ShipsData: ShipData[] = [
     name: "秋雲改二",
   },
   {
+    no: "449a",
+    type: ShipType.Destroyer,
+    name: "高波改二",
+  },
+  {
     no: "450a",
     type: ShipType.Oiler,
     name: "宗谷",
