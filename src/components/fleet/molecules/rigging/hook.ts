@@ -4,13 +4,13 @@ import {
   RiggingState,
   SlotNo,
 } from "../../../../store/organize/equipments";
-import { FleetStateValue, ShipId } from "../../../../store/organize/ships";
+import { DeployedFleetShip, ShipId } from "../../../../store/organize/ships";
 
 const DUMMY_SLOT_SIZE = 4;
 
 const slotSizeSelector = selectorFamily({
   key: "ShipSlotSize",
-  get: (_fleetPlace: FleetStateValue) => () => DUMMY_SLOT_SIZE,
+  get: (_fleetPlace: DeployedFleetShip) => () => DUMMY_SLOT_SIZE,
   // get(ShipsState).get(fleetPlace)?.status.slotSize,
 });
 
@@ -23,7 +23,7 @@ type Rigging = {
   isCanAddNewEquipment: boolean;
   newEquipmentSlotNo: number;
 };
-export const useRigging = (fleetPlace: FleetStateValue): Rigging => {
+export const useRigging = (fleetPlace: DeployedFleetShip): Rigging => {
   const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 

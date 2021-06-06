@@ -1,5 +1,5 @@
-import { PartialFleetPlace, sortFleet } from ".";
-import { FleetState } from "../../store/organize/ships";
+import { sortFleet } from ".";
+import { FleetPlace, FleetState } from "../../store/organize/ships";
 
 const fleetData: FleetState = [
   { fleetNo: 0, turnNo: 0, shipId: "0" },
@@ -9,8 +9,8 @@ const fleetData: FleetState = [
 
 describe("SortFleet", () => {
   test("Single Move", () => {
-    const from: PartialFleetPlace = { fleetNo: 0, turnNo: 0 };
-    const to: PartialFleetPlace = { fleetNo: 0, turnNo: 1 };
+    const from: FleetPlace = { fleetNo: 0, turnNo: 0 };
+    const to: FleetPlace = { fleetNo: 0, turnNo: 1 };
 
     const expected = [
       expect.objectContaining({ turnNo: 0, shipId: "1" }),
@@ -24,8 +24,8 @@ describe("SortFleet", () => {
   });
 
   test("Multi Move", () => {
-    const from: PartialFleetPlace = { fleetNo: 0, turnNo: 0 };
-    const to: PartialFleetPlace = { fleetNo: 0, turnNo: 2 };
+    const from: FleetPlace = { fleetNo: 0, turnNo: 0 };
+    const to: FleetPlace = { fleetNo: 0, turnNo: 2 };
 
     const expected = [
       expect.objectContaining({ turnNo: 0, shipId: "1" }),

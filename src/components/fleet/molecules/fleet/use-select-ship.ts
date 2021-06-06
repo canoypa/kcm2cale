@@ -1,27 +1,19 @@
 import { useState } from "react";
 import { ShipData } from "../../../../models/ship";
 import {
-  FleetNo,
-  ShipId,
-  TurnNo,
+  FleetShip,
   useRemoveShip,
   useSetShip,
 } from "../../../../store/organize/ships";
 import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 
-export type CurrentShip = {
-  fleetNo: FleetNo;
-  turnNo: TurnNo;
-  shipId: ShipId | null;
-};
-
 type SelectState =
-  | { isOpen: true; currentShip: CurrentShip }
+  | { isOpen: true; currentShip: FleetShip }
   | { isOpen: false; currentShip: null };
 type SelectShip = [
   boolean,
   {
-    start: (currentShip: CurrentShip) => void;
+    start: (currentShip: FleetShip) => void;
     onSelect: (shipData: ShipData) => void;
     end: () => void;
   }
@@ -39,7 +31,7 @@ export const useSelectShip = (): SelectShip => {
     initialSelectState
   );
 
-  const startSelecting = (currentShip: CurrentShip) => {
+  const startSelecting = (currentShip: FleetShip) => {
     setSelectState({ isOpen: true, currentShip });
   };
 

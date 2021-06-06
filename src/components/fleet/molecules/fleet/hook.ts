@@ -1,14 +1,14 @@
 import { selector, useRecoilState, useRecoilValue } from "recoil";
-import { PartialFleetPlace, sortFleet } from "../../../../core/sort-fleet";
+import { sortFleet } from "../../../../core/sort-fleet";
 import {
   ActiveFleetNoState,
   FleetType,
   FleetTypeState,
 } from "../../../../store/organize/info";
 import {
-  FleetNo,
+  FleetPlace,
+  FleetShip,
   FleetState,
-  ShipId,
   TurnNo,
 } from "../../../../store/organize/ships";
 import { range } from "../../../../util/range";
@@ -23,11 +23,11 @@ const useSortFleetShip = () => {
   const [fleetState, setFleetState] = useRecoilState(FleetState);
 
   return (fromTurnNo: number, toTurnNo: number) => {
-    const from: PartialFleetPlace = {
+    const from: FleetPlace = {
       fleetNo: activeFleetNo,
       turnNo: fromTurnNo,
     };
-    const to: PartialFleetPlace = {
+    const to: FleetPlace = {
       fleetNo: activeFleetNo,
       turnNo: toTurnNo,
     };
@@ -38,7 +38,7 @@ const useSortFleetShip = () => {
 };
 
 type Fleet = {
-  fleet: Array<{ fleetNo: FleetNo; turnNo: TurnNo; shipId: ShipId | null }>;
+  fleet: FleetShip[];
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 };
 export const useFleet = (): Fleet => {

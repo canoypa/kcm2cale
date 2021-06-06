@@ -5,13 +5,14 @@ import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import { FleetTypeState } from "../../../../store/organize/info";
+import { FleetShip } from "../../../../store/organize/ships";
 import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
 import { useFleet } from "./hook";
 import { ToggleFleet } from "./toggle-fleet";
-import { CurrentShip, useSelectShip } from "./use-select-ship";
+import { useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
   const { fleet: fleetState, sort } = useFleet();
@@ -19,7 +20,7 @@ export const Fleet: FC = () => {
   const fleetType = useRecoilValue(FleetTypeState);
   const isCombined = isCombinedFleet(fleetType);
 
-  const swapShipContextValue = (currentShip: CurrentShip) => {
+  const swapShipContextValue = (currentShip: FleetShip) => {
     selecting.start(currentShip);
   };
 
