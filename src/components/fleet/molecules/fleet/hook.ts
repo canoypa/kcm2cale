@@ -5,7 +5,12 @@ import {
   FleetType,
   FleetTypeState,
 } from "../../../../store/organize/info";
-import { FleetState } from "../../../../store/organize/ships";
+import {
+  FleetNo,
+  FleetState,
+  ShipId,
+  TurnNo,
+} from "../../../../store/organize/ships";
 import { range } from "../../../../util/range";
 
 const isStrikingForceSelector = selector({
@@ -33,8 +38,8 @@ const useSortFleetShip = () => {
 };
 
 type Fleet = {
-  fleet: Array<{ fleetNo: number; turnNo: number; shipId: string | null }>;
-  sort: (oldIndex: number, newIndex: number) => void;
+  fleet: Array<{ fleetNo: FleetNo; turnNo: TurnNo; shipId: ShipId | null }>;
+  sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 };
 export const useFleet = (): Fleet => {
   const fleetNo = useRecoilValue(ActiveFleetNoState);

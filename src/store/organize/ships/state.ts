@@ -1,11 +1,13 @@
 import { atom } from "recoil";
 import { ShipData } from "../../../models/ship";
 
+export type FleetNo = number;
+export type TurnNo = number;
 export type ShipId = string;
 
 export type FleetStateValue = {
-  fleetNo: number;
-  turnNo: number;
+  fleetNo: FleetNo;
+  turnNo: TurnNo;
   shipId: ShipId;
 };
 

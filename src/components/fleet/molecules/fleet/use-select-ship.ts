@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { ShipData } from "../../../../models/ship";
-import { useRemoveShip, useSetShip } from "../../../../store/organize/ships";
+import {
+  FleetNo,
+  ShipId,
+  TurnNo,
+  useRemoveShip,
+  useSetShip,
+} from "../../../../store/organize/ships";
 import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 
 export type CurrentShip = {
-  fleetNo: number;
-  turnNo: number;
-  shipId: string | null;
+  fleetNo: FleetNo;
+  turnNo: TurnNo;
+  shipId: ShipId | null;
 };
 
 type SelectState =

@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { EquipmentData } from "../../../../models/equipment/types";
 import {
+  EquipmentId,
+  SlotNo,
   useRemoveEquipment,
   useSetEquipment,
 } from "../../../../store/organize/equipments";
+import { ShipId } from "../../../../store/organize/ships";
 
 type CurrentEquipment = {
-  shipId: string;
-  slotNo: number;
-  equipmentId: string | null;
+  shipId: ShipId;
+  slotNo: SlotNo;
+  equipmentId: EquipmentId | null;
 };
 
 export const useSelectEquipment = () => {

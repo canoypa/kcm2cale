@@ -1,6 +1,7 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
+import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
 import { FleetStateValue } from "../../../../store/organize/ships";
 import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
@@ -21,8 +22,10 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
 
   const classes = useStyles();
 
-  const handlerAddEquipment = (slotNo: number, equipmentId: string | null) =>
-    selecting.start({ shipId: fleetPlace.shipId, slotNo, equipmentId });
+  const handlerAddEquipment = (
+    slotNo: SlotNo,
+    equipmentId: EquipmentId | null
+  ) => selecting.start({ shipId: fleetPlace.shipId, slotNo, equipmentId });
 
   const handlerAddNewEquipment = () =>
     handlerAddEquipment(newEquipmentSlotNo, null);

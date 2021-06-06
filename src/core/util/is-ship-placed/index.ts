@@ -1,9 +1,14 @@
-import { FleetStateValue } from "../../../store/organize/ships";
+import {
+  FleetNo,
+  FleetStateValue,
+  ShipId,
+  TurnNo,
+} from "../../../store/organize/ships";
 
 type FleetPlace = {
-  fleetNo: number;
-  turnNo: number;
-  shipId: string | null;
+  fleetNo: FleetNo;
+  turnNo: TurnNo;
+  shipId: ShipId | null;
 };
 
 export const isShipPlaced = (

@@ -1,11 +1,13 @@
 import { atom } from "recoil";
 import { EquipmentData } from "../../../models/equipment/types";
+import { ShipId } from "../ships";
 
-type EquipmentId = string;
+export type SlotNo = number;
+export type EquipmentId = string;
 
 export type RiggingStateValue = {
-  shipId: string;
-  slotNo: number;
+  shipId: ShipId;
+  slotNo: SlotNo;
   equipmentId: EquipmentId;
 };
 

@@ -1,6 +1,10 @@
 import { selectorFamily, useRecoilValue } from "recoil";
-import { RiggingState } from "../../../../store/organize/equipments";
-import { FleetStateValue } from "../../../../store/organize/ships";
+import {
+  EquipmentId,
+  RiggingState,
+  SlotNo,
+} from "../../../../store/organize/equipments";
+import { FleetStateValue, ShipId } from "../../../../store/organize/ships";
 
 const DUMMY_SLOT_SIZE = 4;
 
@@ -12,9 +16,9 @@ const slotSizeSelector = selectorFamily({
 
 type Rigging = {
   shipEquipments: Array<{
-    shipId: string;
-    slotNo: number;
-    equipmentId: string;
+    shipId: ShipId;
+    slotNo: SlotNo;
+    equipmentId: EquipmentId;
   }>;
   isCanAddNewEquipment: boolean;
   newEquipmentSlotNo: number;

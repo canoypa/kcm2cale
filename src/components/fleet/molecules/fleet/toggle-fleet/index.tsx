@@ -2,6 +2,7 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { FC, MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 import { ActiveFleetNoState } from "../../../../../store/organize/info";
+import { FleetNo } from "../../../../../store/organize/ships";
 import { useStyles } from "./styles";
 
 export const ToggleFleet: FC = () => {
@@ -9,7 +10,7 @@ export const ToggleFleet: FC = () => {
 
   const classes = useStyles();
 
-  const handlerOnSelect = (_: MouseEvent, fleetNo: number) => {
+  const handlerOnSelect = (_: MouseEvent, fleetNo: FleetNo) => {
     if (fleetNo !== null) {
       setActiveFleetNo(fleetNo);
     }
