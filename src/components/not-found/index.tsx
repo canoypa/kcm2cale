@@ -1,7 +1,8 @@
 import { Box, Typography } from "@material-ui/core";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { useStyles } from "./styles";
 
@@ -13,13 +14,10 @@ export const NotFound: FC = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
+  useDidMount(() => {
     setPageTitle("Page Not Found");
     pageViewLog("Not Found");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <Box
