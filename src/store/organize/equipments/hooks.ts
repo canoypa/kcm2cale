@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
 import { useSetRecoilState } from "recoil";
+import { EquipmentId, EquipmentsState, RiggingState, SlotNo } from ".";
 import { EquipmentData } from "../../../models/equipment/types";
 import { ShipId } from "../ships";
-import { EquipmentId, EquipmentsState, RiggingState, SlotNo } from "./state";
 
 export const useSetEquipment = () => {
   const setRigging = useSetRecoilState(RiggingState);
