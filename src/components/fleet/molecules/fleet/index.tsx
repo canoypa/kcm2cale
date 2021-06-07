@@ -4,13 +4,13 @@ import { List } from "react-movable";
 import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
+import { useFleet } from "../../../../hooks/organize/fleet";
 import { FleetTypeState } from "../../../../store/organize/info";
 import { FleetShip } from "../../../../store/organize/ships";
 import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";
-import { useFleet } from "./hook";
 import { ToggleFleet } from "./toggle-fleet";
 import { useSelectShip } from "./use-select-ship";
 

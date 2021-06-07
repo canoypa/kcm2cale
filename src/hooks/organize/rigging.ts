@@ -3,8 +3,8 @@ import {
   EquipmentId,
   RiggingState,
   SlotNo,
-} from "../../../../store/organize/equipments";
-import { DeployedFleetShip, ShipId } from "../../../../store/organize/ships";
+} from "../../store/organize/equipments";
+import { DeployedFleetShip, ShipId } from "../../store/organize/ships";
 
 const DUMMY_SLOT_SIZE = 4;
 

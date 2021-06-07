@@ -1,7 +1,13 @@
 import { useSetRecoilState } from "recoil";
-import { FleetNo, FleetState, ShipId, ShipsState, TurnNo } from ".";
-import { generateShipId } from "../../../core/util/generate-id";
-import { ShipData } from "../../../models/ship";
+import { generateShipId } from "../../core/util/generate-id";
+import { ShipData } from "../../models/ship";
+import {
+  FleetNo,
+  FleetState,
+  ShipId,
+  ShipsState,
+  TurnNo,
+} from "../../store/organize/ships";
 
 export const useSetShip = () => {
   const setFleet = useSetRecoilState(FleetState);

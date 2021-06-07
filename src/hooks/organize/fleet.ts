@@ -1,17 +1,17 @@
 import { selector, useRecoilState, useRecoilValue } from "recoil";
-import { sortFleet } from "../../../../core/sort-fleet";
+import { sortFleet } from "../../core/sort-fleet";
 import {
   ActiveFleetNoState,
   FleetType,
   FleetTypeState,
-} from "../../../../store/organize/info";
+} from "../../store/organize/info";
 import {
   FleetPlace,
   FleetShip,
   FleetState,
   TurnNo,
-} from "../../../../store/organize/ships";
-import { range } from "../../../../util/range";
+} from "../../store/organize/ships";
+import { range } from "../../util/range";
 
 const isStrikingForceSelector = selector({
   key: "IsStrikingForce",

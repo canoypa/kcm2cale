@@ -1,8 +1,13 @@
 import { useSetRecoilState } from "recoil";
-import { EquipmentId, EquipmentsState, RiggingState, SlotNo } from ".";
-import { generateEquipmentId } from "../../../core/util/generate-id";
-import { EquipmentData } from "../../../models/equipment/types";
-import { ShipId } from "../ships";
+import { generateEquipmentId } from "../../core/util/generate-id";
+import { EquipmentData } from "../../models/equipment/types";
+import {
+  EquipmentId,
+  EquipmentsState,
+  RiggingState,
+  SlotNo,
+} from "../../store/organize/equipments";
+import { ShipId } from "../../store/organize/ships";
 
 export const useSetEquipment = () => {
   const setRigging = useSetRecoilState(RiggingState);

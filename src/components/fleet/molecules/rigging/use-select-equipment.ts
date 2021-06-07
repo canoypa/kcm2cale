@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { EquipmentData } from "../../../../models/equipment/types";
 import {
-  ShipEquipment,
   useRemoveEquipment,
   useSetEquipment,
-} from "../../../../store/organize/equipments";
+} from "../../../../hooks/organize/equipment";
+import { EquipmentData } from "../../../../models/equipment/types";
+import { ShipEquipment } from "../../../../store/organize/equipments";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =

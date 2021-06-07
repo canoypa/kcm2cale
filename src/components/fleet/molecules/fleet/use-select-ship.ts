@@ -1,10 +1,7 @@
 import { useState } from "react";
+import { useRemoveShip, useSetShip } from "../../../../hooks/organize/ship";
 import { ShipData } from "../../../../models/ship";
-import {
-  FleetShip,
-  useRemoveShip,
-  useSetShip,
-} from "../../../../store/organize/ships";
+import { FleetShip } from "../../../../store/organize/ships";
 import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 
 type SelectState =
