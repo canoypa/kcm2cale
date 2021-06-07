@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid";
 import { useSetRecoilState } from "recoil";
 import { FleetNo, FleetState, ShipId, ShipsState, TurnNo } from ".";
+import { generateShipId } from "../../../core/util/generate-id";
 import { ShipData } from "../../../models/ship";
 
 export const useSetShip = () => {
@@ -8,7 +8,7 @@ export const useSetShip = () => {
   const setShip = useSetRecoilState(ShipsState);
 
   return (fleetNo: FleetNo, turnNo: TurnNo, ship: ShipData) => {
-    const shipId = nanoid(8);
+    const shipId = generateShipId();
     const newFleet = { fleetNo, turnNo, shipId };
     const newShip = { shipId, ship };
 

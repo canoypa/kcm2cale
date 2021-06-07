@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid";
 import { useSetRecoilState } from "recoil";
 import { EquipmentId, EquipmentsState, RiggingState, SlotNo } from ".";
+import { generateEquipmentId } from "../../../core/util/generate-id";
 import { EquipmentData } from "../../../models/equipment/types";
 import { ShipId } from "../ships";
 
@@ -9,7 +9,7 @@ export const useSetEquipment = () => {
   const setEquipment = useSetRecoilState(EquipmentsState);
 
   return (shipId: ShipId, slotNo: SlotNo, equipment: EquipmentData) => {
-    const equipmentId = nanoid(8);
+    const equipmentId = generateEquipmentId();
     const newRigging = { shipId, slotNo, equipmentId };
     const newEquipment = { equipmentId, equipment };
 
