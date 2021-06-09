@@ -1,11 +1,8 @@
-import "firebase/auth";
 import { firebase } from "../app";
 import { ProviderIdValue } from "./types";
 
-export const firebaseAuth = firebase.auth;
-
 export const createProvider = (providerId: ProviderIdValue) => {
-  if (providerId === "google") return new firebaseAuth.GoogleAuthProvider();
-  if (providerId === "twitter") return new firebaseAuth.TwitterAuthProvider();
+  if (providerId === "google") return new firebase.auth.GoogleAuthProvider();
+  if (providerId === "twitter") return new firebase.auth.TwitterAuthProvider();
   throw new Error("Error: 不明なプロバイダ");
 };

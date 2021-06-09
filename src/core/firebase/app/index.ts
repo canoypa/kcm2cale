@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { preloadAuth } from "reactfire";
+import { preloadAnalytics, preloadAuth } from "reactfire";
 
 export { default as firebase } from "firebase/app";
 
@@ -11,6 +11,10 @@ export const firebaseApp = firebase.initializeApp({
   messagingSenderId: "719133698825",
   appId: "1:719133698825:web:5bd598038750d7095481d8",
   measurementId: "G-VH9GB7XRVY",
+});
+
+preloadAnalytics({
+  firebaseApp,
 });
 
 preloadAuth({

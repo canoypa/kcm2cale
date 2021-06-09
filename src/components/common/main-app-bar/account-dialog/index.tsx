@@ -1,9 +1,9 @@
 import { Box, Button, Dialog, Divider } from "@material-ui/core";
-import firebase from "firebase/app";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { firebaseAuth } from "../../../../core/firebase/auth";
+import { useAuth } from "reactfire";
+import { firebase } from "../../../../core/firebase/app";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
 
@@ -12,6 +12,8 @@ type AccountHeaderProps = {
   onClose: () => void;
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
+  const auth = useAuth();
+
   const { push } = useHistory();
   const { pathname } = useLocation();
 
@@ -21,7 +23,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
     push("/sign-in", { continue: pathname });
   };
   const _signOut = async () => {
-    await firebaseAuth().signOut();
+    await auth.signOut();
     onClose();
   };
 
