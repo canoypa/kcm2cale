@@ -1,4 +1,4 @@
-import { EquipmentData, EquipmentType } from "../modules/equipment/types";
+import { EquipmentData, EquipmentType } from "../models/equipment/types";
 
 export const EquipmentsData: EquipmentData[] = [
   {
@@ -2042,8 +2042,33 @@ export const EquipmentsData: EquipmentData[] = [
     name: "水雷戦隊 熟練見張員",
   },
   {
+    no: 413,
+    type: EquipmentType.ShipPersonnel,
+    name: "精鋭水雷戦隊 司令部",
+  },
+  {
     no: 414,
     type: EquipmentType.ReconnaissanceSeaplane,
     name: "SOC Seagull",
+  },
+  {
+    no: 415,
+    type: EquipmentType.ReconnaissanceSeaplane,
+    name: "SO3C Seamew改",
+  },
+  {
+    no: 416,
+    type: EquipmentType.LandBasedInterceptor,
+    name: "零式艦戦21型(台南空)",
+  },
+  {
+    no: 417,
+    type: EquipmentType.LandBasedInterceptor,
+    name: "零式艦戦32型(台南空)",
+  },
+  {
+    no: 419,
+    type: EquipmentType.CarrierBasedDiveBomber,
+    name: "SBD-5",
   },
 ];

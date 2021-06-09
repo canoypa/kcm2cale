@@ -1,6 +1,6 @@
 import { CurrentEquipmentStatus, EquipmentStatus } from "./types";
 
-const createStatus = (baseStatus: EquipmentStatus): CurrentEquipmentStatus => {
+const _createStatus = (baseStatus: EquipmentStatus): CurrentEquipmentStatus => {
   const { validProficiency, validImprovement, ...status } = baseStatus;
 
   return Object.assign(

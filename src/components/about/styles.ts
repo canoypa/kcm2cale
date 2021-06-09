@@ -21,11 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     "& main section": {
-      marginBottom: "2em",
-    },
-
-    "& footer": {
-      borderTop: `1px solid ${theme.palette.divider}`,
+      marginBottom: "1em",
     },
   },
 }));

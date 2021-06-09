@@ -11,12 +11,12 @@ import { FC, MouseEvent, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetData_v1 } from "../../../core/persistence/types";
+import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import { LineClamp } from "../../common/clamp";
 import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
 
-type Props = { fleetData: LocalFleetData_v1 };
+type Props = { fleetData: LocalFleetDataV1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
 

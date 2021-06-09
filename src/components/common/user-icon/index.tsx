@@ -1,7 +1,7 @@
 import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
-import firebase from "firebase/app";
 import { FC } from "react";
+import { firebase } from "../../../core/firebase/app";
 import { useStyles } from "./styles";
 
 type UserIconProps = {

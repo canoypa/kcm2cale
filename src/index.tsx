@@ -1,7 +1,6 @@
 import { render as reactRender } from "react-dom";
 import { App } from "./components/app";
-import "./core/firebase/analytics";
-import { appRoot } from "./core/variable";
+import { appRoot } from "./core/constants";
 
 document.body.insertAdjacentElement("afterbegin", appRoot);
 

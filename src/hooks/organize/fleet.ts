@@ -1,12 +1,17 @@
 import { selector, useRecoilState, useRecoilValue } from "recoil";
-import { PartialFleetPlace, sortFleet } from "../../../../core/sort-fleet";
+import { sortFleet } from "../../core/sort-fleet";
 import {
   ActiveFleetNoState,
   FleetType,
   FleetTypeState,
-} from "../../../../store/organize/info";
-import { FleetState } from "../../../../store/organize/ships";
-import { range } from "../../../../util/range";
+} from "../../store/organize/info";
+import {
+  FleetPlace,
+  FleetShip,
+  FleetState,
+  TurnNo,
+} from "../../store/organize/ships";
+import { range } from "../../util/range";
 
 const isStrikingForceSelector = selector({
   key: "IsStrikingForce",
@@ -18,11 +23,11 @@ const useSortFleetShip = () => {
   const [fleetState, setFleetState] = useRecoilState(FleetState);
 
   return (fromTurnNo: number, toTurnNo: number) => {
-    const from: PartialFleetPlace = {
+    const from: FleetPlace = {
       fleetNo: activeFleetNo,
       turnNo: fromTurnNo,
     };
-    const to: PartialFleetPlace = {
+    const to: FleetPlace = {
       fleetNo: activeFleetNo,
       turnNo: toTurnNo,
     };
@@ -33,8 +38,8 @@ const useSortFleetShip = () => {
 };
 
 type Fleet = {
-  fleet: Array<{ fleetNo: number; turnNo: number; shipId: string | null }>;
-  sort: (oldIndex: number, newIndex: number) => void;
+  fleet: FleetShip[];
+  sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 };
 export const useFleet = (): Fleet => {
   const fleetNo = useRecoilValue(ActiveFleetNoState);

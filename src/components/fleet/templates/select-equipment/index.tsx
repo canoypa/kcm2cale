@@ -13,7 +13,7 @@ import {
   EquipmentGroupValues,
 } from "../../../../core/filters/equipment";
 import { EquipmentSearch } from "../../../../core/search/equipment";
-import { EquipmentData } from "../../../../modules/equipment/types";
+import { EquipmentData } from "../../../../models/equipment/types";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "./hooks";
 import { SearchEquipmentsList } from "./search-equipments-list";

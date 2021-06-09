@@ -8,10 +8,10 @@ import {
   useSetRecoilState,
 } from "recoil";
 import { LocalDatabase } from "../../persistence/local-database";
-import { LocalFleetData_v1 } from "../../persistence/types";
+import { LocalFleetDataV1 } from "../../persistence/types";
 import { SearchFleetRequest } from "./types";
 
-const dateSortFn = (a: LocalFleetData_v1, b: LocalFleetData_v1): number => {
+const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
   const [aDate, bDate] = [a.updatedAt, b.updatedAt];
   const dateOrder = aDate < bDate ? 1 : aDate > bDate ? -1 : 0;
   return dateOrder;
@@ -21,14 +21,14 @@ const dateSortFn = (a: LocalFleetData_v1, b: LocalFleetData_v1): number => {
 class FleetSearch {
   public static search = async (
     request: SearchFleetRequest
-  ): Promise<LocalFleetData_v1[]> => {
+  ): Promise<LocalFleetDataV1[]> => {
     // get saved fleet list
     const fleetDataList = await LocalDatabase.getAllFleet();
 
     if (!request.q) return fleetDataList.sort(dateSortFn);
 
     // fuse search
-    const options: Fuse.IFuseOptions<LocalFleetData_v1> = {
+    const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
       keys: ["title"],
       sortFn: (a, b) => {
         const [aScore, bScore] = [a.score, b.score];
@@ -43,7 +43,7 @@ class FleetSearch {
       },
     };
     const fuse = new Fuse(fleetDataList, options);
-    const matchList = fuse.search<LocalFleetData_v1>(request.q || "");
+    const matchList = fuse.search<LocalFleetDataV1>(request.q || "");
 
     const result = matchList.map((v) => v.item);
 
@@ -112,7 +112,7 @@ export const useIsExistFleet: useIsExistFleet = () => {
   return useRecoilValue(IsExistFleetState);
 };
 
-type useFleetList = () => LocalFleetData_v1[];
+type useFleetList = () => LocalFleetDataV1[];
 export const useFleetList: useFleetList = () => {
   return useRecoilValue(FleetListState);
 };

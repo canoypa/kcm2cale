@@ -2,7 +2,7 @@ import { ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import Measure from "react-measure";
 import { FixedSizeList } from "react-window";
-import { ShipData } from "../../../../../modules/ship";
+import { ShipData } from "../../../../../models/ship";
 
 type Props = {
   shipsList: ShipData[];

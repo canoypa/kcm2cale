@@ -1,4 +1,4 @@
-import { ShipData, ShipType } from "../modules/ship";
+import { ShipData, ShipType } from "../models/ship";
 
 export const ShipsData: ShipData[] = [
   {
@@ -2907,6 +2907,16 @@ export const ShipsData: ShipData[] = [
     name: "Atlanta改",
   },
   {
+    no: "398a",
+    type: ShipType.LightCruiser,
+    name: "Honolulu",
+  },
+  {
+    no: "398b",
+    type: ShipType.LightCruiser,
+    name: "Honolulu改",
+  },
+  {
     no: "399a",
     type: ShipType.LightCruiser,
     name: "De Ruyter",
@@ -2960,6 +2970,11 @@ export const ShipsData: ShipData[] = [
     no: "407a",
     type: ShipType.FastBattleship,
     name: "South Dakota改",
+  },
+  {
+    no: "408a",
+    type: ShipType.Oiler,
+    name: "宗谷",
   },
   {
     no: "409a",
@@ -3157,6 +3172,11 @@ export const ShipsData: ShipData[] = [
     name: "桃改",
   },
   {
+    no: "445a",
+    type: ShipType.Oiler,
+    name: "宗谷",
+  },
+  {
     no: "446a",
     type: ShipType.AircraftCarrier,
     name: "加賀改二護",
@@ -3165,6 +3185,16 @@ export const ShipsData: ShipData[] = [
     no: "448a",
     type: ShipType.Destroyer,
     name: "秋雲改二",
+  },
+  {
+    no: "449a",
+    type: ShipType.Destroyer,
+    name: "高波改二",
+  },
+  {
+    no: "450a",
+    type: ShipType.Oiler,
+    name: "宗谷",
   },
   {
     no: "451a",
@@ -3260,5 +3290,15 @@ export const ShipsData: ShipData[] = [
     no: "488a",
     type: ShipType.LightAircraftCarrier,
     name: "龍鳳改二",
+  },
+  {
+    no: "475a",
+    type: ShipType.Destroyer,
+    name: "涼波",
+  },
+  {
+    no: "475b",
+    type: ShipType.Destroyer,
+    name: "涼波",
   },
 ];

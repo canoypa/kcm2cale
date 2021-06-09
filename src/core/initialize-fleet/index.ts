@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import {
   CallbackInterface,
   useGotoRecoilSnapshot,
@@ -15,6 +14,7 @@ import {
 import { FleetState, ShipsState } from "../../store/organize/ships";
 import { FleetData } from "../fleet-data/types";
 import { decodeFleetStates } from "../persistence/local-fleet-data";
+import { generateFleetId } from "../util/generate-id";
 
 interface InitializeFleetArgs {
   fleetData: FleetData | null;
@@ -35,7 +35,7 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
     reset(EquipmentsState);
 
     if (fleetData === null) {
-      const geneFleetId = nanoid(16);
+      const geneFleetId = generateFleetId();
       set(FleetIdState, geneFleetId);
     }
   });

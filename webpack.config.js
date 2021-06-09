@@ -1,25 +1,26 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const webpack = require("webpack");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const variable = require("./scripts/build/variable");
 
-const config = (env) => {
-  const isProd = env.mode === "production";
-  const mode = isProd ? "production" : "development";
+const config = (_, args) => {
+  const mode = args.mode || "development";
+  const isProd = mode === "production";
 
   // babel とか用
-  if (isProd) {
-    process.env.NODE_ENV = "production";
-  }
+  process.env.NODE_ENV = mode;
 
   return {
     mode: mode,
 
-    output: { filename: "[name].js", path: resolve("public") },
+    output: {
+      filename: "[name].js",
+      path: resolve("build"),
+      clean: true,
+    },
 
     entry: {
       index: [
@@ -75,8 +76,17 @@ const config = (env) => {
       new HtmlWebpackPlugin({
         template: resolve("src/index.html"),
         inject: false,
+        minify: {
+          collapseWhitespace: true,
+          keepClosingSlash: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
+          minifyCSS: true,
+        },
       }),
-      new CleanWebpackPlugin(),
       isProd &&
         new BundleAnalyzerPlugin({
           analyzerMode: "json",

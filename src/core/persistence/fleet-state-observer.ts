@@ -1,7 +1,7 @@
 import {
   CallbackInterface,
   useRecoilCallback,
-  useRecoilTransactionObserver_UNSTABLE
+  useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE,
 } from "recoil";
 import { isFleetStateModified } from "./is-fleet-state-modified";
 import { saveToLocal } from "./save-to-local";
@@ -12,7 +12,7 @@ class FleetStateObserver {
   private readonly SAVE_TIMEOUT = 4000;
 
   /** TimeoutId */
-  private saveTimeoutId: number = 0;
+  private saveTimeoutId = 0;
 
   private saveFn: (() => void) | null = null;
 
@@ -76,7 +76,7 @@ const fleetStateObserver = new FleetStateObserver();
 export const useLocalPersistence = () => {
   const observer = useRecoilCallback(fleetStateObserver.observer);
 
-  useRecoilTransactionObserver_UNSTABLE(observer);
+  useRecoilTransactionObserverUNSTABLE(observer);
 
   return {
     justSaveNow: fleetStateObserver.justSaveNow,

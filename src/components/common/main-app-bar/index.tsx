@@ -1,11 +1,11 @@
 import { AppBar, Toolbar, useScrollTrigger } from "@material-ui/core";
 import { FC, useState } from "react";
-import { useUser } from "../../../core/firebase/auth/hooks";
+import { useUser } from "reactfire";
 import { UserIconButton } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
 
 export const MainAppBar: FC = () => {
-  const userLoadable = useUser();
+  const { status: authStatus, data: userData } = useUser();
 
   const elevateTrigger = useScrollTrigger({
     disableHysteresis: true,
@@ -16,7 +16,7 @@ export const MainAppBar: FC = () => {
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
-  const user = userLoadable.state === "hasValue" ? userLoadable.contents : null;
+  const user = authStatus === "success" ? userData : null;
 
   return (
     <>

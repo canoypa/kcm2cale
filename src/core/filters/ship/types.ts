@@ -1,4 +1,4 @@
-import { ShipType, ShipTypeValues } from "../../../modules/ship";
+import { ShipType, ShipTypeValues } from "../../../models/ship";
 import { EnumValues } from "../../../util/types";
 
 export const ShipSearchGroup = {

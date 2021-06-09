@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { FleetIdState, FleetNameState } from "../../store/organize/info";
+import { useDidMount, useWillUnmount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { useInitializeCallback } from "./hooks";
@@ -15,10 +16,10 @@ const LoadFleet: FC = () => {
   const { fleetId } = useParams<{ fleetId: string }>();
   const isExistFleet = useRecoilValue(FleetIdState);
 
-  useEffect(() => {
+  useDidMount(() => {
     // 直アクセスの場合編成初期化
     if (!isExistFleet) initFleet({ fleetId });
-  }, []);
+  });
 
   return null;
 };
@@ -28,9 +29,12 @@ const Fleet: FC = () => {
   const { justSaveNow } = useLocalPersistence();
 
   const backToTopPage = () => {
-    justSaveNow();
     push("/");
   };
+
+  useWillUnmount(() => {
+    justSaveNow();
+  });
 
   return (
     <>
@@ -49,12 +53,9 @@ export const FleetPage: FC = () => {
   const isExistFleet = useRecoilValue(FleetIdState);
   const fleetTitle = useRecoilValue(FleetNameState);
 
-  useEffect(() => {
+  useDidMount(() => {
     pageViewLog("Fleet View");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   useEffect(() => {
     setPageTitle(`${fleetTitle || "無題の編成"}`);

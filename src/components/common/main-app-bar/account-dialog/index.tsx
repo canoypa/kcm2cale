@@ -1,10 +1,9 @@
-import { Box, Button, Dialog, DialogContent } from "@material-ui/core";
-import firebase from "firebase/app";
+import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { firebaseAuth } from "../../../../core/firebase/auth";
-import { useUser } from "../../../../core/firebase/auth/hooks";
+import { useAuth, useUser } from "reactfire";
+import { firebase } from "../../../../core/firebase/app";
 import { LineClamp } from "../../clamp";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
@@ -14,6 +13,8 @@ type AccountHeaderProps = {
   onClose: () => void;
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
+  const auth = useAuth();
+
   const { push } = useHistory();
   const { pathname } = useLocation();
 
@@ -24,7 +25,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
   };
   const signOut = async () => {
     onClose();
-    await firebaseAuth().signOut();
+    await auth.signOut();
   };
 
   return user ? (
@@ -59,19 +60,20 @@ type Props = {
   onClose: () => void;
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
-  const userLoadable = useUser();
+  const { data: user } = useUser();
   const classes = useStyles();
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogContent>
-        <AccountHeader user={userLoadable.contents} onClose={onClose} />
-        <div>
-          <Link to="/about" className={classes.link}>
-            {__APP_NAME__} について
-          </Link>
-        </div>
-      </DialogContent>
+      <Box padding={2}>
+        <AccountHeader user={user} onClose={onClose} />
+      </Box>
+      <Divider variant="middle" />
+      <Box paddingY={1} paddingX={2}>
+        <Link to="/about" className={classes.link}>
+          <Button size="small">{__APP_NAME__} について</Button>
+        </Link>
+      </Box>
     </Dialog>
   );
 };
