@@ -1,8 +1,32 @@
+import { createElement, ReactElement } from "react";
+import { GoogleLogo } from "../../../components/singin/logo/google";
+import { TwitterLogo } from "../../../components/singin/logo/twitter";
 import { firebase } from "../app";
-import { ProviderIdValue } from "./types";
+import { ProviderId, ProviderIdValue } from "./types";
+
+export * from "./types";
+
+export const ProviderNameMap: ReadonlyMap<ProviderIdValue, string> = new Map([
+  [ProviderId.Google, "Google"],
+  [ProviderId.Twitter, "Twitter"],
+]);
+
+export const ProviderLogoMap: ReadonlyMap<
+  ProviderIdValue,
+  ReactElement
+> = new Map([
+  [ProviderId.Google, createElement(GoogleLogo)],
+  [ProviderId.Twitter, createElement(TwitterLogo)],
+]);
 
 export const createProvider = (providerId: ProviderIdValue) => {
-  if (providerId === "google") return new firebase.auth.GoogleAuthProvider();
-  if (providerId === "twitter") return new firebase.auth.TwitterAuthProvider();
-  throw new Error("Error: 不明なプロバイダ");
+  switch (providerId) {
+    case ProviderId.Google:
+      return new firebase.auth.GoogleAuthProvider();
+    case ProviderId.Twitter:
+      return new firebase.auth.TwitterAuthProvider();
+
+    default:
+      throw new Error("Error: 不明なプロバイダ");
+  }
 };
