@@ -11,9 +11,6 @@
 /build/
 /report/
 
-# public
-/public/
-
 # VSCode
 /.vscode/launch.json
 /.vscode/tasks.json

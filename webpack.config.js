@@ -18,7 +18,7 @@ const config = (_, args) => {
 
     output: {
       filename: "[name].js",
-      path: resolve("public"),
+      path: resolve("build"),
       clean: true,
     },
 
