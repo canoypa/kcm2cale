@@ -1,4 +1,4 @@
 import "firebase/analytics";
-import { firebaseApp } from "../app";
+import { firebase } from "../app";
 
-export const firebaseAnalytics = firebaseApp.analytics();
+export const firebaseAnalytics = firebase.analytics();

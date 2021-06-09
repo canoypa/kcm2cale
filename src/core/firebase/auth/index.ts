@@ -1,8 +1,8 @@
 import "firebase/auth";
-import { firebaseApp } from "../app";
+import { firebase } from "../app";
 import { ProviderIdValue } from "./types";
 
-export const firebaseAuth = firebaseApp.auth;
+export const firebaseAuth = firebase.auth;
 
 if (!__IS_PRODUCTION__) {
   // @ts-expect-error: 型定義にないオプション引数
