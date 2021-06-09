@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { preloadAnalytics, preloadAuth } from "reactfire";
+import { preloadAnalytics, preloadAuth, preloadFirestore } from "reactfire";
 
 export { default as firebase } from "firebase/app";
 
@@ -26,6 +26,15 @@ preloadAuth({
         // ページ下部に表示されるエミュレータ使用警告メッセージを表示しない
         disableWarnings: true,
       });
+    }
+  },
+});
+
+preloadFirestore({
+  firebaseApp,
+  setup: (firestore) => {
+    if (!__IS_PRODUCTION__) {
+      firestore().useEmulator("localhost", 8080);
     }
   },
 });
