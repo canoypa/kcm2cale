@@ -3,6 +3,7 @@ import {
   EquipmentsState,
   RiggingState,
 } from "../../../../../store/organize/equipments";
+import { ShipId } from "../../../../../store/organize/ships";
 
 export const useRemoveEquipments = () => {
   const setRigging = useSetRecoilState(RiggingState);
@@ -10,7 +11,7 @@ export const useRemoveEquipments = () => {
 
   const rigging = useRecoilValue(RiggingState);
 
-  return (shipId: string) => {
+  return (shipId: ShipId) => {
     setRigging((state) => state.filter((v) => v.shipId !== shipId));
     rigging.forEach(({ equipmentId }) => {
       setEquipment((state) =>

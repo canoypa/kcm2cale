@@ -1,19 +1,14 @@
 import { useState } from "react";
-import { EquipmentData } from "../../../../models/equipment/types";
 import {
   useRemoveEquipment,
   useSetEquipment,
-} from "../../../../store/organize/equipments";
-
-type CurrentEquipment = {
-  shipId: string;
-  slotNo: number;
-  equipmentId: string | null;
-};
+} from "../../../../hooks/organize/equipment";
+import { EquipmentData } from "../../../../models/equipment/types";
+import { ShipEquipment } from "../../../../store/organize/equipments";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =
-    | { isOpen: true; currentEquipment: CurrentEquipment }
+    | { isOpen: true; currentEquipment: ShipEquipment }
     | { isOpen: false; currentEquipment: null };
 
   const initialSelectingState: SelectingEquipment = {
@@ -27,7 +22,7 @@ export const useSelectEquipment = () => {
   const setEquipment = useSetEquipment();
   const removeEquipment = useRemoveEquipment();
 
-  const startSelecting = (currentEquipment: CurrentEquipment) => {
+  const startSelecting = (currentEquipment: ShipEquipment) => {
     setSelecting({ isOpen: true, currentEquipment });
   };
 
