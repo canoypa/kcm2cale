@@ -6,7 +6,7 @@ import { FleetHeader } from "../../molecules/fleet-header";
 export const Organize: FC = () => {
   return (
     <Container maxWidth="md">
-      <Box display="grid" gridRowGap={16} paddingY={3}>
+      <Box display="flex" flexDirection="column" gridRowGap={16} paddingY={3}>
         <FleetHeader />
         <Fleet />
       </Box>
