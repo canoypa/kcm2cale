@@ -1,6 +1,6 @@
 import { createElement, ReactElement } from "react";
-import { GoogleLogo } from "../../../components/singin/logo/google";
-import { TwitterLogo } from "../../../components/singin/logo/twitter";
+import { GoogleLogo } from "../../../components/signin/logo/google";
+import { TwitterLogo } from "../../../components/signin/logo/twitter";
 import { firebase } from "../app";
 import { ProviderId, ProviderIdValue } from "./types";
 
