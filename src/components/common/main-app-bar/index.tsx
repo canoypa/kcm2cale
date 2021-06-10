@@ -4,8 +4,6 @@ import { UserIconButton } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
 
 export const MainAppBar: FC = () => {
-  // const userLoadable = useUser();
-
   const elevateTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -14,8 +12,6 @@ export const MainAppBar: FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
-
-  // const user = userLoadable.state === "hasValue" ? userLoadable.contents : null;
 
   return (
     <>
@@ -28,7 +24,6 @@ export const MainAppBar: FC = () => {
           <div style={{ flexGrow: 1 }}></div>
           <UserIconButton
             edge="end"
-            user={null}
             onClick={openDialog}
             aria-label="アカウントメニュー"
           />

@@ -1,6 +1,9 @@
 import firebase from "firebase/app";
+import { preloadAnalytics, preloadAuth, preloadFirestore } from "reactfire";
 
-firebase.initializeApp({
+export { default as firebase } from "firebase/app";
+
+export const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyBcGdiIFIksZ_k7kkwtFB57n84Ri9NjkWo",
   authDomain: "kcm2cale.firebaseapp.com",
   projectId: "kcm2cale",
@@ -10,4 +13,28 @@ firebase.initializeApp({
   measurementId: "G-VH9GB7XRVY",
 });
 
-export const firebaseApp = firebase;
+preloadAnalytics({
+  firebaseApp,
+});
+
+preloadAuth({
+  firebaseApp,
+  setup: (auth) => {
+    if (!__IS_PRODUCTION__) {
+      // @ts-expect-error: 型定義にないオプション引数
+      auth().useEmulator("http://localhost:9099", {
+        // ページ下部に表示されるエミュレータ使用警告メッセージを表示しない
+        disableWarnings: true,
+      });
+    }
+  },
+});
+
+preloadFirestore({
+  firebaseApp,
+  setup: (firestore) => {
+    if (!__IS_PRODUCTION__) {
+      firestore().useEmulator("localhost", 8080);
+    }
+  },
+});
