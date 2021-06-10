@@ -1,14 +1,16 @@
 import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
-import { FC } from "react";
-import { firebase } from "../../../core/firebase/app";
+import { Skeleton } from "@material-ui/lab";
+import { FC, Suspense } from "react";
+import { useUser } from "reactfire";
 import { useStyles } from "./styles";
 
-type UserIconProps = {
-  user: firebase.User | null;
-  size?: number;
+type UserAvatarProps = {
+  size: number;
 };
-export const UserIcon: FC<UserIconProps> = ({ user, size = 32 }) => {
+const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
+  const { data: user } = useUser();
+
   const classes = useStyles();
 
   return (
@@ -23,13 +25,23 @@ export const UserIcon: FC<UserIconProps> = ({ user, size = 32 }) => {
   );
 };
 
-type UserIconButtonProps = IconButtonProps & {
-  user: firebase.User | null;
+type UserIconProps = {
+  size?: number;
 };
-export const UserIconButton: FC<UserIconButtonProps> = ({ user, ...props }) => {
+export const UserIcon: FC<UserIconProps> = ({ size = 32 }) => {
+  return (
+    <Suspense
+      fallback={<Skeleton variant="circle" width={size} height={size} />}
+    >
+      <UserAvatar size={size} />
+    </Suspense>
+  );
+};
+
+export const UserIconButton: FC<IconButtonProps> = ({ ...props }) => {
   return (
     <IconButton style={{ padding: 8 }} {...props}>
-      <UserIcon user={null} size={32} />
+      <UserIcon size={32} />
     </IconButton>
   );
 };
