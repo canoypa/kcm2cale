@@ -9,33 +9,31 @@ const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
 };
 
 // TODO: テスト、書く
-export class FleetSearch {
-  public static search = async (
-    fleetDataList: LocalFleetDataV1[],
-    request: SearchFleetRequest
-  ): Promise<LocalFleetDataV1[]> => {
-    if (!request.q) return fleetDataList.sort(dateSortFn);
+/**
+ * 編成リストのフィルタリングとソート
+ */
+export const searchFleet = async (
+  fleetDataList: LocalFleetDataV1[],
+  request: SearchFleetRequest
+): Promise<LocalFleetDataV1[]> => {
+  if (!request.q) return fleetDataList.sort(dateSortFn);
 
-    // fuse search
-    const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
-      keys: ["title"],
-      sortFn: (a, b) => {
-        const [aScore, bScore] = [a.score, b.score];
-        const scoreOrder = aScore > bScore ? 1 : aScore < bScore ? -1 : 0;
+  // fuse search
+  const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
+    keys: ["title"],
+    sortFn: (a, b) => {
+      const [aScore, bScore] = [a.score, b.score];
+      const scoreOrder = aScore > bScore ? 1 : aScore < bScore ? -1 : 0;
 
-        const dateOrder = dateSortFn(
-          fleetDataList[a.idx],
-          fleetDataList[b.idx]
-        );
+      const dateOrder = dateSortFn(fleetDataList[a.idx], fleetDataList[b.idx]);
 
-        return scoreOrder || dateOrder;
-      },
-    };
-    const fuse = new Fuse(fleetDataList, options);
-    const matchList = fuse.search<LocalFleetDataV1>(request.q || "");
-
-    const result = matchList.map((v) => v.item);
-
-    return result;
+      return scoreOrder || dateOrder;
+    },
   };
-}
+  const fuse = new Fuse(fleetDataList, options);
+  const matchList = fuse.search<LocalFleetDataV1>(request.q || "");
+
+  const result = matchList.map((v) => v.item);
+
+  return result;
+};
