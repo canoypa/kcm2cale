@@ -43,9 +43,12 @@ export const FleetListState = selector({
     // refresh query
     get(FleetListRequestIdState);
 
+    // get saved fleet list
+    const fleets = await LocalDatabase.getAllFleet();
+
     const request = {
       q: get(SearchFleetQueryState),
     };
-    return await FleetSearch.search(request);
+    return await FleetSearch.search(fleets, request);
   },
 });

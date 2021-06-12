@@ -1,5 +1,4 @@
 import Fuse from "fuse.js";
-import { LocalDatabase } from "../../persistence/local-database";
 import { LocalFleetDataV1 } from "../../persistence/types";
 import { SearchFleetRequest } from "./types";
 
@@ -12,11 +11,9 @@ const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
 // TODO: テスト、書く
 export class FleetSearch {
   public static search = async (
+    fleetDataList: LocalFleetDataV1[],
     request: SearchFleetRequest
   ): Promise<LocalFleetDataV1[]> => {
-    // get saved fleet list
-    const fleetDataList = await LocalDatabase.getAllFleet();
-
     if (!request.q) return fleetDataList.sort(dateSortFn);
 
     // fuse search
