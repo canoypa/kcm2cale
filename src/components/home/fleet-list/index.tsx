@@ -4,7 +4,7 @@ import {
   useFleetList,
   useRefreshFleetList,
   useSearchFleetQuery,
-} from "../../../core/search/fleet";
+} from "../../../hooks/organize/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 import { useStyles } from "./styles";

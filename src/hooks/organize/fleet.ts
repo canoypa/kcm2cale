@@ -1,5 +1,18 @@
-import { selector, useRecoilState, useRecoilValue } from "recoil";
+import {
+  selector,
+  SetterOrUpdater,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
+import { LocalFleetDataV1 } from "../../core/persistence/types";
 import { sortFleet } from "../../core/sort-fleet";
+import {
+  FleetListRequestIdState,
+  FleetListState,
+  IsExistFleetState,
+  SearchFleetQueryState,
+} from "../../store/organize/fleet";
 import {
   ActiveFleetNoState,
   FleetType,
@@ -59,4 +72,37 @@ export const useFleet = (): Fleet => {
   });
 
   return { fleet, sort: sortFleetShip };
+};
+
+/**
+ * ローカル保存された編成を再取得するよう Request Id を更新
+ */
+type useRefreshFleetList = () => () => void;
+export const useRefreshFleetList: useRefreshFleetList = () => {
+  const setRequestId = useSetRecoilState(FleetListRequestIdState);
+  return () => setRequestId((id) => id + 1);
+};
+
+/**
+ * 編成検索クエリ
+ */
+type useSearchFleetQuery = () => [string, SetterOrUpdater<string>];
+export const useSearchFleetQuery: useSearchFleetQuery = () => {
+  return useRecoilState(SearchFleetQueryState);
+};
+
+/**
+ * 保存された編成が存在するか
+ */
+type useIsExistFleet = () => boolean;
+export const useIsExistFleet: useIsExistFleet = () => {
+  return useRecoilValue(IsExistFleetState);
+};
+
+/**
+ * 保存された編成のリスト
+ */
+type useFleetList = () => LocalFleetDataV1[];
+export const useFleetList: useFleetList = () => {
+  return useRecoilValue(FleetListState);
 };

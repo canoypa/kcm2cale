@@ -3,7 +3,7 @@ import { FC, Suspense } from "react";
 import {
   useIsExistFleet,
   useRefreshFleetList,
-} from "../../../core/search/fleet";
+} from "../../../hooks/organize/fleet";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
