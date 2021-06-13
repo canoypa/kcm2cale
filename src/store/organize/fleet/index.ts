@@ -1,6 +1,5 @@
 import { atom, selector } from "recoil";
 import { LocalDatabase } from "../../../core/persistence/local-database";
-import { searchFleet } from "../../../core/search/fleet";
 
 // IndexedDB の更新検知ができないため
 // 編成取得の selector をこの値に依存させ
@@ -30,12 +29,6 @@ export const FleetListState = selector({
     // refresh query
     get(FleetListRequestIdState);
 
-    // get saved fleet list
-    const fleets = await LocalDatabase.getAllFleet();
-
-    const request = {
-      q: get(SearchFleetQueryState),
-    };
-    return await searchFleet(fleets, request);
+    return await LocalDatabase.getAllFleet();
   },
 });

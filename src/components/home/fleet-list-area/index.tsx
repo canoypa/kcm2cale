@@ -17,6 +17,19 @@ const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
   return fleets.length !== 0;
 };
 
+const LoadingFleet: FC = () => {
+  return (
+    <Box
+      container
+      justify="center"
+      alignItems="center"
+      style={{ height: "100%" }}
+    >
+      <CircularProgress size={24} />
+    </Box>
+  );
+};
+
 const FleetListContainer: FC = () => {
   const refreshFleet = useRefreshFleetList();
 
@@ -35,7 +48,9 @@ const FleetListContainer: FC = () => {
   return (
     <Container maxWidth="md" className={classes.root}>
       {isExistFleetList ? (
-        <FleetList />
+        <Suspense fallback={<LoadingFleet />}>
+          <FleetList fleetList={fleetList} />
+        </Suspense>
       ) : (
         <Box
           container
@@ -52,18 +67,7 @@ const FleetListContainer: FC = () => {
 
 export const FleetListArea: FC = () => {
   return (
-    <Suspense
-      fallback={
-        <Box
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: "100%" }}
-        >
-          <CircularProgress size={24} />
-        </Box>
-      }
-    >
+    <Suspense fallback={<LoadingFleet />}>
       <FleetListContainer />
     </Suspense>
   );

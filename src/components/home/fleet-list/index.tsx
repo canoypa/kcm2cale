@@ -1,7 +1,8 @@
 import { Box, CircularProgress, Grid } from "@material-ui/core";
 import { ChangeEventHandler, createContext, FC, Suspense, useRef } from "react";
+import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import { searchFleet } from "../../../core/search/fleet";
 import {
-  useFleetList,
   useRefreshFleetList,
   useSearchFleetQuery,
 } from "../../../hooks/organize/fleet";
@@ -14,8 +15,11 @@ export const FleetListContext = createContext({
   reloadFleet: () => {},
 });
 
-export const FleetListView: FC = () => {
-  const fleetList = useFleetList();
+type Props = {
+  fleetList: LocalFleetDataV1[];
+};
+
+const FleetListView: FC<Props> = ({ fleetList }) => {
   const reloadFleet = useRefreshFleetList();
 
   // 編成削除時のリロード用 context value
@@ -32,8 +36,10 @@ export const FleetListView: FC = () => {
   );
 };
 
-export const FleetList: FC = () => {
+export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useSearchFleetQuery();
+
+  const searchedFleetList = searchFleet(fleetList, { q: query });
 
   const classes = useStyles();
 
@@ -64,7 +70,7 @@ export const FleetList: FC = () => {
           </Grid>
         }
       >
-        <FleetListView />
+        <FleetListView fleetList={searchedFleetList} />
       </Suspense>
     </div>
   );

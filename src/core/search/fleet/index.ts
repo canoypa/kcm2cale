@@ -12,10 +12,10 @@ const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
 /**
  * 編成リストのフィルタリングとソート
  */
-export const searchFleet = async (
+export const searchFleet = (
   fleetDataList: LocalFleetDataV1[],
   request: SearchFleetRequest
-): Promise<LocalFleetDataV1[]> => {
+): LocalFleetDataV1[] => {
   if (!request.q) return fleetDataList.sort(dateSortFn);
 
   // fuse search
