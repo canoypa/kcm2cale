@@ -15,30 +15,16 @@ export const FleetListContext = createContext({
 type Props = {
   fleetList: LocalFleetDataV1[];
 };
-
-const FleetListView: FC<Props> = ({ fleetList }) => {
-  const reloadFleet = useRefreshFleetList();
-
-  // 編成削除時のリロード用 context value
-  const contextValue = useRef({ reloadFleet });
-
-  return (
-    <FleetListContext.Provider value={contextValue.current}>
-      <Box display="grid" gridRowGap={16}>
-        {fleetList.map((v) => (
-          <FleetCard key={v.id} fleetData={v} />
-        ))}
-      </Box>
-    </FleetListContext.Provider>
-  );
-};
-
 export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useState<string>("");
+  const reloadFleet = useRefreshFleetList();
+
+  const classes = useStyles();
 
   const searchedFleetList = searchFleet(fleetList, { q: query });
 
-  const classes = useStyles();
+  // 編成削除時のリロード用 context value
+  const contextValue = useRef({ reloadFleet });
 
   const changeQuery: ChangeEventHandler<HTMLInputElement> = (event) => {
     setQuery(event.target.value);
@@ -55,7 +41,13 @@ export const FleetList: FC<Props> = ({ fleetList }) => {
         />
       </div>
 
-      <FleetListView fleetList={searchedFleetList} />
+      <FleetListContext.Provider value={contextValue.current}>
+        <Box display="grid" gridRowGap={16}>
+          {searchedFleetList.map((v) => (
+            <FleetCard key={v.id} fleetData={v} />
+          ))}
+        </Box>
+      </FleetListContext.Provider>
     </div>
   );
 };
