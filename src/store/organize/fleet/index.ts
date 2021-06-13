@@ -22,19 +22,6 @@ export const SearchFleetQueryState = atom({
 });
 
 /**
- * 保存された編成が存在するか
- */
-export const IsExistFleetState = selector({
-  key: "IsExistFleet",
-  get: async ({ get }) => {
-    // refresh query
-    get(FleetListRequestIdState);
-
-    return Boolean(await LocalDatabase.fleetLength());
-  },
-});
-
-/**
  * 編成リスト
  */
 export const FleetListState = selector({

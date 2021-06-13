@@ -10,7 +10,6 @@ import { sortFleet } from "../../core/sort-fleet";
 import {
   FleetListRequestIdState,
   FleetListState,
-  IsExistFleetState,
   SearchFleetQueryState,
 } from "../../store/organize/fleet";
 import {
@@ -89,14 +88,6 @@ export const useRefreshFleetList: useRefreshFleetList = () => {
 type useSearchFleetQuery = () => [string, SetterOrUpdater<string>];
 export const useSearchFleetQuery: useSearchFleetQuery = () => {
   return useRecoilState(SearchFleetQueryState);
-};
-
-/**
- * 保存された編成が存在するか
- */
-type useIsExistFleet = () => boolean;
-export const useIsExistFleet: useIsExistFleet = () => {
-  return useRecoilValue(IsExistFleetState);
 };
 
 /**
