@@ -1,12 +1,5 @@
-import { Box, CircularProgress, Grid } from "@material-ui/core";
-import {
-  ChangeEventHandler,
-  createContext,
-  FC,
-  Suspense,
-  useRef,
-  useState,
-} from "react";
+import { Box } from "@material-ui/core";
+import { ChangeEventHandler, createContext, FC, useRef, useState } from "react";
 import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import { searchFleet } from "../../../core/search/fleet";
 import { useRefreshFleetList } from "../../../hooks/organize/fleet";
@@ -62,20 +55,7 @@ export const FleetList: FC<Props> = ({ fleetList }) => {
         />
       </div>
 
-      <Suspense
-        fallback={
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            style={{ height: "100%" }}
-          >
-            <CircularProgress size={24} />
-          </Grid>
-        }
-      >
-        <FleetListView fleetList={searchedFleetList} />
-      </Suspense>
+      <FleetListView fleetList={searchedFleetList} />
     </div>
   );
 };

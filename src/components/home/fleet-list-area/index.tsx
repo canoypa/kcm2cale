@@ -48,9 +48,7 @@ const FleetListContainer: FC = () => {
   return (
     <Container maxWidth="md" className={classes.root}>
       {isExistFleetList ? (
-        <Suspense fallback={<LoadingFleet />}>
-          <FleetList fleetList={fleetList} />
-        </Suspense>
+        <FleetList fleetList={fleetList} />
       ) : (
         <Box
           container
