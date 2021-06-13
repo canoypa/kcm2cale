@@ -16,7 +16,9 @@ export const searchFleet = (
   fleetDataList: LocalFleetDataV1[],
   request: SearchFleetRequest
 ): LocalFleetDataV1[] => {
-  if (!request.q) return fleetDataList.sort(dateSortFn);
+  // Recoil によって値がイミュータブルになっているが、
+  // array.sort が破壊的なため、配列をコピーしミュータブルに
+  if (!request.q) return [...fleetDataList].sort(dateSortFn);
 
   // fuse search
   const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
