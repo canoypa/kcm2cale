@@ -1,6 +1,5 @@
 import {
   selector,
-  SetterOrUpdater,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
@@ -10,7 +9,6 @@ import { sortFleet } from "../../core/sort-fleet";
 import {
   FleetListRequestIdState,
   FleetListState,
-  SearchFleetQueryState,
 } from "../../store/organize/fleet";
 import {
   ActiveFleetNoState,
@@ -80,14 +78,6 @@ type useRefreshFleetList = () => () => void;
 export const useRefreshFleetList: useRefreshFleetList = () => {
   const setRequestId = useSetRecoilState(FleetListRequestIdState);
   return () => setRequestId((id) => id + 1);
-};
-
-/**
- * 編成検索クエリ
- */
-type useSearchFleetQuery = () => [string, SetterOrUpdater<string>];
-export const useSearchFleetQuery: useSearchFleetQuery = () => {
-  return useRecoilState(SearchFleetQueryState);
 };
 
 /**

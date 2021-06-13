@@ -13,14 +13,6 @@ export const FleetListRequestIdState = atom({
 });
 
 /**
- * 編成の検索クエリ
- */
-export const SearchFleetQueryState = atom({
-  key: "SearchFleetQuery",
-  default: "",
-});
-
-/**
  * 編成リスト
  */
 export const FleetListState = selector({

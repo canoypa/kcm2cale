@@ -1,11 +1,15 @@
 import { Box, CircularProgress, Grid } from "@material-ui/core";
-import { ChangeEventHandler, createContext, FC, Suspense, useRef } from "react";
+import {
+  ChangeEventHandler,
+  createContext,
+  FC,
+  Suspense,
+  useRef,
+  useState,
+} from "react";
 import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import { searchFleet } from "../../../core/search/fleet";
-import {
-  useRefreshFleetList,
-  useSearchFleetQuery,
-} from "../../../hooks/organize/fleet";
+import { useRefreshFleetList } from "../../../hooks/organize/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 import { useStyles } from "./styles";
@@ -37,7 +41,7 @@ const FleetListView: FC<Props> = ({ fleetList }) => {
 };
 
 export const FleetList: FC<Props> = ({ fleetList }) => {
-  const [query, setQuery] = useSearchFleetQuery();
+  const [query, setQuery] = useState<string>("");
 
   const searchedFleetList = searchFleet(fleetList, { q: query });
 
