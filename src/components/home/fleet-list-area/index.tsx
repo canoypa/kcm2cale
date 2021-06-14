@@ -1,17 +1,42 @@
 import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
 import { FC, Suspense } from "react";
+import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import {
-  useIsExistFleet,
+  useFleetList,
   useRefreshFleetList,
-} from "../../../core/search/fleet";
+} from "../../../hooks/organize/fleet";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
 import { useStyles } from "./styles";
 
-export const FleetListArea: FC = () => {
-  const isExistFleetList = useIsExistFleet();
+/**
+ * 保存されている編成が存在するか
+ */
+const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
+  return fleets.length !== 0;
+};
+
+const LoadingFleet: FC = () => {
+  return (
+    <Box
+      container
+      justify="center"
+      alignItems="center"
+      style={{ height: "100%" }}
+    >
+      <CircularProgress size={24} />
+    </Box>
+  );
+};
+
+const FleetListContainer: FC = () => {
   const refreshFleet = useRefreshFleetList();
+
+  // 保存されている編成をすべて取得
+  const fleetList = useFleetList();
+  // 保存されている編成が存在するか
+  const isExistFleetList = checkExistFleetList(fleetList);
 
   const classes = useStyles();
 
@@ -21,32 +46,27 @@ export const FleetListArea: FC = () => {
   });
 
   return (
-    <Suspense
-      fallback={
+    <Container maxWidth="md" className={classes.root}>
+      {isExistFleetList ? (
+        <FleetList fleetList={fleetList} />
+      ) : (
         <Box
           container
           justify="center"
           alignItems="center"
           style={{ height: "100%" }}
         >
-          <CircularProgress size={24} />
+          <EmptyState />
         </Box>
-      }
-    >
-      <Container maxWidth="md" className={classes.root}>
-        {isExistFleetList ? (
-          <FleetList />
-        ) : (
-          <Box
-            container
-            justify="center"
-            alignItems="center"
-            style={{ height: "100%" }}
-          >
-            <EmptyState />
-          </Box>
-        )}
-      </Container>
+      )}
+    </Container>
+  );
+};
+
+export const FleetListArea: FC = () => {
+  return (
+    <Suspense fallback={<LoadingFleet />}>
+      <FleetListContainer />
     </Suspense>
   );
 };
