@@ -1,6 +1,6 @@
 import { useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE } from "recoil";
 import { isFleetStateModified } from "./is-fleet-state-modified";
-import { saveToLocal } from "./save-to-local";
+import { saveToLocal } from "./save/save-to-local";
 
 /** 編成の変更を検知し保存 */
 class FleetStateObserver {
