@@ -8,10 +8,13 @@ import {
   FleetTypeState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { FleetData } from "../fleet-data/types";
 import { generateEquipmentId, generateShipId } from "../util/generate-id";
+import { LocalFleetDataV1 } from "./types";
 
-type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
+type FleetDataOmitDate = Omit<
+  LocalFleetDataV1,
+  "version" | "createdAt" | "updatedAt"
+>;
 
 type FleetStates = {
   fleetId: FleetIdState;
@@ -60,7 +63,9 @@ export const encodeLocalFleetData = (
   };
 };
 
-export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
+export const decodeFleetStates = (
+  localFleetData: LocalFleetDataV1
+): FleetStates => {
   const fleetId = localFleetData.id;
   const fleetName = localFleetData.title;
   const fleetDescription = localFleetData.description;
