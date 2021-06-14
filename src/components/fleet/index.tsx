@@ -49,7 +49,8 @@ export const FleetPage: FC = () => {
   const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
-  const isExistFleet = useRecoilValue(FleetIdState);
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const isExistFleet = useRecoilValue(FleetIdState) === fleetId;
   const fleetTitle = useRecoilValue(FleetNameState);
 
   useDidMount(() => {
