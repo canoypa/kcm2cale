@@ -1,8 +1,8 @@
 import Fuse from "fuse.js";
-import { LocalFleetDataV1 } from "../../persistence/types";
+import { FireFleet } from "../../../models/fleet";
 import { SearchFleetRequest } from "./types";
 
-const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
+const dateSortFn = (a: FireFleet, b: FireFleet): number => {
   const [aDate, bDate] = [a.updatedAt, b.updatedAt];
   const dateOrder = aDate < bDate ? 1 : aDate > bDate ? -1 : 0;
   return dateOrder;
@@ -13,15 +13,15 @@ const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
  * 編成リストのフィルタリングとソート
  */
 export const searchFleet = (
-  fleetDataList: LocalFleetDataV1[],
+  fleetDataList: FireFleet[],
   request: SearchFleetRequest
-): LocalFleetDataV1[] => {
+): FireFleet[] => {
   // Recoil によって値がイミュータブルになっているが、
   // array.sort が破壊的なため、配列をコピーしミュータブルに
   if (!request.q) return [...fleetDataList].sort(dateSortFn);
 
   // fuse search
-  const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
+  const options: Fuse.IFuseOptions<FireFleet> = {
     keys: ["title"],
     sortFn: (a, b) => {
       const [aScore, bScore] = [a.score, b.score];
@@ -33,7 +33,7 @@ export const searchFleet = (
     },
   };
   const fuse = new Fuse(fleetDataList, options);
-  const matchList = fuse.search<LocalFleetDataV1>(request.q || "");
+  const matchList = fuse.search<FireFleet>(request.q || "");
 
   const result = matchList.map((v) => v.item);
 

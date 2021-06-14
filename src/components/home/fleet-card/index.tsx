@@ -10,12 +10,12 @@ import { MoreVert } from "@material-ui/icons";
 import { FC, MouseEvent, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import { FireFleet } from "../../../models/fleet";
 import { LineClamp } from "../../common/clamp";
 import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
 
-type Props = { fleetData: LocalFleetDataV1 };
+type Props = { fleetData: FireFleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
 

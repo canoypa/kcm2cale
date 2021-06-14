@@ -5,6 +5,7 @@ import {
   useFleetList,
   useRefreshFleetList,
 } from "../../../hooks/organize/fleet";
+import { FireFleet } from "../../../models/fleet";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { FleetListContainer } from "../fleet-list-container";
 
@@ -29,7 +30,7 @@ export const LoadFireFleet: FC = () => {
     .collection("fleets")
     .where("owner", "==", user.uid)
     .withConverter(FirestoreFleetConverter);
-  const { data: fleetList } = useFirestoreCollectionData(fleetsRef, {
+  const { data: fleetList } = useFirestoreCollectionData<FireFleet>(fleetsRef, {
     idField: "id",
   });
 

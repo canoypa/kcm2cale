@@ -1,8 +1,8 @@
 import { Box } from "@material-ui/core";
 import { ChangeEventHandler, createContext, FC, useRef, useState } from "react";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import { searchFleet } from "../../../core/search/fleet";
 import { useRefreshFleetList } from "../../../hooks/organize/fleet";
+import { FireFleet } from "../../../models/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 import { useStyles } from "./styles";
@@ -13,7 +13,7 @@ export const FleetListContext = createContext({
 });
 
 type Props = {
-  fleetList: LocalFleetDataV1[];
+  fleetList: FireFleet[];
 };
 export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useState<string>("");

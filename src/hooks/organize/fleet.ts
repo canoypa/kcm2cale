@@ -4,8 +4,8 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import { LocalFleetDataV1 } from "../../core/persistence/types";
 import { sortFleet } from "../../core/sort-fleet";
+import { FireFleet } from "../../models/fleet";
 import {
   FleetListRequestIdState,
   FleetListState,
@@ -83,7 +83,7 @@ export const useRefreshFleetList: useRefreshFleetList = () => {
 /**
  * 保存された編成のリスト
  */
-type useFleetList = () => LocalFleetDataV1[];
+type useFleetList = () => FireFleet[];
 export const useFleetList: useFleetList = () => {
   return useRecoilValue(FleetListState);
 };
