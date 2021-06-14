@@ -12,12 +12,11 @@ import {
   IsNewFleetState,
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
-import { decodeFleetStates } from "../persistence/local-fleet-data";
-import { LocalFleetDataV1 } from "../persistence/types";
+import { FleetStates } from "../persistence/create-fleet-states";
 import { generateFleetId } from "../util/generate-id";
 
 interface InitializeFleetArgs {
-  fleetData: LocalFleetDataV1 | null;
+  fleetData: FleetStates | null;
 }
 export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
   fleetData,
@@ -44,42 +43,21 @@ export const initializeFleet = ({ snapshot }: CallbackInterface) => ({
     return initSnapshot;
   }
 
-  const fleetStates = decodeFleetStates(fleetData);
-
-  const fleet: FleetState = [];
-  const ships: ShipsState = [];
-  const rigging: RiggingState = [];
-  const equipments: EquipmentsState = [];
-
-  fleetStates.fleet.forEach((v) => {
-    fleet.push(v);
-  });
-  fleetStates.ships.forEach((v) => {
-    ships.push(v);
-  });
-
-  fleetStates.rigging.forEach((v) => {
-    rigging.push(v);
-  });
-  fleetStates.equipments.forEach((v) => {
-    equipments.push(v);
-  });
-
   // Fixme
   // eslint-disable-next-line array-callback-return
   const loadedSnapshot = initSnapshot.map(({ set }) => {
     set(IsNewFleetState, false);
 
-    set(FleetIdState, fleetStates.fleetId);
-    set(FleetNameState, fleetStates.fleetName);
-    set(FleetDescriptionState, fleetStates.fleetDescription);
-    set(FleetTypeState, fleetStates.fleetType);
+    set(FleetIdState, fleetData.fleetId);
+    set(FleetNameState, fleetData.fleetName);
+    set(FleetDescriptionState, fleetData.fleetDescription);
+    set(FleetTypeState, fleetData.fleetType);
 
-    set(FleetState, fleet);
-    set(ShipsState, ships);
+    set(FleetState, fleetData.fleet);
+    set(ShipsState, fleetData.ships);
 
-    set(RiggingState, rigging);
-    set(EquipmentsState, equipments);
+    set(RiggingState, fleetData.rigging);
+    set(EquipmentsState, fleetData.equipments);
   });
 
   return loadedSnapshot;
@@ -89,7 +67,7 @@ export const useInitFleet = () => {
   const gotoSnapshot = useGotoRecoilSnapshot();
   const initFleetCallback = useRecoilCallback(initializeFleet);
 
-  const initFleet = (fleetData: LocalFleetDataV1 | null) => {
+  const initFleet = (fleetData: FleetStates | null) => {
     const snapshot = initFleetCallback({ fleetData });
     gotoSnapshot(snapshot);
   };
