@@ -1,8 +1,4 @@
-import {
-  CallbackInterface,
-  useRecoilCallback,
-  useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE,
-} from "recoil";
+import { useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE } from "recoil";
 import { isFleetStateModified } from "./is-fleet-state-modified";
 import { saveToLocal } from "./save-to-local";
 
@@ -14,34 +10,16 @@ class FleetStateObserver {
   /** TimeoutId */
   private saveTimeoutId = 0;
 
-  private saveFn: (() => void) | null = null;
-
-  /** atom の変更を受け取り */
-  public observer = ({ snapshot }: CallbackInterface) => () => {
-    // 対象が更新されて無ければ return
-    if (!isFleetStateModified(snapshot)) return;
-
-    // 保存関数を更新
-    this.saveFn = async () => {
-      this.saveFn = null;
-      await saveToLocal(snapshot);
-
-      this.disablePreventBeforeSaveUnload();
-    };
-
-    // 保存をスケジューリング
-    this.enablePreventBeforeSaveUnload();
-    this.resetTimer();
-  };
+  saveFn: (() => void) | null = null;
 
   /** 今すぐに保存 */
-  public justSaveNow = () => {
+  justSaveNow = () => {
     // タイムアウトを 0s に設定
     this.resetTimer(0);
   };
 
   /** 保存までのタイムアウトをリセット */
-  private resetTimer = (timeout?: number) => {
+  resetTimer = (timeout?: number) => {
     window.clearTimeout(this.saveTimeoutId);
 
     if (this.saveFn) {
@@ -53,7 +31,7 @@ class FleetStateObserver {
   };
 
   /** 保存前のページ離脱を防止 */
-  private preventBeforeSaveUnload = (event: BeforeUnloadEvent) => {
+  preventBeforeSaveUnload = (event: BeforeUnloadEvent) => {
     // 離脱防止
     event.preventDefault();
     event.returnValue = "";
@@ -62,11 +40,11 @@ class FleetStateObserver {
     this.justSaveNow();
   };
 
-  private enablePreventBeforeSaveUnload = () => {
+  enablePreventBeforeSaveUnload = () => {
     window.addEventListener("beforeunload", this.preventBeforeSaveUnload);
   };
 
-  private disablePreventBeforeSaveUnload = () => {
+  disablePreventBeforeSaveUnload = () => {
     window.removeEventListener("beforeunload", this.preventBeforeSaveUnload);
   };
 }
@@ -74,9 +52,22 @@ class FleetStateObserver {
 const fleetStateObserver = new FleetStateObserver();
 
 export const useLocalPersistence = () => {
-  const observer = useRecoilCallback(fleetStateObserver.observer);
+  useRecoilTransactionObserverUNSTABLE(({ snapshot }) => {
+    // 対象が更新されて無ければ return
+    if (!isFleetStateModified(snapshot)) return;
 
-  useRecoilTransactionObserverUNSTABLE(observer);
+    // 保存関数を更新
+    fleetStateObserver.saveFn = async () => {
+      fleetStateObserver.saveFn = null;
+      await saveToLocal(snapshot);
+
+      fleetStateObserver.disablePreventBeforeSaveUnload();
+    };
+
+    // 保存をスケジューリング
+    fleetStateObserver.enablePreventBeforeSaveUnload();
+    fleetStateObserver.resetTimer();
+  });
 
   return {
     justSaveNow: fleetStateObserver.justSaveNow,
