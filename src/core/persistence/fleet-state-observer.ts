@@ -1,5 +1,7 @@
+import { useUser } from "reactfire";
 import { useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE } from "recoil";
 import { isFleetStateModified } from "./is-fleet-state-modified";
+import { useSaveToFirestore } from "./save/save-to-firestore";
 import { saveToLocal } from "./save/save-to-local";
 
 /** 編成の変更を検知し保存 */
@@ -52,6 +54,9 @@ class FleetStateObserver {
 const fleetStateObserver = new FleetStateObserver();
 
 export const useLocalPersistence = () => {
+  const { data: user } = useUser();
+  const saveToFirestore = useSaveToFirestore();
+
   useRecoilTransactionObserverUNSTABLE(({ snapshot }) => {
     // 対象が更新されて無ければ return
     if (!isFleetStateModified(snapshot)) return;
@@ -59,7 +64,12 @@ export const useLocalPersistence = () => {
     // 保存関数を更新
     fleetStateObserver.saveFn = async () => {
       fleetStateObserver.saveFn = null;
-      await saveToLocal(snapshot);
+
+      if (user) {
+        await saveToFirestore(snapshot);
+      } else {
+        await saveToLocal(snapshot);
+      }
 
       fleetStateObserver.disablePreventBeforeSaveUnload();
     };
