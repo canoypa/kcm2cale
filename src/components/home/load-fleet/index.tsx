@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire";
-import { firebase } from "../../../core/firebase/app";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import {
   useFleetList,
   useRefreshFleetList,
@@ -23,28 +22,13 @@ export const LoadLocalFleet: FC = () => {
   return <FleetListContainer fleetList={fleetList} />;
 };
 
-const converter = {
-  toFirestore: () => ({}),
-  fromFirestore(
-    snapshot: firebase.firestore.QueryDocumentSnapshot,
-    options: firebase.firestore.SnapshotOptions
-  ): LocalFleetDataV1 {
-    const data = snapshot.data(options)!;
-
-    const createdAt = data.createdAt.toDate();
-    const updatedAt = data.updatedAt.toDate();
-
-    return { ...data, createdAt, updatedAt };
-  },
-};
-
 export const LoadFireFleet: FC = () => {
   const { data: user } = useUser();
 
   const fleetsRef = useFirestore()
     .collection("fleets")
     .where("owner", "==", user.uid)
-    .withConverter(converter);
+    .withConverter(FirestoreFleetConverter);
   const { data: fleetList } = useFirestoreCollectionData(fleetsRef, {
     idField: "id",
   });
