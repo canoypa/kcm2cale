@@ -9,7 +9,6 @@ import {
 import { MoreVert } from "@material-ui/icons";
 import { FC, MouseEvent, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useInitFleet } from "../../../core/initialize-fleet";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { LocalFleetDataV1 } from "../../../core/persistence/types";
 import { LineClamp } from "../../common/clamp";
@@ -21,8 +20,6 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   const { reloadFleet } = useContext(FleetListContext);
 
   const [isMenuOpen, setMenuOpen] = useState(false);
-
-  const initFleet = useInitFleet();
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
 
@@ -44,18 +41,9 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     reloadFleet();
   };
 
-  const openFleet = () => {
-    // 編成初期化
-    initFleet(fleetData);
-  };
-
   return (
     <>
-      <Link
-        to={`/fleet/${fleetData.id}`}
-        className={classes.container}
-        onClick={openFleet}
-      >
+      <Link to={`/fleet/${fleetData.id}`} className={classes.container}>
         <Card variant="outlined">
           <CardContent className={classes.cardContent}>
             <Typography

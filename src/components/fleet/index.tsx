@@ -14,11 +14,10 @@ const LoadFleet: FC = () => {
   const initFleet = useInitializeCallback();
 
   const { fleetId } = useParams<{ fleetId: string }>();
-  const isExistFleet = useRecoilValue(FleetIdState);
 
   useDidMount(() => {
-    // 直アクセスの場合編成初期化
-    if (!isExistFleet) initFleet({ fleetId });
+    // 編成初期化
+    initFleet({ fleetId });
   });
 
   return null;
