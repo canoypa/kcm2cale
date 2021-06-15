@@ -1,7 +1,7 @@
 import { useHistory } from "react-router";
 import { useInitFleet } from "../../core/initialize-fleet";
+import { decodeFleetStates } from "../../core/persistence/encode/local";
 import { LocalDatabase } from "../../core/persistence/local-database";
-import { decodeFleetStates } from "../../core/persistence/local-fleet-data";
 
 interface InitializeCallbackInterface {
   /** ロードする艦隊 Id */

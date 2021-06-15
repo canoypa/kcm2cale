@@ -1,15 +1,18 @@
-import { EquipmentsData } from "../../data/equipment";
-import { ShipsData } from "../../data/ship";
-import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
+import { EquipmentsData } from "../../../data/equipment";
+import { ShipsData } from "../../../data/ship";
+import {
+  EquipmentsState,
+  RiggingState,
+} from "../../../store/organize/equipments";
 import {
   FleetDescriptionState,
   FleetIdState,
   FleetNameState,
   FleetTypeState,
-} from "../../store/organize/info";
-import { FleetState, ShipsState } from "../../store/organize/ships";
-import { generateEquipmentId, generateShipId } from "../util/generate-id";
-import { LocalFleetDataV1 } from "./types";
+} from "../../../store/organize/info";
+import { FleetState, ShipsState } from "../../../store/organize/ships";
+import { generateEquipmentId, generateShipId } from "../../util/generate-id";
+import { LocalFleetDataV1 } from "../types";
 
 type FleetDataOmitDate = Omit<
   LocalFleetDataV1,

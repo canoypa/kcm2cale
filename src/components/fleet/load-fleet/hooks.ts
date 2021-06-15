@@ -6,8 +6,8 @@ import {
 } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { useInitFleet } from "../../../core/initialize-fleet";
+import { decodeFleetStates } from "../../../core/persistence/encode/local";
 import { LocalDatabase } from "../../../core/persistence/local-database";
-import { decodeFleetStates } from "../../../core/persistence/local-fleet-data";
 import { FireEquipment, FireFleet, FireShip } from "../../../models/fleet";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { decodeFireToFleetStates } from "./fire-to-fleet-states";
