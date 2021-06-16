@@ -27,19 +27,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
     auth.signOut();
   };
 
-  return user ? (
-    <div>
-      <div className={classes.accountHeader}>
-        <UserIcon />
-        <LineClamp count={1}>{user.displayName ?? ""}</LineClamp>
-      </div>
-      <Box display="flex" justifyContent="center">
-        <Button variant="outlined" onClick={signOut}>
-          サインアウト
-        </Button>
-      </Box>
-    </div>
-  ) : (
+  return user.isAnonymous ? (
     <div>
       <div className={classes.accountHeader}>
         <UserIcon />
@@ -48,6 +36,18 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
       <Box display="flex" justifyContent="center">
         <Button variant="outlined" onClick={singIn}>
           サインイン
+        </Button>
+      </Box>
+    </div>
+  ) : (
+    <div>
+      <div className={classes.accountHeader}>
+        <UserIcon />
+        <LineClamp count={1}>{user.displayName ?? ""}</LineClamp>
+      </div>
+      <Box display="flex" justifyContent="center">
+        <Button variant="outlined" onClick={signOut}>
+          サインアウト
         </Button>
       </Box>
     </div>

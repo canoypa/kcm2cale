@@ -14,8 +14,8 @@ const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
 
   return (
     <Avatar
-      src={user?.photoURL ?? undefined}
-      alt={user?.displayName ?? undefined}
+      src={user.photoURL ?? undefined}
+      alt={user.displayName ?? undefined}
       className={classes.root}
       style={{ width: size, height: size }}
     >
