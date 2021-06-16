@@ -2,7 +2,7 @@ import { useFirestore } from "reactfire";
 import { Snapshot } from "recoil";
 import { FleetIdState, IsNewFleetState } from "../../../store/organize/info";
 import { createAllFleetStates } from "../create-fleet-states";
-import { encodeLocalFleetData } from "../local-fleet-data";
+import { encodeLocalFleetData } from "../encode/local";
 
 export const useSaveToFirestore = () => {
   const firestore = useFirestore();
