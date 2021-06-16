@@ -1,7 +1,6 @@
 import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
-import { Skeleton } from "@material-ui/lab";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import { useUser } from "reactfire";
 import { useStyles } from "./styles";
 
@@ -29,13 +28,7 @@ type UserIconProps = {
   size?: number;
 };
 export const UserIcon: FC<UserIconProps> = ({ size = 32 }) => {
-  return (
-    <Suspense
-      fallback={<Skeleton variant="circle" width={size} height={size} />}
-    >
-      <UserAvatar size={size} />
-    </Suspense>
-  );
+  return <UserAvatar size={size} />;
 };
 
 export const UserIconButton: FC<IconButtonProps> = ({ ...props }) => {

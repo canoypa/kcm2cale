@@ -1,5 +1,4 @@
-import { Box, CircularProgress } from "@material-ui/core";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import { Redirect, useLocation } from "react-router";
 import { AuthCheck } from "reactfire";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
@@ -25,22 +24,9 @@ export const SignIn: FC = () => {
   });
 
   return (
-    <Suspense
-      fallback={
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-        >
-          <CircularProgress />
-        </Box>
-      }
-    >
-      <AuthCheck fallback={<SignInForm />}>
-        <Redirect to={state?.continue ?? "/"} />
-      </AuthCheck>
-    </Suspense>
+    <AuthCheck fallback={<SignInForm />}>
+      <Redirect to={state?.continue ?? "/"} />
+    </AuthCheck>
   );
 };
 
