@@ -1,7 +1,6 @@
 import { CircularProgress, Grid as Box } from "@material-ui/core";
 import { FC, Suspense } from "react";
-import { AuthCheck } from "reactfire";
-import { LoadFireFleet, LoadLocalFleet } from "../load-fleet";
+import { FleetListContainer } from "../fleet-list-container";
 
 const LoadingFleet: FC = () => {
   return (
@@ -19,9 +18,7 @@ const LoadingFleet: FC = () => {
 export const FleetListArea: FC = () => {
   return (
     <Suspense fallback={<LoadingFleet />}>
-      <AuthCheck fallback={<LoadLocalFleet />}>
-        <LoadFireFleet />
-      </AuthCheck>
+      <FleetListContainer />
     </Suspense>
   );
 };
