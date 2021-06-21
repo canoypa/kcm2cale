@@ -1,7 +1,6 @@
-import { Box, CircularProgress } from "@material-ui/core";
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import { Redirect, useLocation } from "react-router";
-import { AuthCheck } from "reactfire";
+import { useUser } from "reactfire";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
@@ -17,6 +16,8 @@ export const SignIn: FC = () => {
   const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
+  const { data: user } = useUser();
+
   const { state } = useLocation<LocationState>();
 
   useDidMount(() => {
@@ -24,23 +25,10 @@ export const SignIn: FC = () => {
     pageViewLog("Sign In");
   });
 
-  return (
-    <Suspense
-      fallback={
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh"
-        >
-          <CircularProgress />
-        </Box>
-      }
-    >
-      <AuthCheck fallback={<SignInForm />}>
-        <Redirect to={state?.continue ?? "/"} />
-      </AuthCheck>
-    </Suspense>
+  return user.isAnonymous ? (
+    <SignInForm />
+  ) : (
+    <Redirect to={state?.continue ?? "/"} />
   );
 };
 
