@@ -16,6 +16,12 @@ export type FireFleet = {
   updatedAt: Date;
 };
 
+export type EmptyFireShip = {
+  id: null;
+  fleetNo: number;
+  turnNo: number;
+  no: null;
+};
 export type FireShip = {
   id: string;
   fleetNo: number;
@@ -23,6 +29,12 @@ export type FireShip = {
   no: string;
 };
 
+export type EmptyFireEquipment = {
+  id: null;
+  shipId: string;
+  slotNo: number;
+  no: null;
+};
 export type FireEquipment = {
   id: string;
   shipId: string;
