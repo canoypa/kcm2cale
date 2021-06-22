@@ -1,31 +1,40 @@
-import { FC, useEffect, useRef } from "react";
+import { FC } from "react";
 import { useHistory } from "react-router";
-import { useRecoilValue } from "recoil";
-import { useInitFleet } from "../../core/initialize-fleet";
-import { FleetIdState } from "../../store/organize/info";
+import { useFirestore, useUser } from "reactfire";
+import { firebase } from "../../core/firebase/app";
+import { generateFleetId } from "../../core/util/generate-id";
+import { FleetType } from "../../store/organize/info";
+import { useDidMount } from "../../util/hooks/lifecycle";
 
-// 編成新規作成
-// id を生成してリダイレクト
+// 編成を新規作成してリダイレクト
 export const NewFleet: FC = () => {
   const { replace } = useHistory();
-  const fleetId = useRecoilValue(FleetIdState);
+  const firestore = useFirestore();
+  const {data:user}=useUser()
 
-  const initFleet = useInitFleet();
+  useDidMount(() => {
+    const newFleetId = generateFleetId();
+    const newFleetRef = firestore.doc(`fleets/${newFleetId}`);
 
-  const preFleetId = useRef(fleetId);
+    const initFleetData = {
+      version: 1,
 
-  useEffect(() => {
-    if (fleetId === preFleetId.current) {
-      // 初回レンダー時
-      initFleet(null);
-    } else {
-      // fleetId 更新による再レンダー時
-      replace(`/fleet/${fleetId}`);
-    }
+      id: newFleetId,
 
-    // initFleet は不要
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetId]);
+      owner: user.uid,
+
+      title: "",
+      description: "",
+      type: FleetType.Normal,
+
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    newFleetRef.set(initFleetData).then(() => {
+      replace(`/fleet/${newFleetId}`);
+    });
+  });
 
   return null;
 };
