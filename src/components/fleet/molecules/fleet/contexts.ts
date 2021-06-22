@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { FleetShip } from "../../../../store/organize/ships";
+import { EmptyFireShip, FireShip } from "../../../../models/fleet";
 
 interface SwapShipContextInterface {
-  (currentShip: FleetShip): void;
+  (currentShip: FireShip | EmptyFireShip): void;
 }
 
 export const SwapShipContext = createContext<SwapShipContextInterface>(

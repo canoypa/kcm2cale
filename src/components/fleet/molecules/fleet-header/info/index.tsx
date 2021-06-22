@@ -1,12 +1,8 @@
 import { Typography } from "@material-ui/core";
 import { FC } from "react";
-import { useRecoilValue } from "recoil";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetType,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { useParams } from "react-router";
+import { useFireFleet } from "../../../../../hooks/organize/fleet";
+import { FleetType } from "../../../../../store/organize/info";
 import { LineClamp } from "../../../../common/clamp";
 
 const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
@@ -18,19 +14,19 @@ const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
 ]);
 
 export const Info: FC = () => {
-  const fleetName = useRecoilValue(FleetNameState);
-  const fleetDescription = useRecoilValue(FleetDescriptionState);
-  const fleetType = useRecoilValue(FleetTypeState);
+  // Todo: useParams 使用箇所
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetInfo = useFireFleet(fleetId);
 
-  const namedFleetType = fleetTypeToNameMap.get(fleetType);
+  const namedFleetType = fleetTypeToNameMap.get(fleetInfo.type);
 
   return (
     <div>
       <Typography variant="h4" paragraph>
-        <LineClamp count={2}>{fleetName || "無題の編成"}</LineClamp>
+        <LineClamp count={2}>{fleetInfo.title || "無題の編成"}</LineClamp>
       </Typography>
       <Typography variant="body1" paragraph color="textSecondary">
-        <LineClamp count={4}>{fleetDescription}</LineClamp>
+        <LineClamp count={4}>{fleetInfo.description}</LineClamp>
       </Typography>
       <Typography variant="body1" color="textSecondary">
         {namedFleetType}

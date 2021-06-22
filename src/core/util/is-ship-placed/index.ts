@@ -1,5 +1,5 @@
-import { DeployedFleetShip, FleetShip } from "../../../store/organize/ships";
+import { EmptyFireShip, FireShip } from "../../../models/fleet";
 
 export const isShipPlaced = (
-  shipPlace: FleetShip
-): shipPlace is DeployedFleetShip => shipPlace.shipId !== null;
+  shipPlace: FireShip | EmptyFireShip
+): shipPlace is FireShip => shipPlace.id !== null;

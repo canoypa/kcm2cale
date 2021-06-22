@@ -1,11 +1,13 @@
+import { useFirestore, useFirestoreDocData } from "reactfire";
 import {
   selector,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
+import { FirestoreFleetConverter } from "../../core/firestore-converter";
 import { sortFleet } from "../../core/sort-fleet";
-import { FireFleet } from "../../models/fleet";
+import { EmptyFireShip, FireFleet, FireShip } from "../../models/fleet";
 import {
   FleetListRequestIdState,
   FleetListState,
@@ -15,13 +17,22 @@ import {
   FleetType,
   FleetTypeState,
 } from "../../store/organize/info";
-import {
-  FleetPlace,
-  FleetShip,
-  FleetState,
-  TurnNo,
-} from "../../store/organize/ships";
+import { FleetPlace, FleetState, TurnNo } from "../../store/organize/ships";
 import { range } from "../../util/range";
+import { useFireFleetShips } from "./ship";
+
+/**
+ * Firestore から編成情報を取得
+ */
+export const useFireFleet = (fleetId: string) => {
+  const docRef = useFirestore()
+    .doc(`fleets/${fleetId}`)
+    .withConverter(FirestoreFleetConverter);
+
+  const { data } = useFirestoreDocData<FireFleet>(docRef);
+
+  return data;
+};
 
 const isStrikingForceSelector = selector({
   key: "IsStrikingForce",
@@ -48,24 +59,29 @@ const useSortFleetShip = () => {
 };
 
 type Fleet = {
-  fleet: FleetShip[];
+  fleet: Array<FireShip | EmptyFireShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 };
-export const useFleet = (): Fleet => {
+export const useFleet = (fleetId: string): Fleet => {
   const fleetNo = useRecoilValue(ActiveFleetNoState);
-  const fleetState = useRecoilValue(FleetState);
-  const isStrikingForce = useRecoilValue(isStrikingForceSelector);
 
-  const sortFleetShip = useSortFleetShip();
+  const fleetInfo = useFireFleet(fleetId);
+  const ships = useFireFleetShips(fleetId, fleetNo);
 
-  const fleetLength = isStrikingForce ? 7 : 6;
+  // Todo
+  // const sortFleetShip = useSortFleetShip();
+  const sortFleetShip = () => {
+    console.log("sort");
+  };
+
+  const fleetLength = fleetInfo.type === "StrikingForce" ? 7 : 6;
   const fleetTemp = range(fleetLength);
 
   const fleet = fleetTemp.map((turnNo) => {
-    const fleetPlace = fleetState.find(
+    const fleetPlace = ships.find(
       (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
     );
-    return fleetPlace ?? { fleetNo, turnNo, shipId: null };
+    return fleetPlace ?? { fleetNo, turnNo, id: null, no: null };
   });
 
   return { fleet, sort: sortFleetShip };

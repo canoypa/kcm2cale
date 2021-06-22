@@ -1,11 +1,11 @@
 import { Box } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC, useContext } from "react";
-import { FleetShip } from "../../../../store/organize/ships";
+import { EmptyFireShip, FireShip } from "../../../../models/fleet";
 import { SwapShipContext } from "../fleet/contexts";
 
 type Props = {
-  fleetPlace: FleetShip;
+  fleetPlace: FireShip | EmptyFireShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
   const swapShip = useContext(SwapShipContext);

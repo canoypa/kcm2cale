@@ -1,5 +1,8 @@
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { useSetRecoilState } from "recoil";
+import { FirestoreFleetShipsConverter } from "../../core/firestore-converter/ships";
 import { generateShipId } from "../../core/util/generate-id";
+import { FireShip } from "../../models/fleet";
 import { ShipData } from "../../models/ship";
 import {
   FleetNo,
@@ -8,6 +11,26 @@ import {
   ShipsState,
   TurnNo,
 } from "../../store/organize/ships";
+
+export const useFireShips = (fleetId: string) => {
+  const docRef = useFirestore()
+    .collection(`fleets/${fleetId}/ships`)
+    .withConverter(FirestoreFleetShipsConverter);
+
+  const { data } = useFirestoreCollectionData<FireShip>(docRef, {
+    idField: "id",
+  });
+
+  return data;
+};
+
+export const useFireFleetShips = (fleetId: string, fleetNo: number) => {
+  const fleetShips = useFireShips(fleetId);
+
+  const data = fleetShips.filter((v) => v.fleetNo === fleetNo);
+
+  return data;
+};
 
 export const useSetShip = () => {
   const setFleet = useSetRecoilState(FleetState);

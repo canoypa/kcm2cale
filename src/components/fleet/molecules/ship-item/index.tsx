@@ -1,12 +1,12 @@
 import { Box } from "@material-ui/core";
 import { DragIndicator } from "@material-ui/icons";
 import { FC, memo } from "react";
-import { DeployedFleetShip } from "../../../../store/organize/ships";
+import { FireShip } from "../../../../models/fleet";
 import { Rigging } from "../rigging";
 import { ShipContent } from "./ship-content";
 
 type Props = {
-  fleetPlace: DeployedFleetShip;
+  fleetPlace: FireShip;
 };
 export const ShipItem: FC<Props> = memo(({ fleetPlace }) => (
   <Box
