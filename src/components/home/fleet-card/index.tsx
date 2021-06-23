@@ -7,18 +7,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
-import { FC, MouseEvent, useContext, useRef, useState } from "react";
+import { FC, MouseEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { LocalDatabase } from "../../../core/persistence/local-database";
 import { FireFleet } from "../../../models/fleet";
 import { LineClamp } from "../../common/clamp";
-import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
 
 type Props = { fleetData: FireFleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const { reloadFleet } = useContext(FleetListContext);
-
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
@@ -38,7 +35,6 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
   const deleteFleet = async () => {
     await LocalDatabase.deleteFleet(fleetData.id);
-    reloadFleet();
   };
 
   return (

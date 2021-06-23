@@ -1,17 +1,9 @@
 import { useFirestore, useFirestoreDocData } from "reactfire";
-import {
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
+import { selector, useRecoilState, useRecoilValue } from "recoil";
 import { FirestoreFleetConverter } from "../../core/firestore-converter";
 import { sortFleet } from "../../core/sort-fleet";
 import { EmptyFireShip, FireFleet, FireShip } from "../../models/fleet";
-import {
-  FleetListRequestIdState,
-  FleetListState,
-} from "../../store/organize/fleet";
+import { FleetListState } from "../../store/organize/fleet";
 import {
   ActiveFleetNoState,
   FleetType,
@@ -85,15 +77,6 @@ export const useFleet = (fleetId: string): Fleet => {
   });
 
   return { fleet, sort: sortFleetShip };
-};
-
-/**
- * ローカル保存された編成を再取得するよう Request Id を更新
- */
-type useRefreshFleetList = () => () => void;
-export const useRefreshFleetList: useRefreshFleetList = () => {
-  const setRequestId = useSetRecoilState(FleetListRequestIdState);
-  return () => setRequestId((id) => id + 1);
 };
 
 /**
