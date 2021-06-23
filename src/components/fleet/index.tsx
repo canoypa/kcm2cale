@@ -2,24 +2,18 @@ import { FC, useEffect } from "react";
 import { Redirect } from "react-router";
 import { useHistory, useParams } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
 import { useFireFleet } from "../../hooks/organize/fleet";
-import { useDidMount, useWillUnmount } from "../../util/hooks/lifecycle";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { Organize } from "./organisms/organize";
 
 const Fleet: FC = () => {
   const { push } = useHistory();
-  const { justSaveNow } = useLocalPersistence();
 
   const backToTopPage = () => {
     push("/");
   };
-
-  useWillUnmount(() => {
-    justSaveNow();
-  });
 
   return (
     <>
