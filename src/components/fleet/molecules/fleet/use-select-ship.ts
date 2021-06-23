@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useRemoveShip, useSetShip } from "../../../../hooks/organize/ship";
+import { useParams } from "react-router";
+import { useFirestore } from "reactfire";
+import { generateShipId } from "../../../../core/util/generate-id";
 import { EmptyFireShip, FireShip } from "../../../../models/fleet";
 import { ShipData } from "../../../../models/ship";
-import { useRemoveEquipments } from "../../templates/select-ship/hooks";
 
 type SelectState =
   | { isOpen: true; currentShip: FireShip | EmptyFireShip }
@@ -16,9 +17,9 @@ type SelectShip = [
   }
 ];
 export const useSelectShip = (): SelectShip => {
-  const setShip = useSetShip();
-  const removeShip = useRemoveShip();
-  const removeShipEquipments = useRemoveEquipments();
+  // Todo: useParams 使用箇所
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const firestore = useFirestore();
 
   const initialSelectState: SelectState = {
     isOpen: false,
@@ -41,10 +42,27 @@ export const useSelectShip = (): SelectShip => {
 
     const { fleetNo, turnNo, id: shipId } = selectState.currentShip;
 
-    setShip(fleetNo, turnNo, shipData);
     if (shipId) {
-      removeShip(shipId);
-      removeShipEquipments(shipId);
+      const shipRef = firestore.doc(`fleets/${fleetId}/ships/${shipId}`);
+
+      shipRef.update({
+        id: shipId,
+        no: shipData.no,
+      });
+    } else {
+      const geneShipId = generateShipId();
+      const shipRef = firestore.doc(`fleets/${fleetId}/ships/${geneShipId}`);
+
+      shipRef.set({
+        id: geneShipId,
+        fleetNo,
+        turnNo,
+        no: shipData.no,
+      });
+    }
+
+    if (shipId) {
+      // Todo: 装備削除
     }
 
     endSelecting();

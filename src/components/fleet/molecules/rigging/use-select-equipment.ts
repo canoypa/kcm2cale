@@ -1,8 +1,7 @@
 import { useState } from "react";
-import {
-  useRemoveEquipment,
-  useSetEquipment,
-} from "../../../../hooks/organize/equipment";
+import { useParams } from "react-router";
+import { useFirestore } from "reactfire";
+import { generateEquipmentId } from "../../../../core/util/generate-id";
 import { EquipmentData } from "../../../../models/equipment/types";
 import { ShipEquipment } from "../../../../store/organize/equipments";
 
@@ -19,8 +18,9 @@ export const useSelectEquipment = () => {
     initialSelectingState
   );
 
-  const setEquipment = useSetEquipment();
-  const removeEquipment = useRemoveEquipment();
+  // Todo: useParams 使用箇所
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const firestore = useFirestore();
 
   const startSelecting = (currentEquipment: ShipEquipment) => {
     setSelecting({ isOpen: true, currentEquipment });
@@ -31,8 +31,26 @@ export const useSelectEquipment = () => {
 
     const { shipId, slotNo, equipmentId } = selecting.currentEquipment;
 
-    setEquipment(shipId, slotNo, equipmentData);
-    if (equipmentId) removeEquipment(equipmentId);
+    if (equipmentId) {
+      const eqRef = firestore.doc(
+        `fleets/${fleetId}/equipments/${equipmentId}`
+      );
+
+      eqRef.update({
+        id: shipId,
+        no: equipmentData.no,
+      });
+    } else {
+      const geneEqId = generateEquipmentId();
+      const eqRef = firestore.doc(`fleets/${fleetId}/equipments/${geneEqId}`);
+
+      eqRef.set({
+        id: geneEqId,
+        shipId,
+        slotNo,
+        no: equipmentData.no,
+      });
+    }
 
     setSelecting(initialSelectingState);
   };

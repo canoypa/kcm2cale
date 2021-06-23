@@ -1,29 +1,28 @@
 import { useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { useParams } from "react-router";
+import { useFirestore } from "reactfire";
+import { useFireFleet } from "../../../../../hooks/organize/fleet";
 
 export const useEditFleetInfo = () => {
-  const [titleState, setTitleState] = useRecoilState(FleetNameState);
-  const [desState, setDesState] = useRecoilState(FleetDescriptionState);
-  const [typeState, setTypeState] = useRecoilState(FleetTypeState);
+  // Todo: useParams 使用箇所
+  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetState = useFireFleet(fleetId);
 
-  const [title, setTitle] = useState(titleState);
-  const [des, setDes] = useState(desState);
-  const [type, setType] = useState(typeState);
+  const firestore = useFirestore();
+
+  const [title, setTitle] = useState(fleetState.title);
+  const [description, setDes] = useState(fleetState.description);
+  const [type, setType] = useState(fleetState.type);
 
   const submit = () => {
-    setTitleState(title);
-    setDesState(des);
-    setTypeState(type);
+    const fleetDocRef = firestore.doc(`fleets/${fleetState.id}`);
+
+    fleetDocRef.update({ title, description, type });
   };
 
   return {
     title: title,
-    description: des,
+    description: description,
     type: type,
 
     setTitle: setTitle,
