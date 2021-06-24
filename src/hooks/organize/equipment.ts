@@ -17,9 +17,7 @@ export const useFireEquipments = (fleetId: string) => {
     .collection(`fleets/${fleetId}/equipments`)
     .withConverter(FirestoreFleetEquipmentsConverter);
 
-  const { data } = useFirestoreCollectionData<FireEquipment>(docRef, {
-    idField: "id",
-  });
+  const { data } = useFirestoreCollectionData<FireEquipment>(docRef);
 
   return data;
 };

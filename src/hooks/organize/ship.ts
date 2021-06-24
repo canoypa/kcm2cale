@@ -17,9 +17,7 @@ export const useFireShips = (fleetId: string) => {
     .collection(`fleets/${fleetId}/ships`)
     .withConverter(FirestoreFleetShipsConverter);
 
-  const { data } = useFirestoreCollectionData<FireShip>(docRef, {
-    idField: "id",
-  });
+  const { data } = useFirestoreCollectionData<FireShip>(docRef);
 
   return data;
 };

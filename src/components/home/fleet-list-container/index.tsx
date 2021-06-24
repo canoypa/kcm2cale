@@ -21,9 +21,7 @@ export const FleetListContainer: FC = () => {
     .collection("fleets")
     .where("owner", "==", user.uid)
     .withConverter(FirestoreFleetConverter);
-  const { data: fleetList } = useFirestoreCollectionData<FireFleet>(fleetsRef, {
-    idField: "id",
-  });
+  const { data: fleetList } = useFirestoreCollectionData<FireFleet>(fleetsRef);
 
   // 保存されている編成が存在するか
   const isExistFleetList = checkExistFleetList(fleetList);
