@@ -1,4 +1,4 @@
-import { EquipmentData, EquipmentType } from "../modules/equipment/types";
+import { EquipmentData, EquipmentType } from "../models/equipment/types";
 
 export const EquipmentsData: EquipmentData[] = [
   {

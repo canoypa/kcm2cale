@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { FleetStateValue } from "../../../../../store/organize/ships";
+import { DeployedFleetShip } from "../../../../../store/organize/ships";
 import { SwapShipContext } from "../../fleet/contexts";
 import { useShip } from "../hook";
 import { useStyles } from "./styles";
@@ -7,7 +7,7 @@ import { useStyles } from "./styles";
 const DUMMY_LEVEL = 99;
 
 type Props = {
-  fleetPlace: FleetStateValue;
+  fleetPlace: DeployedFleetShip;
 };
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   const swapShip = useContext(SwapShipContext);

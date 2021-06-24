@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import { ShipsData } from "../../../data/ship";
-import { ShipData, ShipTypeValues } from "../../../modules/ship";
+import { ShipData, ShipTypeValues } from "../../../models/ship";
 import { SearchShipRequest } from "./types";
 
 export * from "./types";

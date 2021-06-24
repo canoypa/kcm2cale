@@ -5,6 +5,7 @@ import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { createProvider, firebaseAuth } from "../../core/firebase/auth";
 import { useUser } from "../../core/firebase/auth/hooks";
 import { ProviderId, ProviderIdValue } from "../../core/firebase/auth/types";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { SignInButton } from "./signin-button";
 import { useStyles } from "./styles";
@@ -37,13 +38,10 @@ export const SignIn: FC = () => {
     }
   }, [replace, state?.continue, userLoadable.contents, userLoadable.state]);
 
-  useEffect(() => {
+  useDidMount(() => {
     setPageTitle("サインイン");
     pageViewLog("Sign In");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <>

@@ -1,7 +1,8 @@
 import { Box } from "@material-ui/core";
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { useStyles } from "./styles";
 
@@ -21,13 +22,10 @@ export const About: FC = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
+  useDidMount(() => {
     setPageTitle("About");
     pageViewLog("About");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div className={classes.root}>

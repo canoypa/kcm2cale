@@ -1,0 +1,38 @@
+{
+  "presets": [
+    // React のコンパイル
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ],
+
+  "plugins": [
+    // クラス構文
+    "@babel/plugin-proposal-class-properties",
+    // スプレッド構文
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+
+  "env": {
+    "production": {
+      "presets": [
+        // 構文変換
+        "@babel/preset-env"
+      ]
+    },
+
+    "development": {
+      "plugins": [
+        // fast refresh
+        "react-refresh/babel"
+      ]
+    },
+
+    "test": {
+      "presets": [
+        // commonjs に変換
+        ["@babel/preset-env", { "modules": "commonjs" }],
+        // TypeScript 型を削除
+        "@babel/preset-typescript"
+      ]
+    }
+  }
+}

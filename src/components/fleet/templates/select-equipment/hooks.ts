@@ -1,6 +1,6 @@
 import { Reducer, useCallback, useReducer } from "react";
 import { SearchEquipmentRequest } from "../../../../core/search/equipment";
-import { EquipmentTypeValues } from "../../../../modules/equipment/types";
+import { EquipmentTypeValues } from "../../../../models/equipment/types";
 
 type SearchQuery = {
   query: SearchEquipmentRequest;

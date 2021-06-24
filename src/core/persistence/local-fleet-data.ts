@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { EquipmentsData } from "../../data/equipment";
 import { ShipsData } from "../../data/ship";
 import { EquipmentsState, RiggingState } from "../../store/organize/equipments";
@@ -10,6 +9,7 @@ import {
 } from "../../store/organize/info";
 import { FleetState, ShipsState } from "../../store/organize/ships";
 import { FleetData } from "../fleet-data/types";
+import { generateEquipmentId, generateShipId } from "../util/generate-id";
 
 type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
 
@@ -72,7 +72,7 @@ export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
   const equipments: EquipmentsState = [];
 
   localFleetData.ships.forEach((v) => {
-    const shipId = nanoid(8);
+    const shipId = generateShipId();
 
     const shipData = ShipsData.find((s) => s.no === v.no);
 
@@ -81,7 +81,7 @@ export const decodeFleetStates = (localFleetData: FleetData): FleetStates => {
     ships.push({ shipId, ship: shipData });
 
     v.equipments.forEach((e) => {
-      const equipmentId = nanoid(8);
+      const equipmentId = generateEquipmentId();
 
       const eqData = EquipmentsData.find((eq) => eq.no === e.no);
 

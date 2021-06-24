@@ -13,7 +13,7 @@ import {
   ShipSearchGroupValues,
 } from "../../../../core/filters/ship";
 import { ShipSearch } from "../../../../core/search/ship";
-import { ShipData } from "../../../../modules/ship";
+import { ShipData } from "../../../../models/ship";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "./hooks";
 import { SearchShipsList } from "./search-ships-list";
