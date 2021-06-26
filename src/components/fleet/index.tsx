@@ -1,54 +1,59 @@
-import { FC, useEffect } from "react";
+import { FC, memo, useContext, useEffect } from "react";
 import { Redirect } from "react-router";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useFireFleet } from "../../hooks/organize/fleet";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
+import { FleetContext } from "./contexts";
+import { FleetDataProvider } from "./fleet-data-provider";
 import { Organize } from "./organisms/organize";
 
-const Fleet: FC = () => {
+const FleetComponent: FC = () => {
   const { push } = useHistory();
+
+  const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
+
+  const fleet = useContext(FleetContext);
+
+  useDidMount(() => {
+    pageViewLog("Fleet View");
+  });
+  useEffect(() => {
+    const title = fleet?.title;
+    if (title !== undefined) {
+      setPageTitle(`${title || "無題の編成"}`);
+    }
+
+    // タイトル変更時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fleet?.title]);
 
   const backToTopPage = () => {
     push("/");
   };
 
-  return (
-    <>
-      <div>
-        <LowerAppBar onNavClick={backToTopPage} />
-        <Organize />
-      </div>
-    </>
-  );
-};
-
-export const FleetPage: FC = () => {
-  const pageViewLog = usePageViewLog();
-  const setPageTitle = useSetPageTitle();
-
-  const { fleetId } = useParams<{ fleetId: string }>();
-
-  const fleet = useFireFleet(fleetId);
-
-  // Fixme: 簡易バリデーション
-  const isExistFleet = fleet.version !== undefined;
-
-  useDidMount(() => {
-    pageViewLog("Fleet View");
-  });
-
-  useEffect(() => {
-    setPageTitle(`${fleet.title || "無題の編成"}`);
-
-    // タイトル変更時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleet.title]);
+  const isExistFleet = fleet !== null;
 
   // Todo: エラー画面を表示
-  return isExistFleet ? <Fleet /> : <Redirect to="/" />;
+  return isExistFleet ? (
+    <>
+      <LowerAppBar onNavClick={backToTopPage} />
+      <Organize />
+    </>
+  ) : (
+    <Redirect to="/" />
+  );
 };
+const Fleet = memo(FleetComponent);
 
+// next の getStaticProps みたいなもん
+export const FleetPage: FC = () => {
+  return (
+    <FleetDataProvider>
+      <Fleet />
+    </FleetDataProvider>
+  );
+};
 export default FleetPage;
