@@ -9,7 +9,7 @@ import { range } from "../../util/range";
 type Fleet = {
   fleet: Array<FireShip | EmptyFireShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
-};
+} | null;
 export const useFleet = (): Fleet => {
   const fleetNo = useRecoilValue(ActiveFleetNoState);
 
@@ -22,11 +22,7 @@ export const useFleet = (): Fleet => {
     console.log("sort");
   };
 
-  if (!fleetInfo || !ships)
-    return {
-      fleet: [],
-      sort: sortFleetShip,
-    };
+  if (!fleetInfo || !ships) return null;
 
   const fleetLength = fleetInfo.type === "StrikingForce" ? 7 : 6;
   const fleetTemp = range(fleetLength);
