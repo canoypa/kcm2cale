@@ -1,15 +1,10 @@
 import { useFirestore, useFirestoreDocData } from "reactfire";
-import { selector, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { FirestoreFleetConverter } from "../../core/firestore-converter";
-import { sortFleet } from "../../core/sort-fleet";
 import { EmptyFireShip, FireFleet, FireShip } from "../../models/fleet";
 import { FleetListState } from "../../store/organize/fleet";
-import {
-  ActiveFleetNoState,
-  FleetType,
-  FleetTypeState,
-} from "../../store/organize/info";
-import { FleetPlace, FleetState, TurnNo } from "../../store/organize/ships";
+import { ActiveFleetNoState } from "../../store/organize/info";
+import { TurnNo } from "../../store/organize/ships";
 import { range } from "../../util/range";
 import { useFireFleetShips } from "./ship";
 
@@ -24,30 +19,6 @@ export const useFireFleet = (fleetId: string) => {
   const { data } = useFirestoreDocData<FireFleet>(docRef);
 
   return data;
-};
-
-const isStrikingForceSelector = selector({
-  key: "IsStrikingForce",
-  get: ({ get }) => get(FleetTypeState) === FleetType.StrikingForce,
-});
-
-const useSortFleetShip = () => {
-  const activeFleetNo = useRecoilValue(ActiveFleetNoState);
-  const [fleetState, setFleetState] = useRecoilState(FleetState);
-
-  return (fromTurnNo: number, toTurnNo: number) => {
-    const from: FleetPlace = {
-      fleetNo: activeFleetNo,
-      turnNo: fromTurnNo,
-    };
-    const to: FleetPlace = {
-      fleetNo: activeFleetNo,
-      turnNo: toTurnNo,
-    };
-
-    const newFleet = sortFleet(fleetState, from, to);
-    setFleetState(newFleet);
-  };
 };
 
 type Fleet = {
