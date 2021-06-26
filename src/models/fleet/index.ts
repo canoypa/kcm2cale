@@ -4,9 +4,10 @@ import { FleetType } from "../../store/organize/info";
 // いかなる変換処理を加えようと Firestore のデータ構造を優先
 
 export type FireFleet = {
-  version: 1;
+  version: number;
 
   id: string;
+  owner: string;
 
   title: string;
   description: string;

@@ -22,6 +22,7 @@ export const FirestoreFleetConverter: firebase.firestore.FirestoreDataConverter<
       version,
 
       id,
+      owner: data.owner,
 
       title,
       description,
