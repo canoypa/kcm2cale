@@ -1,14 +1,11 @@
 import { FireEquipment } from "../../models/fleet";
 import { firebase } from "../firebase/app";
 
-export const FirestoreFleetEquipmentsConverter = {
+export const FirestoreFleetEquipmentsConverter: firebase.firestore.FirestoreDataConverter<FireEquipment> = {
   toFirestore: () => ({}),
-  fromFirestore(
-    snapshot: firebase.firestore.QueryDocumentSnapshot,
-    options: firebase.firestore.SnapshotOptions
-  ): FireEquipment {
+  fromFirestore: (snapshot) => {
     // Todo: バリデーション
-    const data = snapshot.data(options);
+    const data = snapshot.data();
 
     return {
       id: data.id,

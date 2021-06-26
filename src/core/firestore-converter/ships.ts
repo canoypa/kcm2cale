@@ -1,14 +1,11 @@
 import { FireShip } from "../../models/fleet";
 import { firebase } from "../firebase/app";
 
-export const FirestoreFleetShipsConverter = {
+export const FirestoreFleetShipsConverter: firebase.firestore.FirestoreDataConverter<FireShip> = {
   toFirestore: () => ({}),
-  fromFirestore(
-    snapshot: firebase.firestore.QueryDocumentSnapshot,
-    options: firebase.firestore.SnapshotOptions
-  ): FireShip {
+  fromFirestore: (snapshot) => {
     // Todo: バリデーション
-    const data = snapshot.data(options);
+    const data = snapshot.data();
 
     return {
       id: data.id,

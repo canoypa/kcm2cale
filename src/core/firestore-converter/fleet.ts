@@ -1,14 +1,11 @@
 import { FireFleet } from "../../models/fleet";
 import { firebase } from "../firebase/app";
 
-export const FirestoreFleetConverter = {
+export const FirestoreFleetConverter: firebase.firestore.FirestoreDataConverter<FireFleet> = {
   toFirestore: () => ({}),
-  fromFirestore(
-    snapshot: firebase.firestore.QueryDocumentSnapshot,
-    options: firebase.firestore.SnapshotOptions
-  ): FireFleet {
+  fromFirestore: (snapshot) => {
     // Todo: バリデーション
-    const data = snapshot.data(options);
+    const data = snapshot.data({ serverTimestamps: "previous" });
 
     const version = data.version;
 
