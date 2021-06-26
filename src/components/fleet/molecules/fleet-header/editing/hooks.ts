@@ -1,21 +1,18 @@
-import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useContext, useMemo, useState } from "react";
 import { useFirestore } from "reactfire";
-import { useFireFleet } from "../../../../../hooks/organize/fleet";
+import { FleetContext } from "../../../contexts";
 
 export const useEditFleetInfo = () => {
-  // Todo: useParams 使用箇所
-  const { fleetId } = useParams<{ fleetId: string }>();
-  const fleetState = useFireFleet(fleetId);
-
   const firestore = useFirestore();
 
-  const [title, setTitle] = useState(fleetState.title);
-  const [description, setDes] = useState(fleetState.description);
-  const [type, setType] = useState(fleetState.type);
+  const fleet = useContext(FleetContext);
+
+  const [title, setTitle] = useState(fleet?.title ?? "");
+  const [description, setDes] = useState(fleet?.description ?? "");
+  const [type, setType] = useState(fleet?.type ?? "");
 
   const submit = () => {
-    const fleetDocRef = firestore.doc(`fleets/${fleetState.id}`);
+    const fleetDocRef = firestore.doc(`fleets/${fleet?.id}`);
 
     fleetDocRef.update({ title, description, type });
   };

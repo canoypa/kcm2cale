@@ -1,9 +1,6 @@
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
 import { useSetRecoilState } from "recoil";
-import { FirestoreFleetEquipmentsConverter } from "../../core/firestore-converter/equipments";
 import { generateEquipmentId } from "../../core/util/generate-id";
 import { EquipmentData } from "../../models/equipment/types";
-import { FireEquipment } from "../../models/fleet";
 import {
   EquipmentId,
   EquipmentsState,
@@ -11,16 +8,6 @@ import {
   SlotNo,
 } from "../../store/organize/equipments";
 import { ShipId } from "../../store/organize/ships";
-
-export const useFireEquipments = (fleetId: string) => {
-  const docRef = useFirestore()
-    .collection(`fleets/${fleetId}/equipments`)
-    .withConverter(FirestoreFleetEquipmentsConverter);
-
-  const { data } = useFirestoreCollectionData<FireEquipment>(docRef);
-
-  return data;
-};
 
 export const useSetEquipment = () => {
   const setRigging = useSetRecoilState(RiggingState);

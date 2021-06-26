@@ -1,7 +1,6 @@
 import { Box } from "@material-ui/core";
 import { FC } from "react";
 import { List } from "react-movable";
-import { useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
@@ -16,10 +15,7 @@ import { ToggleFleet } from "./toggle-fleet";
 import { useSelectShip } from "./use-select-ship";
 
 export const Fleet: FC = () => {
-  // Todo: useParams 使用箇所
-  const { fleetId } = useParams<{ fleetId: string }>();
-
-  const { fleet: fleetState, sort } = useFleet(fleetId);
+  const { fleet: fleetState, sort } = useFleet();
 
   const [isSelectOpen, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);

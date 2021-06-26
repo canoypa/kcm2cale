@@ -1,7 +1,7 @@
-import { useParams } from "react-router";
+import { useContext } from "react";
 import { selectorFamily, useRecoilValue } from "recoil";
+import { EquipmentsContext } from "../../components/fleet/contexts";
 import { FireEquipment, FireShip } from "../../models/fleet";
-import { useFireEquipments } from "./equipment";
 
 const DUMMY_SLOT_SIZE = 4;
 
@@ -20,11 +20,13 @@ export const useRigging = (fleetPlace: FireShip): Rigging => {
   const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
-  const { fleetId } = useParams<{ fleetId: string }>();
-  const shipEquipmentsState = useFireEquipments(fleetId);
+  const shipEquipmentsState = useContext(EquipmentsContext);
+
   const shipEquipments = shipEquipmentsState
-    .filter((v) => v.shipId === fleetPlace.id)
-    .sort((a, b) => a.slotNo - b.slotNo);
+    ? shipEquipmentsState
+        .filter((v) => v.shipId === fleetPlace.id)
+        .sort((a, b) => a.slotNo - b.slotNo)
+    : [];
 
   const equippedLength = shipEquipments.length;
 
