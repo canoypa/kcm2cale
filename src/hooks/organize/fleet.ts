@@ -2,7 +2,6 @@ import { useFirestore, useFirestoreDocData } from "reactfire";
 import { useRecoilValue } from "recoil";
 import { FirestoreFleetConverter } from "../../core/firestore-converter";
 import { EmptyFireShip, FireFleet, FireShip } from "../../models/fleet";
-import { FleetListState } from "../../store/organize/fleet";
 import { ActiveFleetNoState } from "../../store/organize/info";
 import { TurnNo } from "../../store/organize/ships";
 import { range } from "../../util/range";
@@ -48,12 +47,4 @@ export const useFleet = (fleetId: string): Fleet => {
   });
 
   return { fleet, sort: sortFleetShip };
-};
-
-/**
- * 保存された編成のリスト
- */
-type useFleetList = () => FireFleet[];
-export const useFleetList: useFleetList = () => {
-  return useRecoilValue(FleetListState);
 };
