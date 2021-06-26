@@ -41,21 +41,22 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       .collection("equipments")
       .withConverter(FirestoreFleetEquipmentsConverter);
 
-    fleetDocRef.get().then((fleetDoc) => {
-      // 編成が存在しない場合追加の読み込みなし
-      if (!fleetDoc.exists) {
-        setFleet(null);
+    Promise.all([
+      fleetDocRef.get(),
+      shipsCollRef.get(),
+      equipmentsCollRef.get(),
+    ]).then(([f, s, e]) => {
+      if (f.exists) {
+        setFleet(f.data());
+        setShips(s.docs.map((d) => d.data()));
+        setEquipments(e.docs.map((d) => d.data()));
+
         return;
       }
 
-      setFleet(fleetDoc.data());
-
-      shipsCollRef.get().then(({ docs }) => {
-        setShips(docs.map((d) => d.data()));
-      });
-      equipmentsCollRef.get().then(({ docs }) => {
-        setEquipments(docs.map((d) => d.data()));
-      });
+      setFleet(null);
+      setShips(null);
+      setEquipments(null);
     });
   }, [firestore, fleetId]);
 
