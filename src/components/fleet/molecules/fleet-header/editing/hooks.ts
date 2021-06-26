@@ -1,5 +1,6 @@
 import { useContext, useMemo, useState } from "react";
 import { useFirestore } from "reactfire";
+import { firebase } from "../../../../../core/firebase/app";
 import { FleetContext } from "../../../contexts";
 
 export const useEditFleetInfo = () => {
@@ -14,7 +15,12 @@ export const useEditFleetInfo = () => {
   const submit = () => {
     const fleetDocRef = firestore.doc(`fleets/${fleet?.id}`);
 
-    fleetDocRef.update({ title, description, type });
+    fleetDocRef.update({
+      title,
+      description,
+      type,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
   };
 
   return {
