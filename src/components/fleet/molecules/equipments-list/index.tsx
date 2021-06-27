@@ -3,7 +3,10 @@ import { FC } from "react";
 import { EquipmentsData } from "../../../../data/equipment";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { FireEquipment } from "../../../../models/fleet";
-import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
+import {
+  EquipmentId,
+  SlotNo,
+} from "../../../../store/organize/equipments/types";
 import { CharClamp } from "../../../common/clamp";
 
 type Props = {

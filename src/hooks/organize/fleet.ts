@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useUser } from "reactfire";
 import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
 import { EmptyFireShip, FireShip } from "../../models/fleet";
-import { FleetNo, TurnNo } from "../../store/organize/ships";
+import { FleetNo, TurnNo } from "../../store/organize/ships/types";
 import { range } from "../../util/range";
 
 type Fleet = {

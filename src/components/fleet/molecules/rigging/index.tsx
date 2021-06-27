@@ -4,7 +4,10 @@ import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
 import { FireShip } from "../../../../models/fleet";
-import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
+import {
+  EquipmentId,
+  SlotNo,
+} from "../../../../store/organize/equipments/types";
 import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useStyles } from "./styles";

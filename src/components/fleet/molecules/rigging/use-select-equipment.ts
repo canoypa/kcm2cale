@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useFirestore } from "reactfire";
 import { generateEquipmentId } from "../../../../core/util/generate-id";
 import { EquipmentData } from "../../../../models/equipment/types";
-import { ShipEquipment } from "../../../../store/organize/equipments";
+import { ShipEquipment } from "../../../../store/organize/equipments/types";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =

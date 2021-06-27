@@ -1,5 +1,5 @@
 import { EquipmentData } from "../../../models/equipment/types";
-import { ShipId } from "../ships";
+import { ShipId } from "../ships/types";
 
 export type SlotNo = number;
 export type EquipmentId = string;
