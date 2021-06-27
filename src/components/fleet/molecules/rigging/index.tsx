@@ -1,6 +1,7 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
+import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
 import { FireShip } from "../../../../models/fleet";
 import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
@@ -19,6 +20,8 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
     isCanAddNewEquipment,
     newEquipmentSlotNo,
   } = useRigging(fleetPlace);
+
+  const isOwner = useIsFleetOwner();
 
   const classes = useStyles();
 
@@ -47,7 +50,7 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
             swapEquipment={handlerAddEquipment}
           />
         </Grid>
-        {isCanAddNewEquipment && (
+        {isCanAddNewEquipment && isOwner && (
           <Grid item>
             <Chip
               variant="outlined"

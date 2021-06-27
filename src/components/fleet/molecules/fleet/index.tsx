@@ -5,7 +5,7 @@ import { List } from "react-movable";
 import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
-import { useFleet } from "../../../../hooks/organize/fleet";
+import { useFleet, useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { EmptyFireShip, FireShip } from "../../../../models/fleet";
 import { FleetTypeState } from "../../../../store/organize/info";
 import { range } from "../../../../util/range";
@@ -28,6 +28,7 @@ const FleetSkeleton: FC = () => {
 
 export const Fleet: FC = () => {
   const fleet = useFleet();
+  const isOwner = useIsFleetOwner();
 
   const [isSelectOpen, selecting] = useSelectShip();
   const fleetType = useRecoilValue(FleetTypeState);
@@ -47,26 +48,40 @@ export const Fleet: FC = () => {
         )}
         <SwapShipContext.Provider value={swapShipContextValue}>
           {fleet ? (
-            <List
-              values={fleet.fleet}
-              onChange={({ oldIndex, newIndex }) => {
-                fleet.sort(oldIndex, newIndex);
-              }}
-              renderList={({ children, props }) => (
-                <Box display="flex" flexDirection="column" {...props}>
-                  {children}
-                </Box>
-              )}
-              renderItem={({ value: fleetPlace, props }) => (
-                <div {...props}>
-                  {isShipPlaced(fleetPlace) ? (
-                    <ShipItem fleetPlace={fleetPlace} />
-                  ) : (
-                    <ShipSkeleton fleetPlace={fleetPlace} />
-                  )}
-                </div>
-              )}
-            />
+            isOwner ? (
+              <List
+                values={fleet.fleet}
+                onChange={({ oldIndex, newIndex }) => {
+                  fleet.sort(oldIndex, newIndex);
+                }}
+                renderList={({ children, props }) => (
+                  <Box display="flex" flexDirection="column" {...props}>
+                    {children}
+                  </Box>
+                )}
+                renderItem={({ value: fleetPlace, props }) => (
+                  <div {...props}>
+                    {isShipPlaced(fleetPlace) ? (
+                      <ShipItem fleetPlace={fleetPlace} />
+                    ) : (
+                      <ShipSkeleton fleetPlace={fleetPlace} />
+                    )}
+                  </div>
+                )}
+              />
+            ) : (
+              <Box display="flex" flexDirection="column">
+                {fleet.fleet.map((fleetPlace) => (
+                  <div key={fleetPlace.id}>
+                    {isShipPlaced(fleetPlace) ? (
+                      <ShipItem fleetPlace={fleetPlace} />
+                    ) : (
+                      <ShipSkeleton fleetPlace={fleetPlace} />
+                    )}
+                  </div>
+                ))}
+              </Box>
+            )
           ) : (
             <FleetSkeleton />
           )}

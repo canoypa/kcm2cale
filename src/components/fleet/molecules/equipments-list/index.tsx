@@ -1,6 +1,7 @@
 import { Chip, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { EquipmentsData } from "../../../../data/equipment";
+import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { FireEquipment } from "../../../../models/fleet";
 import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
 import { CharClamp } from "../../../common/clamp";
@@ -10,6 +11,8 @@ type Props = {
   swapEquipment: (slotNo: SlotNo, equipmentId: EquipmentId) => void;
 };
 export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
+  const isOwner = useIsFleetOwner();
+
   const handlerEquipmentClick = (preEqId: EquipmentId) => {
     const shipEquipment = shipEquipments.find((v) => v.id === preEqId);
     if (!shipEquipment) throw new Error("Error");
@@ -37,7 +40,7 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
             <Chip
               variant="outlined"
               label={v.label}
-              onClick={_handlerEquipmentClick}
+              onClick={isOwner ? _handlerEquipmentClick : undefined}
             />
           </Grid>
         );

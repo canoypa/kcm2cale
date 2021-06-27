@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useUser } from "reactfire";
 import { useRecoilValue } from "recoil";
 import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
 import { EmptyFireShip, FireShip } from "../../models/fleet";
@@ -35,4 +36,15 @@ export const useFleet = (): Fleet => {
   });
 
   return { fleet, sort: sortFleetShip };
+};
+
+/**
+ * サインインユーザが編成の作成者かどうか
+ */
+export const useIsFleetOwner = () => {
+  const { data: user } = useUser();
+  const fleet = useContext(FleetContext);
+
+  if (fleet === undefined) return undefined;
+  return fleet ? fleet.owner === user.uid : false;
 };
