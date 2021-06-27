@@ -1,19 +1,15 @@
 import { useContext } from "react";
 import { useUser } from "reactfire";
-import { useRecoilValue } from "recoil";
 import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
 import { EmptyFireShip, FireShip } from "../../models/fleet";
-import { ActiveFleetNoState } from "../../store/organize/info";
-import { TurnNo } from "../../store/organize/ships";
+import { FleetNo, TurnNo } from "../../store/organize/ships";
 import { range } from "../../util/range";
 
 type Fleet = {
   fleet: Array<FireShip | EmptyFireShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 } | null;
-export const useFleet = (): Fleet => {
-  const fleetNo = useRecoilValue(ActiveFleetNoState);
-
+export const useFleet = (fleetNo: FleetNo): Fleet => {
   const fleetInfo = useContext(FleetContext);
   const ships = useContext(ShipsContext);
 

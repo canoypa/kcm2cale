@@ -1,14 +1,14 @@
 import { Box } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { FC } from "react";
+import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
-import { useRecoilValue } from "recoil";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import { useFleet, useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { EmptyFireShip, FireShip } from "../../../../models/fleet";
-import { FleetTypeState } from "../../../../store/organize/info";
+import { FleetNo } from "../../../../store/organize/ships";
 import { range } from "../../../../util/range";
+import { FleetContext } from "../../contexts";
 import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
@@ -27,12 +27,16 @@ const FleetSkeleton: FC = () => {
 };
 
 export const Fleet: FC = () => {
-  const fleet = useFleet();
+  // 選択中の艦隊
+  const [activeFleetNo, setActiveFleetNo] = useState<FleetNo>(0);
+
+  const fleetInfo = useContext(FleetContext);
   const isOwner = useIsFleetOwner();
+  const isCombined = fleetInfo ? isCombinedFleet(fleetInfo.type) : false;
+
+  const fleet = useFleet(isCombined ? activeFleetNo : 0);
 
   const [isSelectOpen, selecting] = useSelectShip();
-  const fleetType = useRecoilValue(FleetTypeState);
-  const isCombined = isCombinedFleet(fleetType);
 
   const swapShipContextValue = (currentShip: FireShip | EmptyFireShip) => {
     selecting.start(currentShip);
@@ -43,7 +47,7 @@ export const Fleet: FC = () => {
       <div>
         {isCombined && (
           <Box marginBottom={2}>
-            <ToggleFleet />
+            <ToggleFleet value={activeFleetNo} onChange={setActiveFleetNo} />
           </Box>
         )}
         <SwapShipContext.Provider value={swapShipContextValue}>

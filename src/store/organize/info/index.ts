@@ -9,12 +9,6 @@ export const FleetType = {
 } as const;
 export type FleetType = typeof FleetType[keyof typeof FleetType];
 
-type ActiveFleetNoState = number;
-export const ActiveFleetNoState = atom<ActiveFleetNoState>({
-  key: "ActiveFleetNo",
-  default: 0,
-});
-
 export type FleetIdState = string;
 export const FleetIdState = atom<FleetIdState>({
   key: "FleetId",
