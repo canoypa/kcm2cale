@@ -2,16 +2,15 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { useFirestore } from "reactfire";
 import { generateShipId } from "../../../../core/util/generate-id";
-import { EmptyFireShip, FireShip } from "../../../../models/fleet";
-import { ShipData } from "../../../../models/ship";
+import { EmptyShip, Ship, ShipData } from "../../../../models/ship";
 
 type SelectState =
-  | { isOpen: true; currentShip: FireShip | EmptyFireShip }
+  | { isOpen: true; currentShip: Ship | EmptyShip }
   | { isOpen: false; currentShip: null };
 type SelectShip = [
   boolean,
   {
-    start: (currentShip: FireShip | EmptyFireShip) => void;
+    start: (currentShip: Ship | EmptyShip) => void;
     onSelect: (shipData: ShipData) => void;
     end: () => void;
   }
@@ -29,7 +28,7 @@ export const useSelectShip = (): SelectShip => {
     initialSelectState
   );
 
-  const startSelecting = (currentShip: FireShip | EmptyFireShip) => {
+  const startSelecting = (currentShip: Ship | EmptyShip) => {
     setSelectState({ isOpen: true, currentShip });
   };
 

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { useFirestore } from "reactfire";
 import { generateEquipmentId } from "../../../../core/util/generate-id";
-import { EquipmentData } from "../../../../models/equipment/types";
-import { ShipEquipment } from "../../../../store/organize/equipments/types";
+import {
+  EquipmentData,
+  ShipEquipment,
+} from "../../../../models/equipment/types";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =
@@ -29,7 +31,7 @@ export const useSelectEquipment = () => {
   const endSelecting = (equipmentData: EquipmentData) => {
     if (!selecting.isOpen) throw new Error("Error: start 未実行");
 
-    const { shipId, slotNo, equipmentId } = selecting.currentEquipment;
+    const { shipId, slotNo, id: equipmentId } = selecting.currentEquipment;
 
     if (equipmentId) {
       const eqRef = firestore.doc(

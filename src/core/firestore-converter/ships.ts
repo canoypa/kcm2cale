@@ -1,7 +1,7 @@
-import { FireShip } from "../../models/fleet";
+import { Ship } from "../../models/ship";
 import { firebase } from "../firebase/app";
 
-export const FirestoreFleetShipsConverter: firebase.firestore.FirestoreDataConverter<FireShip> = {
+export const FirestoreFleetShipsConverter: firebase.firestore.FirestoreDataConverter<Ship> = {
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
     // Todo: バリデーション

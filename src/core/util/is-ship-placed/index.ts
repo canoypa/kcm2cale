@@ -1,5 +1,4 @@
-import { EmptyFireShip, FireShip } from "../../../models/fleet";
+import { FleetShip, Ship } from "../../../models/ship";
 
-export const isShipPlaced = (
-  shipPlace: FireShip | EmptyFireShip
-): shipPlace is FireShip => shipPlace.id !== null;
+export const isShipPlaced = (shipPlace: FleetShip): shipPlace is Ship =>
+  shipPlace.id !== null;

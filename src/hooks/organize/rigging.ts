@@ -1,22 +1,23 @@
 import { useContext } from "react";
 import { selectorFamily, useRecoilValue } from "recoil";
 import { EquipmentsContext } from "../../components/fleet/contexts";
-import { FireEquipment, FireShip } from "../../models/fleet";
+import { EmptyEquipment, Equipment } from "../../models/equipment";
+import { Ship } from "../../models/ship";
 
 const DUMMY_SLOT_SIZE = 4;
 
 const slotSizeSelector = selectorFamily({
   key: "ShipSlotSize",
-  get: (_fleetPlace: FireShip) => () => DUMMY_SLOT_SIZE,
+  get: (_fleetPlace: Ship) => () => DUMMY_SLOT_SIZE,
   // get(ShipsState).get(fleetPlace)?.status.slotSize,
 });
 
 type Rigging = {
-  shipEquipments: FireEquipment[];
+  shipEquipments: Equipment[];
   isCanAddNewEquipment: boolean;
-  newEquipmentSlotNo: number;
+  newEquipmentPlace: EmptyEquipment;
 };
-export const useRigging = (fleetPlace: FireShip): Rigging => {
+export const useRigging = (fleetPlace: Ship): Rigging => {
   const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
@@ -31,11 +32,18 @@ export const useRigging = (fleetPlace: FireShip): Rigging => {
   const equippedLength = shipEquipments.length;
 
   const isCanAddNewEquipment = shipSlotSize > equippedLength;
-  const newEquipmentSlotNo = equippedLength;
+  const newEqSlotNo = equippedLength;
+
+  const newEquipmentPlace = {
+    shipId: fleetPlace.id,
+    slotNo: newEqSlotNo,
+    id: null,
+    no: null,
+  };
 
   return {
     shipEquipments,
     isCanAddNewEquipment,
-    newEquipmentSlotNo,
+    newEquipmentPlace,
   };
 };

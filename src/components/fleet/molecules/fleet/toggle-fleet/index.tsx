@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { FC, MouseEvent } from "react";
-import { FleetNo } from "../../../../../store/organize/ships/types";
+import { FleetNo } from "../../../../../models/ship";
 import { useStyles } from "./styles";
 
 type Props = {

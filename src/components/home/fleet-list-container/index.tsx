@@ -2,7 +2,7 @@ import { Container, Grid as Box } from "@material-ui/core";
 import { FC } from "react";
 import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
-import { FireFleet } from "../../../models/fleet";
+import { Fleet } from "../../../models/fleet";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
 import { useStyles } from "./styles";
@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 /**
  * 保存されている編成が存在するか
  */
-const checkExistFleetList = (fleets: FireFleet[]) => {
+const checkExistFleetList = (fleets: Fleet[]) => {
   return fleets.length !== 0;
 };
 
@@ -21,7 +21,7 @@ export const FleetListContainer: FC = () => {
     .collection("fleets")
     .where("owner", "==", user.uid)
     .withConverter(FirestoreFleetConverter);
-  const { data: fleetList } = useFirestoreCollectionData<FireFleet>(fleetsRef);
+  const { data: fleetList } = useFirestoreCollectionData<Fleet>(fleetsRef);
 
   // 保存されている編成が存在するか
   const isExistFleetList = checkExistFleetList(fleetList);

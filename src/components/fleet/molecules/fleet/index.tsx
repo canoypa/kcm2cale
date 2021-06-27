@@ -5,8 +5,7 @@ import { List } from "react-movable";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import { useFleet, useIsFleetOwner } from "../../../../hooks/organize/fleet";
-import { EmptyFireShip, FireShip } from "../../../../models/fleet";
-import { FleetNo } from "../../../../store/organize/ships/types";
+import { EmptyShip, FleetNo, Ship } from "../../../../models/ship";
 import { range } from "../../../../util/range";
 import { FleetContext } from "../../contexts";
 import { SelectShipDialog } from "../../templates/select-ship";
@@ -38,7 +37,7 @@ export const Fleet: FC = () => {
 
   const [isSelectOpen, selecting] = useSelectShip();
 
-  const swapShipContextValue = (currentShip: FireShip | EmptyFireShip) => {
+  const swapShipContextValue = (currentShip: Ship | EmptyShip) => {
     selecting.start(currentShip);
   };
 

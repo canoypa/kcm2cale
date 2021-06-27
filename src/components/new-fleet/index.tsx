@@ -3,14 +3,14 @@ import { useHistory } from "react-router";
 import { useFirestore, useUser } from "reactfire";
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
-import { FleetType } from "../../store/organize/info";
+import { FleetType } from "../../models/fleet";
 import { useDidMount } from "../../util/hooks/lifecycle";
 
 // 編成を新規作成してリダイレクト
 export const NewFleet: FC = () => {
   const { replace } = useHistory();
   const firestore = useFirestore();
-  const {data:user}=useUser()
+  const { data: user } = useUser();
 
   useDidMount(() => {
     const newFleetId = generateFleetId();

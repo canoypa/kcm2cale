@@ -3,38 +3,31 @@ import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
-import { FireShip } from "../../../../models/fleet";
-import {
-  EquipmentId,
-  SlotNo,
-} from "../../../../store/organize/equipments/types";
+import { ShipEquipment } from "../../../../models/equipment";
+import { Ship } from "../../../../models/ship";
 import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useStyles } from "./styles";
 import { useSelectEquipment } from "./use-select-equipment";
 
 type Props = {
-  fleetPlace: FireShip;
+  fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
   const [isOpenDialog, selecting] = useSelectEquipment();
   const {
     shipEquipments,
     isCanAddNewEquipment,
-    newEquipmentSlotNo,
+    newEquipmentPlace,
   } = useRigging(fleetPlace);
 
   const isOwner = useIsFleetOwner();
 
   const classes = useStyles();
 
-  const handlerAddEquipment = (
-    slotNo: SlotNo,
-    equipmentId: EquipmentId | null
-  ) => selecting.start({ shipId: fleetPlace.id, slotNo, equipmentId });
+  const handlerAddEquipment = (eq: ShipEquipment) => selecting.start(eq);
 
-  const handlerAddNewEquipment = () =>
-    handlerAddEquipment(newEquipmentSlotNo, null);
+  const handlerAddNewEquipment = () => handlerAddEquipment(newEquipmentPlace);
 
   return (
     <>

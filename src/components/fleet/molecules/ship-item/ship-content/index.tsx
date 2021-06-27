@@ -1,13 +1,13 @@
 import { FC, useContext } from "react";
 import { ShipsData } from "../../../../../data/ship";
-import { FireShip } from "../../../../../models/fleet";
+import { Ship } from "../../../../../models/ship";
 import { SwapShipContext } from "../../fleet/contexts";
 import { useStyles } from "./styles";
 
 const DUMMY_LEVEL = 99;
 
 type Props = {
-  fleetPlace: FireShip;
+  fleetPlace: Ship;
 };
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   const swapShip = useContext(SwapShipContext);

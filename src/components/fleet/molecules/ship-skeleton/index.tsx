@@ -2,11 +2,11 @@ import { Box } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC, useContext } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
-import { EmptyFireShip, FireShip } from "../../../../models/fleet";
+import { EmptyShip, Ship } from "../../../../models/ship";
 import { SwapShipContext } from "../fleet/contexts";
 
 type Props = {
-  fleetPlace: FireShip | EmptyFireShip;
+  fleetPlace: Ship | EmptyShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
   const swapShip = useContext(SwapShipContext);

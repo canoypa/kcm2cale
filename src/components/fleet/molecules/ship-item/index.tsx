@@ -2,12 +2,12 @@ import { Box } from "@material-ui/core";
 import { DragIndicator } from "@material-ui/icons";
 import { FC, memo } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
-import { FireShip } from "../../../../models/fleet";
+import { Ship } from "../../../../models/ship";
 import { Rigging } from "../rigging";
 import { ShipContent } from "./ship-content";
 
 type Props = {
-  fleetPlace: FireShip;
+  fleetPlace: Ship;
 };
 export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
   const isOwner = useIsFleetOwner();

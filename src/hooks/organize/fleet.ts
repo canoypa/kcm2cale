@@ -1,12 +1,11 @@
 import { useContext } from "react";
 import { useUser } from "reactfire";
 import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
-import { EmptyFireShip, FireShip } from "../../models/fleet";
-import { FleetNo, TurnNo } from "../../store/organize/ships/types";
+import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
 
 type Fleet = {
-  fleet: Array<FireShip | EmptyFireShip>;
+  fleet: Array<Ship | EmptyShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 } | null;
 export const useFleet = (fleetNo: FleetNo): Fleet => {

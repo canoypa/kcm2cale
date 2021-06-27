@@ -15,7 +15,7 @@ import {
 import { NavigateBefore } from "@material-ui/icons";
 import { ChangeEvent, FC, useMemo } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
-import { FleetType } from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../models/fleet";
 import { useCountValid, useEditFleetInfo } from "./hooks";
 import { useStyles } from "./styles";
 

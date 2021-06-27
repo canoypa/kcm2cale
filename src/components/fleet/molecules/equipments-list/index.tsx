@@ -2,34 +2,26 @@ import { Chip, Grid } from "@material-ui/core";
 import { FC } from "react";
 import { EquipmentsData } from "../../../../data/equipment";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
-import { FireEquipment } from "../../../../models/fleet";
-import {
-  EquipmentId,
-  SlotNo,
-} from "../../../../store/organize/equipments/types";
+import { Equipment } from "../../../../models/equipment";
 import { CharClamp } from "../../../common/clamp";
 
 type Props = {
-  shipEquipments: FireEquipment[];
-  swapEquipment: (slotNo: SlotNo, equipmentId: EquipmentId) => void;
+  shipEquipments: Equipment[];
+  swapEquipment: (equipment: Equipment) => void;
 };
 export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
   const isOwner = useIsFleetOwner();
 
-  const handlerEquipmentClick = (preEqId: EquipmentId) => {
-    const shipEquipment = shipEquipments.find((v) => v.id === preEqId);
-    if (!shipEquipment) throw new Error("Error");
-
-    const { slotNo, id: preEquipmentId } = shipEquipment;
-    swapEquipment(slotNo, preEquipmentId);
+  const handlerEquipmentClick = (preEq: Equipment) => {
+    swapEquipment(preEq);
   };
 
-  const items = shipEquipments.map(({ id, no }) => {
-    const equipment = EquipmentsData.find((v) => v.no === no);
+  const items = shipEquipments.map((eq) => {
+    const equipment = EquipmentsData.find((v) => v.no === eq.no);
     if (!equipment) throw new Error("Error: 装備が見つからない");
 
     return {
-      value: id,
+      value: eq,
       label: <CharClamp count={20}>{equipment.name}</CharClamp>,
     };
   });
@@ -39,7 +31,7 @@ export const EquipmentList: FC<Props> = ({ shipEquipments, swapEquipment }) => {
       {items.map((v) => {
         const _handlerEquipmentClick = () => handlerEquipmentClick(v.value);
         return (
-          <Grid key={v.value} item>
+          <Grid key={v.value.id} item>
             <Chip
               variant="outlined"
               label={v.label}

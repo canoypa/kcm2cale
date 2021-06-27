@@ -1,16 +1,12 @@
 import { sortFleet } from ".";
-import {
-  DeployedFleetShip,
-  EmptyFleetShip,
-  FleetPlace,
-} from "../../store/organize/ships/types";
+import { FleetPlace, FleetShip } from "../../models/ship";
 
-type FleetState = Array<EmptyFleetShip | DeployedFleetShip>;
+type FleetState = FleetShip[];
 
 const fleetData: FleetState = [
-  { fleetNo: 0, turnNo: 0, shipId: "0" },
-  { fleetNo: 0, turnNo: 1, shipId: "1" },
-  { fleetNo: 0, turnNo: 2, shipId: "2" },
+  { fleetNo: 0, turnNo: 0, id: null, no: null },
+  { fleetNo: 0, turnNo: 1, id: null, no: null },
+  { fleetNo: 0, turnNo: 2, id: null, no: null },
 ];
 
 describe("SortFleet", () => {

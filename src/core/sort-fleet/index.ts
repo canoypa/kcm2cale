@@ -1,10 +1,6 @@
-import {
-  DeployedFleetShip,
-  EmptyFleetShip,
-  FleetPlace,
-} from "../../store/organize/ships/types";
+import { FleetPlace, FleetShip } from "../../models/ship";
 
-type FleetState = Array<EmptyFleetShip | DeployedFleetShip>;
+type FleetState = FleetShip[];
 
 export const sortFleet = (
   fleet: FleetState,

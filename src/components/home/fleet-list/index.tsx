@@ -1,13 +1,13 @@
 import { Box } from "@material-ui/core";
 import { ChangeEventHandler, FC, useState } from "react";
 import { searchFleet } from "../../../core/search/fleet";
-import { FireFleet } from "../../../models/fleet";
+import { Fleet } from "../../../models/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 import { useStyles } from "./styles";
 
 type Props = {
-  fleetList: FireFleet[];
+  fleetList: Fleet[];
 };
 export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useState<string>("");

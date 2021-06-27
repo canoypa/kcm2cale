@@ -1,4 +1,4 @@
-import { FleetType } from "../../store/organize/info";
+import { FleetType } from "../../models/fleet";
 
 /** ローカル保存用データ構造 */
 export type LocalFleetDataV1 = {

@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { FC, useContext } from "react";
-import { FleetType } from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../models/fleet";
 import { LineClamp } from "../../../../common/clamp";
 import { FleetContext } from "../../../contexts";
 

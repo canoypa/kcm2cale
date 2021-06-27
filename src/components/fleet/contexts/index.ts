@@ -1,9 +1,11 @@
 import { createContext } from "react";
-import { FireEquipment, FireFleet, FireShip } from "../../../models/fleet";
+import { Equipment } from "../../../models/equipment";
+import { Fleet } from "../../../models/fleet";
+import { Ship } from "../../../models/ship";
 
-export type FleetContextValue = FireFleet | null | undefined;
-export type ShipsContextValue = FireShip[] | null | undefined;
-export type EquipmentsContextValue = FireEquipment[] | null | undefined;
+export type FleetContextValue = Fleet | null | undefined;
+export type ShipsContextValue = Ship[] | null | undefined;
+export type EquipmentsContextValue = Equipment[] | null | undefined;
 
 export const FleetContext = createContext<FleetContextValue>(undefined);
 export const ShipsContext = createContext<ShipsContextValue>(undefined);
