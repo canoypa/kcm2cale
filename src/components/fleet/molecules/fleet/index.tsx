@@ -76,7 +76,7 @@ export const Fleet: FC = () => {
             ) : (
               <Box display="flex" flexDirection="column">
                 {fleet.fleet.map((fleetPlace) => (
-                  <div key={fleetPlace.id}>
+                  <div key={fleetPlace.turnNo}>
                     {isShipPlaced(fleetPlace) ? (
                       <ShipItem fleetPlace={fleetPlace} />
                     ) : (
