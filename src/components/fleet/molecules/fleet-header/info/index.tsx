@@ -9,7 +9,7 @@ const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
   [FleetType.Carrier, "空母機動部隊"],
   [FleetType.Surface, "水上打撃部隊"],
   [FleetType.Transport, "輸送護衛部隊"],
-  [FleetType.StrikingForce, "遊撃部隊"],
+  [FleetType.Striking, "遊撃部隊"],
 ]);
 
 export const Info: FC = () => {
