@@ -1,5 +1,5 @@
 import { EnumValues } from "../../util/types";
-import { ShipId, ShipTypeValues } from "../ship";
+import { ShipId } from "../ship";
 
 export type SlotNo = number;
 export type EquipmentId = string;
@@ -160,45 +160,6 @@ export const EquipmentType = {
   LargeFlyingBoat: 51,
 } as const;
 export type EquipmentTypeValues = EnumValues<typeof EquipmentType>;
-
-export const EquipmentRange = { VeryLong: 0, Long: 1, Medium: 2, Short: 3 };
-export type EquipmentRangeValues = EnumValues<typeof EquipmentRange>;
-
-export type CurrentEquipmentStatus = Omit<
-  EquipmentStatus,
-  "validProficiency" | "validImprovement"
-> &
-  Partial<{
-    proficiency: number;
-    improvement: number;
-  }>;
-
-export type EquipmentStatus = Partial<{
-  power: number;
-  torpedo: number;
-  aa: number;
-  asw: number;
-  bombing: number;
-
-  armour: number;
-  evasion: number;
-  los: number;
-  accuracy: number;
-  range: EquipmentRangeValues;
-
-  antiBomb: number;
-  interceptor: number;
-  combatRadius: number;
-}> & {
-  validProficiency: boolean;
-  validImprovement: boolean;
-};
-
-export type Fittable = {
-  type: ShipTypeValues[];
-  include?: string[];
-  exclude?: string[];
-};
 
 export type EquipmentData = {
   no: number;
