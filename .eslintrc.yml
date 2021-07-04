@@ -65,3 +65,5 @@ rules:
   require-jsdoc: 0
   # class 内の this (?)
   no-invalid-this: 0
+  # runtypes
+  new-cap: 0
