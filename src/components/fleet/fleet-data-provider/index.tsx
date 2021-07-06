@@ -1,6 +1,7 @@
+import { Box, CircularProgress } from "@material-ui/core";
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
-import { useFirestore, useUser } from "reactfire";
+import { useFirestore, useSigninCheck } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
@@ -18,7 +19,10 @@ type Props = {
   children: ReactNode;
 };
 export const FleetDataProvider: FC<Props> = ({ children }) => {
-  const { data: user } = useUser();
+  const {
+    status: signInCheckStatus,
+    data: signInCheckResult,
+  } = useSigninCheck();
   const firestore = useFirestore();
 
   // url から fleetId を取得
@@ -48,6 +52,12 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   }, [fleet, ships, equipments]);
 
   useEffect(() => {
+    if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+      return;
+    }
+
+    const user = signInCheckResult.user;
+
     const fleetDocRef = firestore
       .doc(`fleets/${fleetId}`)
       .withConverter(FirestoreFleetConverter);
@@ -74,7 +84,20 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
     eCollUnsubscribe.current = equipmentsCollRef.onSnapshot((e) => {
       setEquipments(e.docs.map((d) => d.data()));
     });
-  }, [firestore, fleetId, user.uid]);
+  }, [firestore, fleetId, signInCheckResult, signInCheckStatus]);
+
+  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        style={{ height: "100%" }}
+      >
+        <CircularProgress size={24} />
+      </Box>
+    );
+  }
 
   return (
     <FleetContext.Provider value={fleet}>
