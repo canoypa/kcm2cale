@@ -1,17 +1,26 @@
 import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
+import { Skeleton } from "@material-ui/lab";
 import { FC } from "react";
-import { useUser } from "reactfire";
+import { useSigninCheck } from "reactfire";
 import { useStyles } from "./styles";
 
 type UserAvatarProps = {
   size: number;
 };
 const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
-  const { data: user } = useUser();
+  const {
+    status: signInCheckStatus,
+    data: signInCheckResult,
+  } = useSigninCheck();
 
   const classes = useStyles();
 
+  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    return <Skeleton variant="circle" width={size} height={size} />;
+  }
+
+  const user = signInCheckResult.user;
   return (
     <Avatar
       src={user.photoURL ?? undefined}

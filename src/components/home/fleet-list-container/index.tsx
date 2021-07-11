@@ -1,6 +1,10 @@
 import { Container, Grid as Box } from "@material-ui/core";
 import { FC } from "react";
-import { useFirestore, useFirestoreCollectionData, useUser } from "reactfire";
+import {
+  useFirestore,
+  useFirestoreCollectionData,
+  useSigninCheck,
+} from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { Fleet } from "../../../models/fleet";
 import { EmptyState } from "../empty-state";
@@ -15,11 +19,13 @@ const checkExistFleetList = (fleets: Fleet[]) => {
 };
 
 export const FleetListContainer: FC = () => {
-  const { data: user } = useUser();
+  // useUser と更新タイミングが違う？
+  // useSigninCheck 下でも null になりえるため
+  const { data: signInCheckResult } = useSigninCheck();
 
   const fleetsRef = useFirestore()
     .collection("fleets")
-    .where("owner", "==", user.uid)
+    .where("owner", "==", signInCheckResult.user?.uid)
     .withConverter(FirestoreFleetConverter);
   const { data: fleetList } = useFirestoreCollectionData<Fleet>(fleetsRef);
 

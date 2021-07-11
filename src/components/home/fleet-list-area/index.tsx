@@ -1,24 +1,26 @@
 import { CircularProgress, Grid as Box } from "@material-ui/core";
-import { FC, Suspense } from "react";
+import { FC } from "react";
+import { useSigninCheck } from "reactfire";
 import { FleetListContainer } from "../fleet-list-container";
 
-const LoadingFleet: FC = () => {
-  return (
-    <Box
-      container
-      justify="center"
-      alignItems="center"
-      style={{ height: "100%" }}
-    >
-      <CircularProgress size={24} />
-    </Box>
-  );
-};
-
 export const FleetListArea: FC = () => {
-  return (
-    <Suspense fallback={<LoadingFleet />}>
-      <FleetListContainer />
-    </Suspense>
-  );
+  const {
+    status: signInCheckStatus,
+    data: signInCheckResult,
+  } = useSigninCheck();
+
+  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    return (
+      <Box
+        container
+        justify="center"
+        alignItems="center"
+        style={{ height: "100%" }}
+      >
+        <CircularProgress size={24} />
+      </Box>
+    );
+  }
+
+  return <FleetListContainer />;
 };
