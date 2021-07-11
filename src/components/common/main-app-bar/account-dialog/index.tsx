@@ -2,7 +2,7 @@ import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { useAuth, useUser } from "reactfire";
+import { useAuth, useSigninCheck } from "reactfire";
 import { LineClamp } from "../../clamp";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
@@ -12,7 +12,10 @@ type AccountHeaderProps = {
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   const auth = useAuth();
-  const { data: user } = useUser();
+  const {
+    status: signInCheckStatus,
+    data: signInCheckResult,
+  } = useSigninCheck();
 
   const { push } = useHistory();
   const { pathname } = useLocation();
@@ -27,6 +30,11 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
     auth.signOut();
   };
 
+  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    return null;
+  }
+
+  const user = signInCheckResult.user;
   return user.isAnonymous ? (
     <div>
       <div className={classes.accountHeader}>
