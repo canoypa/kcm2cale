@@ -10,9 +10,4 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     columnGap: 16,
   },
-
-  promoteSignIn: {
-    display: "flex",
-    justifyContent: "center",
-  },
 }));

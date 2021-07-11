@@ -1,12 +1,14 @@
 import { createInstance } from "localforage";
-import { FleetData } from "../fleet-data/types";
 import { LocalFleetDataV1 } from "./types";
 
-type FleetDataOmitDate = Omit<FleetData, "createdAt" | "updatedAt">;
+type FleetDataOmitDate = Omit<
+  LocalFleetDataV1,
+  "version" | "createdAt" | "updatedAt"
+>;
 
 interface LocalDatabase {
-  getAllFleet: () => Promise<FleetData[]>;
-  getFleet: (id: string) => Promise<FleetData | null>;
+  getAllFleet: () => Promise<LocalFleetDataV1[]>;
+  getFleet: (id: string) => Promise<LocalFleetDataV1 | null>;
   setFleet: (id: string, data: FleetDataOmitDate) => Promise<void>;
   updateFleet: (id: string, data: Partial<FleetDataOmitDate>) => Promise<void>;
   deleteFleet: (id: string) => Promise<void>;
@@ -33,10 +35,8 @@ class LocalDatabaseClass implements LocalDatabase {
   // Todo: ちゃんとした変換処理作れ
   // 変換するので LocalFleetData は圧縮か？
   public getFleet = async (key: string) => {
-    const fleet = await this.fleetStore.getItem<LocalFleetDataV1>(key);
-    if (!fleet) return null;
-
-    const { version, ...fleetData } = fleet;
+    const fleetData = await this.fleetStore.getItem<LocalFleetDataV1>(key);
+    if (!fleetData) return null;
 
     return fleetData;
   };
@@ -44,10 +44,10 @@ class LocalDatabaseClass implements LocalDatabase {
   public setFleet = async (key: string, data: FleetDataOmitDate) => {
     const date = new Date();
     const newFleetData: LocalFleetDataV1 = {
+      ...data,
       version: 1,
       createdAt: date,
       updatedAt: date,
-      ...data,
     };
     await this.fleetStore.setItem<LocalFleetDataV1>(key, newFleetData);
   };

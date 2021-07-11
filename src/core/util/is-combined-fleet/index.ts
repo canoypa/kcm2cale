@@ -1,4 +1,4 @@
-import { FleetType } from "../../../store/organize/info";
+import { FleetType } from "../../../models/fleet";
 
 export const isCombinedFleet = (fleetType: FleetType) =>
   fleetType === FleetType.Carrier ||

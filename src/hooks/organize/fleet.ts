@@ -1,62 +1,45 @@
-import { selector, useRecoilState, useRecoilValue } from "recoil";
-import { sortFleet } from "../../core/sort-fleet";
-import {
-  ActiveFleetNoState,
-  FleetType,
-  FleetTypeState,
-} from "../../store/organize/info";
-import {
-  FleetPlace,
-  FleetShip,
-  FleetState,
-  TurnNo,
-} from "../../store/organize/ships";
+import { useContext } from "react";
+import { useUser } from "reactfire";
+import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
+import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
 
-const isStrikingForceSelector = selector({
-  key: "IsStrikingForce",
-  get: ({ get }) => get(FleetTypeState) === FleetType.StrikingForce,
-});
-
-const useSortFleetShip = () => {
-  const activeFleetNo = useRecoilValue(ActiveFleetNoState);
-  const [fleetState, setFleetState] = useRecoilState(FleetState);
-
-  return (fromTurnNo: number, toTurnNo: number) => {
-    const from: FleetPlace = {
-      fleetNo: activeFleetNo,
-      turnNo: fromTurnNo,
-    };
-    const to: FleetPlace = {
-      fleetNo: activeFleetNo,
-      turnNo: toTurnNo,
-    };
-
-    const newFleet = sortFleet(fleetState, from, to);
-    setFleetState(newFleet);
-  };
-};
-
 type Fleet = {
-  fleet: FleetShip[];
+  fleet: Array<Ship | EmptyShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
-};
-export const useFleet = (): Fleet => {
-  const fleetNo = useRecoilValue(ActiveFleetNoState);
-  const fleetState = useRecoilValue(FleetState);
-  const isStrikingForce = useRecoilValue(isStrikingForceSelector);
+} | null;
+export const useFleet = (fleetNo: FleetNo): Fleet => {
+  const fleetInfo = useContext(FleetContext);
+  const ships = useContext(ShipsContext);
 
-  const sortFleetShip = useSortFleetShip();
+  // Todo
+  // const sortFleetShip = useSortFleetShip();
+  const sortFleetShip = () => {
+    console.log("sort");
+  };
 
-  const fleetLength = isStrikingForce ? 7 : 6;
+  if (!fleetInfo || !ships) return null;
+
+  const fleetLength = fleetInfo.type === "StrikingForce" ? 7 : 6;
   const fleetTemp = range(fleetLength);
 
   const fleet = fleetTemp.map((turnNo) => {
-    const fleetPlace = fleetState.find(
+    const fleetPlace = ships.find(
       (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
     );
-    return fleetPlace ?? { fleetNo, turnNo, shipId: null };
+    return fleetPlace ?? { fleetNo, turnNo, id: null, no: null };
   });
 
   return { fleet, sort: sortFleetShip };
+};
+
+/**
+ * サインインユーザが編成の作成者かどうか
+ */
+export const useIsFleetOwner = () => {
+  const { data: user } = useUser();
+  const fleet = useContext(FleetContext);
+
+  if (fleet === undefined) return undefined;
+  return fleet ? fleet.owner === user.uid : false;
 };

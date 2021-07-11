@@ -1,13 +1,8 @@
 import { Typography } from "@material-ui/core";
-import { FC } from "react";
-import { useRecoilValue } from "recoil";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetType,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { FC, useContext } from "react";
+import { FleetType } from "../../../../../models/fleet";
 import { LineClamp } from "../../../../common/clamp";
+import { FleetContext } from "../../../contexts";
 
 const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
   [FleetType.Normal, "通常艦隊"],
@@ -18,22 +13,19 @@ const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
 ]);
 
 export const Info: FC = () => {
-  const fleetName = useRecoilValue(FleetNameState);
-  const fleetDescription = useRecoilValue(FleetDescriptionState);
-  const fleetType = useRecoilValue(FleetTypeState);
+  const fleet = useContext(FleetContext);
 
-  const namedFleetType = fleetTypeToNameMap.get(fleetType);
-
+  if (!fleet) return null;
   return (
     <div>
       <Typography variant="h4" paragraph>
-        <LineClamp count={2}>{fleetName || "無題の編成"}</LineClamp>
+        <LineClamp count={2}>{fleet.title || "無題の編成"}</LineClamp>
       </Typography>
       <Typography variant="body1" paragraph color="textSecondary">
-        <LineClamp count={4}>{fleetDescription}</LineClamp>
+        <LineClamp count={4}>{fleet.description}</LineClamp>
       </Typography>
       <Typography variant="body1" color="textSecondary">
-        {namedFleetType}
+        {fleetTypeToNameMap.get(fleet.type)}
       </Typography>
     </div>
   );

@@ -1,4 +1,6 @@
-import { FleetPlace, FleetState } from "../../store/organize/ships";
+import { FleetPlace, FleetShip } from "../../models/ship";
+
+type FleetState = FleetShip[];
 
 export const sortFleet = (
   fleet: FleetState,

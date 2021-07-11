@@ -1,5 +1,7 @@
 import { CurrentEquipmentStatus, EquipmentStatus } from "./types";
 
+export * from "./types";
+
 const _createStatus = (baseStatus: EquipmentStatus): CurrentEquipmentStatus => {
   const { validProficiency, validImprovement, ...status } = baseStatus;
 

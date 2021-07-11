@@ -1,5 +1,38 @@
 import { EnumValues } from "../../util/types";
 
+export type FleetNo = number;
+export type TurnNo = number;
+export type ShipId = string;
+
+/**
+ * 艦の配備位置
+ */
+export type FleetPlace = {
+  fleetNo: FleetNo;
+  turnNo: TurnNo;
+};
+
+/**
+ * 未配備位置の艦隊データ
+ */
+export type EmptyShip = FleetPlace & {
+  id: null;
+  no: null;
+};
+
+/**
+ * 配備済み位置の艦隊データ
+ */
+export type Ship = FleetPlace & {
+  id: string;
+  no: string;
+};
+
+/**
+ * 艦隊データ
+ */
+export type FleetShip = Ship | EmptyShip;
+
 export const ShipType = {
   /** 戦艦 */
   Battleship: 0,

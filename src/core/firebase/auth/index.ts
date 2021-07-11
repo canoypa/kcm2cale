@@ -1,19 +1,32 @@
-import "firebase/auth";
-import { firebaseApp } from "../app";
-import { ProviderIdValue } from "./types";
+import { createElement, ReactElement } from "react";
+import { GoogleLogo } from "../../../components/signin/logo/google";
+import { TwitterLogo } from "../../../components/signin/logo/twitter";
+import { firebase } from "../app";
+import { ProviderId, ProviderIdValue } from "./types";
 
-export const firebaseAuth = firebaseApp.auth;
+export * from "./types";
 
-if (!__IS_PRODUCTION__) {
-  // @ts-expect-error: 型定義にないオプション引数
-  firebaseAuth().useEmulator("http://localhost:9099", {
-    // ページ下部に表示されるエミュレータ使用警告メッセージを表示しない
-    disableWarnings: true,
-  });
-}
+export const ProviderNameMap: ReadonlyMap<ProviderIdValue, string> = new Map([
+  [ProviderId.Google, "Google"],
+  [ProviderId.Twitter, "Twitter"],
+]);
+
+export const ProviderLogoMap: ReadonlyMap<
+  ProviderIdValue,
+  ReactElement
+> = new Map([
+  [ProviderId.Google, createElement(GoogleLogo)],
+  [ProviderId.Twitter, createElement(TwitterLogo)],
+]);
 
 export const createProvider = (providerId: ProviderIdValue) => {
-  if (providerId === "google") return new firebaseAuth.GoogleAuthProvider();
-  if (providerId === "twitter") return new firebaseAuth.TwitterAuthProvider();
-  throw new Error("Error: 不明なプロバイダ");
+  switch (providerId) {
+    case ProviderId.Google:
+      return new firebase.auth.GoogleAuthProvider();
+    case ProviderId.Twitter:
+      return new firebase.auth.TwitterAuthProvider();
+
+    default:
+      throw new Error("Error: 不明なプロバイダ");
+  }
 };

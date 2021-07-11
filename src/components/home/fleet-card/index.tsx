@@ -7,22 +7,18 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
-import { FC, MouseEvent, useContext, useRef, useState } from "react";
+import { FC, MouseEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useInitFleet } from "../../../core/initialize-fleet";
-import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import { useFirestore } from "reactfire";
+import { Fleet } from "../../../models/fleet";
 import { LineClamp } from "../../common/clamp";
-import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
 
-type Props = { fleetData: LocalFleetDataV1 };
+type Props = { fleetData: Fleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const { reloadFleet } = useContext(FleetListContext);
+  const firestore = useFirestore();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
-
-  const initFleet = useInitFleet();
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
 
@@ -40,22 +36,32 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
   };
 
   const deleteFleet = async () => {
-    await LocalDatabase.deleteFleet(fleetData.id);
-    reloadFleet();
-  };
+    closeMenu();
 
-  const openFleet = () => {
-    // 編成初期化
-    initFleet(fleetData);
+    // 各参照を取得
+    const fleeDocRef = firestore.doc(`fleets/${fleetData.id}`);
+    const shipsColRed = fleeDocRef.collection("ships");
+    const equipmentsColRed = fleeDocRef.collection("equipments");
+
+    // 艦,装備ドキュメントリストの取得
+    const { docs: shipDocs } = await shipsColRed.get();
+    const { docs: equipmentDocs } = await equipmentsColRed.get();
+
+    // バッチ処理開始
+    const batch = firestore.batch();
+
+    // 各ドキュメント削除
+    shipDocs.forEach((doc) => batch.delete(doc.ref));
+    equipmentDocs.forEach((doc) => batch.delete(doc.ref));
+    batch.delete(fleeDocRef);
+
+    // コミット
+    batch.commit();
   };
 
   return (
     <>
-      <Link
-        to={`/fleet/${fleetData.id}`}
-        className={classes.container}
-        onClick={openFleet}
-      >
+      <Link to={`/fleet/${fleetData.id}`} className={classes.container}>
         <Card variant="outlined">
           <CardContent className={classes.cardContent}>
             <Typography

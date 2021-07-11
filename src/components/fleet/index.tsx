@@ -1,70 +1,59 @@
-import { FC, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { FC, memo, useContext, useEffect } from "react";
+import { Redirect } from "react-router";
+import { useHistory } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
-import { FleetIdState, FleetNameState } from "../../store/organize/info";
-import { useDidMount, useWillUnmount } from "../../util/hooks/lifecycle";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
-import { useInitializeCallback } from "./hooks";
+import { FleetContext } from "./contexts";
+import { FleetDataProvider } from "./fleet-data-provider";
 import { Organize } from "./organisms/organize";
 
-const LoadFleet: FC = () => {
-  const initFleet = useInitializeCallback();
+const FleetComponent: FC = () => {
+  const { push } = useHistory();
 
-  const { fleetId } = useParams<{ fleetId: string }>();
-  const isExistFleet = useRecoilValue(FleetIdState);
+  const pageViewLog = usePageViewLog();
+  const setPageTitle = useSetPageTitle();
+
+  const fleet = useContext(FleetContext);
 
   useDidMount(() => {
-    // 直アクセスの場合編成初期化
-    if (!isExistFleet) initFleet({ fleetId });
+    pageViewLog("Fleet View");
   });
+  useEffect(() => {
+    const title = fleet?.title;
+    if (title !== undefined) {
+      setPageTitle(`${title || "無題の編成"}`);
+    }
 
-  return null;
-};
-
-const Fleet: FC = () => {
-  const { push } = useHistory();
-  const { justSaveNow } = useLocalPersistence();
+    // タイトル変更時にのみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fleet?.title]);
 
   const backToTopPage = () => {
     push("/");
   };
 
-  useWillUnmount(() => {
-    justSaveNow();
-  });
+  const isExistFleet = fleet !== null;
 
-  return (
+  // Todo: エラー画面を表示
+  return isExistFleet ? (
     <>
-      <div>
-        <LowerAppBar onNavClick={backToTopPage} />
-        <Organize />
-      </div>
+      <LowerAppBar onNavClick={backToTopPage} />
+      <Organize />
     </>
+  ) : (
+    <Redirect to="/" />
   );
 };
+const Fleet = memo(FleetComponent);
 
+// next の getStaticProps みたいなもん
 export const FleetPage: FC = () => {
-  const pageViewLog = usePageViewLog();
-  const setPageTitle = useSetPageTitle();
-
-  const isExistFleet = useRecoilValue(FleetIdState);
-  const fleetTitle = useRecoilValue(FleetNameState);
-
-  useDidMount(() => {
-    pageViewLog("Fleet View");
-  });
-
-  useEffect(() => {
-    setPageTitle(`${fleetTitle || "無題の編成"}`);
-
-    // タイトル変更時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetTitle]);
-
-  return isExistFleet ? <Fleet /> : <LoadFleet />;
+  return (
+    <FleetDataProvider>
+      <Fleet />
+    </FleetDataProvider>
+  );
 };
-
 export default FleetPage;

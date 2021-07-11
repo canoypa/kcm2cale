@@ -1,5 +1,5 @@
 import { isFleetType } from ".";
-import { FleetType } from "../../../store/organize/info";
+import { FleetType } from "../../../models/fleet";
 
 test("isFleetType", () => {
   expect(isFleetType(FleetType.Normal)).toBe(true);

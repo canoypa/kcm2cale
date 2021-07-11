@@ -1,5 +1,5 @@
 import { isCombinedFleet } from ".";
-import { FleetType } from "../../../store/organize/info";
+import { FleetType } from "../../../models/fleet";
 
 test("isCombinedFleet", () => {
   expect(isCombinedFleet(FleetType.Carrier)).toBe(true);

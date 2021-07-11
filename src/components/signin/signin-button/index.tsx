@@ -4,7 +4,7 @@ import {
   ProviderIdValue,
   ProviderLogoMap,
   ProviderNameMap,
-} from "../../../core/firebase/auth/types";
+} from "../../../core/firebase/auth";
 
 type Props = {
   provider: ProviderIdValue;
@@ -17,15 +17,13 @@ export const SignInButton: FC<Props> = ({ provider, onClick }) => {
   const handlerClick = () => onClick(provider);
 
   return (
-    <>
-      <Button
-        variant="outlined"
-        size="large"
-        startIcon={ProviderLogo}
-        onClick={handlerClick}
-      >
-        {providerName} でサインイン
-      </Button>
-    </>
+    <Button
+      variant="outlined"
+      size="large"
+      startIcon={ProviderLogo}
+      onClick={handlerClick}
+    >
+      {providerName} でサインイン
+    </Button>
   );
 };
