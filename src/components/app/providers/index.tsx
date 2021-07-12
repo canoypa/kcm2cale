@@ -1,4 +1,4 @@
-import { FC, StrictMode, Suspense } from "react";
+import { FC, StrictMode } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { FirebaseAppProvider } from "reactfire";
 import { RecoilRoot } from "recoil";
@@ -14,10 +14,8 @@ export const RootProviders: FC = ({ children }) => (
         <Router>
           <ThemeProvider>
             <GlobalStyles>
-              {/* Todo: スプラッシュとか表示する */}
-              <Suspense fallback={"Loading..."}>
-                <AuthProvider>{children}</AuthProvider>
-              </Suspense>
+              <AuthProvider />
+              {children}
             </GlobalStyles>
           </ThemeProvider>
         </Router>
