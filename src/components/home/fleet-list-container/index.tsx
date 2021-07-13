@@ -1,10 +1,7 @@
 import { Container, Grid as Box } from "@material-ui/core";
 import { FC } from "react";
-import {
-  useFirestore,
-  useFirestoreCollectionData,
-  useSigninCheck,
-} from "reactfire";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import { firebase } from "../../../core/firebase/app";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { Fleet } from "../../../models/fleet";
 import { EmptyState } from "../empty-state";
@@ -18,14 +15,13 @@ const checkExistFleetList = (fleets: Fleet[]) => {
   return fleets.length !== 0;
 };
 
-export const FleetListContainer: FC = () => {
-  // useUser と更新タイミングが違う？
-  // useSigninCheck 下でも null になりえるため
-  const { data: signInCheckResult } = useSigninCheck();
-
+type Props = {
+  user: firebase.User;
+};
+export const FleetListContainer: FC<Props> = ({ user }) => {
   const fleetsRef = useFirestore()
     .collection("fleets")
-    .where("owner", "==", signInCheckResult.user?.uid)
+    .where("owner", "==", user.uid)
     .withConverter(FirestoreFleetConverter);
   const { data: fleetList } = useFirestoreCollectionData<Fleet>(fleetsRef);
 
@@ -34,11 +30,9 @@ export const FleetListContainer: FC = () => {
 
   const classes = useStyles();
 
-  return (
-    <Container maxWidth="md" className={classes.root}>
-      {isExistFleetList ? (
-        <FleetList fleetList={fleetList} />
-      ) : (
+  if (!isExistFleetList) {
+    return (
+      <Container maxWidth="md" className={classes.root}>
         <Box
           container
           justify="center"
@@ -47,7 +41,13 @@ export const FleetListContainer: FC = () => {
         >
           <EmptyState />
         </Box>
-      )}
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="md" className={classes.root}>
+      <FleetList fleetList={fleetList} />
     </Container>
   );
 };

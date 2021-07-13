@@ -9,6 +9,7 @@ export const FleetListArea: FC = () => {
     data: signInCheckResult,
   } = useSigninCheck();
 
+  // 認証待機
   if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
     return (
       <Box
@@ -22,5 +23,5 @@ export const FleetListArea: FC = () => {
     );
   }
 
-  return <FleetListContainer />;
+  return <FleetListContainer user={signInCheckResult.user} />;
 };
