@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useUser } from "reactfire";
 import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
+import { FleetType } from "../../models/fleet";
 import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
 
@@ -20,7 +21,7 @@ export const useFleet = (fleetNo: FleetNo): Fleet => {
 
   if (!fleetInfo || !ships) return null;
 
-  const fleetLength = fleetInfo.type === "StrikingForce" ? 7 : 6;
+  const fleetLength = fleetInfo.type === FleetType.Striking ? 7 : 6;
   const fleetTemp = range(fleetLength);
 
   const fleet = fleetTemp.map((turnNo) => {
