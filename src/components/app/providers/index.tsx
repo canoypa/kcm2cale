@@ -1,4 +1,4 @@
-import { FC, StrictMode } from "react";
+import { FC, StrictMode, Suspense } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { FirebaseAppProvider } from "reactfire";
 import { RecoilRoot } from "recoil";
@@ -14,8 +14,11 @@ export const RootProviders: FC = ({ children }) => (
         <Router>
           <ThemeProvider>
             <GlobalStyles>
-              <AuthProvider />
-              {children}
+              {/* Fixme: AuthProvider によるサスペンド LCPが低下するため */}
+              <Suspense fallback={null}>
+                <AuthProvider />
+                {children}
+              </Suspense>
             </GlobalStyles>
           </ThemeProvider>
         </Router>
