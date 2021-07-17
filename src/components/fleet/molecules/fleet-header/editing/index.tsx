@@ -66,7 +66,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setType(isFleetType(value) ? value : "Normal");
+      setType(isFleetType(value) ? value : FleetType.Normal);
     },
 
     onSubmit: () => {

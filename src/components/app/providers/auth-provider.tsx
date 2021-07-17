@@ -1,13 +1,10 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useAuth, useSigninCheck } from "reactfire";
 
-type Props = {
-  children: ReactNode;
-};
 /**
  * アプリ内で常にサインインを要求
  */
-export const AuthProvider: FC<Props> = ({ children }) => {
+export const AuthProvider: FC = () => {
   const auth = useAuth();
 
   const {
@@ -22,5 +19,5 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }, [auth, signInCheckResult.signedIn, signInCheckStatus]);
 
-  return <>{children}</>;
+  return null;
 };

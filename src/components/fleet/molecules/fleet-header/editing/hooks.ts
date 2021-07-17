@@ -1,6 +1,7 @@
 import { useContext, useMemo, useState } from "react";
 import { useFirestore } from "reactfire";
 import { firebase } from "../../../../../core/firebase/app";
+import { FleetType } from "../../../../../models/fleet";
 import { FleetContext } from "../../../contexts";
 
 export const useEditFleetInfo = () => {
@@ -8,9 +9,9 @@ export const useEditFleetInfo = () => {
 
   const fleet = useContext(FleetContext);
 
-  const [title, setTitle] = useState(fleet?.title ?? "");
-  const [description, setDes] = useState(fleet?.description ?? "");
-  const [type, setType] = useState(fleet?.type ?? "");
+  const [title, setTitle] = useState<string>(fleet?.title ?? "");
+  const [description, setDes] = useState<string>(fleet?.description ?? "");
+  const [type, setType] = useState<FleetType>(fleet?.type ?? FleetType.Normal);
 
   const submit = () => {
     const fleetDocRef = firestore.doc(`fleets/${fleet?.id}`);

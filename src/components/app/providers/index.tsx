@@ -14,9 +14,10 @@ export const RootProviders: FC = ({ children }) => (
         <Router>
           <ThemeProvider>
             <GlobalStyles>
-              {/* Todo: スプラッシュとか表示する */}
-              <Suspense fallback={"Loading..."}>
-                <AuthProvider>{children}</AuthProvider>
+              {/* Fixme: AuthProvider によるサスペンド LCPが低下するため */}
+              <Suspense fallback={null}>
+                <AuthProvider />
+                {children}
               </Suspense>
             </GlobalStyles>
           </ThemeProvider>
