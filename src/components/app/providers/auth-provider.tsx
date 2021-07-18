@@ -1,23 +1,27 @@
 import { FC, useEffect } from "react";
-import { useAuth, useSigninCheck } from "reactfire";
+import { useAuth } from "reactfire";
+import useSWR from "swr";
+import { UserStateKey } from "../../../hooks/firebase/useUser";
 
 /**
  * アプリ内で常にサインインを要求
  */
 export const AuthProvider: FC = () => {
   const auth = useAuth();
-
-  const {
-    status: signInCheckStatus,
-    data: signInCheckResult,
-  } = useSigninCheck();
+  const { mutate } = useSWR(UserStateKey, null);
 
   useEffect(() => {
-    if (signInCheckStatus === "success" && !signInCheckResult.signedIn) {
-      // サインインしていない場合匿名認証
-      auth.signInAnonymously();
-    }
-  }, [auth, signInCheckResult.signedIn, signInCheckStatus]);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user === null) {
+        // サインインしていない場合匿名認証
+        auth.signInAnonymously();
+      }
+
+      mutate(user);
+    });
+
+    return () => unsubscribe();
+  }, [auth, mutate]);
 
   return null;
 };
