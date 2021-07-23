@@ -13,7 +13,7 @@ export const FleetListArea: FC = () => {
     return (
       <Box
         container
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         style={{ height: "100%" }}
       >
