@@ -56,7 +56,7 @@ export const FleetList: FC = () => {
         fallback={
           <Grid
             container
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             style={{ height: "100%" }}
           >

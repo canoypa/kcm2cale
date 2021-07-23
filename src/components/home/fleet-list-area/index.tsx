@@ -25,7 +25,7 @@ export const FleetListArea: FC = () => {
       fallback={
         <Box
           container
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           style={{ height: "100%" }}
         >
@@ -39,7 +39,7 @@ export const FleetListArea: FC = () => {
         ) : (
           <Box
             container
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             style={{ height: "100%" }}
           >
