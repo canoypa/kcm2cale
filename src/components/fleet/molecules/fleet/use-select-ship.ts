@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { useFirestore } from "reactfire";
 import { generateShipId } from "../../../../core/util/generate-id";
 import { EmptyShip, Ship, ShipData } from "../../../../models/ship";
+import { useFirestore } from "../../../../store/firebase/sdk";
 
 type SelectState =
   | { isOpen: true; currentShip: Ship | EmptyShip }
@@ -24,9 +24,8 @@ export const useSelectShip = (): SelectShip => {
     isOpen: false,
     currentShip: null,
   };
-  const [selectState, setSelectState] = useState<SelectState>(
-    initialSelectState
-  );
+  const [selectState, setSelectState] =
+    useState<SelectState>(initialSelectState);
 
   const startSelecting = (currentShip: Ship | EmptyShip) => {
     setSelectState({ isOpen: true, currentShip });

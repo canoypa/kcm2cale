@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { useHistory } from "react-router";
-import { useFirestore, useUser } from "reactfire";
+import { useUser } from "reactfire";
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
 import { FleetType } from "../../models/fleet";
+import { useFirestore } from "../../store/firebase/sdk";
 import { useDidMount } from "../../util/hooks/lifecycle";
 
 // 編成を新規作成してリダイレクト
