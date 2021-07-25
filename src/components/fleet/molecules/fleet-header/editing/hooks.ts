@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from "react";
-import { useFirestore } from "reactfire";
 import { firebase } from "../../../../../core/firebase/app";
 import { FleetType } from "../../../../../models/fleet";
+import { useFirestore } from "../../../../../store/firebase/sdk";
 import { FleetContext } from "../../../contexts";
 
 export const useEditFleetInfo = () => {
