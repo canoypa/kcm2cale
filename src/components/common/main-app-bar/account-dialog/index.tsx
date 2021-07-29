@@ -12,10 +12,8 @@ type AccountHeaderProps = {
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   const auth = useAuth();
-  const {
-    status: signInCheckStatus,
-    data: signInCheckResult,
-  } = useSigninCheck();
+  const { status: signInCheckStatus, data: signInCheckResult } =
+    useSigninCheck();
 
   const { push } = useHistory();
   const { pathname } = useLocation();
@@ -27,7 +25,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   };
   const signOut = () => {
     onClose();
-    auth.signOut();
+    auth.signInAnonymously();
   };
 
   if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
