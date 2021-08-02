@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { selectorFamily, useRecoilValue } from "recoil";
-import { EquipmentsContext } from "../../components/fleet/contexts";
+import { FleetIdContext } from "../../components/fleet/fleetIdContext";
+import { useEquipments } from "../../components/fleet/hooks";
 import { EmptyEquipment, Equipment } from "../../models/equipment";
 import { Ship } from "../../models/ship";
 
@@ -21,10 +22,11 @@ export const useRigging = (fleetPlace: Ship): Rigging => {
   const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
-  const shipEquipmentsState = useContext(EquipmentsContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: equipments } = useEquipments(fleetId);
 
-  const shipEquipments = shipEquipmentsState
-    ? shipEquipmentsState
+  const shipEquipments = equipments
+    ? equipments
         .filter((v) => v.shipId === fleetPlace.id)
         .sort((a, b) => a.slotNo - b.slotNo)
     : [];

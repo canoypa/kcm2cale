@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useUser } from "reactfire";
-import { FleetContext, ShipsContext } from "../../components/fleet/contexts";
+import { FleetIdContext } from "../../components/fleet/fleetIdContext";
+import { useFleet, useShips } from "../../components/fleet/hooks";
 import { FleetType } from "../../models/fleet";
 import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
@@ -9,9 +10,10 @@ type Fleet = {
   fleet: Array<Ship | EmptyShip>;
   sort: (oldIndex: TurnNo, newIndex: TurnNo) => void;
 } | null;
-export const useFleet = (fleetNo: FleetNo): Fleet => {
-  const fleetInfo = useContext(FleetContext);
-  const ships = useContext(ShipsContext);
+export const useFleetManager = (fleetNo: FleetNo): Fleet => {
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleetInfo } = useFleet(fleetId);
+  const { data: ships } = useShips(fleetId);
 
   // Todo
   // const sortFleetShip = useSortFleetShip();
@@ -39,7 +41,8 @@ export const useFleet = (fleetNo: FleetNo): Fleet => {
  */
 export const useIsFleetOwner = () => {
   const { data: user } = useUser();
-  const fleet = useContext(FleetContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   if (fleet === undefined) return undefined;
   return fleet ? fleet.owner === user.uid : false;
