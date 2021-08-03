@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { useFirestore } from "reactfire";
 import { generateEquipmentId } from "../../../../core/util/generate-id";
 import {
   EquipmentData,
   ShipEquipment,
 } from "../../../../models/equipment/types";
+import { useFirestore } from "../../../../store/firebase/sdk";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =

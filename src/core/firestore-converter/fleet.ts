@@ -5,7 +5,7 @@ export const FirestoreFleetConverter: firebase.firestore.FirestoreDataConverter<
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
     // Todo: バリデーション
-    const data = snapshot.data({ serverTimestamps: "previous" });
+    const data = snapshot.data({ serverTimestamps: "estimate" });
 
     const version = data.version;
 

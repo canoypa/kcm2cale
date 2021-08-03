@@ -1,10 +1,11 @@
 import { Box, CircularProgress } from "@material-ui/core";
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
-import { useFirestore, useSigninCheck } from "reactfire";
+import { useSigninCheck } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
+import { useFirestore } from "../../../store/firebase/sdk";
 import {
   EquipmentsContext,
   EquipmentsContextValue,
@@ -19,10 +20,8 @@ type Props = {
   children: ReactNode;
 };
 export const FleetDataProvider: FC<Props> = ({ children }) => {
-  const {
-    status: signInCheckStatus,
-    data: signInCheckResult,
-  } = useSigninCheck();
+  const { status: signInCheckStatus, data: signInCheckResult } =
+    useSigninCheck();
   const firestore = useFirestore();
 
   // url から fleetId を取得
@@ -31,9 +30,8 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   // useEffect からの更新検知のため useState を使用
   const [fleet, setFleet] = useState<FleetContextValue>(undefined);
   const [ships, setShips] = useState<ShipsContextValue>(undefined);
-  const [equipments, setEquipments] = useState<EquipmentsContextValue>(
-    undefined
-  );
+  const [equipments, setEquipments] =
+    useState<EquipmentsContextValue>(undefined);
 
   // 作成者の場合のみ変更を受け取るようにするあれこれ
   // next.js 移行できれいにしてくれ...

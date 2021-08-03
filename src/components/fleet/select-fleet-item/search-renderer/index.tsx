@@ -16,7 +16,7 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
   changeQuery,
 }) => (
   <AppBar position="sticky" color="inherit" style={{ bottom: 0 }}>
-    <Grid container justify="center" style={{ padding: 8 }}>
+    <Grid container justifyContent="center" style={{ padding: 8 }}>
       <Box maxWidth={800} width="100%" overflow="hidden">
         <Box marginBottom={1}>
           <Filter items={filterGroup} onFilterChange={changeFilter} />

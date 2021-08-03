@@ -1,5 +1,6 @@
 import { FC, useEffect } from "react";
-import { useAuth, useSigninCheck } from "reactfire";
+import { useSigninCheck } from "reactfire";
+import { useAuth } from "../../../store/firebase/sdk";
 
 /**
  * アプリ内で常にサインインを要求

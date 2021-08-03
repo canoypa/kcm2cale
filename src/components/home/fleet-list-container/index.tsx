@@ -1,9 +1,10 @@
 import { Container, Grid as Box } from "@material-ui/core";
 import { FC } from "react";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import { useFirestoreCollectionData } from "reactfire";
 import { firebase } from "../../../core/firebase/app";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { Fleet } from "../../../models/fleet";
+import { useFirestore } from "../../../store/firebase/sdk";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
 import { useStyles } from "./styles";
@@ -35,7 +36,7 @@ export const FleetListContainer: FC<Props> = ({ user }) => {
       <Container maxWidth="md" className={classes.root}>
         <Box
           container
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           style={{ height: "100%" }}
         >

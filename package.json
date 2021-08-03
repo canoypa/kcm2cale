@@ -1,13 +1,14 @@
 {
   "private": true,
   "name": "kcm2cale",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "build:prod": "webpack --mode=production",
     "build:dev": "webpack",
     "build:watch": "webpack -w",
-    "serve": "webpack serve",
-    "start": "firebase emulators:start --import=debug/emulators --export-on-exit",
+    "start": "run-p start:*",
+    "start:server": "webpack serve",
+    "start:emulators": "firebase emulators:start --import=debug/emulators --export-on-exit",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "lint": "run-p lint:*",
@@ -30,7 +31,7 @@
     "react-router-dom": "^5.2.0",
     "react-window": "^1.8.6",
     "reactfire": "^3.0.0-rc.0",
-    "recoil": "^0.2.0"
+    "recoil": "^0.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

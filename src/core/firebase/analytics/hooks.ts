@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useAnalytics } from "reactfire";
+import { useAnalytics } from "../../../store/firebase/sdk";
 
 export const usePageViewLog = () => {
   const analytics = useAnalytics();
