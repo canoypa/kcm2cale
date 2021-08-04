@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { useUser } from "reactfire";
 import { FleetIdContext } from "../../components/fleet/fleetIdContext";
 import { useFleet, useShips } from "../../components/fleet/hooks";
 import { FleetType } from "../../models/fleet";
 import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
+import { useUser } from "../firebase/useUser";
 
 type Fleet = {
   fleet: Array<Ship | EmptyShip>;
@@ -45,5 +45,6 @@ export const useIsFleetOwner = () => {
   const { data: fleet } = useFleet(fleetId);
 
   if (fleet === undefined) return undefined;
-  return fleet ? fleet.owner === user.uid : false;
+  // Fixme
+  return fleet ? fleet.owner === user?.uid : false;
 };

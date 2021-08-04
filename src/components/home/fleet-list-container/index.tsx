@@ -1,7 +1,7 @@
 import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
 import { FC, useEffect } from "react";
-import { useSigninCheck } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
+import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { Fleet } from "../../../models/fleet";
 import { useFirestore } from "../../../store/firebase/sdk";
 import { EmptyState } from "../empty-state";

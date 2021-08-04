@@ -1,10 +1,10 @@
 import { Box, CircularProgress } from "@material-ui/core";
 import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useParams } from "react-router";
-import { useSigninCheck } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
+import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { useFirestore } from "../../../store/firebase/sdk";
 import { useEquipments, useFleet, useShips } from "../hooks";
 
@@ -16,7 +16,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   const { fleetId } = useParams<{ fleetId: string }>();
 
   const firestore = useFirestore();
-  const { status: signInCheckStatus, data: signInCheckResult } =
+  const { isValidating: isSignInValidating, data: signInCheckResult } =
     useSigninCheck();
 
   // useEffect からの更新検知のため useState を使用
@@ -41,7 +41,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   }, [fleet, ships, equipments]);
 
   useEffect(() => {
-    if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    if (isSignInValidating || !signInCheckResult.signedIn) {
       return;
     }
 
@@ -79,10 +79,10 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
     mutateFleet,
     mutateShips,
     signInCheckResult,
-    signInCheckStatus,
+    isSignInValidating,
   ]);
 
-  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+  if (isSignInValidating || !signInCheckResult.signedIn) {
     return (
       <Box
         display="flex"
