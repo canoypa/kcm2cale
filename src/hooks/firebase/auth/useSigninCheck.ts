@@ -1,5 +1,5 @@
 import { firebase } from "../../../core/firebase/app";
-import { useUser } from "../useUser";
+import { useUser } from "./useUser";
 
 type SigninCheckResult =
   | {

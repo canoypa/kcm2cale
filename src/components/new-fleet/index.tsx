@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useHistory } from "react-router";
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
-import { useUser } from "../../hooks/firebase/useUser";
+import { useUser } from "../../hooks/firebase/auth/useUser";
 import { FleetType } from "../../models/fleet";
 import { useFirestore } from "../../store/firebase/sdk";
 import { useDidMount } from "../../util/hooks/lifecycle";

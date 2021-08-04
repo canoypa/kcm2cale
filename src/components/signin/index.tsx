@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Redirect, useLocation } from "react-router";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useUser } from "../../hooks/firebase/useUser";
+import { useUser } from "../../hooks/firebase/auth/useUser";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { SignInForm } from "./signin-form";

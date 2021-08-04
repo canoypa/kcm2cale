@@ -4,7 +4,7 @@ import { useFleet, useShips } from "../../components/fleet/hooks";
 import { FleetType } from "../../models/fleet";
 import { EmptyShip, FleetNo, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
-import { useUser } from "../firebase/useUser";
+import { useUser } from "../firebase/auth/useUser";
 
 type Fleet = {
   fleet: Array<Ship | EmptyShip>;

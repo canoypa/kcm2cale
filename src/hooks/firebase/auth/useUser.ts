@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useAuth } from "../../store/firebase/sdk";
+import { useAuth } from "../../../store/firebase/sdk";
 
 export const UserStateKey = "firebase-auth-user";
 
