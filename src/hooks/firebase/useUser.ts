@@ -1,5 +1,5 @@
-import { useAuth } from "reactfire";
 import useSWR from "swr";
+import { useAuth } from "../../store/firebase/sdk";
 
 export const UserStateKey = "firebase-auth-user";
 
