@@ -1,23 +1,23 @@
 import firebase from "firebase";
-import { selector, useRecoilValue } from "recoil";
+import { atom, useRecoilValue } from "recoil";
 import { firebaseApp } from "../../core/firebase/app";
 import { getFirebaseSdkPromise } from "../../core/firebase/sdk/fetch";
 
-const AnalyticsSdkState = selector<firebase.analytics.Analytics>({
+const AnalyticsSdkState = atom<firebase.analytics.Analytics>({
   key: "firebase_sdk_analytics",
-  get: () => getFirebaseSdkPromise(firebaseApp, "analytics"),
+  default: getFirebaseSdkPromise(firebaseApp, "analytics"),
   dangerouslyAllowMutability: true,
 });
 
-const AuthSdkState = selector<firebase.auth.Auth>({
+const AuthSdkState = atom<firebase.auth.Auth>({
   key: "firebase_sdk_auth",
-  get: () => getFirebaseSdkPromise(firebaseApp, "auth"),
+  default: getFirebaseSdkPromise(firebaseApp, "auth"),
   dangerouslyAllowMutability: true,
 });
 
-const FirestoreSdkState = selector<firebase.firestore.Firestore>({
+const FirestoreSdkState = atom<firebase.firestore.Firestore>({
   key: "firebase_sdk_firestore",
-  get: () => getFirebaseSdkPromise(firebaseApp, "firestore"),
+  default: getFirebaseSdkPromise(firebaseApp, "firestore"),
   dangerouslyAllowMutability: true,
 });
 
