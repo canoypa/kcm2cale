@@ -16,8 +16,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   const { fleetId } = useParams<{ fleetId: string }>();
 
   const firestore = useFirestore();
-  const { isValidating: isSignInValidating, data: signInCheckResult } =
-    useSigninCheck();
+  const { data: signInCheckResult } = useSigninCheck();
 
   // useEffect からの更新検知のため useState を使用
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
@@ -41,7 +40,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   }, [fleet, ships, equipments]);
 
   useEffect(() => {
-    if (isSignInValidating || !signInCheckResult.signedIn) {
+    if (!signInCheckResult.signedIn) {
       return;
     }
 
@@ -79,10 +78,9 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
     mutateFleet,
     mutateShips,
     signInCheckResult,
-    isSignInValidating,
   ]);
 
-  if (isSignInValidating || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return (
       <Box
         display="flex"

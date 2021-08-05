@@ -9,12 +9,11 @@ type UserAvatarProps = {
   size: number;
 };
 const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
-  const { isValidating: isSignInValidating, data: signInCheckResult } =
-    useSigninCheck();
+  const { data: signInCheckResult } = useSigninCheck();
 
   const classes = useStyles();
 
-  if (isSignInValidating || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return <Skeleton variant="circle" width={size} height={size} />;
   }
 

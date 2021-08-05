@@ -12,12 +12,11 @@ type SigninCheckResult =
     };
 
 export const useSigninCheck = () => {
-  const { data: user, isValidating } = useUser();
+  const { data: user } = useUser();
 
   const data = { signedIn: Boolean(user), user } as SigninCheckResult;
 
   return {
     data,
-    isValidating,
   };
 };

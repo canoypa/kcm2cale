@@ -1,4 +1,5 @@
 import { FC, useEffect } from "react";
+import { useUser } from "../../../hooks/firebase/auth/useUser";
 import { useAuth } from "../../../store/firebase/sdk";
 
 /**
@@ -6,6 +7,7 @@ import { useAuth } from "../../../store/firebase/sdk";
  */
 export const AuthProvider: FC = () => {
   const auth = useAuth();
+  const { mutate } = useUser();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -13,10 +15,12 @@ export const AuthProvider: FC = () => {
         // サインインしていない場合匿名認証
         auth.signInAnonymously();
       }
+
+      mutate(user);
     });
 
     return () => unsubscribe();
-  }, [auth]);
+  }, [auth, mutate]);
 
   return null;
 };

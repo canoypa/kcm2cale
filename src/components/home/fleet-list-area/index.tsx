@@ -4,10 +4,9 @@ import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetListContainer } from "../fleet-list-container";
 
 export const FleetListArea: FC = () => {
-  const { isValidating: isSignInValidating, data: signInCheckResult } =
-    useSigninCheck();
+  const { data: signInCheckResult } = useSigninCheck();
 
-  if (isSignInValidating || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return (
       <Box
         container
