@@ -2071,4 +2071,34 @@ export const EquipmentsData: EquipmentData[] = [
     type: EquipmentType.CarrierBasedDiveBomber,
     name: "SBD-5",
   },
+  {
+    no: 420,
+    type: EquipmentType.CarrierBasedDiveBomber,
+    name: "SB2C-3",
+  },
+  {
+    no: 421,
+    type: EquipmentType.CarrierBasedDiveBomber,
+    name: "SB2C-5",
+  },
+  {
+    no: 422,
+    type: EquipmentType.CarrierBasedFighter,
+    name: "FR-1 Fireball",
+  },
+  {
+    no: 423,
+    type: EquipmentType.CarrierBasedReconnaissanceAircraft,
+    name: "Fulmar(戦闘偵察/熟練)",
+  },
+  {
+    no: 424,
+    type: EquipmentType.CarrierBasedTorpedoBomber,
+    name: "Barracuda Mk.II",
+  },
+  {
+    no: 425,
+    type: EquipmentType.CarrierBasedTorpedoBomber,
+    name: "Barracuda Mk.III",
+  },
 ];
