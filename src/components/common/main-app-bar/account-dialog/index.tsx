@@ -25,7 +25,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   };
   const signOut = () => {
     onClose();
-    auth.signOut();
+    auth.signInAnonymously();
   };
 
   if (!signInCheckResult.signedIn) {

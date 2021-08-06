@@ -13,11 +13,12 @@ export const RootProviders: FC = ({ children }) => (
         <Router>
           <ThemeProvider>
             <GlobalStyles>
-              {/* Fixme: AuthProvider によるサスペンド LCPが低下するため */}
+              {/* auth sdk のインポートでサスペンドするため必要 */}
               <Suspense fallback={null}>
                 <AuthProvider />
-                {children}
               </Suspense>
+
+              {children}
             </GlobalStyles>
           </ThemeProvider>
         </Router>
