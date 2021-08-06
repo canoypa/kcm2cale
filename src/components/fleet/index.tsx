@@ -1,34 +1,35 @@
-import { FC, memo, useContext, useEffect } from "react";
-import { Redirect } from "react-router";
+import { FC, useContext, useEffect } from "react";
+import { Redirect, useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
-import { FleetContext } from "./contexts";
 import { FleetDataProvider } from "./fleet-data-provider";
+import { FleetIdContext } from "./fleetIdContext";
+import { useFleet } from "./hooks";
 import { Organize } from "./organisms/organize";
 
-const FleetComponent: FC = () => {
+const Fleet: FC = () => {
   const { push } = useHistory();
 
   const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
-  const fleet = useContext(FleetContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   useDidMount(() => {
     pageViewLog("Fleet View");
   });
   useEffect(() => {
-    const title = fleet?.title;
-    if (title !== undefined) {
-      setPageTitle(`${title || "無題の編成"}`);
+    if (fleet !== undefined) {
+      setPageTitle(`${fleet.title || "無題の編成"}`);
     }
 
     // タイトル変更時にのみ実行
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleet?.title]);
+  }, [fleet]);
 
   const backToTopPage = () => {
     push("/");
@@ -46,14 +47,17 @@ const FleetComponent: FC = () => {
     <Redirect to="/" />
   );
 };
-const Fleet = memo(FleetComponent);
 
 // next の getStaticProps みたいなもん
 export const FleetPage: FC = () => {
+  const { fleetId } = useParams<{ fleetId: string }>();
+
   return (
-    <FleetDataProvider>
-      <Fleet />
-    </FleetDataProvider>
+    <FleetIdContext.Provider value={fleetId}>
+      <FleetDataProvider>
+        <Fleet />
+      </FleetDataProvider>
+    </FleetIdContext.Provider>
   );
 };
 export default FleetPage;

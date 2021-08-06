@@ -1,6 +1,10 @@
 import firebase from "firebase/app";
 import "firebase/app-check";
-import { preloadAnalytics, preloadAuth, preloadFirestore } from "reactfire";
+import {
+  preloadAnalytics,
+  preloadAuth,
+  preloadFirestore,
+} from "../sdk/preload";
 
 export { default as firebase } from "firebase/app";
 

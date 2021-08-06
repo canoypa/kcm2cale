@@ -1,7 +1,7 @@
-import { useFirestore } from "reactfire";
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
 import { FleetType } from "../../models/fleet";
+import { useFirestore } from "../../store/firebase/sdk";
 
 const createNewFleetData = (fleetId: string, userId: string) => ({
   version: 1,

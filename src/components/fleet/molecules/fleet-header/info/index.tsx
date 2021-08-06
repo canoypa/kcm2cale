@@ -2,7 +2,8 @@ import { Typography } from "@material-ui/core";
 import { FC, useContext } from "react";
 import { FleetType } from "../../../../../models/fleet";
 import { LineClamp } from "../../../../common/clamp";
-import { FleetContext } from "../../../contexts";
+import { FleetIdContext } from "../../../fleetIdContext";
+import { useFleet } from "../../../hooks";
 
 const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
   [FleetType.Normal, "通常艦隊"],
@@ -13,7 +14,8 @@ const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
 ]);
 
 export const Info: FC = () => {
-  const fleet = useContext(FleetContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   if (!fleet) return null;
   return (

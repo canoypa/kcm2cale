@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useHistory } from "react-router";
-import { useUser } from "reactfire";
+import { useUser } from "../../hooks/firebase/auth/useUser";
 import { useCreateNewFleet } from "./useCreateNewFleet";
 
 // 編成を新規作成してリダイレクト

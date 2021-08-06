@@ -1,4 +1,4 @@
-import { useFirestore } from "reactfire";
+import { useFirestore } from "../../../store/firebase/sdk";
 
 export const useDeleteFleet = () => {
   const firestore = useFirestore();

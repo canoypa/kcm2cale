@@ -2,7 +2,7 @@ import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import { FC } from "react";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { useSigninCheck } from "reactfire";
+import { useSigninCheck } from "../../../../hooks/firebase/auth/useSigninCheck";
 import { useAuth } from "../../../../store/firebase/sdk";
 import { LineClamp } from "../../clamp";
 import { UserIcon } from "../../user-icon";
@@ -13,8 +13,7 @@ type AccountHeaderProps = {
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   const auth = useAuth();
-  const { status: signInCheckStatus, data: signInCheckResult } =
-    useSigninCheck();
+  const { data: signInCheckResult } = useSigninCheck();
 
   const { push } = useHistory();
   const { pathname } = useLocation();
@@ -29,7 +28,7 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
     auth.signInAnonymously();
   };
 
-  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return null;
   }
 
