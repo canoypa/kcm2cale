@@ -1,8 +1,9 @@
 import { Box, Typography } from "@material-ui/core";
 import { FC } from "react";
-import { useAuth, useUser } from "reactfire";
 import { createProvider } from "../../../core/firebase/auth";
 import { ProviderId, ProviderIdValue } from "../../../core/firebase/auth/types";
+import { useUser } from "../../../hooks/firebase/auth/useUser";
+import { useAuth } from "../../../store/firebase/sdk";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 import { useStyles } from "./styles";

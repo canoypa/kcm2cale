@@ -9,8 +9,8 @@ import {
 import { MoreVert } from "@material-ui/icons";
 import { FC, MouseEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useFirestore } from "reactfire";
 import { Fleet } from "../../../models/fleet";
+import { useFirestore } from "../../../store/firebase/sdk";
 import { LineClamp } from "../../common/clamp";
 import { useStyles } from "./styles";
 

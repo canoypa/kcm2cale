@@ -4,10 +4,14 @@ import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
-import { useFleet, useIsFleetOwner } from "../../../../hooks/organize/fleet";
+import {
+  useFleetManager,
+  useIsFleetOwner,
+} from "../../../../hooks/organize/fleet";
 import { EmptyShip, FleetNo, Ship } from "../../../../models/ship";
 import { range } from "../../../../util/range";
-import { FleetContext } from "../../contexts";
+import { FleetIdContext } from "../../fleetIdContext";
+import { useFleet } from "../../hooks";
 import { SelectShipDialog } from "../../templates/select-ship";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
@@ -29,11 +33,12 @@ export const Fleet: FC = () => {
   // 選択中の艦隊
   const [activeFleetNo, setActiveFleetNo] = useState<FleetNo>(0);
 
-  const fleetInfo = useContext(FleetContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleetInfo } = useFleet(fleetId);
   const isOwner = useIsFleetOwner();
   const isCombined = fleetInfo ? isCombinedFleet(fleetInfo.type) : false;
 
-  const fleet = useFleet(isCombined ? activeFleetNo : 0);
+  const fleet = useFleetManager(isCombined ? activeFleetNo : 0);
 
   const [isSelectOpen, selecting] = useSelectShip();
 

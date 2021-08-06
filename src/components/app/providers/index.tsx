@@ -1,16 +1,15 @@
 import { FC, StrictMode, Suspense } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { FirebaseAppProvider } from "reactfire";
 import { RecoilRoot } from "recoil";
-import { firebaseApp } from "../../../core/firebase/app";
 import { AuthProvider } from "./auth-provider";
 import { GlobalStyles } from "./global-styles";
+import { SWRConfig } from "./swrConfig";
 import { ThemeProvider } from "./theme-provider";
 
 export const RootProviders: FC = ({ children }) => (
   <StrictMode>
     <RecoilRoot>
-      <FirebaseAppProvider firebaseApp={firebaseApp} suspense>
+      <SWRConfig>
         <Router>
           <ThemeProvider>
             <GlobalStyles>
@@ -22,7 +21,7 @@ export const RootProviders: FC = ({ children }) => (
             </GlobalStyles>
           </ThemeProvider>
         </Router>
-      </FirebaseAppProvider>
+      </SWRConfig>
     </RecoilRoot>
   </StrictMode>
 );

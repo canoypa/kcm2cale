@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { useHistory } from "react-router";
-import { useFirestore, useUser } from "reactfire";
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
+import { useUser } from "../../hooks/firebase/auth/useUser";
 import { FleetType } from "../../models/fleet";
+import { useFirestore } from "../../store/firebase/sdk";
 import { useDidMount } from "../../util/hooks/lifecycle";
 
 // 編成を新規作成してリダイレクト
@@ -21,7 +22,8 @@ export const NewFleet: FC = () => {
 
       id: newFleetId,
 
-      owner: user.uid,
+      // Fixme
+      owner: user?.uid,
 
       title: "",
       description: "",

@@ -1,15 +1,12 @@
 import { CircularProgress, Grid as Box } from "@material-ui/core";
 import { FC } from "react";
-import { useSigninCheck } from "reactfire";
+import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetListContainer } from "../fleet-list-container";
 
 export const FleetListArea: FC = () => {
-  const {
-    status: signInCheckStatus,
-    data: signInCheckResult,
-  } = useSigninCheck();
+  const { data: signInCheckResult } = useSigninCheck();
 
-  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return (
       <Box
         container

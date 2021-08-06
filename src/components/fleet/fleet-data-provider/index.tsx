@@ -1,39 +1,27 @@
 import { Box, CircularProgress } from "@material-ui/core";
-import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
+import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useParams } from "react-router";
-import { useFirestore, useSigninCheck } from "reactfire";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
-import {
-  EquipmentsContext,
-  EquipmentsContextValue,
-  FleetContext,
-  FleetContextValue,
-  ShipsContext,
-  ShipsContextValue,
-} from "../contexts";
+import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
+import { useFirestore } from "../../../store/firebase/sdk";
+import { useEquipments, useFleet, useShips } from "../hooks";
 
 type Props = {
   /** 更新抑制のためメモ化されたコンポーネントであるべき */
   children: ReactNode;
 };
 export const FleetDataProvider: FC<Props> = ({ children }) => {
-  const {
-    status: signInCheckStatus,
-    data: signInCheckResult,
-  } = useSigninCheck();
-  const firestore = useFirestore();
-
-  // url から fleetId を取得
   const { fleetId } = useParams<{ fleetId: string }>();
 
+  const firestore = useFirestore();
+  const { data: signInCheckResult } = useSigninCheck();
+
   // useEffect からの更新検知のため useState を使用
-  const [fleet, setFleet] = useState<FleetContextValue>(undefined);
-  const [ships, setShips] = useState<ShipsContextValue>(undefined);
-  const [equipments, setEquipments] = useState<EquipmentsContextValue>(
-    undefined
-  );
+  const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
+  const { data: ships, mutate: mutateShips } = useShips(fleetId);
+  const { data: equipments, mutate: mutateEquipments } = useEquipments(fleetId);
 
   // 作成者の場合のみ変更を受け取るようにするあれこれ
   // next.js 移行できれいにしてくれ...
@@ -52,7 +40,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   }, [fleet, ships, equipments]);
 
   useEffect(() => {
-    if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+    if (!signInCheckResult.signedIn) {
       return;
     }
 
@@ -72,21 +60,27 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       const data = f.data();
       if (data) {
         isOwner.current = data.owner === user.uid;
-
-        setFleet(data);
+        mutateFleet(data);
       }
     });
 
     sCollUnsubscribe.current = shipsCollRef.onSnapshot((s) => {
-      setShips(s.docs.map((d) => d.data()));
+      mutateShips(s.docs.map((d) => d.data()));
     });
 
     eCollUnsubscribe.current = equipmentsCollRef.onSnapshot((e) => {
-      setEquipments(e.docs.map((d) => d.data()));
+      mutateEquipments(e.docs.map((d) => d.data()));
     });
-  }, [firestore, fleetId, signInCheckResult, signInCheckStatus]);
+  }, [
+    firestore,
+    fleetId,
+    mutateEquipments,
+    mutateFleet,
+    mutateShips,
+    signInCheckResult,
+  ]);
 
-  if (signInCheckStatus === "loading" || !signInCheckResult.signedIn) {
+  if (!signInCheckResult.signedIn) {
     return (
       <Box
         display="flex"
@@ -99,13 +93,5 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
     );
   }
 
-  return (
-    <FleetContext.Provider value={fleet}>
-      <ShipsContext.Provider value={ships}>
-        <EquipmentsContext.Provider value={equipments}>
-          {children}
-        </EquipmentsContext.Provider>
-      </ShipsContext.Provider>
-    </FleetContext.Provider>
-  );
+  return <>{children}</>;
 };
