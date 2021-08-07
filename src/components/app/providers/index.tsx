@@ -1,4 +1,4 @@
-import { FC, StrictMode, Suspense } from "react";
+import { FC, StrictMode } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { AuthProvider } from "./auth-provider";
@@ -13,11 +13,7 @@ export const RootProviders: FC = ({ children }) => (
         <Router>
           <ThemeProvider>
             <GlobalStyles>
-              {/* auth sdk のインポートでサスペンドするため必要 */}
-              <Suspense fallback={null}>
-                <AuthProvider />
-              </Suspense>
-
+              <AuthProvider />
               {children}
             </GlobalStyles>
           </ThemeProvider>

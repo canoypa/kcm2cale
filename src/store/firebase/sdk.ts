@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import { atom, useRecoilValue } from "recoil";
+import { atom, useRecoilValueLoadable } from "recoil";
 import { firebaseApp } from "../../core/firebase/app";
 import { getFirebaseSdkPromise } from "../../core/firebase/sdk/fetch";
 
@@ -15,5 +15,5 @@ const FirestoreSdkState = atom<firebase.firestore.Firestore>({
   dangerouslyAllowMutability: true,
 });
 
-export const useAuth = () => useRecoilValue(AuthSdkState);
-export const useFirestore = () => useRecoilValue(FirestoreSdkState);
+export const useAuth = () => useRecoilValueLoadable(AuthSdkState);
+export const useFirestore = () => useRecoilValueLoadable(FirestoreSdkState);

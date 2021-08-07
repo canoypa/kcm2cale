@@ -1,13 +1,10 @@
 import { useContext, useMemo, useState } from "react";
 import { firebase } from "../../../../../core/firebase/app";
 import { FleetType } from "../../../../../models/fleet";
-import { useFirestore } from "../../../../../store/firebase/sdk";
 import { FleetIdContext } from "../../../fleetIdContext";
 import { useFleet } from "../../../hooks";
 
-export const useEditFleetInfo = () => {
-  const firestore = useFirestore();
-
+export const useEditFleetInfo = (firestore: firebase.firestore.Firestore) => {
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
 

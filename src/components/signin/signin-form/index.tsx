@@ -1,17 +1,38 @@
 import { Box, Typography } from "@material-ui/core";
 import { FC } from "react";
+import { firebase } from "../../../core/firebase/app";
 import { createProvider } from "../../../core/firebase/auth";
 import { ProviderId, ProviderIdValue } from "../../../core/firebase/auth/types";
-import { useUser } from "../../../hooks/firebase/auth/useUser";
 import { useAuth } from "../../../store/firebase/sdk";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 import { useStyles } from "./styles";
 
-export const SignInForm: FC = () => {
-  const auth = useAuth();
-  const { data: user } = useUser();
+type Props = {
+  anonymousUser: firebase.User;
+};
+export const SignInForm: FC<Props> = ({ anonymousUser }) => {
+  const authLoadable = useAuth();
 
+  if (authLoadable.state === "hasValue") {
+    return (
+      <SignInFormScreen
+        auth={authLoadable.contents}
+        anonymousUser={anonymousUser}
+      />
+    );
+  }
+
+  return null;
+};
+
+type SignInFormScreenProps = Props & {
+  auth: firebase.auth.Auth;
+};
+const SignInFormScreen: FC<SignInFormScreenProps> = ({
+  auth,
+  anonymousUser: user,
+}) => {
   const classes = useStyles();
 
   const signIn = (providerId: ProviderIdValue) => {

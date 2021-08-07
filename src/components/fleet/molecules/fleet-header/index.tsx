@@ -28,7 +28,7 @@ const FleetHeaderSkeleton: FC = () => {
 
 export const FleetHeader: FC = () => {
   const fleetId = useContext(FleetIdContext);
-  const fleet = useFleet(fleetId);
+  const { data: fleet } = useFleet(fleetId);
 
   const [isEditing, setIsEditing] = useState(false);
 

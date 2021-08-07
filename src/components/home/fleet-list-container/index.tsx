@@ -1,5 +1,6 @@
 import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
 import { FC, useEffect } from "react";
+import { firebase } from "../../../core/firebase/app";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { Fleet } from "../../../models/fleet";
@@ -17,30 +18,32 @@ const checkExistFleetList = (fleets: Fleet[]) => {
 };
 
 export const FleetListContainer: FC = () => {
-  // useUser と更新タイミングが違う？
-  // useSigninCheck 下でも null になりえるため
   const { data: signInCheckResult } = useSigninCheck();
 
-  const firestore = useFirestore();
+  const firestoreLoadable = useFirestore();
 
   const { data: fleetList, mutate: mutateFleetList } = useFleetList();
 
   const classes = useStyles();
 
   useEffect(() => {
-    const fleetListRef = firestore
-      .collection("fleets")
-      .where("owner", "==", signInCheckResult.user?.uid)
-      .withConverter(FirestoreFleetConverter);
+    let unsubscribe: firebase.Unsubscribe | undefined = undefined;
 
-    const unsubscribe = fleetListRef.onSnapshot((snap) => {
-      mutateFleetList(snap.docs.map((d) => d.data()));
-    });
+    if (firestoreLoadable.state === "hasValue") {
+      const firestore = firestoreLoadable.contents;
 
-    return () => {
-      unsubscribe();
-    };
-  }, [firestore, mutateFleetList, signInCheckResult.user]);
+      const fleetListRef = firestore
+        .collection("fleets")
+        .where("owner", "==", signInCheckResult.user?.uid)
+        .withConverter(FirestoreFleetConverter);
+
+      unsubscribe = fleetListRef.onSnapshot((snap) => {
+        mutateFleetList(snap.docs.map((d) => d.data()));
+      });
+    }
+
+    return () => unsubscribe?.();
+  }, [firestoreLoadable, mutateFleetList, signInCheckResult.user]);
 
   if (!fleetList) {
     return (

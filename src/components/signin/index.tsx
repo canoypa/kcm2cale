@@ -27,7 +27,7 @@ export const SignIn: FC = () => {
   }
 
   return user.isAnonymous ? (
-    <SignInForm />
+    <SignInForm anonymousUser={user} />
   ) : (
     <Redirect to={state?.continue ?? "/"} />
   );
