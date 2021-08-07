@@ -24,6 +24,7 @@ export const firebaseApp = firebase.apps.length
 
 preloadAnalytics({
   firebaseApp,
+  setup: (analytics) => analytics(),
 });
 
 preloadAuth({
