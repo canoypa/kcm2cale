@@ -1,13 +1,11 @@
 import { Box, Typography } from "@material-ui/core";
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { useStyles } from "./styles";
 
 export const NotFound: FC = () => {
-  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
   const { pathname } = useLocation();
@@ -16,7 +14,6 @@ export const NotFound: FC = () => {
 
   useDidMount(() => {
     setPageTitle("Page Not Found");
-    pageViewLog("Not Found");
   });
 
   return (

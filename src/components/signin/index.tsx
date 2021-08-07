@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Redirect, useLocation } from "react-router";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
 import { useUser } from "../../hooks/firebase/auth/useUser";
 import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
@@ -13,7 +12,6 @@ type LocationState =
   | undefined;
 
 export const SignIn: FC = () => {
-  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
   const { data: user } = useUser();
@@ -22,7 +20,6 @@ export const SignIn: FC = () => {
 
   useDidMount(() => {
     setPageTitle("サインイン");
-    pageViewLog("Sign In");
   });
 
   if (!user) {
