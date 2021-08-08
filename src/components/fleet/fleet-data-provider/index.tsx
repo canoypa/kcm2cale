@@ -15,10 +15,9 @@ type Props = {
 export const FleetDataProvider: FC<Props> = ({ children }) => {
   const { fleetId } = useParams<{ fleetId: string }>();
 
-  const firestore = useFirestore();
+  const firestoreLoadable = useFirestore();
   const { data: signInCheckResult } = useSigninCheck();
 
-  // useEffect からの更新検知のため useState を使用
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
   const { data: ships, mutate: mutateShips } = useShips(fleetId);
   const { data: equipments, mutate: mutateEquipments } = useEquipments(fleetId);
@@ -37,42 +36,42 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       sCollUnsubscribe.current?.();
       eCollUnsubscribe.current?.();
     }
-  }, [fleet, ships, equipments]);
+  }, [equipments, fleet, ships]);
 
   useEffect(() => {
-    if (!signInCheckResult.signedIn) {
-      return;
+    if (signInCheckResult.signedIn && firestoreLoadable.state === "hasValue") {
+      const firestore = firestoreLoadable.contents;
+
+      const user = signInCheckResult.user;
+
+      const fleetDocRef = firestore
+        .doc(`fleets/${fleetId}`)
+        .withConverter(FirestoreFleetConverter);
+      const shipsCollRef = fleetDocRef
+        .collection("ships")
+        .withConverter(FirestoreFleetShipsConverter);
+      const equipmentsCollRef = fleetDocRef
+        .collection("equipments")
+        .withConverter(FirestoreFleetEquipmentsConverter);
+
+      fDocUnsubscribe.current = fleetDocRef.onSnapshot((f) => {
+        const data = f.data();
+        if (data) {
+          isOwner.current = data.owner === user.uid;
+          mutateFleet(data);
+        }
+      });
+
+      sCollUnsubscribe.current = shipsCollRef.onSnapshot((s) => {
+        mutateShips(s.docs.map((d) => d.data()));
+      });
+
+      eCollUnsubscribe.current = equipmentsCollRef.onSnapshot((e) => {
+        mutateEquipments(e.docs.map((d) => d.data()));
+      });
     }
-
-    const user = signInCheckResult.user;
-
-    const fleetDocRef = firestore
-      .doc(`fleets/${fleetId}`)
-      .withConverter(FirestoreFleetConverter);
-    const shipsCollRef = fleetDocRef
-      .collection("ships")
-      .withConverter(FirestoreFleetShipsConverter);
-    const equipmentsCollRef = fleetDocRef
-      .collection("equipments")
-      .withConverter(FirestoreFleetEquipmentsConverter);
-
-    fDocUnsubscribe.current = fleetDocRef.onSnapshot((f) => {
-      const data = f.data();
-      if (data) {
-        isOwner.current = data.owner === user.uid;
-        mutateFleet(data);
-      }
-    });
-
-    sCollUnsubscribe.current = shipsCollRef.onSnapshot((s) => {
-      mutateShips(s.docs.map((d) => d.data()));
-    });
-
-    eCollUnsubscribe.current = equipmentsCollRef.onSnapshot((e) => {
-      mutateEquipments(e.docs.map((d) => d.data()));
-    });
   }, [
-    firestore,
+    firestoreLoadable,
     fleetId,
     mutateEquipments,
     mutateFleet,

@@ -9,7 +9,8 @@ type UserState = firebase.User | null | undefined;
 export const useUser = () => {
   const auth = useAuth();
 
-  return useSWR<UserState>(UserStateKey, null, {
-    initialData: auth.currentUser ?? undefined,
-  });
+  const initialData =
+    (auth.state === "hasValue" && auth.contents.currentUser) || undefined;
+
+  return useSWR<UserState>(UserStateKey, { initialData });
 };

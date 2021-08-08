@@ -2,6 +2,7 @@ import { Box } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
+import { firebase } from "../../../../core/firebase/app";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
 import {
@@ -9,6 +10,7 @@ import {
   useIsFleetOwner,
 } from "../../../../hooks/organize/fleet";
 import { EmptyShip, FleetNo, Ship } from "../../../../models/ship";
+import { useFirestore } from "../../../../store/firebase/sdk";
 import { range } from "../../../../util/range";
 import { FleetIdContext } from "../../fleetIdContext";
 import { useFleet } from "../../hooks";
@@ -30,6 +32,19 @@ const FleetSkeleton: FC = () => {
 };
 
 export const Fleet: FC = () => {
+  const firestoreLoadable = useFirestore();
+
+  if (firestoreLoadable.state === "hasValue") {
+    return <FleetScreen firestore={firestoreLoadable.contents} />;
+  }
+
+  return null;
+};
+
+type Props = {
+  firestore: firebase.firestore.Firestore;
+};
+const FleetScreen: FC<Props> = ({ firestore }) => {
   // 選択中の艦隊
   const [activeFleetNo, setActiveFleetNo] = useState<FleetNo>(0);
 
@@ -40,7 +55,7 @@ export const Fleet: FC = () => {
 
   const fleet = useFleetManager(isCombined ? activeFleetNo : 0);
 
-  const [isSelectOpen, selecting] = useSelectShip();
+  const [isSelectOpen, selecting] = useSelectShip(firestore);
 
   const swapShipContextValue = (currentShip: Ship | EmptyShip) => {
     selecting.start(currentShip);

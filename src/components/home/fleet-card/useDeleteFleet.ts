@@ -1,8 +1,6 @@
-import { useFirestore } from "../../../store/firebase/sdk";
+import { firebase } from "../../../core/firebase/app";
 
-export const useDeleteFleet = () => {
-  const firestore = useFirestore();
-
+export const useDeleteFleet = (firestore: firebase.firestore.Firestore) => {
   return async (fleetId: string) => {
     // 各参照を取得
     const fleeDocRef = firestore.doc(`fleets/${fleetId}`);

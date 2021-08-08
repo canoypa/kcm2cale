@@ -1,8 +1,6 @@
 import { FC, useContext, useEffect } from "react";
 import { Redirect, useParams } from "react-router";
 import { useHistory } from "react-router-dom";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { FleetDataProvider } from "./fleet-data-provider";
@@ -13,15 +11,11 @@ import { Organize } from "./organisms/organize";
 const Fleet: FC = () => {
   const { push } = useHistory();
 
-  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
 
-  useDidMount(() => {
-    pageViewLog("Fleet View");
-  });
   useEffect(() => {
     if (fleet !== undefined) {
       setPageTitle(`${fleet.title || "無題の編成"}`);

@@ -1,7 +1,6 @@
 import { firebase } from "../../core/firebase/app";
 import { generateFleetId } from "../../core/util/generate-id";
 import { FleetType } from "../../models/fleet";
-import { useFirestore } from "../../store/firebase/sdk";
 
 const createNewFleetData = (fleetId: string, userId: string) => ({
   version: 1,
@@ -18,10 +17,10 @@ const createNewFleetData = (fleetId: string, userId: string) => ({
   updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
 });
 
-type UseCreateNewFleet = () => (userId: string) => Promise<string>;
-export const useCreateNewFleet: UseCreateNewFleet = () => {
-  const firestore = useFirestore();
-
+type UseCreateNewFleet = (
+  firestore: firebase.firestore.Firestore
+) => (userId: string) => Promise<string>;
+export const useCreateNewFleet: UseCreateNewFleet = (firestore) => {
   return async (userId: string) => {
     const newFleetId = generateFleetId();
     const newFleetData = createNewFleetData(newFleetId, userId);
