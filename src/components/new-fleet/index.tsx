@@ -1,33 +1,40 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect } from "react";
 import { useHistory } from "react-router";
-import { useRecoilValue } from "recoil";
-import { useInitFleet } from "../../core/initialize-fleet";
-import { FleetIdState } from "../../store/organize/info";
+import { firebase } from "../../core/firebase/app";
+import { useUser } from "../../hooks/firebase/auth/useUser";
+import { useFirestore } from "../../store/firebase/sdk";
+import { useCreateNewFleet } from "./useCreateNewFleet";
 
-// 編成新規作成
-// id を生成してリダイレクト
-export const NewFleet: FC = () => {
-  const { replace } = useHistory();
-  const fleetId = useRecoilValue(FleetIdState);
+// 編成を新規作成してリダイレクト
+export const NewFleetPage: FC = () => {
+  const firestoreLoadable = useFirestore();
 
-  const initFleet = useInitFleet();
-
-  const preFleetId = useRef(fleetId);
-
-  useEffect(() => {
-    if (fleetId === preFleetId.current) {
-      // 初回レンダー時
-      initFleet(null);
-    } else {
-      // fleetId 更新による再レンダー時
-      replace(`/fleet/${fleetId}`);
-    }
-
-    // initFleet は不要
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetId]);
+  if (firestoreLoadable.state === "hasValue") {
+    return <NewFleet firestore={firestoreLoadable.contents} />;
+  }
 
   return null;
 };
 
-export default NewFleet;
+type Props = {
+  firestore: firebase.firestore.Firestore;
+};
+const NewFleet: FC<Props> = ({ firestore }) => {
+  const { replace } = useHistory();
+  const createNewFleet = useCreateNewFleet(firestore);
+
+  const { data: user } = useUser();
+
+  useEffect(() => {
+    // 未認証の場合スキップ
+    if (!user) return;
+
+    createNewFleet(user.uid).then((newFleetId) => {
+      replace(`/fleet/${newFleetId}`);
+    });
+  }, [user]);
+
+  return null;
+};
+
+export default NewFleetPage;

@@ -1,11 +1,11 @@
-import { FleetState, FleetStateValue } from "../../store/organize/ships";
+import { FleetPlace, FleetShip } from "../../models/ship";
 
-export type PartialFleetPlace = Omit<FleetStateValue, "shipId">;
+type FleetState = FleetShip[];
 
 export const sortFleet = (
   fleet: FleetState,
-  from: PartialFleetPlace,
-  to: PartialFleetPlace
+  from: FleetPlace,
+  to: FleetPlace
 ): FleetState => {
   return fleet.map((fleetShip) => {
     const fromTurnNo = from.turnNo;

@@ -1,29 +1,31 @@
-import { useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
-import {
-  FleetDescriptionState,
-  FleetNameState,
-  FleetTypeState,
-} from "../../../../../store/organize/info";
+import { useContext, useMemo, useState } from "react";
+import { firebase } from "../../../../../core/firebase/app";
+import { FleetType } from "../../../../../models/fleet";
+import { FleetIdContext } from "../../../fleetIdContext";
+import { useFleet } from "../../../hooks";
 
-export const useEditFleetInfo = () => {
-  const [titleState, setTitleState] = useRecoilState(FleetNameState);
-  const [desState, setDesState] = useRecoilState(FleetDescriptionState);
-  const [typeState, setTypeState] = useRecoilState(FleetTypeState);
+export const useEditFleetInfo = (firestore: firebase.firestore.Firestore) => {
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
-  const [title, setTitle] = useState(titleState);
-  const [des, setDes] = useState(desState);
-  const [type, setType] = useState(typeState);
+  const [title, setTitle] = useState<string>(fleet?.title ?? "");
+  const [description, setDes] = useState<string>(fleet?.description ?? "");
+  const [type, setType] = useState<FleetType>(fleet?.type ?? FleetType.Normal);
 
   const submit = () => {
-    setTitleState(title);
-    setDesState(des);
-    setTypeState(type);
+    const fleetDocRef = firestore.doc(`fleets/${fleet?.id}`);
+
+    fleetDocRef.update({
+      title,
+      description,
+      type,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
   };
 
   return {
     title: title,
-    description: des,
+    description: description,
     type: type,
 
     setTitle: setTitle,

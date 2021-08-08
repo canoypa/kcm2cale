@@ -1,71 +1,57 @@
-import { FC, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
-import { FleetIdState, FleetNameState } from "../../store/organize/info";
+import { FC, useContext, useEffect } from "react";
+import { Redirect, useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { LowerAppBar } from "../common/lower-app-bar";
-import { useInitializeCallback } from "./hooks";
+import { FleetDataProvider } from "./fleet-data-provider";
+import { FleetIdContext } from "./fleetIdContext";
+import { useFleet } from "./hooks";
 import { Organize } from "./organisms/organize";
-
-const LoadFleet: FC = () => {
-  const initFleet = useInitializeCallback();
-
-  const { fleetId } = useParams<{ fleetId: string }>();
-  const isExistFleet = useRecoilValue(FleetIdState);
-
-  useEffect(() => {
-    // 直アクセスの場合編成初期化
-    if (!isExistFleet) initFleet({ fleetId });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return null;
-};
 
 const Fleet: FC = () => {
   const { push } = useHistory();
-  const { justSaveNow } = useLocalPersistence();
 
-  const backToTopPage = () => {
-    justSaveNow();
-    push("/");
-  };
-
-  return (
-    <>
-      <div>
-        <LowerAppBar onNavClick={backToTopPage} />
-        <Organize />
-      </div>
-    </>
-  );
-};
-
-export const FleetPage: FC = () => {
-  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
-  const isExistFleet = useRecoilValue(FleetIdState);
-  const fleetTitle = useRecoilValue(FleetNameState);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   useEffect(() => {
-    pageViewLog("Fleet View");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    setPageTitle(`${fleetTitle || "無題の編成"}`);
+    if (fleet !== undefined) {
+      setPageTitle(`${fleet.title || "無題の編成"}`);
+    }
 
     // タイトル変更時にのみ実行
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetTitle]);
+  }, [fleet]);
 
-  return isExistFleet ? <Fleet /> : <LoadFleet />;
+  const backToTopPage = () => {
+    push("/");
+  };
+
+  const isExistFleet = fleet !== null;
+
+  // Todo: エラー画面を表示
+  return isExistFleet ? (
+    <>
+      <LowerAppBar onNavClick={backToTopPage} />
+      <Organize />
+    </>
+  ) : (
+    <Redirect to="/" />
+  );
 };
 
+// next の getStaticProps みたいなもん
+export const FleetPage: FC = () => {
+  const { fleetId } = useParams<{ fleetId: string }>();
+
+  return (
+    <FleetIdContext.Provider value={fleetId}>
+      <FleetDataProvider>
+        <Fleet />
+      </FleetDataProvider>
+    </FleetIdContext.Provider>
+  );
+};
 export default FleetPage;

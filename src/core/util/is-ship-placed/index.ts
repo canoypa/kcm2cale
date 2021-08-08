@@ -1,11 +1,4 @@
-import { FleetStateValue } from "../../../store/organize/ships";
+import { FleetShip, Ship } from "../../../models/ship";
 
-type FleetPlace = {
-  fleetNo: number;
-  turnNo: number;
-  shipId: string | null;
-};
-
-export const isShipPlaced = (
-  shipPlace: FleetPlace
-): shipPlace is FleetStateValue => shipPlace.shipId !== null;
+export const isShipPlaced = (shipPlace: FleetShip): shipPlace is Ship =>
+  shipPlace.id !== null;
