@@ -2066,4 +2066,9 @@ export const EquipmentsData: EquipmentData[] = [
     type: EquipmentType.LandBasedInterceptor,
     name: "零式艦戦32型(台南空)",
   },
+  {
+    no: 419,
+    type: EquipmentType.CarrierBasedDiveBomber,
+    name: "SBD-5",
+  },
 ];

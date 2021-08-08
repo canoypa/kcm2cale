@@ -1,23 +1,24 @@
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import { FC, MouseEvent } from "react";
-import { useRecoilState } from "recoil";
-import { ActiveFleetNoState } from "../../../../../store/organize/info";
+import { FleetNo } from "../../../../../models/ship";
 import { useStyles } from "./styles";
 
-export const ToggleFleet: FC = () => {
-  const [activeFleetNo, setActiveFleetNo] = useRecoilState(ActiveFleetNoState);
-
+type Props = {
+  value: FleetNo;
+  onChange: (fleetNo: FleetNo) => void;
+};
+export const ToggleFleet: FC<Props> = ({ value, onChange }) => {
   const classes = useStyles();
 
-  const handlerOnSelect = (_: MouseEvent, fleetNo: number) => {
+  const handlerOnSelect = (_: MouseEvent, fleetNo: FleetNo) => {
     if (fleetNo !== null) {
-      setActiveFleetNo(fleetNo);
+      onChange(fleetNo);
     }
   };
 
   return (
     <ToggleButtonGroup
-      value={activeFleetNo}
+      value={value}
       exclusive
       size="small"
       color="primary"

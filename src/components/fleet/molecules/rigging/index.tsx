@@ -1,31 +1,50 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
-import { FleetStateValue } from "../../../../store/organize/ships";
+import { firebase } from "../../../../core/firebase/app";
+import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
+import { useRigging } from "../../../../hooks/organize/rigging";
+import { ShipEquipment } from "../../../../models/equipment";
+import { Ship } from "../../../../models/ship";
+import { useFirestore } from "../../../../store/firebase/sdk";
 import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
-import { useRigging } from "./hook";
 import { useStyles } from "./styles";
 import { useSelectEquipment } from "./use-select-equipment";
 
 type Props = {
-  fleetPlace: FleetStateValue;
+  fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
-  const [isOpenDialog, selecting] = useSelectEquipment();
-  const {
-    shipEquipments,
-    isCanAddNewEquipment,
-    newEquipmentSlotNo,
-  } = useRigging(fleetPlace);
+  const firestoreLoadable = useFirestore();
+
+  if (firestoreLoadable.state === "hasValue") {
+    return (
+      <RiggingScreen
+        firestore={firestoreLoadable.contents}
+        fleetPlace={fleetPlace}
+      />
+    );
+  }
+
+  return null;
+};
+
+type RiggingScreenProps = Props & {
+  firestore: firebase.firestore.Firestore;
+};
+const RiggingScreen: FC<RiggingScreenProps> = ({ firestore, fleetPlace }) => {
+  const [isOpenDialog, selecting] = useSelectEquipment(firestore);
+  const { shipEquipments, isCanAddNewEquipment, newEquipmentPlace } =
+    useRigging(fleetPlace);
+
+  const isOwner = useIsFleetOwner();
 
   const classes = useStyles();
 
-  const handlerAddEquipment = (slotNo: number, equipmentId: string | null) =>
-    selecting.start({ shipId: fleetPlace.shipId, slotNo, equipmentId });
+  const handlerAddEquipment = (eq: ShipEquipment) => selecting.start(eq);
 
-  const handlerAddNewEquipment = () =>
-    handlerAddEquipment(newEquipmentSlotNo, null);
+  const handlerAddNewEquipment = () => handlerAddEquipment(newEquipmentPlace);
 
   return (
     <>
@@ -44,7 +63,7 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
             swapEquipment={handlerAddEquipment}
           />
         </Grid>
-        {isCanAddNewEquipment && (
+        {isCanAddNewEquipment && isOwner && (
           <Grid item>
             <Chip
               variant="outlined"

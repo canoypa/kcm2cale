@@ -14,8 +14,10 @@ import {
 } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
 import { ChangeEvent, FC, useMemo } from "react";
+import { firebase } from "../../../../../core/firebase/app";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
-import { FleetType } from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../models/fleet";
+import { useFirestore } from "../../../../../store/firebase/sdk";
 import { useCountValid, useEditFleetInfo } from "./hooks";
 import { useStyles } from "./styles";
 
@@ -27,7 +29,7 @@ const FleetTypeOptions = [
   { label: "空母機動部隊", value: FleetType.Carrier },
   { label: "水上打撃部隊", value: FleetType.Surface },
   { label: "輸送護衛部隊", value: FleetType.Transport },
-  { label: "遊撃部隊", value: FleetType.StrikingForce },
+  { label: "遊撃部隊", value: FleetType.Striking },
 ];
 
 type Props = {
@@ -35,6 +37,25 @@ type Props = {
   onEnd: () => void;
 };
 export const Editing: FC<Props> = ({ open, onEnd }) => {
+  const firestoreLoadable = useFirestore();
+
+  if (firestoreLoadable.state === "hasValue") {
+    return (
+      <EditingScreen
+        open={open}
+        onEnd={onEnd}
+        firestore={firestoreLoadable.contents}
+      />
+    );
+  }
+
+  return null;
+};
+
+type ScreenProps = Props & {
+  firestore: firebase.firestore.Firestore;
+};
+const EditingScreen: FC<ScreenProps> = ({ open, onEnd, firestore }) => {
   const {
     title,
     description,
@@ -43,7 +64,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     setDescription,
     setType,
     submit,
-  } = useEditFleetInfo();
+  } = useEditFleetInfo(firestore);
 
   const titleValid = useCountValid(title, TitleCharCount);
   const descriptionValid = useCountValid(description, DescriptionCharCount);
@@ -66,7 +87,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setType(isFleetType(value) ? value : "Normal");
+      setType(isFleetType(value) ? value : FleetType.Normal);
     },
 
     onSubmit: () => {

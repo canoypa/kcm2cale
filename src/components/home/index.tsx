@@ -1,22 +1,17 @@
 import { AppBar, Box, Grid } from "@material-ui/core";
-import { FC, useEffect } from "react";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
+import { FC } from "react";
+import { useDidMount } from "../../util/hooks/lifecycle";
 import { useSetPageTitle } from "../../util/hooks/set-page-title";
 import { MainAppBar } from "../common/main-app-bar";
 import { CreateNewFleet } from "./create-new-fleet";
 import { FleetListArea } from "./fleet-list-area";
 
 export const Home: FC = () => {
-  const pageViewLog = usePageViewLog();
   const setPageTitle = useSetPageTitle();
 
-  useEffect(() => {
+  useDidMount(() => {
     setPageTitle(__APP_NAME__, { noSuffix: true });
-    pageViewLog("Home");
-
-    // マウント時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <Grid

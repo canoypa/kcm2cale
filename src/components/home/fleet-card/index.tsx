@@ -7,26 +7,44 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
-import { FC, MouseEvent, useContext, useRef, useState } from "react";
+import { FC, MouseEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useInitFleet } from "../../../core/initialize-fleet";
-import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import { firebase } from "../../../core/firebase/app";
+import { Fleet } from "../../../models/fleet";
+import { useFirestore } from "../../../store/firebase/sdk";
 import { LineClamp } from "../../common/clamp";
-import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
+import { useDeleteFleet } from "./useDeleteFleet";
 
-type Props = { fleetData: LocalFleetDataV1 };
+type Props = { fleetData: Fleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const { reloadFleet } = useContext(FleetListContext);
+  const firestoreLoadable = useFirestore();
+
+  if (firestoreLoadable.state === "hasValue") {
+    return (
+      <FleetCardScreen
+        firestore={firestoreLoadable.contents}
+        fleetData={fleetData}
+      />
+    );
+  }
+
+  return null;
+};
+
+type FleetCardScreenProps = Props & {
+  firestore: firebase.firestore.Firestore;
+};
+const FleetCardScreen: FC<FleetCardScreenProps> = ({
+  firestore,
+  fleetData,
+}) => {
+  const deleteFleet = useDeleteFleet(firestore);
+  const classes = useStyles();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const initFleet = useInitFleet();
-
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
-
-  const classes = useStyles();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
@@ -39,23 +57,14 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const deleteFleet = async () => {
-    await LocalDatabase.deleteFleet(fleetData.id);
-    reloadFleet();
-  };
-
-  const openFleet = () => {
-    // 編成初期化
-    initFleet(fleetData);
+  const handlerDeleteFleet = () => {
+    closeMenu();
+    deleteFleet(fleetData.id);
   };
 
   return (
     <>
-      <Link
-        to={`/fleet/${fleetData.id}`}
-        className={classes.container}
-        onClick={openFleet}
-      >
+      <Link to={`/fleet/${fleetData.id}`} className={classes.container}>
         <Card variant="outlined">
           <CardContent className={classes.cardContent}>
             <Typography
@@ -93,7 +102,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
         onClose={closeMenu}
         anchorEl={menuAnchorEl.current}
       >
-        <MenuItem onClick={deleteFleet}>削除</MenuItem>
+        <MenuItem onClick={handlerDeleteFleet}>削除</MenuItem>
       </Menu>
     </>
   );
