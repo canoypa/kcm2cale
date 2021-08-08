@@ -1,29 +1,17 @@
-import { FC, useContext, useEffect } from "react";
-import { Redirect, useParams } from "react-router";
-import { useHistory } from "react-router-dom";
-import { useSetPageTitle } from "../../util/hooks/set-page-title";
+import { Box } from "@material-ui/core";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { FC, useContext } from "react";
 import { LowerAppBar } from "../common/lower-app-bar";
-import { FleetDataProvider } from "./fleet-data-provider";
 import { FleetIdContext } from "./fleetIdContext";
 import { useFleet } from "./hooks";
 import { Organize } from "./organisms/organize";
 
-const Fleet: FC = () => {
-  const { push } = useHistory();
-
-  const setPageTitle = useSetPageTitle();
+export const Fleet: FC = () => {
+  const { push } = useRouter();
 
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
-
-  useEffect(() => {
-    if (fleet !== undefined) {
-      setPageTitle(`${fleet.title || "無題の編成"}`);
-    }
-
-    // タイトル変更時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleet]);
 
   const backToTopPage = () => {
     push("/");
@@ -34,24 +22,25 @@ const Fleet: FC = () => {
   // Todo: エラー画面を表示
   return isExistFleet ? (
     <>
+      <Head>
+        <title>
+          {fleet
+            ? `${fleet.title || "無題の編成"} - ${process.env.APP_NAME}`
+            : process.env.APP_NAME}
+        </title>
+      </Head>
+
       <LowerAppBar onNavClick={backToTopPage} />
       <Organize />
     </>
   ) : (
-    <Redirect to="/" />
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "100vh" }}
+    >
+      <div>リクエストされた編成は存在しません</div>
+    </Box>
   );
 };
-
-// next の getStaticProps みたいなもん
-export const FleetPage: FC = () => {
-  const { fleetId } = useParams<{ fleetId: string }>();
-
-  return (
-    <FleetIdContext.Provider value={fleetId}>
-      <FleetDataProvider>
-        <Fleet />
-      </FleetDataProvider>
-    </FleetIdContext.Provider>
-  );
-};
-export default FleetPage;

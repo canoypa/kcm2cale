@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
-import { firebase } from "../../../core/firebase/app";
-import { useUser } from "../../../hooks/firebase/auth/useUser";
-import { useAuth } from "../../../store/firebase/sdk";
+import { firebase } from "../../core/firebase/app";
+import { useUser } from "../../hooks/firebase/auth/useUser";
+import { useAuth } from "../../store/firebase/sdk";
 
 /**
  * アプリ内で常にサインインを要求

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useParams } from "react-router";
+import { useContext, useState } from "react";
 import { firebase } from "../../../../core/firebase/app";
 import { generateShipId } from "../../../../core/util/generate-id";
 import { EmptyShip, Ship, ShipData } from "../../../../models/ship";
+import { FleetIdContext } from "../../fleetIdContext";
 
 type SelectState =
   | { isOpen: true; currentShip: Ship | EmptyShip }
@@ -18,15 +18,15 @@ type SelectShip = [
 export const useSelectShip = (
   firestore: firebase.firestore.Firestore
 ): SelectShip => {
-  // Todo: useParams 使用箇所
-  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetId = useContext(FleetIdContext);
 
   const initialSelectState: SelectState = {
     isOpen: false,
     currentShip: null,
   };
-  const [selectState, setSelectState] =
-    useState<SelectState>(initialSelectState);
+  const [selectState, setSelectState] = useState<SelectState>(
+    initialSelectState
+  );
 
   const startSelecting = (currentShip: Ship | EmptyShip) => {
     setSelectState({ isOpen: true, currentShip });

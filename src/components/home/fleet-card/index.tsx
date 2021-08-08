@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
+import Link from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { firebase } from "../../../core/firebase/app";
 import { Fleet } from "../../../models/fleet";
 import { useFirestore } from "../../../store/firebase/sdk";
@@ -64,8 +64,8 @@ const FleetCardScreen: FC<FleetCardScreenProps> = ({
 
   return (
     <>
-      <Link to={`/fleet/${fleetData.id}`} className={classes.container}>
-        <Card variant="outlined">
+      <Link href={`/fleet/${fleetData.id}`}>
+        <Card variant="outlined" className={classes.container}>
           <CardContent className={classes.cardContent}>
             <Typography
               variant="overline"

@@ -11,24 +11,28 @@ const getDefaultThemeMode = () => {
 };
 
 const loadConfig: AtomEffect<PaletteType> = ({ setSelf }) => {
-  const themeMatchMedia = getThemeMediaQuery();
+  let unsubscribe: () => void | undefined = undefined;
 
-  const updateWithSystemTheme = () => {
-    setSelf(getDefaultThemeMode());
-  };
+  if (typeof window !== "undefined") {
+    const themeMatchMedia = getThemeMediaQuery();
 
-  AppSettings.get("theme").then((value) => {
-    if (value === "system") {
-      updateWithSystemTheme();
-      themeMatchMedia.addEventListener("change", updateWithSystemTheme);
-    } else {
-      setSelf(value);
-    }
-  });
+    const updateWithSystemTheme = () => {
+      setSelf(getDefaultThemeMode());
+    };
 
-  return () => {
-    themeMatchMedia.removeEventListener("change", updateWithSystemTheme);
-  };
+    AppSettings.get("theme").then((value) => {
+      if (value === "system") {
+        updateWithSystemTheme();
+        themeMatchMedia.addEventListener("change", updateWithSystemTheme);
+        unsubscribe = () =>
+          themeMatchMedia.removeEventListener("change", updateWithSystemTheme);
+      } else {
+        setSelf(value);
+      }
+    });
+  }
+
+  return () => unsubscribe?.();
 };
 
 export const PaletteModeState = atom<PaletteType>({
