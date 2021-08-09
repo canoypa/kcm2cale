@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/compat";
 import { atom, useRecoilValueLoadable } from "recoil";
 import { firebaseApp } from "../../core/firebase/app";
 import { getFirebaseSdkPromise } from "../../core/firebase/sdk/fetch";

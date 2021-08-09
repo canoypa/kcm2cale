@@ -1,12 +1,12 @@
-import firebase from "firebase/app";
-import "firebase/app-check";
+import firebase from "firebase/compat/app";
+import "firebase/compat/app-check";
 import {
   preloadAnalytics,
   preloadAuth,
   preloadFirestore,
 } from "../sdk/preload";
 
-export { default as firebase } from "firebase/app";
+export { default as firebase } from "firebase/compat/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcGdiIFIksZ_k7kkwtFB57n84Ri9NjkWo",
