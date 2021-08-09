@@ -12,6 +12,8 @@ parserOptions:
 extends:
   - eslint:recommended
   - google
+  - next
+  - next/core-web-vitals
   - prettier
 
 overrides:
@@ -33,23 +35,6 @@ overrides:
           argsIgnorePattern: "^_"
           ignoreRestSiblings: true
 
-  # React
-  - files: ["*.jsx", "*.tsx"]
-    extends:
-      - plugin:react/recommended
-      - plugin:react-hooks/recommended
-    settings:
-      react:
-        version: detect
-    rules:
-      # 新しい変換方法により不要
-      react/jsx-uses-react: off
-      react/react-in-jsx-scope: off
-      # props の強固な型 TypeScript で対応
-      react/prop-types: off
-      # 保留: デバッグ用表示名
-      react/display-name: off
-
   # Jest
   # expect 等々...
   - files: ["*.test.ts", "*.test.tsx"]
@@ -65,3 +50,7 @@ rules:
   require-jsdoc: 0
   # class 内の this (?)
   no-invalid-this: 0
+  # Next.js の Image コンポーネントを使用する
+  "@next/next/no-img-element": 0
+  # React のデバッグ用表示名
+  react/display-name: off

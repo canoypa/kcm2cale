@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useParams } from "react-router";
+import { useContext, useState } from "react";
 import { firebase } from "../../../../core/firebase/app";
 import { generateEquipmentId } from "../../../../core/util/generate-id";
 import {
   EquipmentData,
   ShipEquipment,
 } from "../../../../models/equipment/types";
+import { FleetIdContext } from "../../fleetIdContext";
 
 export const useSelectEquipment = (firestore: firebase.firestore.Firestore) => {
   type SelectingEquipment =
@@ -20,8 +20,7 @@ export const useSelectEquipment = (firestore: firebase.firestore.Firestore) => {
     initialSelectingState
   );
 
-  // Todo: useParams 使用箇所
-  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetId = useContext(FleetIdContext);
 
   const startSelecting = (currentEquipment: ShipEquipment) => {
     setSelecting({ isOpen: true, currentEquipment });

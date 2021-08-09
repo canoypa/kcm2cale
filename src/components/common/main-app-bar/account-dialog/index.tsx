@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, Divider } from "@material-ui/core";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC } from "react";
-import { useHistory, useLocation } from "react-router";
-import { Link } from "react-router-dom";
 import { useSigninCheck } from "../../../../hooks/firebase/auth/useSigninCheck";
 import { useAuth } from "../../../../store/firebase/sdk";
 import { LineClamp } from "../../clamp";
@@ -15,14 +15,10 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
   const auth = useAuth();
   const { data: signInCheckResult } = useSigninCheck();
 
-  const { push } = useHistory();
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
 
   const classes = useStyles();
 
-  const singIn = () => {
-    push("/signin", { continue: pathname });
-  };
   const signOut = () => {
     onClose();
 
@@ -43,9 +39,14 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
         <span>サインインしていません</span>
       </div>
       <Box display="flex" justifyContent="center">
-        <Button variant="outlined" onClick={singIn}>
-          サインイン
-        </Button>
+        <Link
+          href={{
+            pathname: "/sign-in",
+            query: { continue: pathname },
+          }}
+        >
+          <Button variant="outlined">サインイン</Button>
+        </Link>
       </Box>
     </div>
   ) : (
@@ -77,8 +78,10 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
-        <Link to="/about" className={classes.link}>
-          <Button size="small">{__APP_NAME__} について</Button>
+        <Link href="/about">
+          <Button size="small" className={classes.link}>
+            {process.env.APP_NAME} について
+          </Button>
         </Link>
       </Box>
     </Dialog>

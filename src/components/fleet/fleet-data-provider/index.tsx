@@ -1,11 +1,10 @@
-import { Box, CircularProgress } from "@material-ui/core";
-import React, { FC, ReactNode, useEffect, useRef } from "react";
-import { useParams } from "react-router";
+import React, { FC, ReactNode, useContext, useEffect, useRef } from "react";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { useFirestore } from "../../../store/firebase/sdk";
+import { FleetIdContext } from "../fleetIdContext";
 import { useEquipments, useFleet, useShips } from "../hooks";
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
   children: ReactNode;
 };
 export const FleetDataProvider: FC<Props> = ({ children }) => {
-  const { fleetId } = useParams<{ fleetId: string }>();
+  const fleetId = useContext(FleetIdContext);
 
   const firestoreLoadable = useFirestore();
   const { data: signInCheckResult } = useSigninCheck();
@@ -56,9 +55,12 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
       fDocUnsubscribe.current = fleetDocRef.onSnapshot((f) => {
         const data = f.data();
+
         if (data) {
           isOwner.current = data.owner === user.uid;
           mutateFleet(data);
+        } else {
+          mutateFleet(null);
         }
       });
 
@@ -78,19 +80,6 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
     mutateShips,
     signInCheckResult,
   ]);
-
-  if (!signInCheckResult.signedIn) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        style={{ height: "100%" }}
-      >
-        <CircularProgress size={24} />
-      </Box>
-    );
-  }
 
   return <>{children}</>;
 };

@@ -30,7 +30,7 @@ preloadAnalytics({
 preloadAuth({
   firebaseApp,
   setup: (auth) => {
-    if (!__IS_PRODUCTION__) {
+    if (process.env.NODE_ENV === "development") {
       // @ts-expect-error: 型定義にないオプション引数
       auth().useEmulator("http://localhost:9099", {
         // ページ下部に表示されるエミュレータ使用警告メッセージを表示しない
@@ -43,7 +43,7 @@ preloadAuth({
 preloadFirestore({
   firebaseApp,
   setup: (firestore) => {
-    if (!__IS_PRODUCTION__) {
+    if (process.env.NODE_ENV === "development") {
       firestore().useEmulator("localhost", 8080);
     }
   },
