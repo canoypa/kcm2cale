@@ -1,7 +1,7 @@
+import { FirestoreDataConverter } from "firebase/firestore";
 import { Fleet } from "../../models/fleet";
-import { firebase } from "../firebase/app";
 
-export const FirestoreFleetConverter: firebase.firestore.FirestoreDataConverter<Fleet> = {
+export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
     // Todo: バリデーション

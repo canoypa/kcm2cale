@@ -1,18 +1,21 @@
-import { firebase } from "../../../core/firebase/app";
+import { collection, doc, getDocs, writeBatch } from "firebase/firestore";
+import { getFirestore } from "../../../core/firebase/sdk/firestore";
 
-export const useDeleteFleet = (firestore: firebase.firestore.Firestore) => {
+export const useDeleteFleet = () => {
+  const firestore = getFirestore();
+
   return async (fleetId: string) => {
     // 各参照を取得
-    const fleeDocRef = firestore.doc(`fleets/${fleetId}`);
-    const shipsColRed = fleeDocRef.collection("ships");
-    const equipmentsColRed = fleeDocRef.collection("equipments");
+    const fleeDocRef = doc(firestore, `fleets/${fleetId}`);
+    const shipsColRed = collection(fleeDocRef, "ships");
+    const equipmentsColRed = collection(fleeDocRef, "equipments");
 
     // 艦,装備ドキュメントリストの取得
-    const { docs: shipDocs } = await shipsColRed.get();
-    const { docs: equipmentDocs } = await equipmentsColRed.get();
+    const { docs: shipDocs } = await getDocs(shipsColRed);
+    const { docs: equipmentDocs } = await getDocs(equipmentsColRed);
 
     // バッチ処理開始
-    const batch = firestore.batch();
+    const batch = writeBatch(firestore);
 
     // 各ドキュメント削除
     shipDocs.forEach((doc) => batch.delete(doc.ref));

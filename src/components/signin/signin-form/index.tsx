@@ -1,48 +1,33 @@
 import { Box, Typography } from "@material-ui/core";
+import {
+  getRedirectResult,
+  linkWithRedirect,
+  signInWithCredential,
+  User,
+} from "firebase/auth";
 import { FC } from "react";
-import { firebase } from "../../../core/firebase/app";
 import { createProvider } from "../../../core/firebase/auth";
-import { ProviderId, ProviderIdValue } from "../../../core/firebase/auth/types";
-import { useAuth } from "../../../store/firebase/sdk";
+import { ProviderId } from "../../../core/firebase/auth/types";
+import { getAuth } from "../../../core/firebase/sdk/auth";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 import { useStyles } from "./styles";
 
 type Props = {
-  anonymousUser: firebase.User;
+  anonymousUser: User;
 };
 export const SignInForm: FC<Props> = ({ anonymousUser }) => {
-  const authLoadable = useAuth();
+  const auth = getAuth();
 
-  if (authLoadable.state === "hasValue") {
-    return (
-      <SignInFormScreen
-        auth={authLoadable.contents}
-        anonymousUser={anonymousUser}
-      />
-    );
-  }
-
-  return null;
-};
-
-type SignInFormScreenProps = Props & {
-  auth: firebase.auth.Auth;
-};
-const SignInFormScreen: FC<SignInFormScreenProps> = ({
-  auth,
-  anonymousUser: user,
-}) => {
   const classes = useStyles();
 
-  const signIn = (providerId: ProviderIdValue) => {
+  const signIn = (providerId: ProviderId) => {
     const provider = createProvider(providerId);
-    user.linkWithRedirect(provider);
+    linkWithRedirect(anonymousUser, provider);
   };
 
   useDidMount(() => {
-    auth
-      .getRedirectResult()
+    getRedirectResult(auth)
       .then((result) => {
         // 正常にリンク完了
         console.log(result);
@@ -53,10 +38,10 @@ const SignInFormScreen: FC<SignInFormScreenProps> = ({
           // Todo: 匿名認証時に作成された編成がある場合移行するか尋ねる？
 
           // 現在のユーザを変数に逃がす
-          const prevUser = user;
+          const prevUser = anonymousUser;
 
           // 認証情報でサインイン
-          await auth.signInWithCredential(error.credential);
+          await signInWithCredential(auth, error.credential);
 
           // 匿名ユーザを削除
           prevUser.delete();
@@ -75,8 +60,8 @@ const SignInFormScreen: FC<SignInFormScreenProps> = ({
           <Typography variant="h4">サインイン</Typography>
         </Box>
         <div className={classes.actions}>
-          <SignInButton provider={ProviderId.Google} onClick={signIn} />
-          <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
+          <SignInButton provider={ProviderId.GOOGLE} onClick={signIn} />
+          <SignInButton provider={ProviderId.TWITTER} onClick={signIn} />
         </div>
       </div>
     </div>

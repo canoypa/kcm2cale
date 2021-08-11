@@ -1,14 +1,14 @@
 import { Button } from "@material-ui/core";
 import { FC } from "react";
 import {
-  ProviderIdValue,
+  ProviderId,
   ProviderLogoMap,
   ProviderNameMap,
 } from "../../../core/firebase/auth";
 
 type Props = {
-  provider: ProviderIdValue;
-  onClick: (provider: ProviderIdValue) => void;
+  provider: ProviderId;
+  onClick: (provider: ProviderId) => void;
 };
 export const SignInButton: FC<Props> = ({ provider, onClick }) => {
   const providerName = ProviderNameMap.get(provider);

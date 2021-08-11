@@ -4,7 +4,9 @@ import { Fleet } from "../../models/fleet";
 import { Ship } from "../../models/ship";
 
 export const useFleet = (fleetId: string) => {
-  return useSWR<Fleet>(`fleet/${fleetId}/fleet`);
+  // 存在しない編成の場合 null
+  // error boundary とか使え
+  return useSWR<Fleet | null>(`fleet/${fleetId}/fleet`);
 };
 
 export const useShips = (fleetId: string) => {

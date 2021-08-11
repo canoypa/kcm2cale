@@ -9,37 +9,14 @@ import {
 import { MoreVert } from "@material-ui/icons";
 import Link from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
-import { firebase } from "../../../core/firebase/app";
 import { Fleet } from "../../../models/fleet";
-import { useFirestore } from "../../../store/firebase/sdk";
 import { LineClamp } from "../../common/clamp";
 import { useStyles } from "./styles";
 import { useDeleteFleet } from "./useDeleteFleet";
 
 type Props = { fleetData: Fleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const firestoreLoadable = useFirestore();
-
-  if (firestoreLoadable.state === "hasValue") {
-    return (
-      <FleetCardScreen
-        firestore={firestoreLoadable.contents}
-        fleetData={fleetData}
-      />
-    );
-  }
-
-  return null;
-};
-
-type FleetCardScreenProps = Props & {
-  firestore: firebase.firestore.Firestore;
-};
-const FleetCardScreen: FC<FleetCardScreenProps> = ({
-  firestore,
-  fleetData,
-}) => {
-  const deleteFleet = useDeleteFleet(firestore);
+  const deleteFleet = useDeleteFleet();
   const classes = useStyles();
 
   const [isMenuOpen, setMenuOpen] = useState(false);

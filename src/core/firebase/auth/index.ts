@@ -1,30 +1,27 @@
+import { GoogleAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { createElement, ReactElement } from "react";
 import { GoogleLogo } from "../../../components/signin/logo/google";
 import { TwitterLogo } from "../../../components/signin/logo/twitter";
-import { firebase } from "../app";
-import { ProviderId, ProviderIdValue } from "./types";
+import { ProviderId } from "./types";
 
-export * from "./types";
+export { ProviderId } from "./types";
 
-export const ProviderNameMap: ReadonlyMap<ProviderIdValue, string> = new Map([
-  [ProviderId.Google, "Google"],
-  [ProviderId.Twitter, "Twitter"],
+export const ProviderNameMap: ReadonlyMap<ProviderId, string> = new Map([
+  [ProviderId.GOOGLE, "Google"],
+  [ProviderId.TWITTER, "Twitter"],
 ]);
 
-export const ProviderLogoMap: ReadonlyMap<
-  ProviderIdValue,
-  ReactElement
-> = new Map([
-  [ProviderId.Google, createElement(GoogleLogo)],
-  [ProviderId.Twitter, createElement(TwitterLogo)],
+export const ProviderLogoMap: ReadonlyMap<ProviderId, ReactElement> = new Map([
+  [ProviderId.GOOGLE, createElement(GoogleLogo)],
+  [ProviderId.TWITTER, createElement(TwitterLogo)],
 ]);
 
-export const createProvider = (providerId: ProviderIdValue) => {
+export const createProvider = (providerId: ProviderId) => {
   switch (providerId) {
-    case ProviderId.Google:
-      return new firebase.auth.GoogleAuthProvider();
-    case ProviderId.Twitter:
-      return new firebase.auth.TwitterAuthProvider();
+    case ProviderId.GOOGLE:
+      return new GoogleAuthProvider();
+    case ProviderId.TWITTER:
+      return new TwitterAuthProvider();
 
     default:
       throw new Error("Error: 不明なプロバイダ");

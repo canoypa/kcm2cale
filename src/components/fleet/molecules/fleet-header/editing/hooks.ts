@@ -1,10 +1,12 @@
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useContext, useMemo, useState } from "react";
-import { firebase } from "../../../../../core/firebase/app";
+import { getFirestore } from "../../../../../core/firebase/sdk/firestore";
 import { FleetType } from "../../../../../models/fleet";
 import { FleetIdContext } from "../../../fleetIdContext";
 import { useFleet } from "../../../hooks";
 
-export const useEditFleetInfo = (firestore: firebase.firestore.Firestore) => {
+export const useEditFleetInfo = () => {
+  const firestore = getFirestore();
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
 
@@ -13,13 +15,13 @@ export const useEditFleetInfo = (firestore: firebase.firestore.Firestore) => {
   const [type, setType] = useState<FleetType>(fleet?.type ?? FleetType.Normal);
 
   const submit = () => {
-    const fleetDocRef = firestore.doc(`fleets/${fleet?.id}`);
+    const fleetDocRef = doc(firestore, `fleets/${fleet?.id}`);
 
-    fleetDocRef.update({
+    updateDoc(fleetDocRef, {
       title,
       description,
       type,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
   };
 

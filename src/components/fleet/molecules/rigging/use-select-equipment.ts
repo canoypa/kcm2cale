@@ -1,5 +1,6 @@
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
-import { firebase } from "../../../../core/firebase/app";
+import { getFirestore } from "../../../../core/firebase/sdk/firestore";
 import { generateEquipmentId } from "../../../../core/util/generate-id";
 import {
   EquipmentData,
@@ -7,10 +8,12 @@ import {
 } from "../../../../models/equipment/types";
 import { FleetIdContext } from "../../fleetIdContext";
 
-export const useSelectEquipment = (firestore: firebase.firestore.Firestore) => {
+export const useSelectEquipment = () => {
   type SelectingEquipment =
     | { isOpen: true; currentEquipment: ShipEquipment }
     | { isOpen: false; currentEquipment: null };
+
+  const firestore = getFirestore();
 
   const initialSelectingState: SelectingEquipment = {
     isOpen: false,
@@ -32,19 +35,20 @@ export const useSelectEquipment = (firestore: firebase.firestore.Firestore) => {
     const { shipId, slotNo, id: equipmentId } = selecting.currentEquipment;
 
     if (equipmentId) {
-      const eqRef = firestore.doc(
+      const eqRef = doc(
+        firestore,
         `fleets/${fleetId}/equipments/${equipmentId}`
       );
 
-      eqRef.update({
+      updateDoc(eqRef, {
         id: shipId,
         no: equipmentData.no,
       });
     } else {
       const geneEqId = generateEquipmentId();
-      const eqRef = firestore.doc(`fleets/${fleetId}/equipments/${geneEqId}`);
+      const eqRef = doc(firestore, `fleets/${fleetId}/equipments/${geneEqId}`);
 
-      eqRef.set({
+      setDoc(eqRef, {
         id: geneEqId,
         shipId,
         slotNo,
