@@ -1,4 +1,5 @@
-import { firebase } from "../../core/firebase/app";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { getFirestore } from "../../core/firebase/sdk/firestore";
 import { generateFleetId } from "../../core/util/generate-id";
 import { FleetType } from "../../models/fleet";
 
@@ -13,20 +14,19 @@ const createNewFleetData = (fleetId: string, userId: string) => ({
   description: "",
   type: FleetType.Normal,
 
-  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  createdAt: serverTimestamp(),
+  updatedAt: serverTimestamp(),
 });
 
-type UseCreateNewFleet = (
-  firestore: firebase.firestore.Firestore
-) => (userId: string) => Promise<string>;
-export const useCreateNewFleet: UseCreateNewFleet = (firestore) => {
+export const useCreateNewFleet = () => {
+  const firestore = getFirestore();
+
   return async (userId: string) => {
     const newFleetId = generateFleetId();
     const newFleetData = createNewFleetData(newFleetId, userId);
 
-    const newFleetRef = firestore.doc(`fleets/${newFleetId}`);
-    await newFleetRef.set(newFleetData);
+    const newFleetRef = doc(firestore, `fleets/${newFleetId}`);
+    await setDoc(newFleetRef, newFleetData);
 
     return newFleetId;
   };

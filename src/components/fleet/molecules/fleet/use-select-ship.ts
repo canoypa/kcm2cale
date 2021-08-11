@@ -1,5 +1,6 @@
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
-import { firebase } from "../../../../core/firebase/app";
+import { getFirestore } from "../../../../core/firebase/sdk/firestore";
 import { generateShipId } from "../../../../core/util/generate-id";
 import { EmptyShip, Ship, ShipData } from "../../../../models/ship";
 import { FleetIdContext } from "../../fleetIdContext";
@@ -15,18 +16,16 @@ type SelectShip = [
     end: () => void;
   }
 ];
-export const useSelectShip = (
-  firestore: firebase.firestore.Firestore
-): SelectShip => {
+export const useSelectShip = (): SelectShip => {
+  const firestore = getFirestore();
   const fleetId = useContext(FleetIdContext);
 
   const initialSelectState: SelectState = {
     isOpen: false,
     currentShip: null,
   };
-  const [selectState, setSelectState] = useState<SelectState>(
-    initialSelectState
-  );
+  const [selectState, setSelectState] =
+    useState<SelectState>(initialSelectState);
 
   const startSelecting = (currentShip: Ship | EmptyShip) => {
     setSelectState({ isOpen: true, currentShip });
@@ -42,17 +41,17 @@ export const useSelectShip = (
     const { fleetNo, turnNo, id: shipId } = selectState.currentShip;
 
     if (shipId) {
-      const shipRef = firestore.doc(`fleets/${fleetId}/ships/${shipId}`);
+      const shipRef = doc(firestore, `fleets/${fleetId}/ships/${shipId}`);
 
-      shipRef.update({
+      updateDoc(shipRef, {
         id: shipId,
         no: shipData.no,
       });
     } else {
       const geneShipId = generateShipId();
-      const shipRef = firestore.doc(`fleets/${fleetId}/ships/${geneShipId}`);
+      const shipRef = doc(firestore, `fleets/${fleetId}/ships/${geneShipId}`);
 
-      shipRef.set({
+      setDoc(shipRef, {
         id: geneShipId,
         fleetNo,
         turnNo,

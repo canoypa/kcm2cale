@@ -1,16 +1,14 @@
+import { getAuth, User } from "firebase/auth";
 import useSWR from "swr";
-import { firebase } from "../../../core/firebase/app";
-import { useAuth } from "../../../store/firebase/sdk";
 
 export const UserStateKey = "firebase-auth-user";
 
-type UserState = firebase.User | null | undefined;
+type UserState = User | null | undefined;
 
 export const useUser = () => {
-  const auth = useAuth();
+  const auth = getAuth();
 
-  const initialData =
-    (auth.state === "hasValue" && auth.contents.currentUser) || undefined;
+  const initialData = auth.currentUser || undefined;
 
   return useSWR<UserState>(UserStateKey, { initialData });
 };

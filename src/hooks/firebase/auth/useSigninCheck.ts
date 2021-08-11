@@ -1,10 +1,10 @@
-import { firebase } from "../../../core/firebase/app";
+import { User } from "firebase/auth";
 import { useUser } from "./useUser";
 
 type SigninCheckResult =
   | {
       signedIn: true;
-      user: firebase.User;
+      user: User;
     }
   | {
       signedIn: false;

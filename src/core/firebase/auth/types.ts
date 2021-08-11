@@ -1,7 +1,4 @@
-import { EnumValues } from "../../../util/types";
+import { ProviderId as AuthProviderId } from "firebase/auth";
 
-export const ProviderId = {
-  Google: "google.com",
-  Twitter: "twitter.com",
-};
-export type ProviderIdValue = EnumValues<typeof ProviderId>;
+export const ProviderId = AuthProviderId;
+export type ProviderId = typeof ProviderId[keyof typeof ProviderId];

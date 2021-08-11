@@ -14,10 +14,8 @@ import {
 } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
 import { ChangeEvent, FC, useMemo } from "react";
-import { firebase } from "../../../../../core/firebase/app";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
 import { FleetType } from "../../../../../models/fleet";
-import { useFirestore } from "../../../../../store/firebase/sdk";
 import { useCountValid, useEditFleetInfo } from "./hooks";
 import { useStyles } from "./styles";
 
@@ -37,25 +35,6 @@ type Props = {
   onEnd: () => void;
 };
 export const Editing: FC<Props> = ({ open, onEnd }) => {
-  const firestoreLoadable = useFirestore();
-
-  if (firestoreLoadable.state === "hasValue") {
-    return (
-      <EditingScreen
-        open={open}
-        onEnd={onEnd}
-        firestore={firestoreLoadable.contents}
-      />
-    );
-  }
-
-  return null;
-};
-
-type ScreenProps = Props & {
-  firestore: firebase.firestore.Firestore;
-};
-const EditingScreen: FC<ScreenProps> = ({ open, onEnd, firestore }) => {
   const {
     title,
     description,
@@ -64,7 +43,7 @@ const EditingScreen: FC<ScreenProps> = ({ open, onEnd, firestore }) => {
     setDescription,
     setType,
     submit,
-  } = useEditFleetInfo(firestore);
+  } = useEditFleetInfo();
 
   const titleValid = useCountValid(title, TitleCharCount);
   const descriptionValid = useCountValid(description, DescriptionCharCount);

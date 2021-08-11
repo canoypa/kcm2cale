@@ -1,9 +1,10 @@
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import React, { FC, ReactNode, useContext, useEffect, useRef } from "react";
+import { getFirestore } from "../../../core/firebase/sdk/firestore";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
 import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
-import { useFirestore } from "../../../store/firebase/sdk";
 import { FleetIdContext } from "../fleetIdContext";
 import { useEquipments, useFleet, useShips } from "../hooks";
 
@@ -14,7 +15,7 @@ type Props = {
 export const FleetDataProvider: FC<Props> = ({ children }) => {
   const fleetId = useContext(FleetIdContext);
 
-  const firestoreLoadable = useFirestore();
+  const firestore = getFirestore();
   const { data: signInCheckResult } = useSigninCheck();
 
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
@@ -38,22 +39,21 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   }, [equipments, fleet, ships]);
 
   useEffect(() => {
-    if (signInCheckResult.signedIn && firestoreLoadable.state === "hasValue") {
-      const firestore = firestoreLoadable.contents;
-
+    if (signInCheckResult.signedIn) {
       const user = signInCheckResult.user;
 
-      const fleetDocRef = firestore
-        .doc(`fleets/${fleetId}`)
-        .withConverter(FirestoreFleetConverter);
-      const shipsCollRef = fleetDocRef
-        .collection("ships")
-        .withConverter(FirestoreFleetShipsConverter);
-      const equipmentsCollRef = fleetDocRef
-        .collection("equipments")
-        .withConverter(FirestoreFleetEquipmentsConverter);
+      const fleetDocRef = doc(firestore, `fleets/${fleetId}`).withConverter(
+        FirestoreFleetConverter
+      );
+      const shipsCollRef = collection(fleetDocRef, "ships").withConverter(
+        FirestoreFleetShipsConverter
+      );
+      const equipmentsCollRef = collection(
+        fleetDocRef,
+        "equipments"
+      ).withConverter(FirestoreFleetEquipmentsConverter);
 
-      fDocUnsubscribe.current = fleetDocRef.onSnapshot((f) => {
+      fDocUnsubscribe.current = onSnapshot(fleetDocRef, (f) => {
         const data = f.data();
 
         if (data) {
@@ -64,16 +64,16 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
         }
       });
 
-      sCollUnsubscribe.current = shipsCollRef.onSnapshot((s) => {
+      sCollUnsubscribe.current = onSnapshot(shipsCollRef, (s) => {
         mutateShips(s.docs.map((d) => d.data()));
       });
 
-      eCollUnsubscribe.current = equipmentsCollRef.onSnapshot((e) => {
+      eCollUnsubscribe.current = onSnapshot(equipmentsCollRef, (e) => {
         mutateEquipments(e.docs.map((d) => d.data()));
       });
     }
   }, [
-    firestoreLoadable,
+    firestore,
     fleetId,
     mutateEquipments,
     mutateFleet,

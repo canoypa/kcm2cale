@@ -1,9 +1,10 @@
 import { Box, Button, Dialog, Divider } from "@material-ui/core";
+import { signInAnonymously } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
+import { getAuth } from "../../../../core/firebase/sdk/auth";
 import { useSigninCheck } from "../../../../hooks/firebase/auth/useSigninCheck";
-import { useAuth } from "../../../../store/firebase/sdk";
 import { LineClamp } from "../../clamp";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
@@ -12,7 +13,7 @@ type AccountHeaderProps = {
   onClose: () => void;
 };
 const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
-  const auth = useAuth();
+  const auth = getAuth();
   const { data: signInCheckResult } = useSigninCheck();
 
   const { pathname } = useRouter();
@@ -21,13 +22,10 @@ const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
 
   const signOut = () => {
     onClose();
-
-    if (auth.state === "hasValue") {
-      auth.contents.signInAnonymously();
-    }
+    signInAnonymously(auth);
   };
 
-  if (!signInCheckResult.signedIn || auth.state !== "hasValue") {
+  if (!signInCheckResult.signedIn) {
     return null;
   }
 

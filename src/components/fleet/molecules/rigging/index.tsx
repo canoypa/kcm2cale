@@ -1,12 +1,10 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
-import { firebase } from "../../../../core/firebase/app";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
 import { ShipEquipment } from "../../../../models/equipment";
 import { Ship } from "../../../../models/ship";
-import { useFirestore } from "../../../../store/firebase/sdk";
 import { SelectEquipmentDialog } from "../../templates/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useStyles } from "./styles";
@@ -16,25 +14,7 @@ type Props = {
   fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
-  const firestoreLoadable = useFirestore();
-
-  if (firestoreLoadable.state === "hasValue") {
-    return (
-      <RiggingScreen
-        firestore={firestoreLoadable.contents}
-        fleetPlace={fleetPlace}
-      />
-    );
-  }
-
-  return null;
-};
-
-type RiggingScreenProps = Props & {
-  firestore: firebase.firestore.Firestore;
-};
-const RiggingScreen: FC<RiggingScreenProps> = ({ firestore, fleetPlace }) => {
-  const [isOpenDialog, selecting] = useSelectEquipment(firestore);
+  const [isOpenDialog, selecting] = useSelectEquipment();
   const { shipEquipments, isCanAddNewEquipment, newEquipmentPlace } =
     useRigging(fleetPlace);
 

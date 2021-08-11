@@ -1,10 +1,16 @@
 import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
+import {
+  collection,
+  onSnapshot,
+  query,
+  Unsubscribe,
+  where,
+} from "firebase/firestore";
 import { FC, useEffect } from "react";
-import { firebase } from "../../../core/firebase/app";
+import { getFirestore } from "../../../core/firebase/sdk/firestore";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { Fleet } from "../../../models/fleet";
-import { useFirestore } from "../../../store/firebase/sdk";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
 import { useFleetList } from "../hooks";
@@ -18,32 +24,27 @@ const checkExistFleetList = (fleets: Fleet[]) => {
 };
 
 export const FleetListContainer: FC = () => {
+  const firestore = getFirestore();
+
   const { data: signInCheckResult } = useSigninCheck();
-
-  const firestoreLoadable = useFirestore();
-
   const { data: fleetList, mutate: mutateFleetList } = useFleetList();
 
   const classes = useStyles();
 
   useEffect(() => {
-    let unsubscribe: firebase.Unsubscribe | undefined = undefined;
+    let unsubscribe: Unsubscribe | undefined = undefined;
 
-    if (firestoreLoadable.state === "hasValue") {
-      const firestore = firestoreLoadable.contents;
+    const fleetListRef = query(
+      collection(firestore, "fleets"),
+      where("owner", "==", signInCheckResult.user?.uid)
+    ).withConverter(FirestoreFleetConverter);
 
-      const fleetListRef = firestore
-        .collection("fleets")
-        .where("owner", "==", signInCheckResult.user?.uid)
-        .withConverter(FirestoreFleetConverter);
-
-      unsubscribe = fleetListRef.onSnapshot((snap) => {
-        mutateFleetList(snap.docs.map((d) => d.data()));
-      });
-    }
+    unsubscribe = onSnapshot(fleetListRef, (snap) => {
+      mutateFleetList(snap.docs.map((d) => d.data()));
+    });
 
     return () => unsubscribe?.();
-  }, [firestoreLoadable, mutateFleetList, signInCheckResult.user]);
+  }, [firestore, mutateFleetList, signInCheckResult.user]);
 
   if (!fleetList) {
     return (

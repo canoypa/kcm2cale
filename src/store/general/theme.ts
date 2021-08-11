@@ -11,7 +11,7 @@ const getDefaultThemeMode = () => {
 };
 
 const loadConfig: AtomEffect<PaletteType> = ({ setSelf }) => {
-  let unsubscribe: () => void | undefined = undefined;
+  let unsubscribe: (() => void) | undefined = undefined;
 
   if (typeof window !== "undefined") {
     const themeMatchMedia = getThemeMediaQuery();
