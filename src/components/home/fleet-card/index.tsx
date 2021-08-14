@@ -7,26 +7,21 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
-import { FC, MouseEvent, useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { useInitFleet } from "../../../core/initialize-fleet";
-import { LocalDatabase } from "../../../core/persistence/local-database";
-import { LocalFleetDataV1 } from "../../../core/persistence/types";
+import Link from "next/link";
+import { FC, MouseEvent, useRef, useState } from "react";
+import { Fleet } from "../../../models/fleet";
 import { LineClamp } from "../../common/clamp";
-import { FleetListContext } from "../fleet-list";
 import { useStyles } from "./styles";
+import { useDeleteFleet } from "./useDeleteFleet";
 
-type Props = { fleetData: LocalFleetDataV1 };
+type Props = { fleetData: Fleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const { reloadFleet } = useContext(FleetListContext);
+  const deleteFleet = useDeleteFleet();
+  const classes = useStyles();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const initFleet = useInitFleet();
-
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
-
-  const classes = useStyles();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
@@ -39,24 +34,15 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const deleteFleet = async () => {
-    await LocalDatabase.deleteFleet(fleetData.id);
-    reloadFleet();
-  };
-
-  const openFleet = () => {
-    // 編成初期化
-    initFleet(fleetData);
+  const handlerDeleteFleet = () => {
+    closeMenu();
+    deleteFleet(fleetData.id);
   };
 
   return (
     <>
-      <Link
-        to={`/fleet/${fleetData.id}`}
-        className={classes.container}
-        onClick={openFleet}
-      >
-        <Card variant="outlined">
+      <Link href={`/fleet/${fleetData.id}`}>
+        <Card variant="outlined" className={classes.container}>
           <CardContent className={classes.cardContent}>
             <Typography
               variant="overline"
@@ -93,7 +79,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
         onClose={closeMenu}
         anchorEl={menuAnchorEl.current}
       >
-        <MenuItem onClick={deleteFleet}>削除</MenuItem>
+        <MenuItem onClick={handlerDeleteFleet}>削除</MenuItem>
       </Menu>
     </>
   );

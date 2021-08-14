@@ -1,70 +1,46 @@
-import { FC, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useLocalPersistence } from "../../core/persistence/fleet-state-observer";
-import { FleetIdState, FleetNameState } from "../../store/organize/info";
-import { useDidMount, useWillUnmount } from "../../util/hooks/lifecycle";
-import { useSetPageTitle } from "../../util/hooks/set-page-title";
+import { Box } from "@material-ui/core";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { FC, useContext } from "react";
 import { LowerAppBar } from "../common/lower-app-bar";
-import { useInitializeCallback } from "./hooks";
+import { FleetIdContext } from "./fleetIdContext";
+import { useFleet } from "./hooks";
 import { Organize } from "./organisms/organize";
 
-const LoadFleet: FC = () => {
-  const initFleet = useInitializeCallback();
+export const Fleet: FC = () => {
+  const { push } = useRouter();
 
-  const { fleetId } = useParams<{ fleetId: string }>();
-  const isExistFleet = useRecoilValue(FleetIdState);
-
-  useDidMount(() => {
-    // 直アクセスの場合編成初期化
-    if (!isExistFleet) initFleet({ fleetId });
-  });
-
-  return null;
-};
-
-const Fleet: FC = () => {
-  const { push } = useHistory();
-  const { justSaveNow } = useLocalPersistence();
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   const backToTopPage = () => {
     push("/");
   };
 
-  useWillUnmount(() => {
-    justSaveNow();
-  });
+  const isExistFleet = fleet !== null;
 
-  return (
+  // Todo: エラー画面を表示
+  return isExistFleet ? (
     <>
-      <div>
-        <LowerAppBar onNavClick={backToTopPage} />
-        <Organize />
-      </div>
+      <Head>
+        <title>
+          {fleet
+            ? `${fleet.title || "無題の編成"} - ${process.env.APP_NAME}`
+            : process.env.APP_NAME}
+        </title>
+      </Head>
+
+      <LowerAppBar onNavClick={backToTopPage} />
+      <Organize />
     </>
+  ) : (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "100vh" }}
+    >
+      <div>リクエストされた編成は存在しません</div>
+    </Box>
   );
 };
-
-export const FleetPage: FC = () => {
-  const pageViewLog = usePageViewLog();
-  const setPageTitle = useSetPageTitle();
-
-  const isExistFleet = useRecoilValue(FleetIdState);
-  const fleetTitle = useRecoilValue(FleetNameState);
-
-  useDidMount(() => {
-    pageViewLog("Fleet View");
-  });
-
-  useEffect(() => {
-    setPageTitle(`${fleetTitle || "無題の編成"}`);
-
-    // タイトル変更時にのみ実行
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetTitle]);
-
-  return isExistFleet ? <Fleet /> : <LoadFleet />;
-};
-
-export default FleetPage;

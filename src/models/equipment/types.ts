@@ -1,5 +1,37 @@
 import { EnumValues } from "../../util/types";
-import { ShipTypeValues } from "../ship";
+import { ShipId } from "../ship";
+
+export type SlotNo = number;
+export type EquipmentId = string;
+
+/**
+ * 装備の配備位置
+ */
+export type RiggingPlace = {
+  shipId: ShipId;
+  slotNo: SlotNo;
+};
+
+/**
+ * 未配備位置の装備データ
+ */
+export type EmptyEquipment = RiggingPlace & {
+  id: null;
+  no: null;
+};
+
+/**
+ * 配備済み位置の装備データ
+ */
+export type Equipment = RiggingPlace & {
+  id: string;
+  no: number;
+};
+
+/**
+ * 装備データ
+ */
+export type ShipEquipment = Equipment | EmptyEquipment;
 
 /**
  * 装備の種類
@@ -128,45 +160,6 @@ export const EquipmentType = {
   LargeFlyingBoat: 51,
 } as const;
 export type EquipmentTypeValues = EnumValues<typeof EquipmentType>;
-
-export const EquipmentRange = { VeryLong: 0, Long: 1, Medium: 2, Short: 3 };
-export type EquipmentRangeValues = EnumValues<typeof EquipmentRange>;
-
-export type CurrentEquipmentStatus = Omit<
-  EquipmentStatus,
-  "validProficiency" | "validImprovement"
-> &
-  Partial<{
-    proficiency: number;
-    improvement: number;
-  }>;
-
-export type EquipmentStatus = Partial<{
-  power: number;
-  torpedo: number;
-  aa: number;
-  asw: number;
-  bombing: number;
-
-  armour: number;
-  evasion: number;
-  los: number;
-  accuracy: number;
-  range: EquipmentRangeValues;
-
-  antiBomb: number;
-  interceptor: number;
-  combatRadius: number;
-}> & {
-  validProficiency: boolean;
-  validImprovement: boolean;
-};
-
-export type Fittable = {
-  type: ShipTypeValues[];
-  include?: string[];
-  exclude?: string[];
-};
 
 export type EquipmentData = {
   no: number;

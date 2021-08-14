@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { useContext, useState } from "react";
+import { getFirestore } from "../../../../core/firebase/sdk/firestore";
+import { generateEquipmentId } from "../../../../core/util/generate-id";
 import {
-  useRemoveEquipment,
-  useSetEquipment,
-} from "../../../../hooks/organize/equipment";
-import { EquipmentData } from "../../../../models/equipment/types";
-import { ShipEquipment } from "../../../../store/organize/equipments";
+  EquipmentData,
+  ShipEquipment,
+} from "../../../../models/equipment/types";
+import { FleetIdContext } from "../../fleetIdContext";
 
 export const useSelectEquipment = () => {
   type SelectingEquipment =
     | { isOpen: true; currentEquipment: ShipEquipment }
     | { isOpen: false; currentEquipment: null };
+
+  const firestore = getFirestore();
 
   const initialSelectingState: SelectingEquipment = {
     isOpen: false,
@@ -19,8 +23,7 @@ export const useSelectEquipment = () => {
     initialSelectingState
   );
 
-  const setEquipment = useSetEquipment();
-  const removeEquipment = useRemoveEquipment();
+  const fleetId = useContext(FleetIdContext);
 
   const startSelecting = (currentEquipment: ShipEquipment) => {
     setSelecting({ isOpen: true, currentEquipment });
@@ -29,10 +32,29 @@ export const useSelectEquipment = () => {
   const endSelecting = (equipmentData: EquipmentData) => {
     if (!selecting.isOpen) throw new Error("Error: start 未実行");
 
-    const { shipId, slotNo, equipmentId } = selecting.currentEquipment;
+    const { shipId, slotNo, id: equipmentId } = selecting.currentEquipment;
 
-    setEquipment(shipId, slotNo, equipmentData);
-    if (equipmentId) removeEquipment(equipmentId);
+    if (equipmentId) {
+      const eqRef = doc(
+        firestore,
+        `fleets/${fleetId}/equipments/${equipmentId}`
+      );
+
+      updateDoc(eqRef, {
+        id: shipId,
+        no: equipmentData.no,
+      });
+    } else {
+      const geneEqId = generateEquipmentId();
+      const eqRef = doc(firestore, `fleets/${fleetId}/equipments/${geneEqId}`);
+
+      setDoc(eqRef, {
+        id: geneEqId,
+        shipId,
+        slotNo,
+        no: equipmentData.no,
+      });
+    }
 
     setSelecting(initialSelectingState);
   };

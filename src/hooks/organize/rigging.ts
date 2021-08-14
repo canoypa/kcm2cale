@@ -1,45 +1,51 @@
+import { useContext } from "react";
 import { selectorFamily, useRecoilValue } from "recoil";
-import {
-  EquipmentId,
-  RiggingState,
-  SlotNo,
-} from "../../store/organize/equipments";
-import { DeployedFleetShip, ShipId } from "../../store/organize/ships";
+import { FleetIdContext } from "../../components/fleet/fleetIdContext";
+import { useEquipments } from "../../components/fleet/hooks";
+import { EmptyEquipment, Equipment } from "../../models/equipment";
+import { Ship } from "../../models/ship";
 
 const DUMMY_SLOT_SIZE = 4;
 
 const slotSizeSelector = selectorFamily({
   key: "ShipSlotSize",
-  get: (_fleetPlace: DeployedFleetShip) => () => DUMMY_SLOT_SIZE,
+  get: (_fleetPlace: Ship) => () => DUMMY_SLOT_SIZE,
   // get(ShipsState).get(fleetPlace)?.status.slotSize,
 });
 
 type Rigging = {
-  shipEquipments: Array<{
-    shipId: ShipId;
-    slotNo: SlotNo;
-    equipmentId: EquipmentId;
-  }>;
+  shipEquipments: Equipment[];
   isCanAddNewEquipment: boolean;
-  newEquipmentSlotNo: number;
+  newEquipmentPlace: EmptyEquipment;
 };
-export const useRigging = (fleetPlace: DeployedFleetShip): Rigging => {
+export const useRigging = (fleetPlace: Ship): Rigging => {
   const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
-  const shipEquipmentsState = useRecoilValue(RiggingState);
-  const shipEquipments = shipEquipmentsState
-    .filter((v) => v.shipId === fleetPlace.shipId)
-    .sort((a, b) => a.slotNo - b.slotNo);
+  const fleetId = useContext(FleetIdContext);
+  const { data: equipments } = useEquipments(fleetId);
+
+  const shipEquipments = equipments
+    ? equipments
+        .filter((v) => v.shipId === fleetPlace.id)
+        .sort((a, b) => a.slotNo - b.slotNo)
+    : [];
 
   const equippedLength = shipEquipments.length;
 
   const isCanAddNewEquipment = shipSlotSize > equippedLength;
-  const newEquipmentSlotNo = equippedLength;
+  const newEqSlotNo = equippedLength;
+
+  const newEquipmentPlace = {
+    shipId: fleetPlace.id,
+    slotNo: newEqSlotNo,
+    id: null,
+    no: null,
+  };
 
   return {
     shipEquipments,
     isCanAddNewEquipment,
-    newEquipmentSlotNo,
+    newEquipmentPlace,
   };
 };

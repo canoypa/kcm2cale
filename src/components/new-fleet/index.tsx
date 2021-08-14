@@ -1,33 +1,24 @@
-import { FC, useEffect, useRef } from "react";
-import { useHistory } from "react-router";
-import { useRecoilValue } from "recoil";
-import { useInitFleet } from "../../core/initialize-fleet";
-import { FleetIdState } from "../../store/organize/info";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
+import { useUser } from "../../hooks/firebase/auth/useUser";
+import { useCreateNewFleet } from "./useCreateNewFleet";
 
-// 編成新規作成
-// id を生成してリダイレクト
+// 編成を新規作成してリダイレクト
 export const NewFleet: FC = () => {
-  const { replace } = useHistory();
-  const fleetId = useRecoilValue(FleetIdState);
+  const { replace } = useRouter();
+  const createNewFleet = useCreateNewFleet();
 
-  const initFleet = useInitFleet();
-
-  const preFleetId = useRef(fleetId);
+  const { data: user } = useUser();
 
   useEffect(() => {
-    if (fleetId === preFleetId.current) {
-      // 初回レンダー時
-      initFleet(null);
-    } else {
-      // fleetId 更新による再レンダー時
-      replace(`/fleet/${fleetId}`);
+    // 未認証の場合スキップ
+    if (user) {
+      createNewFleet(user.uid).then((newFleetId) => {
+        replace(`/fleet/${newFleetId}`);
+      });
     }
-
-    // initFleet は不要
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fleetId]);
+  }, [user]);
 
   return null;
 };
-
 export default NewFleet;
