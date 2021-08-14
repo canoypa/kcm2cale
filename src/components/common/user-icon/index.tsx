@@ -17,14 +17,8 @@ const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
     return <Skeleton variant="circle" width={size} height={size} />;
   }
 
-  const user = signInCheckResult.user;
   return (
-    <Avatar
-      src={user.photoURL ?? undefined}
-      alt={user.displayName ?? undefined}
-      className={classes.root}
-      style={{ width: size, height: size }}
-    >
+    <Avatar className={classes.root} style={{ width: size, height: size }}>
       <AccountCircleOutlined />
     </Avatar>
   );
