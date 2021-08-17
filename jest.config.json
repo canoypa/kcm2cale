@@ -1,4 +1,0 @@
-{
-  "moduleFileExtensions": ["ts", "tsx", "js"],
-  "testMatch": ["**/(tests|src)/**/*.test.ts"]
-}
