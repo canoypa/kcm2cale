@@ -4,12 +4,13 @@ import Head from "next/head";
 import { MainAppBar } from "../components/common/main-app-bar";
 import { CreateNewFleet } from "../components/home/create-new-fleet";
 import { FleetListArea } from "../components/home/fleet-list-area";
+import { APP_NAME } from "../core/env";
 
 const HomePage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>{process.env.APP_NAME}</title>
+        <title>{APP_NAME}</title>
         <meta
           name="description"
           content="艦隊これくしょん向けの編成管理アプリ"

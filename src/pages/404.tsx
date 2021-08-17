@@ -4,12 +4,13 @@ import Head from "next/head";
 import { Message } from "../components/404/Message";
 import { SadFace } from "../components/404/SadFace";
 import { TopPageLink } from "../components/404/TopPageLink";
+import { APP_NAME } from "../core/env";
 
 const NotFoundPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>404 Not Found - {process.env.APP_NAME}</title>
+        <title>404 Not Found - {APP_NAME}</title>
       </Head>
 
       <Box display="flex" justifyContent="center" padding={3}>
