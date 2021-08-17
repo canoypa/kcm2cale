@@ -1,8 +1,8 @@
-import { Box } from "@material-ui/core";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FC, useContext } from "react";
 import { LowerAppBar } from "../common/lower-app-bar";
+import { FleetError } from "./error";
 import { FleetIdContext } from "./fleetIdContext";
 import { useFleet } from "./hooks";
 import { Organize } from "./organisms/organize";
@@ -34,13 +34,6 @@ export const Fleet: FC = () => {
       <Organize />
     </>
   ) : (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      style={{ height: "100vh" }}
-    >
-      <div>リクエストされた編成は存在しません</div>
-    </Box>
+    <FleetError />
   );
 };
