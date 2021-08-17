@@ -5,7 +5,7 @@ const { compilerOptions } = require(resolve("tsconfig.json"));
 
 module.exports = {
   transform: {
-    "\\.[jt]sx?$": "./scripts/test/babel",
+    "\\.[jt]sx?$": ["babel-jest", { presets: ["next/babel"] }],
   },
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
