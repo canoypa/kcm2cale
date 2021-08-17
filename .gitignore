@@ -1,22 +1,22 @@
-# firebase
+# Private Files
+.private
+
+# Build
+/out/
+
+# Debug
+/debug/
+
+# Firebase
 /.firebase
 /.firebaserc
 /firestore.indexes.json
 /firestore.rules
 
-# Debug
-/debug/
-
-# Build
-/build/
-/report/
-
 # VSCode
 /.vscode/launch.json
 /.vscode/tasks.json
 
-# private
-.private
 
 # Logs
 logs
