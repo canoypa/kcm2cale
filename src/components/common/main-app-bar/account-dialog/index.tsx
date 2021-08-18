@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, Divider } from "@material-ui/core";
 import Link from "next/link";
 import { FC } from "react";
+import { APP_NAME } from "../../../../core/env";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
 
@@ -33,7 +34,7 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
       <Box paddingY={1} paddingX={2}>
         <Link href="/about">
           <Button size="small" className={classes.link}>
-            {process.env.APP_NAME} について
+            {APP_NAME} について
           </Button>
         </Link>
       </Box>

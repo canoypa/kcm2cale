@@ -1,18 +1,19 @@
 import { Box } from "@material-ui/core";
 import { FC } from "react";
+import { APP_NAME, APP_VERSION } from "../../core/env";
 import { ExternalLink } from "../common/ExternalLink";
 
 export const Intro: FC = () => {
   return (
     <section>
-      <h1>{process.env.APP_NAME}</h1>
+      <h1>{APP_NAME}</h1>
 
       <Box display="flex" gridColumnGap={8} flexWrap="wrap">
         <ExternalLink
-          href={`https://github.com/canoypa/kcm2cale/releases/tag/v${process.env.APP_VERSION}`}
+          href={`https://github.com/canoypa/kcm2cale/releases/tag/v${APP_VERSION}`}
         >
           <img
-            src={`https://img.shields.io/badge/Release-v${process.env.APP_VERSION}-blue`}
+            src={`https://img.shields.io/badge/Release-v${APP_VERSION}-blue`}
           />
         </ExternalLink>
         <ExternalLink href="https://github.com/canoypa/kcm2cale">
@@ -23,10 +24,7 @@ export const Intro: FC = () => {
           <img src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
         </ExternalLink>
       </Box>
-      <p>
-        {process.env.APP_NAME}{" "}
-        は、ゲーム「艦隊これくしょん」向けの編成管理ツールです。
-      </p>
+      <p>{APP_NAME} は、ゲーム「艦隊これくしょん」向けの編成管理ツールです。</p>
     </section>
   );
 };

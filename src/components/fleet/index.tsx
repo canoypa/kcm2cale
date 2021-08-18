@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FC, useContext } from "react";
+import { APP_NAME } from "../../core/env";
 import { LowerAppBar } from "../common/lower-app-bar";
 import { FleetError } from "./error";
 import { FleetIdContext } from "./fleetIdContext";
@@ -24,9 +25,7 @@ export const Fleet: FC = () => {
     <>
       <Head>
         <title>
-          {fleet
-            ? `${fleet.title || "無題の編成"} - ${process.env.APP_NAME}`
-            : process.env.APP_NAME}
+          {fleet ? `${fleet.title || "無題の編成"} - ${APP_NAME}` : APP_NAME}
         </title>
       </Head>
 
