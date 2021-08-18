@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { selectorFamily, useRecoilValue } from "recoil";
 import { FleetIdContext } from "../../components/fleet/fleetIdContext";
 import { useEquipments } from "../../components/fleet/hooks";
 import { EmptyEquipment, Equipment } from "../../models/equipment";
@@ -7,19 +6,13 @@ import { Ship } from "../../models/ship";
 
 const DUMMY_SLOT_SIZE = 4;
 
-const slotSizeSelector = selectorFamily({
-  key: "ShipSlotSize",
-  get: (_fleetPlace: Ship) => () => DUMMY_SLOT_SIZE,
-  // get(ShipsState).get(fleetPlace)?.status.slotSize,
-});
-
 type Rigging = {
   shipEquipments: Equipment[];
   isCanAddNewEquipment: boolean;
   newEquipmentPlace: EmptyEquipment;
 };
 export const useRigging = (fleetPlace: Ship): Rigging => {
-  const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
+  const shipSlotSize = DUMMY_SLOT_SIZE;
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
   const fleetId = useContext(FleetIdContext);
