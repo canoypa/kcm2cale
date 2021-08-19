@@ -3,7 +3,7 @@ import { Add } from "@material-ui/icons";
 import { FC, useContext } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { EmptyShip, Ship } from "../../../../models/ship";
-import { SwapShipContext } from "../fleet/contexts";
+import { SwapShipContext } from "../ShipsList/contexts";
 
 type Props = {
   fleetPlace: Ship | EmptyShip;

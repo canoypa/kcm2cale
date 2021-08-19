@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Fleet } from "../../components/fleet";
-import { FleetDataProvider } from "../../components/fleet/fleet-data-provider";
-import { FleetIdContext } from "../../components/fleet/fleetIdContext";
+import { FleetDataProvider } from "~/components/fleet/fleet-data-provider";
+import { FleetExistRoute } from "~/components/fleet/FleetExistRoute";
+import { FleetIdContext } from "~/components/fleet/fleetIdContext";
 
 const FleetPage: NextPage = () => {
   const { query } = useRouter();
@@ -15,7 +15,7 @@ const FleetPage: NextPage = () => {
     <>
       <FleetIdContext.Provider value={fleetId}>
         <FleetDataProvider>
-          <Fleet />
+          <FleetExistRoute />
         </FleetDataProvider>
       </FleetIdContext.Provider>
     </>

@@ -29,7 +29,7 @@ const FleetSkeleton: FC = () => {
   );
 };
 
-export const Fleet: FC = () => {
+export const ShipsList: FC = () => {
   // 選択中の艦隊
   const [activeFleetNo, setActiveFleetNo] = useState<FleetNo>(0);
 

@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { ShipsData } from "../../../../../data/ship";
 import { Ship } from "../../../../../models/ship";
-import { SwapShipContext } from "../../fleet/contexts";
+import { SwapShipContext } from "../../ShipsList/contexts";
 import { useStyles } from "./styles";
 
 const DUMMY_LEVEL = 99;
