@@ -12,7 +12,7 @@ import { EmptyShip, FleetNo, Ship } from "../../../../models/ship";
 import { range } from "../../../../util/range";
 import { FleetIdContext } from "../../fleetIdContext";
 import { useFleet } from "../../hooks";
-import { SelectShipDialog } from "../../templates/select-ship";
+import { SelectShipDialog } from "../../SelectShipDialog";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
 import { SwapShipContext } from "./contexts";

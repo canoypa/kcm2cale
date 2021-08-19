@@ -1,6 +1,6 @@
 import { Reducer, useCallback, useReducer } from "react";
-import { SearchShipRequest } from "../../../../../core/search/ship";
-import { ShipTypeValues } from "../../../../../models/ship";
+import { SearchShipRequest } from "../../../../core/search/ship";
+import { ShipTypeValues } from "../../../../models/ship";
 
 type SearchQuery = {
   query: SearchShipRequest;

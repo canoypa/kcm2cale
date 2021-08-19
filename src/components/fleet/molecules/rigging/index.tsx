@@ -5,7 +5,7 @@ import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
 import { ShipEquipment } from "../../../../models/equipment";
 import { Ship } from "../../../../models/ship";
-import { SelectEquipmentDialog } from "../../templates/select-equipment";
+import { SelectEquipmentDialog } from "../../SelectEquipmentDialog";
 import { EquipmentList } from "../equipments-list";
 import { useStyles } from "./styles";
 import { useSelectEquipment } from "./use-select-equipment";
