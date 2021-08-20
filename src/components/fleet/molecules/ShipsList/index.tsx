@@ -8,16 +8,13 @@ import {
   useFleetManager,
   useIsFleetOwner,
 } from "../../../../hooks/organize/fleet";
-import { EmptyShip, FleetNo, Ship } from "../../../../models/ship";
+import { FleetNo } from "../../../../models/ship";
 import { range } from "../../../../util/range";
 import { FleetIdContext } from "../../fleetIdContext";
 import { useFleet } from "../../hooks";
-import { SelectShipDialog } from "../../SelectShipDialog";
 import { ShipItem } from "../ship-item";
 import { ShipSkeleton } from "../ship-skeleton";
-import { SwapShipContext } from "./contexts";
 import { ToggleFleet } from "./toggle-fleet";
-import { useSelectShip } from "./use-select-ship";
 
 const FleetSkeleton: FC = () => {
   return (
@@ -40,67 +37,52 @@ export const ShipsList: FC = () => {
 
   const fleet = useFleetManager(isCombined ? activeFleetNo : 0);
 
-  const [isSelectOpen, selecting] = useSelectShip();
-
-  const swapShipContextValue = (currentShip: Ship | EmptyShip) => {
-    selecting.start(currentShip);
-  };
-
   return (
-    <>
-      <div>
-        {isCombined && (
-          <Box marginBottom={2}>
-            <ToggleFleet value={activeFleetNo} onChange={setActiveFleetNo} />
-          </Box>
-        )}
-        <SwapShipContext.Provider value={swapShipContextValue}>
-          {fleet ? (
-            isOwner ? (
-              <List
-                values={fleet.fleet}
-                onChange={({ oldIndex, newIndex }) => {
-                  fleet.sort(oldIndex, newIndex);
-                }}
-                renderList={({ children, props }) => (
-                  <Box display="flex" flexDirection="column" {...props}>
-                    {children}
-                  </Box>
-                )}
-                renderItem={({ value: fleetPlace, props }) => (
-                  <div {...props}>
-                    {isShipPlaced(fleetPlace) ? (
-                      <ShipItem fleetPlace={fleetPlace} />
-                    ) : (
-                      <ShipSkeleton fleetPlace={fleetPlace} />
-                    )}
-                  </div>
-                )}
-              />
-            ) : (
-              <Box display="flex" flexDirection="column">
-                {fleet.fleet.map((fleetPlace) => (
-                  <div key={fleetPlace.turnNo}>
-                    {isShipPlaced(fleetPlace) ? (
-                      <ShipItem fleetPlace={fleetPlace} />
-                    ) : (
-                      <ShipSkeleton fleetPlace={fleetPlace} />
-                    )}
-                  </div>
-                ))}
-              </Box>
-            )
-          ) : (
-            <FleetSkeleton />
-          )}
-        </SwapShipContext.Provider>
-      </div>
+    <div>
+      {isCombined && (
+        <Box marginBottom={2}>
+          <ToggleFleet value={activeFleetNo} onChange={setActiveFleetNo} />
+        </Box>
+      )}
 
-      <SelectShipDialog
-        open={isSelectOpen}
-        onSelect={selecting.onSelect}
-        onClose={selecting.end}
-      />
-    </>
+      {fleet ? (
+        isOwner ? (
+          <List
+            values={fleet.fleet}
+            onChange={({ oldIndex, newIndex }) => {
+              fleet.sort(oldIndex, newIndex);
+            }}
+            renderList={({ children, props }) => (
+              <Box display="flex" flexDirection="column" {...props}>
+                {children}
+              </Box>
+            )}
+            renderItem={({ value: fleetPlace, props }) => (
+              <div {...props}>
+                {isShipPlaced(fleetPlace) ? (
+                  <ShipItem fleetPlace={fleetPlace} />
+                ) : (
+                  <ShipSkeleton fleetPlace={fleetPlace} />
+                )}
+              </div>
+            )}
+          />
+        ) : (
+          <Box display="flex" flexDirection="column">
+            {fleet.fleet.map((fleetPlace) => (
+              <div key={fleetPlace.turnNo}>
+                {isShipPlaced(fleetPlace) ? (
+                  <ShipItem fleetPlace={fleetPlace} />
+                ) : (
+                  <ShipSkeleton fleetPlace={fleetPlace} />
+                )}
+              </div>
+            ))}
+          </Box>
+        )
+      ) : (
+        <FleetSkeleton />
+      )}
+    </div>
   );
 };

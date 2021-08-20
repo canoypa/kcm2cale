@@ -6,27 +6,31 @@ import {
   Typography,
 } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
-import { FC, useCallback, VFC } from "react";
+import { FC, useCallback } from "react";
+import { useRecoilState } from "recoil";
 import {
   shipGroupFilter,
   ShipSearchGroupMap,
   ShipSearchGroupValues,
 } from "~/core/filters/ship";
 import { ShipSearch } from "~/core/search/ship";
-import { ShipData } from "~/models/ship";
+import { FleetShip, ShipData } from "~/models/ship";
 import { OrganizeSelectSearchRenderer } from "../select-fleet-item/search-renderer";
-import { useSearchQuery } from "./hooks";
+import { DefaultSelectShipState, SelectShipAtom } from "../store/select-ship";
+import { useSearchQuery } from "./hooks/search-query";
+import { useSetShip } from "./hooks/set-ship";
 import { SearchShipsList } from "./search-ships-list";
 
 const isShipGroupValue = (n: number): n is ShipSearchGroupValues =>
   n >= 0 && n <= 8;
 
 type SelectShipProps = {
-  onSelect: (shipData: ShipData) => void;
+  target: FleetShip;
   onClose: () => void;
 };
-const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
+const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
+  const setShip = useSetShip();
 
   const handler = {
     filterChange: useCallback(
@@ -46,9 +50,10 @@ const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
 
     onSelect: useCallback(
       (shipData: ShipData) => {
-        onSelect(shipData);
+        setShip(target, shipData);
+        onClose();
       },
-      [onSelect]
+      [onClose, setShip, target]
     ),
   };
 
@@ -74,19 +79,18 @@ const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
   );
 };
 
-type SelectShipDialogProps = {
-  open: boolean;
-  onSelect: (shipData: ShipData) => void;
-  onClose: () => void;
-};
-export const SelectShipDialog: VFC<SelectShipDialogProps> = ({
-  open,
-  onSelect,
-  onClose,
-}) => {
+export const SelectShipDialog: FC = () => {
+  const [selectState, setSelectState] = useRecoilState(SelectShipAtom);
+
+  const onClose = useCallback(() => {
+    setSelectState(DefaultSelectShipState);
+  }, [setSelectState]);
+
   return (
-    <Dialog fullScreen open={open} onClose={onClose}>
-      <SelectShip onSelect={onSelect} onClose={onClose} />
+    <Dialog fullScreen open={selectState.open} onClose={onClose}>
+      {selectState.open && (
+        <SelectShip target={selectState.target} onClose={onClose} />
+      )}
     </Dialog>
   );
 };

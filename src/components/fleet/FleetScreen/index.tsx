@@ -5,6 +5,8 @@ import { LowerAppBar } from "~/components/common/lower-app-bar";
 import { APP_NAME } from "~/core/env";
 import { Fleet } from "~/models/fleet";
 import { Organize } from "../organisms/organize";
+import { SelectEquipmentDialog } from "../SelectEquipmentDialog";
+import { SelectShipDialog } from "../SelectShipDialog";
 
 type Props = {
   fleet: Fleet;
@@ -27,6 +29,9 @@ export const FleetScreen: FC<Props> = ({ fleet }) => {
 
       <LowerAppBar onNavClick={backToTopPage} />
       <Organize />
+
+      <SelectShipDialog />
+      <SelectEquipmentDialog />
     </>
   );
 };
