@@ -9,7 +9,7 @@ import { SelectEquipmentDialog } from "../SelectEquipmentDialog";
 import { SelectShipDialog } from "../SelectShipDialog";
 
 type Props = {
-  fleet: Fleet;
+  fleet: Fleet | undefined;
 };
 /**
  * 編成画面
@@ -24,7 +24,7 @@ export const FleetScreen: FC<Props> = ({ fleet }) => {
   return (
     <>
       <Head>
-        <title>{`${fleet.title || "無題の編成"} - ${APP_NAME}`}</title>
+        <title>{`${fleet?.title || "無題の編成"} - ${APP_NAME}`}</title>
       </Head>
 
       <LowerAppBar onNavClick={backToTopPage} />

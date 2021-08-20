@@ -5,7 +5,9 @@ import { FleetIdContext } from "../fleetIdContext";
 import { FleetScreen } from "../FleetScreen";
 import { useFleet } from "../hooks";
 
-const existFleet = (fleet: Fleet | null | undefined): fleet is Fleet => {
+const existFleet = (
+  fleet: Fleet | null | undefined
+): fleet is Fleet | undefined => {
   return fleet !== null;
 };
 
