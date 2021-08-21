@@ -4,7 +4,6 @@ import { ReactNode, VFC } from "react";
 const CssBaseline = withStyles((theme) => ({
   "@global": {
     html: {
-      colorScheme: "dark light",
       WebkitTapHighlightColor: "transparent",
     },
     body: {

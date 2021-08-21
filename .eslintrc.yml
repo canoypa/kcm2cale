@@ -1,13 +1,9 @@
 root: true
 
+# VSCode ESLint 対応
+# コンフィグファイルの `require` 等でエラー表示されないよう
 env:
-  browser: true
-  es6: true
   node: true
-
-parserOptions:
-  ecmaVersion: 2020
-  sourceType: module
 
 extends:
   - eslint:recommended
@@ -17,16 +13,13 @@ extends:
   - prettier
 
 overrides:
-  # TypeScript
+  # VSCode ESLint 対応
+  # .js でエラー表示されないように .ts にのみ適応
   - files: ["*.ts", "*.tsx"]
     extends:
-      - plugin:@typescript-eslint/eslint-recommended
       - plugin:@typescript-eslint/recommended
-    plugins:
-      - "@typescript-eslint"
-    parser: "@typescript-eslint/parser"
     rules:
-      # 保留: 戻り値の明示的指定
+      # 戻り値の明示的指定
       "@typescript-eslint/explicit-module-boundary-types": off
       # _ から始まるもの、スプレッドによるプロパティ削除を許容
       "@typescript-eslint/no-unused-vars":
@@ -35,16 +28,10 @@ overrides:
           argsIgnorePattern: "^_"
           ignoreRestSiblings: true
 
-  # Jest
-  # expect 等々...
-  - files: ["*.test.ts", "*.test.tsx"]
-    extends:
-      - plugin:jest/recommended
-    plugins:
-      - jest
-
 # 保留
 rules:
+  # 型定義読み込み (e.g. next-env.d.ts)
+  spaced-comment: ["error", "always", { "markers": ["/"] }]
   # jsdoc を書く
   valid-jsdoc: 0
   require-jsdoc: 0
