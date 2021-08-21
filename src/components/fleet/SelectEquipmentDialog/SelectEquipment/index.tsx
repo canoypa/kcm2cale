@@ -1,22 +1,17 @@
-import {
-  AppBar,
-  Dialog,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
-import { FC, useCallback, VFC } from "react";
+import { FC, useCallback } from "react";
 import {
   equipmentGroupFilter,
   EquipmentGroupMap,
   EquipmentGroupValues,
-} from "../../../../core/filters/equipment";
-import { EquipmentSearch } from "../../../../core/search/equipment";
-import { EquipmentData } from "../../../../models/equipment/types";
+} from "~/core/filters/equipment";
+import { EquipmentSearch } from "~/core/search/equipment";
+import { EquipmentData, ShipEquipment } from "~/models/equipment/types";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
-import { useSearchQuery } from "./hooks";
-import { SearchEquipmentsList } from "./search-equipments-list";
+import { useSearchQuery } from "../hooks/search-query";
+import { useSetEquipment } from "../hooks/set-equipment";
+import { SearchEquipmentsList } from "../search-equipments-list";
 
 /**
  * 原因不明のエラー
@@ -30,11 +25,13 @@ const isEquipmentGroupValue = (n: number): n is EquipmentGroupValues =>
   n >= 0 && n <= 21;
 
 type SelectEquipmentProps = {
-  onSelect: (equipmentData: EquipmentData) => void;
+  target: ShipEquipment;
   onClose: () => void;
 };
-const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
+const SelectEquipment: FC<SelectEquipmentProps> = ({ target, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
+
+  const setEquipment = useSetEquipment();
 
   const handler = {
     filterChange: useCallback(
@@ -53,8 +50,11 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
     onSelect: useCallback(
-      (equipmentData: EquipmentData) => onSelect(equipmentData),
-      [onSelect]
+      (equipmentData: EquipmentData) => {
+        setEquipment(target, equipmentData);
+        onClose();
+      },
+      [onClose, setEquipment, target]
     ),
   };
 
@@ -82,20 +82,4 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ onSelect, onClose }) => {
     </>
   );
 };
-
-type SelectEquipmentDialogProps = {
-  open: boolean;
-  onSelect: (equipmentData: EquipmentData) => void;
-  onClose: () => void;
-};
-export const SelectEquipmentDialog: VFC<SelectEquipmentDialogProps> = ({
-  open,
-  onSelect,
-  onClose,
-}) => {
-  return (
-    <Dialog fullScreen open={open} onClose={onClose}>
-      <SelectEquipment onSelect={onSelect} onClose={onClose} />
-    </Dialog>
-  );
-};
+export default SelectEquipment;

@@ -1,18 +1,21 @@
 import { Box } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { EmptyShip, Ship } from "../../../../models/ship";
-import { SwapShipContext } from "../fleet/contexts";
+import { useSelectShip } from "../../hooks/select-ship";
 
 type Props = {
   fleetPlace: Ship | EmptyShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const swapShip = useContext(SwapShipContext);
+  const selectShip = useSelectShip();
+
   const isOwner = useIsFleetOwner();
 
-  const swapShipHandler = () => swapShip(fleetPlace);
+  const swapShipHandler = () => {
+    selectShip(fleetPlace);
+  };
 
   return (
     // role=button: ドラッグを防止

@@ -1,14 +1,14 @@
 import { Box, Container } from "@material-ui/core";
 import { FC } from "react";
-import { Fleet } from "../../molecules/fleet";
 import { FleetHeader } from "../../molecules/fleet-header";
+import { ShipsList } from "../../molecules/ShipsList";
 
 export const Organize: FC = () => {
   return (
     <Container maxWidth="md">
       <Box display="flex" flexDirection="column" gridRowGap={16} paddingY={3}>
         <FleetHeader />
-        <Fleet />
+        <ShipsList />
       </Box>
     </Container>
   );
