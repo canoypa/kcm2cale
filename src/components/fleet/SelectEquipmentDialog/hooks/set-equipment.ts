@@ -22,7 +22,7 @@ export const useSetEquipment: UseSetEquipment = () => {
       const { shipId, slotNo, id: equipmentId } = place;
 
       if (equipmentId) {
-        const eqData = { id: shipId, no: equipmentData.no };
+        const eqData = { no: equipmentData.no };
 
         const eqRef = doc(
           firestore,
