@@ -1,5 +1,21 @@
-import { collection, doc, onSnapshot } from "firebase/firestore";
-import React, { FC, ReactNode, useContext, useEffect, useRef } from "react";
+import {
+  collection,
+  doc,
+  DocumentSnapshot,
+  onSnapshot,
+  QuerySnapshot,
+} from "firebase/firestore";
+import React, {
+  FC,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
+import { Equipment } from "~/models/equipment";
+import { Fleet } from "~/models/fleet";
+import { Ship } from "~/models/ship";
 import { getFirestore } from "../../../core/firebase/sdk/firestore";
 import { FirestoreFleetConverter } from "../../../core/firestore-converter";
 import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
@@ -24,62 +40,120 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
   // 作成者の場合のみ変更を受け取るようにするあれこれ
   // next.js 移行できれいにしてくれ...
-  const isOwner = useRef<boolean | undefined>(undefined);
-  const fDocUnsubscribe = useRef<(() => void) | undefined>(undefined);
-  const sCollUnsubscribe = useRef<(() => void) | undefined>(undefined);
-  const eCollUnsubscribe = useRef<(() => void) | undefined>(undefined);
+  const fleetDocUnsubscribe = useRef<(() => void) | undefined>(undefined);
+  const shipDocsUnsubscribe = useRef<(() => void) | undefined>(undefined);
+  const equipDocsUnsubscribe = useRef<(() => void) | undefined>(undefined);
 
-  // データが揃った後、作成者でなければリスナを解除
+  // 現在のリストへの更新検知を避けた参照
+  // shipDocsChangeCallback/equipDocsChangeCallback 内で使用
+  const shipsRef = useRef<Ship[]>([]);
   useEffect(() => {
-    if (!isOwner.current && fleet && ships && equipments) {
-      fDocUnsubscribe.current?.();
-      sCollUnsubscribe.current?.();
-      eCollUnsubscribe.current?.();
-    }
-  }, [equipments, fleet, ships]);
+    ships && (shipsRef.current = ships);
+  }, [ships]);
+  const equipsRef = useRef<Equipment[]>([]);
+  useEffect(() => {
+    equipments && (equipsRef.current = equipments);
+  }, [equipments]);
+
+  const fleetDocChangeCallback = useCallback(
+    (snap: DocumentSnapshot<Fleet>) => {
+      const data = snap.data();
+      mutateFleet(data ?? null);
+    },
+    [mutateFleet]
+  );
+
+  const shipDocsChangeCallback = useCallback(
+    (snap: QuerySnapshot<Ship>) => {
+      let result = shipsRef.current;
+
+      snap.docChanges().forEach((change) => {
+        const data = change.doc.data();
+
+        if (change.type === "added") result = [...result, data];
+
+        if (change.type === "modified")
+          result = result.map((v) => (v.id === data.id ? data : v));
+
+        if (change.type === "removed")
+          result = result.filter((v) => !(v.id === data.id));
+      });
+
+      mutateShips(result);
+    },
+    [mutateShips]
+  );
+
+  const equipDocsChangeCallback = useCallback(
+    (snap: QuerySnapshot<Equipment>) => {
+      let result = equipsRef.current;
+
+      snap.docChanges().forEach((change) => {
+        const data = change.doc.data();
+
+        if (change.type === "added") result = [...result, data];
+
+        if (change.type === "modified")
+          result = result.map((v) => (v.id === data.id ? data : v));
+
+        if (change.type === "removed")
+          result = result.filter((v) => !(v.id === data.id));
+      });
+
+      mutateEquipments(result);
+    },
+    [mutateEquipments]
+  );
 
   useEffect(() => {
-    if (signInCheckResult.signedIn) {
-      const user = signInCheckResult.user;
+    const fleetDocRef = doc(firestore, `fleets/${fleetId}`).withConverter(
+      FirestoreFleetConverter
+    );
+    const shipDocsRef = collection(fleetDocRef, "ships").withConverter(
+      FirestoreFleetShipsConverter
+    );
+    const equipDocsRef = collection(fleetDocRef, "equipments").withConverter(
+      FirestoreFleetEquipmentsConverter
+    );
 
-      const fleetDocRef = doc(firestore, `fleets/${fleetId}`).withConverter(
-        FirestoreFleetConverter
-      );
-      const shipsCollRef = collection(fleetDocRef, "ships").withConverter(
-        FirestoreFleetShipsConverter
-      );
-      const equipmentsCollRef = collection(
-        fleetDocRef,
-        "equipments"
-      ).withConverter(FirestoreFleetEquipmentsConverter);
+    // initial load and subscribe changes
+    fleetDocUnsubscribe.current = onSnapshot(
+      fleetDocRef,
+      fleetDocChangeCallback
+    );
+    shipDocsUnsubscribe.current = onSnapshot(
+      shipDocsRef,
+      shipDocsChangeCallback
+    );
+    equipDocsUnsubscribe.current = onSnapshot(
+      equipDocsRef,
+      equipDocsChangeCallback
+    );
 
-      fDocUnsubscribe.current = onSnapshot(fleetDocRef, (f) => {
-        const data = f.data();
-
-        if (data) {
-          isOwner.current = data.owner === user.uid;
-          mutateFleet(data);
-        } else {
-          mutateFleet(null);
-        }
-      });
-
-      sCollUnsubscribe.current = onSnapshot(shipsCollRef, (s) => {
-        mutateShips(s.docs.map((d) => d.data()));
-      });
-
-      eCollUnsubscribe.current = onSnapshot(equipmentsCollRef, (e) => {
-        mutateEquipments(e.docs.map((d) => d.data()));
-      });
-    }
+    return () => {
+      // Unsubscribe
+      fleetDocUnsubscribe.current?.();
+      shipDocsUnsubscribe.current?.();
+      equipDocsUnsubscribe.current?.();
+    };
   }, [
     firestore,
     fleetId,
-    mutateEquipments,
-    mutateFleet,
-    mutateShips,
-    signInCheckResult,
+    fleetDocChangeCallback,
+    shipDocsChangeCallback,
+    equipDocsChangeCallback,
   ]);
+
+  useEffect(() => {
+    // データが揃った後、作成者でなければリスナを解除
+    if (signInCheckResult.signedIn && fleet && ships && equipments) {
+      if (fleet.owner !== signInCheckResult.user.uid) {
+        fleetDocUnsubscribe.current?.();
+        shipDocsUnsubscribe.current?.();
+        equipDocsUnsubscribe.current?.();
+      }
+    }
+  }, [equipments, fleet, ships, signInCheckResult]);
 
   return <>{children}</>;
 };
