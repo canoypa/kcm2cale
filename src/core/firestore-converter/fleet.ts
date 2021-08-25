@@ -9,8 +9,6 @@ export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
 
     const version = data.version;
 
-    const id = data.id;
-
     const title = data.title;
     const description = data.description;
     const type = data.type;
@@ -21,7 +19,7 @@ export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
     return {
       version,
 
-      id,
+      id: snapshot.id,
       owner: data.owner,
 
       title,

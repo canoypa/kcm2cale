@@ -9,7 +9,7 @@ export const FirestoreFleetEquipmentsConverter: FirestoreDataConverter<Equipment
       const data = snapshot.data();
 
       return {
-        id: data.id,
+        id: snapshot.id,
         shipId: data.shipId,
         slotNo: data.slotNo,
         no: data.no,
