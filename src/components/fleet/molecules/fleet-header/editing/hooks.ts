@@ -1,12 +1,10 @@
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useContext, useMemo, useState } from "react";
-import { getFirestore } from "../../../../../core/firebase/sdk/firestore";
+import { updateFleetDoc } from "~/api/fleet";
 import { FleetType } from "../../../../../models/fleet";
 import { FleetIdContext } from "../../../fleetIdContext";
 import { useFleet } from "../../../hooks";
 
 export const useEditFleetInfo = () => {
-  const firestore = getFirestore();
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
 
@@ -15,14 +13,8 @@ export const useEditFleetInfo = () => {
   const [type, setType] = useState<FleetType>(fleet?.type ?? FleetType.Normal);
 
   const submit = () => {
-    const fleetDocRef = doc(firestore, `fleets/${fleet?.id}`);
-
-    updateDoc(fleetDocRef, {
-      title,
-      description,
-      type,
-      updatedAt: serverTimestamp(),
-    });
+    const data = { title, description, type };
+    updateFleetDoc(fleetId, data);
   };
 
   return {

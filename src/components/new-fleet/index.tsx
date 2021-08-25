@@ -13,8 +13,8 @@ export const NewFleet: FC = () => {
   useEffect(() => {
     // 未認証の場合スキップ
     if (user) {
-      createNewFleet(user.uid).then((newFleetId) => {
-        replace(`/fleet/${newFleetId}`);
+      createNewFleet(user.uid).then((fleetRef) => {
+        replace(`/fleet/${fleetRef.id}`);
       });
     }
   }, [user]);

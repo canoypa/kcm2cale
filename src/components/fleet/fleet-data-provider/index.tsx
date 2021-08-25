@@ -1,10 +1,4 @@
-import {
-  collection,
-  doc,
-  DocumentSnapshot,
-  onSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
+import { DocumentSnapshot, QuerySnapshot } from "firebase/firestore";
 import React, {
   FC,
   ReactNode,
@@ -13,13 +7,12 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import { listenEquipDocs } from "~/api/equip";
+import { listenFleetDoc } from "~/api/fleet";
+import { listenShipDocs } from "~/api/ship";
 import { Equipment } from "~/models/equipment";
 import { Fleet } from "~/models/fleet";
 import { Ship } from "~/models/ship";
-import { getFirestore } from "../../../core/firebase/sdk/firestore";
-import { FirestoreFleetConverter } from "../../../core/firestore-converter";
-import { FirestoreFleetEquipmentsConverter } from "../../../core/firestore-converter/equipments";
-import { FirestoreFleetShipsConverter } from "../../../core/firestore-converter/ships";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetIdContext } from "../fleetIdContext";
 import { useEquipments, useFleet, useShips } from "../hooks";
@@ -31,7 +24,6 @@ type Props = {
 export const FleetDataProvider: FC<Props> = ({ children }) => {
   const fleetId = useContext(FleetIdContext);
 
-  const firestore = getFirestore();
   const { data: signInCheckResult } = useSigninCheck();
 
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
@@ -106,27 +98,17 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   );
 
   useEffect(() => {
-    const fleetDocRef = doc(firestore, `fleets/${fleetId}`).withConverter(
-      FirestoreFleetConverter
-    );
-    const shipDocsRef = collection(fleetDocRef, "ships").withConverter(
-      FirestoreFleetShipsConverter
-    );
-    const equipDocsRef = collection(fleetDocRef, "equipments").withConverter(
-      FirestoreFleetEquipmentsConverter
-    );
-
     // initial load and subscribe changes
-    fleetDocUnsubscribe.current = onSnapshot(
-      fleetDocRef,
+    fleetDocUnsubscribe.current = listenFleetDoc(
+      fleetId,
       fleetDocChangeCallback
     );
-    shipDocsUnsubscribe.current = onSnapshot(
-      shipDocsRef,
+    shipDocsUnsubscribe.current = listenShipDocs(
+      fleetId,
       shipDocsChangeCallback
     );
-    equipDocsUnsubscribe.current = onSnapshot(
-      equipDocsRef,
+    equipDocsUnsubscribe.current = listenEquipDocs(
+      fleetId,
       equipDocsChangeCallback
     );
 
@@ -137,7 +119,6 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       equipDocsUnsubscribe.current?.();
     };
   }, [
-    firestore,
     fleetId,
     fleetDocChangeCallback,
     shipDocsChangeCallback,
