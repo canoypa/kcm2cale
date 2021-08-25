@@ -5,9 +5,9 @@ import { SettableEquip } from "./types";
 const convert = (equip: Partial<SettableEquip>) => {
   return Object.assign(
     {},
-    equip.shipId && { shipId: equip.shipId },
-    equip.slotNo && { slotNo: equip.slotNo },
-    equip.no && { no: equip.no }
+    typeof equip.shipId !== "undefined" && { shipId: equip.shipId },
+    typeof equip.slotNo !== "undefined" && { slotNo: equip.slotNo },
+    typeof equip.no !== "undefined" && { no: equip.no }
   );
 };
 

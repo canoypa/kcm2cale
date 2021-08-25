@@ -11,17 +11,20 @@ const convert = (
     { version: 1, updatedAt: serverTimestamp() },
     options?.isNew && { createdAt: serverTimestamp() },
 
-    fleet.owner && { owner: fleet.owner },
-    fleet.title && { title: fleet.title },
-    fleet.description && { description: fleet.description },
-    fleet.type && { type: fleet.type }
+    typeof fleet.owner !== "undefined" && { owner: fleet.owner },
+    typeof fleet.title !== "undefined" && { title: fleet.title },
+    typeof fleet.description !== "undefined" && {
+      description: fleet.description,
+    },
+    typeof fleet.type !== "undefined" && { type: fleet.type }
   );
 };
 
 export const addFleetDoc = async (fleet: SettableFleet) => {
   const fleetId = generateFleetId();
   const ref = getFleetDocReference(fleetId);
-  return await setDoc(ref, convert(fleet, { isNew: true }));
+  await setDoc(ref, convert(fleet, { isNew: true }));
+  return ref;
 };
 
 export const updateFleetDoc = async (

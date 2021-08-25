@@ -7,8 +7,6 @@ export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
     // Todo: バリデーション
     const data = snapshot.data({ serverTimestamps: "estimate" });
 
-    const version = data.version;
-
     const title = data.title;
     const description = data.description;
     const type = data.type;
@@ -17,8 +15,6 @@ export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
     const updatedAt = data.updatedAt.toDate();
 
     return {
-      version,
-
       id: snapshot.id,
       owner: data.owner,
 

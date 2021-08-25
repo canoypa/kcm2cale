@@ -2,12 +2,12 @@ import { addDoc, setDoc } from "firebase/firestore";
 import { getShipCollectionReference, getShipDocReference } from "./ref";
 import { SettableShip } from "./types";
 
-const convert = (equip: Partial<SettableShip>) => {
+const convert = (ship: Partial<SettableShip>) => {
   return Object.assign(
     {},
-    equip.fleetNo && { shipId: equip.fleetNo },
-    equip.turnNo && { slotNo: equip.turnNo },
-    equip.no && { no: equip.no }
+    typeof ship.fleetNo !== "undefined" && { fleetNo: ship.fleetNo },
+    typeof ship.turnNo !== "undefined" && { turnNo: ship.turnNo },
+    typeof ship.no !== "undefined" && { no: ship.no }
   );
 };
 

@@ -8,8 +8,6 @@ export const FleetType = {
 export type FleetType = typeof FleetType[keyof typeof FleetType];
 
 export type Fleet = {
-  version: number;
-
   id: string;
   owner: string;
 
