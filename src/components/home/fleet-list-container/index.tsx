@@ -36,7 +36,14 @@ export const FleetListContainer: FC = () => {
       snap.docChanges().forEach((change) => {
         const data = change.doc.data();
 
-        if (change.type === "added") result = [...result, data];
+        if (change.type === "added") {
+          // 取得済みのデータがある場合更新
+          if (result.some((v) => v.id === change.doc.id)) {
+            result = result.map((v) => (v.id === data.id ? data : v));
+          } else {
+            result = [...result, data];
+          }
+        }
 
         if (change.type === "modified")
           result = result.map((v) => (v.id === data.id ? data : v));

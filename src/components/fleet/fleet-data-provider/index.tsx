@@ -38,11 +38,11 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
   // 現在のリストへの更新検知を避けた参照
   // shipDocsChangeCallback/equipDocsChangeCallback 内で使用
-  const shipsRef = useRef<Ship[]>([]);
+  const shipsRef = useRef<Ship[]>(ships ?? []);
   useEffect(() => {
     ships && (shipsRef.current = ships);
   }, [ships]);
-  const equipsRef = useRef<Equipment[]>([]);
+  const equipsRef = useRef<Equipment[]>(equipments ?? []);
   useEffect(() => {
     equipments && (equipsRef.current = equipments);
   }, [equipments]);
@@ -62,7 +62,14 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       snap.docChanges().forEach((change) => {
         const data = change.doc.data();
 
-        if (change.type === "added") result = [...result, data];
+        if (change.type === "added") {
+          // 取得済みのデータがある場合更新
+          if (result.some((v) => v.id === change.doc.id)) {
+            result = result.map((v) => (v.id === data.id ? data : v));
+          } else {
+            result = [...result, data];
+          }
+        }
 
         if (change.type === "modified")
           result = result.map((v) => (v.id === data.id ? data : v));
@@ -83,7 +90,14 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
       snap.docChanges().forEach((change) => {
         const data = change.doc.data();
 
-        if (change.type === "added") result = [...result, data];
+        if (change.type === "added") {
+          // 取得済みのデータがある場合更新
+          if (result.some((v) => v.id === change.doc.id)) {
+            result = result.map((v) => (v.id === data.id ? data : v));
+          } else {
+            result = [...result, data];
+          }
+        }
 
         if (change.type === "modified")
           result = result.map((v) => (v.id === data.id ? data : v));
