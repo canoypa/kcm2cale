@@ -50,7 +50,7 @@ export const ShipsList: FC = () => {
           <List
             values={fleet.fleet}
             onChange={({ oldIndex, newIndex }) => {
-              fleet.sort(oldIndex, newIndex);
+              fleet.sort(fleet.fleet, activeFleetNo, oldIndex, newIndex);
             }}
             renderList={({ children, props }) => (
               <Box display="flex" flexDirection="column" {...props}>
