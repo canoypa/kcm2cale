@@ -10,12 +10,12 @@ import React, {
 import { listenEquipDocs } from "~/api/equip";
 import { listenFleetDoc } from "~/api/fleet";
 import { listenShipDocs } from "~/api/ship";
-import { Equipment } from "~/models/equipment";
+import { Equip } from "~/models/equip";
 import { Fleet } from "~/models/fleet";
 import { Ship } from "~/models/ship";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetIdContext } from "../fleetIdContext";
-import { useEquipments, useFleet, useShips } from "../hooks";
+import { useEquips, useFleet, useShips } from "../hooks";
 
 type Props = {
   /** 更新抑制のためメモ化されたコンポーネントであるべき */
@@ -28,7 +28,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
   const { data: ships, mutate: mutateShips } = useShips(fleetId);
-  const { data: equipments, mutate: mutateEquipments } = useEquipments(fleetId);
+  const { data: equips, mutate: mutateEquips } = useEquips(fleetId);
 
   // 作成者の場合のみ変更を受け取るようにするあれこれ
   // next.js 移行できれいにしてくれ...
@@ -42,10 +42,10 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     ships && (shipsRef.current = ships);
   }, [ships]);
-  const equipsRef = useRef<Equipment[]>(equipments ?? []);
+  const equipsRef = useRef<Equip[]>(equips ?? []);
   useEffect(() => {
-    equipments && (equipsRef.current = equipments);
-  }, [equipments]);
+    equips && (equipsRef.current = equips);
+  }, [equips]);
 
   const fleetDocChangeCallback = useCallback(
     (snap: DocumentSnapshot<Fleet>) => {
@@ -84,7 +84,7 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
   );
 
   const equipDocsChangeCallback = useCallback(
-    (snap: QuerySnapshot<Equipment>) => {
+    (snap: QuerySnapshot<Equip>) => {
       let result = equipsRef.current;
 
       snap.docChanges().forEach((change) => {
@@ -106,9 +106,9 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
           result = result.filter((v) => !(v.id === data.id));
       });
 
-      mutateEquipments(result);
+      mutateEquips(result);
     },
-    [mutateEquipments]
+    [mutateEquips]
   );
 
   useEffect(() => {
@@ -141,14 +141,14 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     // データが揃った後、作成者でなければリスナを解除
-    if (signInCheckResult.signedIn && fleet && ships && equipments) {
+    if (signInCheckResult.signedIn && fleet && ships && equips) {
       if (fleet.owner !== signInCheckResult.user.uid) {
         fleetDocUnsubscribe.current?.();
         shipDocsUnsubscribe.current?.();
         equipDocsUnsubscribe.current?.();
       }
     }
-  }, [equipments, fleet, ships, signInCheckResult]);
+  }, [equips, fleet, ships, signInCheckResult]);
 
   return <>{children}</>;
 };

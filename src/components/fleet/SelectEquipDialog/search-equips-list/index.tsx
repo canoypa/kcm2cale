@@ -2,23 +2,19 @@ import { ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import Measure from "react-measure";
 import { FixedSizeList } from "react-window";
-import { EquipmentData } from "../../../../models/equipment/types";
+import { EquipData } from "../../../../models/equip/types";
 
 type Props = {
-  equipmentsList: EquipmentData[];
-  onSelect: (equipmentData: EquipmentData) => void;
+  equipsList: EquipData[];
+  onSelect: (equipData: EquipData) => void;
 };
-export const SearchEquipmentsList: FC<Props> = ({
-  equipmentsList,
-  onSelect,
-}) => {
-  const handlerOnSelect = (equipmentData: EquipmentData) =>
-    onSelect(equipmentData);
+export const SearchEquipsList: FC<Props> = ({ equipsList, onSelect }) => {
+  const handlerOnSelect = (equipData: EquipData) => onSelect(equipData);
 
-  const items = equipmentsList.map((equipmentData) => ({
-    key: equipmentData.no,
-    value: equipmentData,
-    label: equipmentData.name,
+  const items = equipsList.map((equipData) => ({
+    key: equipData.no,
+    value: equipData,
+    label: equipData.name,
   }));
 
   return (

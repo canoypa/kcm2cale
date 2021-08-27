@@ -1,17 +1,17 @@
 import { Reducer, useCallback, useReducer } from "react";
-import { SearchEquipmentRequest } from "~/core/search/equipment";
-import { EquipmentTypeValues } from "~/models/equipment/types";
+import { SearchEquipRequest } from "~/core/search/equip";
+import { EquipTypeValues } from "~/models/equip/types";
 
 type SearchQuery = {
-  query: SearchEquipmentRequest;
+  query: SearchEquipRequest;
   setQuery: (q: string) => void;
-  setTypes: (types: EquipmentTypeValues[] | null) => void;
+  setTypes: (types: EquipTypeValues[] | null) => void;
 };
 
-type State = SearchEquipmentRequest;
+type State = SearchEquipRequest;
 type Actions =
   | { type: "Query"; value: string }
-  | { type: "Types"; value: EquipmentTypeValues[] | null };
+  | { type: "Types"; value: EquipTypeValues[] | null };
 const searchQueryReducer: Reducer<State, Actions> = (state, action) => {
   if (action.type === "Query") {
     return { ...state, q: action.value || undefined };
@@ -36,7 +36,7 @@ export const useSearchQuery = (): SearchQuery => {
   );
 
   const setTypes = useCallback(
-    (types: EquipmentTypeValues[] | null) =>
+    (types: EquipTypeValues[] | null) =>
       dispatchQuery({ type: "Types", value: types }),
     []
   );

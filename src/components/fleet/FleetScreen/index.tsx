@@ -5,7 +5,7 @@ import { LowerAppBar } from "~/components/common/lower-app-bar";
 import { APP_NAME } from "~/core/env";
 import { Fleet } from "~/models/fleet";
 import { Organize } from "../organisms/organize";
-import { SelectEquipmentDialog } from "../SelectEquipmentDialog";
+import { SelectEquipDialog } from "../SelectEquipDialog";
 import { SelectShipDialog } from "../SelectShipDialog";
 
 type Props = {
@@ -31,7 +31,7 @@ export const FleetScreen: FC<Props> = ({ fleet }) => {
       <Organize />
 
       <SelectShipDialog />
-      <SelectEquipmentDialog />
+      <SelectEquipDialog />
     </>
   );
 };

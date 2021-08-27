@@ -2,16 +2,16 @@ import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { NavigateBefore } from "@material-ui/icons";
 import { FC, useCallback } from "react";
 import {
-  equipmentGroupFilter,
-  EquipmentGroupMap,
-  EquipmentGroupValues,
-} from "~/core/filters/equipment";
-import { EquipmentSearch } from "~/core/search/equipment";
-import { EquipmentData, ShipEquipment } from "~/models/equipment/types";
+  equipGroupFilter,
+  EquipGroupMap,
+  EquipGroupValues,
+} from "~/core/filters/equip";
+import { EquipSearch } from "~/core/search/equip";
+import { EquipData, ShipEquip } from "~/models/equip/types";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "../hooks/search-query";
-import { useSetEquipment } from "../hooks/set-equipment";
-import { SearchEquipmentsList } from "../search-equipments-list";
+import { useSetEquip } from "../hooks/set-equip";
+import { SearchEquipsList } from "../search-equips-list";
 
 /**
  * 原因不明のエラー
@@ -21,17 +21,17 @@ import { SearchEquipmentsList } from "../search-equipments-list";
  * - いずれかの要素に focus されているとエラーにならない
  */
 
-const isEquipmentGroupValue = (n: number): n is EquipmentGroupValues =>
+const isEquipGroupValue = (n: number): n is EquipGroupValues =>
   n >= 0 && n <= 21;
 
-type SelectEquipmentProps = {
-  target: ShipEquipment;
+type SelectEquipProps = {
+  target: ShipEquip;
   onClose: () => void;
 };
-const SelectEquipment: FC<SelectEquipmentProps> = ({ target, onClose }) => {
+const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
 
-  const setEquipment = useSetEquipment();
+  const setEquip = useSetEquip();
 
   const handler = {
     filterChange: useCallback(
@@ -39,8 +39,8 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ target, onClose }) => {
         if (filter === null) {
           setTypes(null);
         } else {
-          if (isEquipmentGroupValue(filter)) {
-            setTypes(EquipmentGroupMap[filter]);
+          if (isEquipGroupValue(filter)) {
+            setTypes(EquipGroupMap[filter]);
           }
         }
       },
@@ -50,15 +50,15 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ target, onClose }) => {
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
     onSelect: useCallback(
-      (equipmentData: EquipmentData) => {
-        setEquipment(target, equipmentData);
+      (equipData: EquipData) => {
+        setEquip(target, equipData);
         onClose();
       },
-      [onClose, setEquipment, target]
+      [onClose, setEquip, target]
     ),
   };
 
-  const equipmentsList = EquipmentSearch.search(searchQuery);
+  const equipsList = EquipSearch.search(searchQuery);
 
   return (
     <>
@@ -70,16 +70,13 @@ const SelectEquipment: FC<SelectEquipmentProps> = ({ target, onClose }) => {
           <Typography variant="h6">装備を選択</Typography>
         </Toolbar>
       </AppBar>
-      <SearchEquipmentsList
-        equipmentsList={equipmentsList}
-        onSelect={handler.onSelect}
-      />
+      <SearchEquipsList equipsList={equipsList} onSelect={handler.onSelect} />
       <OrganizeSelectSearchRenderer
-        filterGroup={equipmentGroupFilter}
+        filterGroup={equipGroupFilter}
         changeFilter={handler.filterChange}
         changeQuery={handler.onChangeQuery}
       />
     </>
   );
 };
-export default SelectEquipment;
+export default SelectEquip;

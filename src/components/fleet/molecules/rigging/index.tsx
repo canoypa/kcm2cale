@@ -3,29 +3,29 @@ import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
-import { ShipEquipment } from "../../../../models/equipment";
+import { ShipEquip } from "../../../../models/equip";
 import { Ship } from "../../../../models/ship";
-import { useSelectEquipment } from "../../hooks/select-equipment";
-import { EquipmentList } from "../equipments-list";
+import { useSelectEquip } from "../../hooks/select-equip";
+import { EquipList } from "../equips-list";
 import { useStyles } from "./styles";
 
 type Props = {
   fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
-  const selectEquipment = useSelectEquipment();
-  const { shipEquipments, isCanAddNewEquipment, newEquipmentPlace } =
+  const selectEquip = useSelectEquip();
+  const { shipEquips, isCanAddNewEquip, newEquipPlace } =
     useRigging(fleetPlace);
 
   const isOwner = useIsFleetOwner();
 
   const classes = useStyles();
 
-  const handlerAddEquipment = (eq: ShipEquipment) => {
-    selectEquipment(eq);
+  const handlerAddEquip = (eq: ShipEquip) => {
+    selectEquip(eq);
   };
 
-  const handlerAddNewEquipment = () => handlerAddEquipment(newEquipmentPlace);
+  const handlerAddNewEquip = () => handlerAddEquip(newEquipPlace);
 
   return (
     <Grid
@@ -38,18 +38,15 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
       }}
     >
       <Grid item>
-        <EquipmentList
-          shipEquipments={shipEquipments}
-          swapEquipment={handlerAddEquipment}
-        />
+        <EquipList shipEquips={shipEquips} swapEquip={handlerAddEquip} />
       </Grid>
-      {isCanAddNewEquipment && isOwner && (
+      {isCanAddNewEquip && isOwner && (
         <Grid item>
           <Chip
             variant="outlined"
             icon={<Add />}
             label="装備を追加"
-            onClick={handlerAddNewEquipment}
+            onClick={handlerAddNewEquip}
           />
         </Grid>
       )}
