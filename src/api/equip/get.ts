@@ -6,13 +6,13 @@ import {
   QueryConstraint,
   QuerySnapshot,
 } from "firebase/firestore";
-import { FirestoreFleetEquipmentsConverter } from "~/core/firestore-converter/equipments";
-import { Equipment } from "~/models/equipment";
+import { FirestoreFleetEquipConverter } from "~/core/firestore-converter/equip";
+import { Equip } from "~/models/equip";
 import { getEquipDocReference, getEquipDocsQuery } from "./ref";
 
 export const getEquipDoc = async (fleetId: string, equipId: string) => {
   const ref = getEquipDocReference(fleetId, equipId).withConverter(
-    FirestoreFleetEquipmentsConverter
+    FirestoreFleetEquipConverter
   );
   return await getDoc(ref);
 };
@@ -22,7 +22,7 @@ export const getEquipDocs = async (
   ...queries: QueryConstraint[]
 ) => {
   const ref = getEquipDocsQuery(fleetId, ...queries).withConverter(
-    FirestoreFleetEquipmentsConverter
+    FirestoreFleetEquipConverter
   );
   return await getDocs(ref);
 };
@@ -30,21 +30,21 @@ export const getEquipDocs = async (
 export const listenEquipDoc = (
   fleetId: string,
   equipId: string,
-  callback: (snap: DocumentSnapshot<Equipment>) => void
+  callback: (snap: DocumentSnapshot<Equip>) => void
 ) => {
   const ref = getEquipDocReference(fleetId, equipId).withConverter(
-    FirestoreFleetEquipmentsConverter
+    FirestoreFleetEquipConverter
   );
   return onSnapshot(ref, callback);
 };
 
 export const listenEquipDocs = (
   fleetId: string,
-  callback: (snap: QuerySnapshot<Equipment>) => void,
+  callback: (snap: QuerySnapshot<Equip>) => void,
   ...queries: QueryConstraint[]
 ) => {
   const ref = getEquipDocsQuery(fleetId, ...queries).withConverter(
-    FirestoreFleetEquipmentsConverter
+    FirestoreFleetEquipConverter
   );
   return onSnapshot(ref, callback);
 };

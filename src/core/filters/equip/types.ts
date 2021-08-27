@@ -1,90 +1,76 @@
-import {
-  EquipmentType,
-  EquipmentTypeValues,
-} from "../../../models/equipment/types";
+import { EquipType, EquipTypeValues } from "../../../models/equip/types";
 import { EnumValues } from "../../../util/types";
 
-export const EquipmentGroupMap: Record<
-  EquipmentGroupValues,
-  EquipmentTypeValues[]
-> = {
+export const EquipGroupMap: Record<EquipGroupValues, EquipTypeValues[]> = {
   /** 主砲 */
   0: [
-    EquipmentType.SmallCaliberMainGun,
-    EquipmentType.MediumCaliberMainGun,
-    EquipmentType.LargeCaliberMainGun,
+    EquipType.SmallCaliberMainGun,
+    EquipType.MediumCaliberMainGun,
+    EquipType.LargeCaliberMainGun,
   ],
   /** 小口径主砲 */
-  1: [EquipmentType.SmallCaliberMainGun],
+  1: [EquipType.SmallCaliberMainGun],
   /** 中口径主砲 */
-  2: [EquipmentType.MediumCaliberMainGun],
+  2: [EquipType.MediumCaliberMainGun],
   /** 大口径主砲 */
-  3: [EquipmentType.LargeCaliberMainGun],
+  3: [EquipType.LargeCaliberMainGun],
 
   /** 副砲 */
-  4: [EquipmentType.SecondaryGun],
+  4: [EquipType.SecondaryGun],
 
   /** 魚雷 */
-  5: [
-    EquipmentType.Torpedo,
-    EquipmentType.SubmarineTorpedo,
-    EquipmentType.MidgetSubmarine,
-  ],
+  5: [EquipType.Torpedo, EquipType.SubmarineTorpedo, EquipType.MidgetSubmarine],
 
   /** 機銃 */
-  6: [EquipmentType.AntiAircraftGun],
+  6: [EquipType.AntiAircraftGun],
 
   /** 電探 */
-  7: [EquipmentType.SmallRadar, EquipmentType.LargeRadar],
+  7: [EquipType.SmallRadar, EquipType.LargeRadar],
 
   /** 対潜兵装 */
-  8: [
-    EquipmentType.Sonar,
-    EquipmentType.DepthCharge,
-    EquipmentType.DepthChargeProjector,
-  ],
+  8: [EquipType.Sonar, EquipType.DepthCharge, EquipType.DepthChargeProjector],
 
   /** 艦上戦闘機 */
-  9: [EquipmentType.CarrierBasedFighter],
+  9: [EquipType.CarrierBasedFighter],
   /** 艦上爆撃機 */
-  10: [EquipmentType.CarrierBasedDiveBomber],
+  10: [EquipType.CarrierBasedDiveBomber],
   /** 艦上攻撃機 */
-  11: [EquipmentType.CarrierBasedTorpedoBomber],
+  11: [EquipType.CarrierBasedTorpedoBomber],
   /** 艦上偵察機 */
-  12: [EquipmentType.CarrierBasedReconnaissanceAircraft],
+  12: [EquipType.CarrierBasedReconnaissanceAircraft],
 
   /** 水上偵察機 */
-  13: [EquipmentType.ReconnaissanceSeaplane],
+  13: [EquipType.ReconnaissanceSeaplane],
   /** 水上爆撃機 */
-  14: [EquipmentType.SeaplaneBomber],
+  14: [EquipType.SeaplaneBomber],
   /** 水上戦闘機 */
-  15: [EquipmentType.SeaplaneFighter],
+  15: [EquipType.SeaplaneFighter],
 
   /** その他航空機 */
-  16: [EquipmentType.Autogyro, EquipmentType.AntiSubmarinePatrolAircraft],
+  16: [EquipType.Autogyro, EquipType.AntiSubmarinePatrolAircraft],
 
   /** 特殊兵装 */
   17: [
-    EquipmentType.ArmorPiercingShell,
-    EquipmentType.AntiAircraftShell,
-    EquipmentType.AntiAircraftFireDirector,
+    EquipType.ArmorPiercingShell,
+    EquipType.AntiAircraftShell,
+    EquipType.AntiAircraftFireDirector,
   ],
 
   /** 増設バルジ */
-  18: [EquipmentType.MediumExtraArmor, EquipmentType.LargeExtraArmor],
+  18: [EquipType.MediumExtraArmor, EquipType.LargeExtraArmor],
 
   /** 機関改善 */
-  19: [EquipmentType.Turbine, EquipmentType.Boiler],
+  19: [EquipType.Turbine, EquipType.Boiler],
 
   /** 陸上戦闘機 */
-  20: [EquipmentType.LandBasedInterceptor, EquipmentType.LandBasedFighter],
+  20: [EquipType.LandBasedInterceptor, EquipType.LandBasedFighter],
   /** 陸上攻撃機 */
-  21: [EquipmentType.LandBasedAttackAircraft],
+  21: [EquipType.LandBasedAttackAircraft],
 };
 
 // Todo 装備グループ分け見直し 大型飛行艇はいずこ
 /** 装備グループ */
-export const EquipmentGroup = {
+export const EquipGroup = {
   /** 主砲 */
   MainGun: 0,
   /** 小口径主砲 */
@@ -142,4 +128,4 @@ export const EquipmentGroup = {
   /** 陸上攻撃機 */
   LandBasedAttackAircraft: 21,
 } as const;
-export type EquipmentGroupValues = EnumValues<typeof EquipmentGroup>;
+export type EquipGroupValues = EnumValues<typeof EquipGroup>;

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Equipment } from "../../models/equipment";
+import { Equip } from "../../models/equip";
 import { Fleet } from "../../models/fleet";
 import { Ship } from "../../models/ship";
 
@@ -13,6 +13,6 @@ export const useShips = (fleetId: string) => {
   return useSWR<Ship[]>(`fleet/${fleetId}/ships`);
 };
 
-export const useEquipments = (fleetId: string) => {
-  return useSWR<Equipment[]>(`fleet/${fleetId}/equipments`);
+export const useEquips = (fleetId: string) => {
+  return useSWR<Equip[]>(`fleet/${fleetId}/equips`);
 };
