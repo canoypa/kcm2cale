@@ -1,5 +1,5 @@
 import { isCombinedFleet } from ".";
-import { FleetType } from "../../../store/organize/info";
+import { FleetType } from "../../../models/fleet";
 
 test("isCombinedFleet", () => {
   expect(isCombinedFleet(FleetType.Carrier)).toBe(true);
@@ -7,5 +7,5 @@ test("isCombinedFleet", () => {
   expect(isCombinedFleet(FleetType.Transport)).toBe(true);
 
   expect(isCombinedFleet(FleetType.Normal)).toBe(false);
-  expect(isCombinedFleet(FleetType.StrikingForce)).toBe(false);
+  expect(isCombinedFleet(FleetType.Striking)).toBe(false);
 });

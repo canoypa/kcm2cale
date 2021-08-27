@@ -1,69 +1,58 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
+import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
-import { EquipmentId, SlotNo } from "../../../../store/organize/equipments";
-import { DeployedFleetShip } from "../../../../store/organize/ships";
-import { SelectEquipmentDialog } from "../../templates/select-equipment";
+import { ShipEquipment } from "../../../../models/equipment";
+import { Ship } from "../../../../models/ship";
+import { useSelectEquipment } from "../../hooks/select-equipment";
 import { EquipmentList } from "../equipments-list";
 import { useStyles } from "./styles";
-import { useSelectEquipment } from "./use-select-equipment";
 
 type Props = {
-  fleetPlace: DeployedFleetShip;
+  fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
-  const [isOpenDialog, selecting] = useSelectEquipment();
-  const {
-    shipEquipments,
-    isCanAddNewEquipment,
-    newEquipmentSlotNo,
-  } = useRigging(fleetPlace);
+  const selectEquipment = useSelectEquipment();
+  const { shipEquipments, isCanAddNewEquipment, newEquipmentPlace } =
+    useRigging(fleetPlace);
+
+  const isOwner = useIsFleetOwner();
 
   const classes = useStyles();
 
-  const handlerAddEquipment = (
-    slotNo: SlotNo,
-    equipmentId: EquipmentId | null
-  ) => selecting.start({ shipId: fleetPlace.shipId, slotNo, equipmentId });
+  const handlerAddEquipment = (eq: ShipEquipment) => {
+    selectEquipment(eq);
+  };
 
-  const handlerAddNewEquipment = () =>
-    handlerAddEquipment(newEquipmentSlotNo, null);
+  const handlerAddNewEquipment = () => handlerAddEquipment(newEquipmentPlace);
 
   return (
-    <>
-      <Grid
-        container
-        spacing={1}
-        wrap="nowrap"
-        className={classes.root}
-        style={{
-          overflow: "auto",
-        }}
-      >
+    <Grid
+      container
+      spacing={1}
+      wrap="nowrap"
+      className={classes.root}
+      style={{
+        overflow: "auto",
+      }}
+    >
+      <Grid item>
+        <EquipmentList
+          shipEquipments={shipEquipments}
+          swapEquipment={handlerAddEquipment}
+        />
+      </Grid>
+      {isCanAddNewEquipment && isOwner && (
         <Grid item>
-          <EquipmentList
-            shipEquipments={shipEquipments}
-            swapEquipment={handlerAddEquipment}
+          <Chip
+            variant="outlined"
+            icon={<Add />}
+            label="装備を追加"
+            onClick={handlerAddNewEquipment}
           />
         </Grid>
-        {isCanAddNewEquipment && (
-          <Grid item>
-            <Chip
-              variant="outlined"
-              icon={<Add />}
-              label="装備を追加"
-              onClick={handlerAddNewEquipment}
-            />
-          </Grid>
-        )}
-      </Grid>
-
-      <SelectEquipmentDialog
-        open={isOpenDialog}
-        onSelect={selecting.end}
-        onClose={selecting.cancel}
-      />
-    </>
+      )}
+    </Grid>
   );
 };

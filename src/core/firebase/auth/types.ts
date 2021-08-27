@@ -1,23 +1,4 @@
-import { createElement, ReactElement } from "react";
-import { GoogleLogo } from "../../../components/sing-in/logo/google";
-import { TwitterLogo } from "../../../components/sing-in/logo/twitter";
-import { EnumValues } from "../../../util/types";
+import { ProviderId as AuthProviderId } from "firebase/auth";
 
-export const ProviderId = {
-  Google: "google",
-  Twitter: "twitter",
-} as const;
-export type ProviderIdValue = EnumValues<typeof ProviderId>;
-
-export const ProviderNameMap: ReadonlyMap<ProviderIdValue, string> = new Map([
-  [ProviderId.Google, "Google"],
-  [ProviderId.Twitter, "Twitter"],
-]);
-
-export const ProviderLogoMap: ReadonlyMap<
-  ProviderIdValue,
-  ReactElement
-> = new Map([
-  [ProviderId.Google, createElement(GoogleLogo)],
-  [ProviderId.Twitter, createElement(TwitterLogo)],
-]);
+export const ProviderId = AuthProviderId;
+export type ProviderId = typeof ProviderId[keyof typeof ProviderId];

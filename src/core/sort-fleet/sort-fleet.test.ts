@@ -1,40 +1,48 @@
 import { sortFleet } from ".";
-import { FleetPlace, FleetState } from "../../store/organize/ships";
+import { FleetShip } from "../../models/ship";
 
-const fleetData: FleetState = [
-  { fleetNo: 0, turnNo: 0, shipId: "0" },
-  { fleetNo: 0, turnNo: 1, shipId: "1" },
-  { fleetNo: 0, turnNo: 2, shipId: "2" },
+const fleetData: FleetShip[] = [
+  { fleetNo: 0, turnNo: 0, id: "0", no: "0" },
+  { fleetNo: 0, turnNo: 1, id: "1", no: "0" },
+  { fleetNo: 0, turnNo: 2, id: "2", no: "0" },
 ];
 
 describe("SortFleet", () => {
   test("Single Move", () => {
-    const from: FleetPlace = { fleetNo: 0, turnNo: 0 };
-    const to: FleetPlace = { fleetNo: 0, turnNo: 1 };
+    const expected = expect.arrayContaining([
+      expect.objectContaining({ turnNo: 0, id: "1" }),
+      expect.objectContaining({ turnNo: 1, id: "0" }),
+    ]);
 
-    const expected = [
-      expect.objectContaining({ turnNo: 0, shipId: "1" }),
-      expect.objectContaining({ turnNo: 1, shipId: "0" }),
-      expect.objectContaining({ turnNo: 2, shipId: "2" }),
-    ];
+    expect(sortFleet(fleetData, 0, 0, 1)).toEqual(expected);
+  });
 
-    expect(sortFleet(fleetData, from, to)).toEqual(
-      expect.arrayContaining(expected)
-    );
+  test("Reversed Single Move", () => {
+    const expected = expect.arrayContaining([
+      expect.objectContaining({ turnNo: 1, id: "0" }),
+      expect.objectContaining({ turnNo: 0, id: "1" }),
+    ]);
+
+    expect(sortFleet(fleetData, 0, 1, 0)).toEqual(expected);
   });
 
   test("Multi Move", () => {
-    const from: FleetPlace = { fleetNo: 0, turnNo: 0 };
-    const to: FleetPlace = { fleetNo: 0, turnNo: 2 };
+    const expected = expect.arrayContaining([
+      expect.objectContaining({ turnNo: 0, id: "1" }),
+      expect.objectContaining({ turnNo: 1, id: "2" }),
+      expect.objectContaining({ turnNo: 2, id: "0" }),
+    ]);
 
-    const expected = [
-      expect.objectContaining({ turnNo: 0, shipId: "1" }),
-      expect.objectContaining({ turnNo: 1, shipId: "2" }),
-      expect.objectContaining({ turnNo: 2, shipId: "0" }),
-    ];
+    expect(sortFleet(fleetData, 0, 0, 2)).toEqual(expected);
+  });
 
-    expect(sortFleet(fleetData, from, to)).toEqual(
-      expect.arrayContaining(expected)
-    );
+  test("Reversed Multi Move", () => {
+    const expected = expect.arrayContaining([
+      expect.objectContaining({ turnNo: 0, id: "2" }),
+      expect.objectContaining({ turnNo: 1, id: "0" }),
+      expect.objectContaining({ turnNo: 2, id: "1" }),
+    ]);
+
+    expect(sortFleet(fleetData, 0, 2, 0)).toEqual(expected);
   });
 });

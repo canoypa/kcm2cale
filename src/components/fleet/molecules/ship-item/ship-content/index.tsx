@@ -1,21 +1,25 @@
-import { FC, useContext } from "react";
-import { DeployedFleetShip } from "../../../../../store/organize/ships";
-import { SwapShipContext } from "../../fleet/contexts";
-import { useShip } from "../hook";
+import { FC } from "react";
+import { useSelectShip } from "~/components/fleet/hooks/select-ship";
+import { ShipsData } from "../../../../../data/ship";
+import { Ship } from "../../../../../models/ship";
 import { useStyles } from "./styles";
 
 const DUMMY_LEVEL = 99;
 
 type Props = {
-  fleetPlace: DeployedFleetShip;
+  fleetPlace: Ship;
 };
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
-  const swapShip = useContext(SwapShipContext);
-  const ship = useShip(fleetPlace);
+  const selectShip = useSelectShip();
+
+  const ship = ShipsData.find((v) => v.no === fleetPlace.no);
+  if (!ship) throw new Error("Error");
 
   const classes = useStyles();
 
-  const swapShipHandler = () => swapShip(fleetPlace);
+  const swapShipHandler = () => {
+    selectShip(fleetPlace);
+  };
 
   return (
     <div className={classes.root}>

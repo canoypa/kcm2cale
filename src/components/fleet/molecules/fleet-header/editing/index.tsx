@@ -15,7 +15,7 @@ import {
 import { NavigateBefore } from "@material-ui/icons";
 import { ChangeEvent, FC, useMemo } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
-import { FleetType } from "../../../../../store/organize/info";
+import { FleetType } from "../../../../../models/fleet";
 import { useCountValid, useEditFleetInfo } from "./hooks";
 import { useStyles } from "./styles";
 
@@ -27,7 +27,7 @@ const FleetTypeOptions = [
   { label: "空母機動部隊", value: FleetType.Carrier },
   { label: "水上打撃部隊", value: FleetType.Surface },
   { label: "輸送護衛部隊", value: FleetType.Transport },
-  { label: "遊撃部隊", value: FleetType.StrikingForce },
+  { label: "遊撃部隊", value: FleetType.Striking },
 ];
 
 type Props = {
@@ -66,7 +66,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     },
     onFleetTypeChange: (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setType(isFleetType(value) ? value : "Normal");
+      setType(isFleetType(value) ? value : FleetType.Normal);
     },
 
     onSubmit: () => {

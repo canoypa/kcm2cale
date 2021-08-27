@@ -1,29 +1,18 @@
-import { useHistory } from "react-router";
-import { useInitFleet } from "../../core/initialize-fleet";
-import { LocalDatabase } from "../../core/persistence/local-database";
+import useSWR from "swr";
+import { Equipment } from "../../models/equipment";
+import { Fleet } from "../../models/fleet";
+import { Ship } from "../../models/ship";
 
-interface InitializeCallbackInterface {
-  /** ロードする艦隊 Id */
-  fleetId?: string;
-}
-export const useInitializeCallback = () => {
-  const { replace } = useHistory();
-  const initFleet = useInitFleet();
+export const useFleet = (fleetId: string) => {
+  // 存在しない編成の場合 null
+  // error boundary とか使え
+  return useSWR<Fleet | null>(`fleet/${fleetId}/fleet`);
+};
 
-  const loadFleet = async ({ fleetId }: InitializeCallbackInterface) => {
-    if (fleetId !== undefined) {
-      const localFleetData = await LocalDatabase.getFleet(fleetId);
+export const useShips = (fleetId: string) => {
+  return useSWR<Ship[]>(`fleet/${fleetId}/ships`);
+};
 
-      if (localFleetData) {
-        // 保存済みの編成がある場合初期化
-        initFleet(localFleetData);
-        return;
-      }
-    }
-
-    // 編成が存在しない場合リダイレクト
-    replace("/");
-  };
-
-  return loadFleet;
+export const useEquipments = (fleetId: string) => {
+  return useSWR<Equipment[]>(`fleet/${fleetId}/equipments`);
 };
