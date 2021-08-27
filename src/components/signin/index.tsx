@@ -1,35 +1,36 @@
-import { FC } from "react";
-import { Redirect, useLocation } from "react-router";
-import { useUser } from "reactfire";
-import { usePageViewLog } from "../../core/firebase/analytics/hooks";
-import { useDidMount } from "../../util/hooks/lifecycle";
-import { useSetPageTitle } from "../../util/hooks/set-page-title";
+import { Box, CircularProgress } from "@material-ui/core";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
+import { useUser } from "../../hooks/firebase/auth/useUser";
 import { SignInForm } from "./signin-form";
 
-type LocationState =
-  | {
-      continue?: string;
-    }
-  | undefined;
-
-export const SignIn: FC = () => {
-  const pageViewLog = usePageViewLog();
-  const setPageTitle = useSetPageTitle();
-
-  const { data: user } = useUser();
-
-  const { state } = useLocation<LocationState>();
-
-  useDidMount(() => {
-    setPageTitle("サインイン");
-    pageViewLog("Sign In");
-  });
-
-  return user.isAnonymous ? (
-    <SignInForm />
-  ) : (
-    <Redirect to={state?.continue ?? "/"} />
-  );
+/** リダイレクト先を返す */
+const getRedirectTo = (to: string | string[] | undefined): string => {
+  // continue が有効な値でなければ /
+  return (typeof to === "string" && to) || "/";
 };
 
-export default SignIn;
+export const SignIn: FC = () => {
+  const { data: user } = useUser();
+  const { query, replace } = useRouter();
+
+  useEffect(() => {
+    if (user && !user.isAnonymous) {
+      const redirectTo = getRedirectTo(query.continue);
+      replace(redirectTo);
+    }
+  }, [query.continue, replace, user]);
+
+  return user?.isAnonymous ? (
+    <SignInForm anonymousUser={user} />
+  ) : (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "100vh" }}
+    >
+      <CircularProgress size={24} />
+    </Box>
+  );
+};

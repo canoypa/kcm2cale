@@ -1,7 +1,8 @@
 import { Box, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { FC, useContext, useState } from "react";
-import { FleetContext } from "../../contexts";
+import { FleetIdContext } from "../../fleetIdContext";
+import { useFleet } from "../../hooks";
 import { Editing } from "./editing";
 import { Info } from "./info";
 import { Actions } from "./status-bar";
@@ -26,7 +27,8 @@ const FleetHeaderSkeleton: FC = () => {
 };
 
 export const FleetHeader: FC = () => {
-  const fleet = useContext(FleetContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: fleet } = useFleet(fleetId);
 
   const [isEditing, setIsEditing] = useState(false);
 

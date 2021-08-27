@@ -7,5 +7,5 @@ test("isCombinedFleet", () => {
   expect(isCombinedFleet(FleetType.Transport)).toBe(true);
 
   expect(isCombinedFleet(FleetType.Normal)).toBe(false);
-  expect(isCombinedFleet(FleetType.StrikingForce)).toBe(false);
+  expect(isCombinedFleet(FleetType.Striking)).toBe(false);
 });

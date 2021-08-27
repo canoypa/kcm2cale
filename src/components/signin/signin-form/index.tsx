@@ -1,26 +1,33 @@
 import { Box, Typography } from "@material-ui/core";
+import {
+  getRedirectResult,
+  linkWithRedirect,
+  signInWithCredential,
+  User,
+} from "firebase/auth";
 import { FC } from "react";
-import { useAuth, useUser } from "reactfire";
 import { createProvider } from "../../../core/firebase/auth";
-import { ProviderId, ProviderIdValue } from "../../../core/firebase/auth/types";
+import { ProviderId } from "../../../core/firebase/auth/types";
+import { getAuth } from "../../../core/firebase/sdk/auth";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 import { useStyles } from "./styles";
 
-export const SignInForm: FC = () => {
-  const auth = useAuth();
-  const { data: user } = useUser();
+type Props = {
+  anonymousUser: User;
+};
+export const SignInForm: FC<Props> = ({ anonymousUser }) => {
+  const auth = getAuth();
 
   const classes = useStyles();
 
-  const signIn = (providerId: ProviderIdValue) => {
+  const signIn = (providerId: ProviderId) => {
     const provider = createProvider(providerId);
-    user.linkWithRedirect(provider);
+    linkWithRedirect(anonymousUser, provider);
   };
 
   useDidMount(() => {
-    auth
-      .getRedirectResult()
+    getRedirectResult(auth)
       .then((result) => {
         // 正常にリンク完了
         console.log(result);
@@ -31,10 +38,10 @@ export const SignInForm: FC = () => {
           // Todo: 匿名認証時に作成された編成がある場合移行するか尋ねる？
 
           // 現在のユーザを変数に逃がす
-          const prevUser = user;
+          const prevUser = anonymousUser;
 
           // 認証情報でサインイン
-          await auth.signInWithCredential(error.credential);
+          await signInWithCredential(auth, error.credential);
 
           // 匿名ユーザを削除
           prevUser.delete();
@@ -53,8 +60,8 @@ export const SignInForm: FC = () => {
           <Typography variant="h4">サインイン</Typography>
         </Box>
         <div className={classes.actions}>
-          <SignInButton provider={ProviderId.Google} onClick={signIn} />
-          <SignInButton provider={ProviderId.Twitter} onClick={signIn} />
+          <SignInButton provider={ProviderId.GOOGLE} onClick={signIn} />
+          <SignInButton provider={ProviderId.TWITTER} onClick={signIn} />
         </div>
       </div>
     </div>

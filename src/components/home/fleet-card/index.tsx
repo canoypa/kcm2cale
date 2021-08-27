@@ -7,22 +7,21 @@ import {
   Typography,
 } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
+import Link from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { useFirestore } from "reactfire";
 import { Fleet } from "../../../models/fleet";
 import { LineClamp } from "../../common/clamp";
 import { useStyles } from "./styles";
+import { useDeleteFleet } from "./useDeleteFleet";
 
 type Props = { fleetData: Fleet };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const firestore = useFirestore();
+  const deleteFleet = useDeleteFleet();
+  const classes = useStyles();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
-
-  const classes = useStyles();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
@@ -35,34 +34,15 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const deleteFleet = async () => {
+  const handlerDeleteFleet = () => {
     closeMenu();
-
-    // 各参照を取得
-    const fleeDocRef = firestore.doc(`fleets/${fleetData.id}`);
-    const shipsColRed = fleeDocRef.collection("ships");
-    const equipmentsColRed = fleeDocRef.collection("equipments");
-
-    // 艦,装備ドキュメントリストの取得
-    const { docs: shipDocs } = await shipsColRed.get();
-    const { docs: equipmentDocs } = await equipmentsColRed.get();
-
-    // バッチ処理開始
-    const batch = firestore.batch();
-
-    // 各ドキュメント削除
-    shipDocs.forEach((doc) => batch.delete(doc.ref));
-    equipmentDocs.forEach((doc) => batch.delete(doc.ref));
-    batch.delete(fleeDocRef);
-
-    // コミット
-    batch.commit();
+    deleteFleet(fleetData.id);
   };
 
   return (
     <>
-      <Link to={`/fleet/${fleetData.id}`} className={classes.container}>
-        <Card variant="outlined">
+      <Link href={`/fleet/${fleetData.id}`}>
+        <Card variant="outlined" className={classes.container}>
           <CardContent className={classes.cardContent}>
             <Typography
               variant="overline"
@@ -99,7 +79,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
         onClose={closeMenu}
         anchorEl={menuAnchorEl.current}
       >
-        <MenuItem onClick={deleteFleet}>削除</MenuItem>
+        <MenuItem onClick={handlerDeleteFleet}>削除</MenuItem>
       </Menu>
     </>
   );

@@ -1,55 +1,19 @@
 import { Box, Button, Dialog, Divider } from "@material-ui/core";
+import Link from "next/link";
 import { FC } from "react";
-import { useHistory, useLocation } from "react-router";
-import { Link } from "react-router-dom";
-import { useAuth, useUser } from "reactfire";
-import { LineClamp } from "../../clamp";
+import { APP_NAME } from "../../../../core/env";
 import { UserIcon } from "../../user-icon";
 import { useStyles } from "./styles";
 
-type AccountHeaderProps = {
-  onClose: () => void;
-};
-const AccountHeader: FC<AccountHeaderProps> = ({ onClose }) => {
-  const auth = useAuth();
-  const { data: user } = useUser();
-
-  const { push } = useHistory();
-  const { pathname } = useLocation();
-
+const AccountHeader: FC = () => {
   const classes = useStyles();
 
-  const singIn = () => {
-    push("/signin", { continue: pathname });
-  };
-  const signOut = () => {
-    onClose();
-    auth.signOut();
-  };
-
-  return user.isAnonymous ? (
+  return (
     <div>
       <div className={classes.accountHeader}>
         <UserIcon />
         <span>サインインしていません</span>
       </div>
-      <Box display="flex" justifyContent="center">
-        <Button variant="outlined" onClick={singIn}>
-          サインイン
-        </Button>
-      </Box>
-    </div>
-  ) : (
-    <div>
-      <div className={classes.accountHeader}>
-        <UserIcon />
-        <LineClamp count={1}>{user.displayName ?? ""}</LineClamp>
-      </div>
-      <Box display="flex" justifyContent="center">
-        <Button variant="outlined" onClick={signOut}>
-          サインアウト
-        </Button>
-      </Box>
     </div>
   );
 };
@@ -64,12 +28,14 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <Box padding={2}>
-        <AccountHeader onClose={onClose} />
+        <AccountHeader />
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
-        <Link to="/about" className={classes.link}>
-          <Button size="small">{__APP_NAME__} について</Button>
+        <Link href="/about">
+          <Button size="small" className={classes.link}>
+            {APP_NAME} について
+          </Button>
         </Link>
       </Box>
     </Dialog>

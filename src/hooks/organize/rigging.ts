@@ -1,40 +1,35 @@
 import { useContext } from "react";
-import { selectorFamily, useRecoilValue } from "recoil";
-import { EquipmentsContext } from "../../components/fleet/contexts";
-import { EmptyEquipment, Equipment } from "../../models/equipment";
+import { FleetIdContext } from "../../components/fleet/fleetIdContext";
+import { useEquips } from "../../components/fleet/hooks";
+import { EmptyEquip, Equip } from "../../models/equip";
 import { Ship } from "../../models/ship";
 
 const DUMMY_SLOT_SIZE = 4;
 
-const slotSizeSelector = selectorFamily({
-  key: "ShipSlotSize",
-  get: (_fleetPlace: Ship) => () => DUMMY_SLOT_SIZE,
-  // get(ShipsState).get(fleetPlace)?.status.slotSize,
-});
-
 type Rigging = {
-  shipEquipments: Equipment[];
-  isCanAddNewEquipment: boolean;
-  newEquipmentPlace: EmptyEquipment;
+  shipEquips: Equip[];
+  isCanAddNewEquip: boolean;
+  newEquipPlace: EmptyEquip;
 };
 export const useRigging = (fleetPlace: Ship): Rigging => {
-  const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
+  const shipSlotSize = DUMMY_SLOT_SIZE;
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
-  const shipEquipmentsState = useContext(EquipmentsContext);
+  const fleetId = useContext(FleetIdContext);
+  const { data: equips } = useEquips(fleetId);
 
-  const shipEquipments = shipEquipmentsState
-    ? shipEquipmentsState
+  const shipEquips = equips
+    ? equips
         .filter((v) => v.shipId === fleetPlace.id)
         .sort((a, b) => a.slotNo - b.slotNo)
     : [];
 
-  const equippedLength = shipEquipments.length;
+  const equippedLength = shipEquips.length;
 
-  const isCanAddNewEquipment = shipSlotSize > equippedLength;
+  const isCanAddNewEquip = shipSlotSize > equippedLength;
   const newEqSlotNo = equippedLength;
 
-  const newEquipmentPlace = {
+  const newEquipPlace = {
     shipId: fleetPlace.id,
     slotNo: newEqSlotNo,
     id: null,
@@ -42,8 +37,8 @@ export const useRigging = (fleetPlace: Ship): Rigging => {
   };
 
   return {
-    shipEquipments,
-    isCanAddNewEquipment,
-    newEquipmentPlace,
+    shipEquips: shipEquips,
+    isCanAddNewEquip: isCanAddNewEquip,
+    newEquipPlace: newEquipPlace,
   };
 };

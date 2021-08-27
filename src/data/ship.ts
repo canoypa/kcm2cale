@@ -3237,6 +3237,11 @@ export const ShipsData: ShipData[] = [
     name: "球磨改二丁",
   },
   {
+    no: "458a",
+    type: ShipType.LightAircraftCarrier,
+    name: "Gambier Bay Mk.II",
+  },
+  {
     no: "459a",
     type: ShipType.FastBattleship,
     name: "Washington改",
