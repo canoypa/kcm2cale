@@ -1,10 +1,9 @@
-import * as t from "runtypes";
+import { array, number, object, string } from "zod";
 
-export const EquipmentDoc = t.Record({
-  shipId: t.String,
-  slotNo: t.Number,
-  no: t.Number,
-  id: t.String,
+export const EquipDoc = object({
+  shipId: string(),
+  slotNo: number(),
+  no: number(),
 });
 
-export const EquipmentColl = t.Array(EquipmentDoc);
+export const EquipDocs = array(EquipDoc);

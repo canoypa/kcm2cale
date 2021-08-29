@@ -1,26 +1,32 @@
-import * as t from "runtypes";
-import { firebase } from "../../core/firebase/app";
+import { Timestamp } from "firebase/firestore";
+import {
+  array,
+  instanceof as zodInstanceof,
+  literal,
+  object,
+  string,
+  union,
+} from "zod";
 
-const FleetType = t.Union(
-  t.Literal("Normal"),
-  t.Literal("Carrier"),
-  t.Literal("Surface"),
-  t.Literal("Transport"),
-  t.Literal("StrikingForce")
-);
+const FleetType = union([
+  literal("normal"),
+  literal("carrier"),
+  literal("surface"),
+  literal("transport"),
+  literal("striking"),
+]);
 
-export const FleetDoc = t.Record({
-  version: t.Number,
+export const FleetDoc = object({
+  version: literal(1),
 
-  id: t.String,
-  owner: t.String,
+  owner: string(),
 
-  title: t.String,
-  description: t.String,
+  title: string(),
+  description: string(),
   type: FleetType,
 
-  createdAt: t.InstanceOf(firebase.firestore.Timestamp),
-  updatedAt: t.InstanceOf(firebase.firestore.Timestamp),
+  createdAt: zodInstanceof(Timestamp),
+  updatedAt: zodInstanceof(Timestamp),
 });
 
-export const FleetColl = t.Array(FleetDoc);
+export const FleetDocs = array(FleetDoc);
