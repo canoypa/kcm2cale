@@ -28,9 +28,10 @@
     "react-measure": "^2.5.2",
     "react-movable": "^2.5.3",
     "react-window": "^1.8.6",
-    "runtypes": "^6.3.1",
     "recoil": "^0.4.1",
-    "swr": "^0.5.6"
+    "runtypes": "^6.3.1",
+    "swr": "^0.5.6",
+    "zod": "^3.8.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.0.1",
