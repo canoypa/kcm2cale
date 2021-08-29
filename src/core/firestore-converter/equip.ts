@@ -1,6 +1,6 @@
 import { FirestoreDataConverter } from "firebase/firestore";
+import { EquipDoc } from "~/models/firestore/equipment";
 import { Equip } from "../../models/equip";
-import { EquipmentDoc } from "../../models/firestore/equipment";
 
 export const FirestoreFleetEquipConverter: FirestoreDataConverter<Equip> = {
   toFirestore: () => ({}),
@@ -8,13 +8,11 @@ export const FirestoreFleetEquipConverter: FirestoreDataConverter<Equip> = {
     const data = snapshot.data();
 
     // バリデーション
-    const equipment = EquipmentDoc.check(data);
-
-    return {
+    const equip = EquipDoc.transform((v) => ({
+      ...v,
       id: snapshot.id,
-      shipId: data.shipId,
-      slotNo: data.slotNo,
-      no: data.no,
-    };
+    })).parse(data);
+
+    return equip;
   },
 };

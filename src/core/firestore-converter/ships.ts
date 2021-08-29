@@ -8,13 +8,11 @@ export const FirestoreFleetShipsConverter: FirestoreDataConverter<Ship> = {
     const data = snapshot.data();
 
     // バリデーション
-    const ship = ShipDoc.check(data);
-
-    return {
+    const ship = ShipDoc.transform((v) => ({
+      ...v,
       id: snapshot.id,
-      fleetNo: data.fleetNo,
-      turnNo: data.turnNo,
-      no: data.no,
-    };
+    })).parse(data);
+
+    return ship;
   },
 };
