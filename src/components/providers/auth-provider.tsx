@@ -11,7 +11,7 @@ import { useUser } from "../../hooks/firebase/auth/useUser";
 /**
  * アプリ内で常にサインインを要求
  */
-export const AuthProvider: FC = () => {
+const AuthProvider: FC = () => {
   const auth = getAuth();
   const { mutate } = useUser();
 
@@ -33,3 +33,4 @@ export const AuthProvider: FC = () => {
 
   return null;
 };
+export default AuthProvider;
