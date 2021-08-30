@@ -53,7 +53,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   );
 
   const theme = useTheme();
-  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("xs"));
+  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   const classes = useStyles();
 
@@ -80,7 +80,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
       {fullScreenBreakPoint && (
         <AppBar position="static" elevation={0} color="transparent">
           <Toolbar>
-            <IconButton onClick={onEnd} aria-label="戻る">
+            <IconButton onClick={onEnd} aria-label="戻る" size="large">
               <NavigateBefore />
             </IconButton>
           </Toolbar>

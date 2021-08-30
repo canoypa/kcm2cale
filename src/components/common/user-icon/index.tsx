@@ -1,6 +1,6 @@
 import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
-import { Skeleton } from "@material-ui/lab";
+import { Skeleton } from "@material-ui/core";
 import { FC } from "react";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { useStyles } from "./styles";
@@ -14,7 +14,7 @@ const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
   const classes = useStyles();
 
   if (!signInCheckResult.signedIn) {
-    return <Skeleton variant="circle" width={size} height={size} />;
+    return <Skeleton variant="circular" width={size} height={size} />;
   }
 
   return (
@@ -33,7 +33,7 @@ export const UserIcon: FC<UserIconProps> = ({ size = 32 }) => {
 
 export const UserIconButton: FC<IconButtonProps> = ({ ...props }) => {
   return (
-    <IconButton style={{ padding: 8 }} {...props}>
+    <IconButton style={{ padding: 8 }} {...props} size="large">
       <UserIcon size={32} />
     </IconButton>
   );

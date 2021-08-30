@@ -6,12 +6,7 @@ export const EmptyState: FC = () => {
   const classes = useStyles();
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      gridRowGap={8}
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" rowGap={8}>
       <Typography variant="h6" color="textSecondary">
         まだ編成がありません
       </Typography>

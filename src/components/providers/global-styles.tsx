@@ -1,4 +1,5 @@
-import { CssBaseline as MuiCssBaseline, withStyles } from "@material-ui/core";
+import { CssBaseline as MuiCssBaseline } from "@material-ui/core";
+import withStyles from "@material-ui/styles/withStyles";
 import { ReactNode, VFC } from "react";
 
 const CssBaseline = withStyles((theme) => ({

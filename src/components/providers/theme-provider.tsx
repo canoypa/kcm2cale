@@ -1,6 +1,9 @@
 import {
   PaletteType,
   ThemeProvider as MuiThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  adaptV4Theme,
 } from "@material-ui/core";
 import {
   createContext,
@@ -11,6 +14,11 @@ import {
   VFC,
 } from "react";
 import { createTheme } from "../../core/theme";
+
+declare module "@material-ui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 const IsDarkMatchMedia = "(prefers-color-scheme:dark)";
 
@@ -80,7 +88,10 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
     return () => matchMedia.removeEventListener("change", handler);
   }, [configuredTheme]);
 
-  const themeData = useMemo(() => createTheme(resolvedTheme), [resolvedTheme]);
+  const themeData = useMemo(
+    () => createTheme(adaptV4Theme(resolvedTheme)),
+    [resolvedTheme]
+  );
 
   const themeValue: Theme = {
     themes: ["light", "dark"],
@@ -90,7 +101,9 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <MuiThemeProvider theme={themeData}>{children}</MuiThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <MuiThemeProvider theme={themeData}>{children}</MuiThemeProvider>
+      </StyledEngineProvider>
     </ThemeContext.Provider>
   );
 };

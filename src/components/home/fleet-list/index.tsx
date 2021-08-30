@@ -31,7 +31,7 @@ export const FleetList: FC<Props> = ({ fleetList }) => {
         />
       </div>
 
-      <Box display="grid" gridRowGap={16}>
+      <Box display="grid" rowGap={16}>
         {searchedFleetList.map((v) => (
           <FleetCard key={v.id} fleetData={v} />
         ))}

@@ -1,4 +1,4 @@
-import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/core";
 import { FC, MouseEvent } from "react";
 import { FleetNo } from "../../../../../models/ship";
 import { useStyles } from "./styles";

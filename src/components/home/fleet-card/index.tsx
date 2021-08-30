@@ -66,6 +66,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
                 onClick={openMenu}
                 ref={menuAnchorEl}
                 aria-label="アクションメニュー"
+                size="large"
               >
                 <MoreVert />
               </IconButton>

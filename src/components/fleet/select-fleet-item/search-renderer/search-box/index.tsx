@@ -1,8 +1,8 @@
 import {
   FormControl,
   OutlinedInput as MuiOutlinedInput,
-  withStyles,
 } from "@material-ui/core";
+import withStyles from "@material-ui/styles/withStyles";
 import { Search } from "@material-ui/icons";
 import { FC, KeyboardEventHandler } from "react";
 
