@@ -1,8 +1,8 @@
+import { CssBaseline } from "@material-ui/core";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { GlobalStyles } from "../components/providers/global-styles";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 const AuthProvider = dynamic(
@@ -19,10 +19,10 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
       </Head>
 
       <ThemeProvider>
-        <GlobalStyles>
-          <AuthProvider />
-          <Component {...pageProps} />
-        </GlobalStyles>
+        <CssBaseline />
+        <AuthProvider />
+
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   );

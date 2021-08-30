@@ -10,4 +10,14 @@ export const createTheme = (mode: PaletteMode) =>
         textTransform: "none",
       },
     },
+
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          html: {
+            WebkitTapHighlightColor: "transparent",
+          },
+        },
+      },
+    },
   });
