@@ -6,7 +6,7 @@ import { ShipsList } from "../../molecules/ShipsList";
 export const Organize: FC = () => {
   return (
     <Container maxWidth="md">
-      <Box display="flex" flexDirection="column" rowGap={16} paddingY={3}>
+      <Box display="flex" flexDirection="column" rowGap={2} paddingY={3}>
         <FleetHeader />
         <ShipsList />
       </Box>

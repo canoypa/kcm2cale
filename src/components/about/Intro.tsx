@@ -8,7 +8,7 @@ export const Intro: FC = () => {
     <section>
       <h1>{APP_NAME}</h1>
 
-      <Box display="flex" columnGap={8} flexWrap="wrap">
+      <Box display="flex" columnGap={1} flexWrap="wrap">
         <ExternalLink
           href={`https://github.com/canoypa/kcm2cale/releases/tag/v${APP_VERSION}`}
         >

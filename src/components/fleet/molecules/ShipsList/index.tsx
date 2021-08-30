@@ -1,5 +1,4 @@
-import { Box } from "@material-ui/core";
-import { Skeleton } from "@material-ui/core";
+import { Box, Skeleton } from "@material-ui/core";
 import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
@@ -18,7 +17,7 @@ import { ToggleFleet } from "./toggle-fleet";
 
 const FleetSkeleton: FC = () => {
   return (
-    <Box display="flex" flexDirection="column" rowGap={8}>
+    <Box display="flex" flexDirection="column" rowGap={1}>
       {range(6).map((i) => (
         <Skeleton key={i} variant="rectangular" height={64} />
       ))}
