@@ -9,7 +9,7 @@ type Props = {
   fleetPlace: Ship | EmptyShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const selectShip = useSelectShip();
+  const { select: selectShip } = useSelectShip();
 
   const isOwner = useIsFleetOwner();
 

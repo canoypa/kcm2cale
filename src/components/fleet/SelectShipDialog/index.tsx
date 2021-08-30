@@ -1,17 +1,16 @@
 import { Dialog } from "@material-ui/core";
 import dynamic from "next/dynamic";
 import { FC, useCallback } from "react";
-import { useRecoilState } from "recoil";
-import { DefaultSelectShipState, SelectShipAtom } from "../store/select-ship";
+import { useSelectShip } from "../hooks/select-ship";
 
 const SelectShip = dynamic(() => import("./SelectShip"));
 
 export const SelectShipDialog: FC = () => {
-  const [selectState, setSelectState] = useRecoilState(SelectShipAtom);
+  const { data: selectState, reset: resetSelectState } = useSelectShip();
 
   const onClose = useCallback(() => {
-    setSelectState(DefaultSelectShipState);
-  }, [setSelectState]);
+    resetSelectState();
+  }, [resetSelectState]);
 
   return (
     <Dialog fullScreen open={selectState.open} onClose={onClose}>
