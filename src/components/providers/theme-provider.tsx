@@ -1,9 +1,8 @@
 import {
-  PaletteType,
-  ThemeProvider as MuiThemeProvider,
-  Theme,
+  PaletteMode,
   StyledEngineProvider,
-  adaptV4Theme,
+  Theme as MuiTheme,
+  ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core";
 import {
   createContext,
@@ -17,12 +16,11 @@ import { createTheme } from "../../core/theme";
 
 declare module "@material-ui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
+  interface DefaultTheme extends MuiTheme {}
 }
-
 const IsDarkMatchMedia = "(prefers-color-scheme:dark)";
 
-type ThemeType = PaletteType | "system";
+type ThemeType = PaletteMode | "system";
 
 type Theme = {
   /** 全てのテーマ名 */
@@ -54,7 +52,7 @@ const getConfiguredTheme = (): ThemeType => {
 /**
  * 保存されたテーマ設定が "system" の場合、システム設定を解決して返す
  */
-const getResolvedTheme = (configuredTheme: ThemeType): PaletteType => {
+const getResolvedTheme = (configuredTheme: ThemeType): PaletteMode => {
   // 設定値が "system" 出ない場合そのまま返す
   if (configuredTheme !== "system") return configuredTheme;
 
@@ -88,10 +86,7 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
     return () => matchMedia.removeEventListener("change", handler);
   }, [configuredTheme]);
 
-  const themeData = useMemo(
-    () => createTheme(adaptV4Theme(resolvedTheme)),
-    [resolvedTheme]
-  );
+  const themeData = useMemo(() => createTheme(resolvedTheme), [resolvedTheme]);
 
   const themeValue: Theme = {
     themes: ["light", "dark"],
@@ -100,10 +95,10 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={themeValue}>
-      <StyledEngineProvider injectFirst>
+    <StyledEngineProvider injectFirst>
+      <ThemeContext.Provider value={themeValue}>
         <MuiThemeProvider theme={themeData}>{children}</MuiThemeProvider>
-      </StyledEngineProvider>
-    </ThemeContext.Provider>
+      </ThemeContext.Provider>
+    </StyledEngineProvider>
   );
 };
