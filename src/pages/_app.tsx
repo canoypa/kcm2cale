@@ -1,4 +1,5 @@
-import { CssBaseline } from "@material-ui/core";
+import createEmotionCache, { EmotionCache } from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
@@ -9,7 +10,16 @@ const AuthProvider = dynamic(
   () => import("~/components/providers/auth-provider")
 );
 
-const App: NextPage<AppProps> = ({ Component, pageProps }) => {
+const clientSideEmotionCache = createEmotionCache({ key: "css" });
+
+type Props = AppProps & {
+  emotionCache?: EmotionCache;
+};
+const App: NextPage<Props> = ({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}) => {
   return (
     <>
       <Head>
@@ -18,12 +28,14 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <ThemeProvider>
-        <CssBaseline />
-        <AuthProvider />
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider>
+          {/* <CssBaseline /> */}
+          <AuthProvider />
 
-        <Component {...pageProps} />
-      </ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
     </>
   );
 };

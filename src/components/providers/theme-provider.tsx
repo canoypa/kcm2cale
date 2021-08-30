@@ -1,4 +1,5 @@
 import {
+  CssBaseline,
   PaletteMode,
   StyledEngineProvider,
   Theme as MuiTheme,
@@ -97,7 +98,10 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeContext.Provider value={themeValue}>
-        <MuiThemeProvider theme={themeData}>{children}</MuiThemeProvider>
+        <MuiThemeProvider theme={themeData}>
+          <CssBaseline />
+          {children}
+        </MuiThemeProvider>
       </ThemeContext.Provider>
     </StyledEngineProvider>
   );
