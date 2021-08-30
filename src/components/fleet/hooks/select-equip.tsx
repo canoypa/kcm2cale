@@ -1,17 +1,36 @@
 import { useCallback } from "react";
-import { useSetRecoilState } from "recoil";
+import useSWR from "swr";
 import { ShipEquip } from "~/models/equip";
-import { SelectEquipAtom } from "../store/select-equip";
+
+export type SelectEquipState =
+  | { open: true; target: ShipEquip }
+  | { open: false; target: null };
+
+const defaultState: SelectEquipState = {
+  open: false,
+  target: null,
+};
 
 export const useSelectEquip = () => {
-  const setSelectEquip = useSetRecoilState(SelectEquipAtom);
+  const { data, mutate } = useSWR<SelectEquipState>("select-equip", {
+    fallbackData: defaultState,
+  });
 
-  const selectEquip = useCallback(
+  const select = useCallback(
     (target: ShipEquip) => {
-      setSelectEquip({ open: true, target });
+      mutate({ open: true, target });
     },
-    [setSelectEquip]
+    [mutate]
   );
 
-  return selectEquip;
+  const reset = useCallback(() => {
+    mutate(defaultState);
+  }, [mutate]);
+
+  return {
+    // fallbackData を設定済みのため安全
+    data: data as SelectEquipState,
+    select,
+    reset,
+  };
 };

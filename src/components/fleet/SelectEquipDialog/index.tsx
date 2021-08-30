@@ -1,20 +1,16 @@
 import { Dialog } from "@material-ui/core";
 import dynamic from "next/dynamic";
 import { FC, useCallback } from "react";
-import { useRecoilState } from "recoil";
-import {
-  DefaultSelectEquipState,
-  SelectEquipAtom,
-} from "../store/select-equip";
+import { useSelectEquip } from "../hooks/select-equip";
 
 const SelectEquip = dynamic(() => import("./SelectEquip"));
 
 export const SelectEquipDialog: FC = () => {
-  const [selectState, setSelectState] = useRecoilState(SelectEquipAtom);
+  const { data: selectState, reset: resetSelectState } = useSelectEquip();
 
   const onClose = useCallback(() => {
-    setSelectState(DefaultSelectEquipState);
-  }, [setSelectState]);
+    resetSelectState();
+  }, [resetSelectState]);
 
   return (
     <Dialog fullScreen open={selectState.open} onClose={onClose}>

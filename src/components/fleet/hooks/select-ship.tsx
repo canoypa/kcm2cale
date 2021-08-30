@@ -1,17 +1,36 @@
 import { useCallback } from "react";
-import { useSetRecoilState } from "recoil";
+import useSWR from "swr";
 import { FleetShip } from "~/models/ship";
-import { SelectShipAtom } from "../store/select-ship";
+
+export type SelectShipState =
+  | { open: true; target: FleetShip }
+  | { open: false; target: null };
+
+const defaultState: SelectShipState = {
+  open: false,
+  target: null,
+};
 
 export const useSelectShip = () => {
-  const setSelectShip = useSetRecoilState(SelectShipAtom);
+  const { data, mutate } = useSWR<SelectShipState>("select-ship", {
+    fallbackData: defaultState,
+  });
 
-  const selectShip = useCallback(
+  const select = useCallback(
     (target: FleetShip) => {
-      setSelectShip({ open: true, target });
+      mutate({ open: true, target });
     },
-    [setSelectShip]
+    [mutate]
   );
 
-  return selectShip;
+  const reset = useCallback(() => {
+    mutate(defaultState);
+  }, [mutate]);
+
+  return {
+    // fallbackData を設定済みのため安全
+    data: data as SelectShipState,
+    select,
+    reset,
+  };
 };

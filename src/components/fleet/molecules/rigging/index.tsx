@@ -13,7 +13,7 @@ type Props = {
   fleetPlace: Ship;
 };
 export const Rigging: FC<Props> = ({ fleetPlace }) => {
-  const selectEquip = useSelectEquip();
+  const { select: selectEquip } = useSelectEquip();
   const { shipEquips, isCanAddNewEquip, newEquipPlace } =
     useRigging(fleetPlace);
 

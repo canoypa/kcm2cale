@@ -10,7 +10,7 @@ type Props = {
   fleetPlace: Ship;
 };
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
-  const selectShip = useSelectShip();
+  const { select: selectShip } = useSelectShip();
 
   const ship = ShipsData.find((v) => v.no === fleetPlace.no);
   if (!ship) throw new Error("Error");
