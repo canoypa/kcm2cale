@@ -23,7 +23,7 @@ const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
       sx={{
         width: size,
         height: size,
-        backgroundColor: "inherit",
+        backgroundColor: "unset",
         color: "inherit",
       }}
     >
