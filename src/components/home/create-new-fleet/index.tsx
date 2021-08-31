@@ -9,7 +9,7 @@ export const CreateNewFleet: FC = () => {
 
   return (
     <Grid container justifyContent="center" className={classes.container}>
-      <Link href="/new">
+      <Link href="/new" passHref>
         <Fab variant="extended" color="primary">
           <Add className={classes.extendedIcon} />
           編成を作成

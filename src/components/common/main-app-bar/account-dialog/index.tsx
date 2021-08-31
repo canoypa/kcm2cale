@@ -32,7 +32,7 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
-        <Link href="/about">
+        <Link href="/about" passHref>
           <Button size="small" className={classes.link}>
             {APP_NAME} について
           </Button>
