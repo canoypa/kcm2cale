@@ -74,7 +74,12 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onEnd} fullScreen={fullScreenBreakPoint}>
+    <Dialog
+      open={open}
+      onClose={onEnd}
+      fullScreen={fullScreenBreakPoint}
+      fullWidth
+    >
       {fullScreenBreakPoint && (
         <AppBar position="static" elevation={0} color="transparent">
           <Toolbar>
