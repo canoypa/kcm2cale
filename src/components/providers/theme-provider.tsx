@@ -1,7 +1,6 @@
 import {
   CssBaseline,
   PaletteMode,
-  StyledEngineProvider,
   ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core";
 import {
@@ -91,13 +90,11 @@ export const ThemeProvider: VFC<Props> = ({ children }) => {
   };
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeContext.Provider value={themeValue}>
-        <MuiThemeProvider theme={themeData}>
-          <CssBaseline />
-          {children}
-        </MuiThemeProvider>
-      </ThemeContext.Provider>
-    </StyledEngineProvider>
+    <ThemeContext.Provider value={themeValue}>
+      <MuiThemeProvider theme={themeData}>
+        <CssBaseline />
+        {children}
+      </MuiThemeProvider>
+    </ThemeContext.Provider>
   );
 };
