@@ -8,12 +8,7 @@ export const FleetListArea: FC = () => {
 
   if (!signInCheckResult.signedIn) {
     return (
-      <Box
-        container
-        justifyContent="center"
-        alignItems="center"
-        style={{ height: "100%" }}
-      >
+      <Box container justifyContent="center" alignItems="center" height="100%">
         <CircularProgress size={24} />
       </Box>
     );

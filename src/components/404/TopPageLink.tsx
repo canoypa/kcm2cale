@@ -4,7 +4,7 @@ import { TextLink } from "../common/TextLink";
 
 export const TopPageLink: FC = () => {
   return (
-    <Box style={{ marginTop: 2, marginBottom: 2 }}>
+    <Box my={2}>
       <TextLink href="/">トップページへ</TextLink>
     </Box>
   );

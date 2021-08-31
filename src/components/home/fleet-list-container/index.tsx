@@ -78,7 +78,7 @@ export const FleetListContainer: FC = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        style={{ height: "100%" }}
+        height="100%"
       >
         <CircularProgress size={24} />
       </Box>
@@ -89,7 +89,7 @@ export const FleetListContainer: FC = () => {
   const isExistFleetList = checkExistFleetList(fleetList);
 
   return (
-    <Container maxWidth="md" style={{ height: "100%" }}>
+    <Container maxWidth="md" sx={{ height: "100%" }}>
       <Box
         display="flex"
         flexDirection="column"
@@ -104,7 +104,7 @@ export const FleetListContainer: FC = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            style={{ height: "100%" }}
+            height="100%"
           >
             <EmptyState />
           </Box>

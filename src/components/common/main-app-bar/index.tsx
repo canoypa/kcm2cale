@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, useScrollTrigger } from "@material-ui/core";
+import { AppBar, Box, Toolbar, useScrollTrigger } from "@material-ui/core";
 import { FC, useState } from "react";
 import { UserIconButton } from "../user-icon";
 import { AccountDialog } from "./account-dialog";
@@ -21,7 +21,7 @@ export const MainAppBar: FC = () => {
         elevation={elevateTrigger ? 4 : 0}
       >
         <Toolbar>
-          <div style={{ flexGrow: 1 }}></div>
+          <Box flexGrow={1} />
           <UserIconButton
             edge="end"
             onClick={openDialog}

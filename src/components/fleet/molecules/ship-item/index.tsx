@@ -29,9 +29,7 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
           width={24}
           height={24}
           color="text.secondary"
-          style={{
-            cursor: "grab",
-          }}
+          sx={{ cursor: "grab" }}
           data-movable-handle
         >
           <DragIndicator />

@@ -26,12 +26,7 @@ const HomePage: NextPage = () => {
       </Head>
 
       <main>
-        <Grid
-          container
-          direction="column"
-          wrap="nowrap"
-          style={{ height: "100vh" }}
-        >
+        <Grid container direction="column" wrap="nowrap" height="100vh">
           <MainAppBar />
           <Box flexGrow={1}>
             <FleetListArea />
@@ -40,7 +35,7 @@ const HomePage: NextPage = () => {
             position="sticky"
             elevation={0}
             color="transparent"
-            style={{ bottom: 0 }}
+            sx={{ bottom: 0 }}
           >
             <CreateNewFleet />
           </AppBar>

@@ -1,4 +1,4 @@
-import { ListItem, ListItemText } from "@material-ui/core";
+import { Box, ListItem, ListItemText } from "@material-ui/core";
 import { FC } from "react";
 import Measure from "react-measure";
 import { FixedSizeList } from "react-window";
@@ -20,7 +20,7 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
   return (
     <Measure bounds>
       {({ measureRef, contentRect }) => (
-        <div style={{ flexGrow: 1 }} ref={measureRef}>
+        <Box flexGrow={1} ref={measureRef}>
           <FixedSizeList
             width={contentRect.bounds?.width || 0}
             height={contentRect.bounds?.height || 0}
@@ -35,7 +35,7 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
                 <ListItem
                   key={item.key}
                   button
-                  style={style}
+                  sx={style}
                   onClick={_handlerOnSelect}
                 >
                   <ListItemText primary={item.label} />
@@ -43,7 +43,7 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
               );
             }}
           </FixedSizeList>
-        </div>
+        </Box>
       )}
     </Measure>
   );

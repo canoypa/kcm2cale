@@ -30,9 +30,7 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
         margin="4px 0"
         height={64}
         color="text.secondary"
-        style={{
-          cursor: "pointer",
-        }}
+        sx={{ cursor: "pointer" }}
         role="button"
         onClick={swapShipHandler}
       >
