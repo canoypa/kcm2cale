@@ -7,28 +7,28 @@ import {
 import { createContext, ReactNode, useMemo, VFC } from "react";
 import { createTheme } from "../../core/theme";
 
-type ThemeType = PaletteMode | "system";
+type ConfiguredModeType = PaletteMode | "system";
 
 type Theme = {
   /** 全てのテーマ名 */
-  themes: string[];
+  modes: string[];
   /** 現在のテーマ名 */
-  theme: string;
+  mode: string;
   /** "system" を含む保存されたテーマ設定 */
-  configuredTheme: string;
+  configuredMode: string;
   /** テーマを更新 */
   // setTheme: (theme: string) => void;
 };
 const ThemeContext = createContext<Theme>({
-  themes: [],
-  theme: "",
-  configuredTheme: "",
+  modes: [],
+  mode: "",
+  configuredMode: "",
 });
 
 /**
  * 保存されたテーマ設定を取得して返す
  */
-const getConfiguredTheme = (): ThemeType => {
+const getConfiguredMode = (): ConfiguredModeType => {
   // サーバサイドでは "system" で処理
   if (typeof window === "undefined") return "system";
 
@@ -36,23 +36,20 @@ const getConfiguredTheme = (): ThemeType => {
   // 現在は "system" のみ
   return "system";
 };
-const configuredTheme = getConfiguredTheme();
+const configuredMode = getConfiguredMode();
 
 type Props = {
   children: ReactNode;
 };
 export const ThemeProvider: VFC<Props> = ({ children }) => {
-  const resolvedTheme = useMediaQuery("(prefers-color-scheme:dark)");
-  const mode = useMemo(
-    () => (resolvedTheme ? "dark" : "light"),
-    [resolvedTheme]
-  );
-  const themeData = useMemo(() => createTheme(mode), [mode]);
+  const isDark = useMediaQuery("(prefers-color-scheme:dark)");
+  const resolvedMode = useMemo(() => (isDark ? "dark" : "light"), [isDark]);
+  const themeData = useMemo(() => createTheme(resolvedMode), [resolvedMode]);
 
   const themeValue: Theme = {
-    themes: ["light", "dark"],
-    theme: mode,
-    configuredTheme: configuredTheme,
+    modes: ["light", "dark"],
+    mode: resolvedMode,
+    configuredMode: configuredMode,
   };
 
   return (
