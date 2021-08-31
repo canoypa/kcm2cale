@@ -1,8 +1,20 @@
+import { Box, makeStyles } from "@material-ui/core";
 import { FC } from "react";
 import { useSelectShip } from "~/components/fleet/hooks/select-ship";
 import { ShipsData } from "../../../../../data/ship";
 import { Ship } from "../../../../../models/ship";
-import { useStyles } from "./styles";
+
+const useStyles = makeStyles(() => ({
+  name: {
+    fontSize: "1.25em",
+    cursor: "pointer",
+
+    ["@media (max-width: 599px)"]: {
+      fontSize: "1em",
+      maxWidth: "8em",
+    },
+  },
+}));
 
 const DUMMY_LEVEL = 99;
 
@@ -22,13 +34,13 @@ export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.actions}>
+    <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" marginLeft={1}>
         <div className={classes.name} onClick={swapShipHandler}>
           {ship.name || "変更"}
         </div>
-        <div className={classes.level}>{`${DUMMY_LEVEL} Lv`}</div>
-      </div>
-    </div>
+        <Box marginLeft={2}>{`${DUMMY_LEVEL} Lv`}</Box>
+      </Box>
+    </Box>
   );
 };

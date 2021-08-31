@@ -4,15 +4,12 @@ import { searchFleet } from "../../../core/search/fleet";
 import { Fleet } from "../../../models/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
-import { useStyles } from "./styles";
 
 type Props = {
   fleetList: Fleet[];
 };
 export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useState<string>("");
-
-  const classes = useStyles();
 
   const searchedFleetList = searchFleet(fleetList, { q: query });
 
@@ -22,14 +19,14 @@ export const FleetList: FC<Props> = ({ fleetList }) => {
 
   return (
     <div>
-      <div className={classes.searchBoxArea}>
+      <Box mb={2}>
         <SearchBox
           fullWidth
           placeholder="編成を検索"
           value={query}
           onChange={changeQuery}
         />
-      </div>
+      </Box>
 
       <Box display="grid" gridRowGap={16}>
         {searchedFleetList.map((v) => (

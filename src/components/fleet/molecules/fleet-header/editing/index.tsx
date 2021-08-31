@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -17,7 +18,6 @@ import { ChangeEvent, FC, useMemo } from "react";
 import { isFleetType } from "../../../../../core/util/is-fleet-type";
 import { FleetType } from "../../../../../models/fleet";
 import { useCountValid, useEditFleetInfo } from "./hooks";
-import { useStyles } from "./styles";
 
 const TitleCharCount = 256;
 const DescriptionCharCount = 512;
@@ -55,8 +55,6 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   const theme = useTheme();
   const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const classes = useStyles();
-
   const handler = {
     onFleetTitleChange: (e: ChangeEvent<HTMLInputElement>) => {
       setTitle(e.target.value);
@@ -88,43 +86,48 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
       )}
       <DialogTitle>編成を編集</DialogTitle>
       <DialogContent>
-        <TextField
-          variant="outlined"
-          label="編成名"
-          value={title}
-          helperText={titleValid.countText}
-          error={titleValid.error}
-          onChange={handler.onFleetTitleChange}
-          fullWidth
-          autoFocus
-          className={classes.titleFieldMargin}
-        />
-        <TextField
-          variant="outlined"
-          label="説明"
-          value={description}
-          helperText={descriptionValid.countText}
-          error={descriptionValid.error}
-          onChange={handler.onFleetDescriptionChange}
-          fullWidth
-          multiline
-          className={classes.descriptionFieldMargin}
-        />
-        <TextField
-          variant="outlined"
-          select
-          label="艦隊編成"
-          value={type}
-          onChange={handler.onFleetTypeChange}
-          fullWidth
-          className={classes.fleetTypeFieldMargin}
-        >
-          {FleetTypeOptions.map((v) => (
-            <MenuItem key={v.value} value={v.value}>
-              {v.label}
-            </MenuItem>
-          ))}
-        </TextField>
+        <Box mt={1}>
+          <TextField
+            variant="outlined"
+            label="編成名"
+            value={title}
+            helperText={titleValid.countText}
+            error={titleValid.error}
+            onChange={handler.onFleetTitleChange}
+            fullWidth
+            autoFocus
+          />
+        </Box>
+
+        <Box mt={2}>
+          <TextField
+            variant="outlined"
+            label="説明"
+            value={description}
+            helperText={descriptionValid.countText}
+            error={descriptionValid.error}
+            onChange={handler.onFleetDescriptionChange}
+            fullWidth
+            multiline
+          />
+        </Box>
+
+        <Box mt={4}>
+          <TextField
+            variant="outlined"
+            select
+            label="艦隊編成"
+            value={type}
+            onChange={handler.onFleetTypeChange}
+            fullWidth
+          >
+            {FleetTypeOptions.map((v) => (
+              <MenuItem key={v.value} value={v.value}>
+                {v.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onEnd}>キャンセル</Button>

@@ -1,7 +1,15 @@
-import { Chip, Grid } from "@material-ui/core";
+import { Chip, Grid, makeStyles } from "@material-ui/core";
 import { FC, useState } from "react";
 import { SearchFilters } from "../types";
-import { useStyles } from "./styles";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    msOverflowStyle: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+}));
 
 type Props = {
   items: SearchFilters;

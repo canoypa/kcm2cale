@@ -1,4 +1,4 @@
-import { Chip, Grid } from "@material-ui/core";
+import { Chip, Grid, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
@@ -7,7 +7,15 @@ import { ShipEquip } from "../../../../models/equip";
 import { Ship } from "../../../../models/ship";
 import { useSelectEquip } from "../../hooks/select-equip";
 import { EquipList } from "../equips-list";
-import { useStyles } from "./styles";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    msOverflowStyle: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+}));
 
 type Props = {
   fleetPlace: Ship;

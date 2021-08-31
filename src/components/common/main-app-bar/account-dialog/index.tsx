@@ -3,17 +3,14 @@ import Link from "next/link";
 import { FC } from "react";
 import { APP_NAME } from "../../../../core/env";
 import { UserIcon } from "../../user-icon";
-import { useStyles } from "./styles";
 
 const AccountHeader: FC = () => {
-  const classes = useStyles();
-
   return (
     <div>
-      <div className={classes.accountHeader}>
+      <Box display="flex" alignItems="center" gridColumnGap={16}>
         <UserIcon />
         <span>サインインしていません</span>
-      </div>
+      </Box>
     </div>
   );
 };
@@ -23,8 +20,6 @@ type Props = {
   onClose: () => void;
 };
 export const AccountDialog: FC<Props> = ({ open, onClose }) => {
-  const classes = useStyles();
-
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <Box padding={2}>
@@ -33,8 +28,10 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
         <Link href="/about" passHref>
-          <Button size="small" className={classes.link}>
-            {APP_NAME} について
+          <Button size="small">
+            <Box component="span" color="text.secondary">
+              {APP_NAME} について
+            </Box>
           </Button>
         </Link>
       </Box>
