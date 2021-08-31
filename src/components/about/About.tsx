@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ExternalLink } from "../common/ExternalLink";
+import { TextLink } from "../common/TextLink";
 
 export const About: FC = () => {
   return (
@@ -16,14 +16,18 @@ export const About: FC = () => {
         <p>使用するデータは以下のサイトに基づいています。</p>
         <ul>
           <li>
-            <ExternalLink href="https://wikiwiki.jp/kancolle/">
+            <TextLink href="https://wikiwiki.jp/kancolle/" ext newTab>
               艦隊これくしょん -艦これ- 攻略 Wiki*
-            </ExternalLink>
+            </TextLink>
           </li>
           <li>
-            <ExternalLink href="https://kancolle.fandom.com/wiki/KanColle_Wiki">
+            <TextLink
+              href="https://kancolle.fandom.com/wiki/KanColle_Wiki"
+              ext
+              newTab
+            >
               KanColle Wiki | Fandom
-            </ExternalLink>
+            </TextLink>
           </li>
         </ul>
       </div>

@@ -1,7 +1,19 @@
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { FC, MouseEvent } from "react";
 import { FleetNo } from "../../../../../models/ship";
-import { useStyles } from "./styles";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    "&.MuiToggleButtonGroup-root": {
+      display: "flex",
+    },
+
+    "& .MuiToggleButton-root": {
+      flexGrow: 1,
+    },
+  },
+}));
 
 type Props = {
   value: FleetNo;

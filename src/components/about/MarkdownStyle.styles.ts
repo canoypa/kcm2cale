@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     padding: 24,
 
-    "*": {
+    "& *": {
       color: theme.palette.text.primary,
     },
 
