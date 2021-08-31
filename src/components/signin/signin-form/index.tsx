@@ -1,5 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { Box, Typography, useTheme } from "@material-ui/core";
 import {
   getRedirectResult,
   linkWithRedirect,
@@ -13,26 +12,13 @@ import { getAuth } from "../../../core/firebase/sdk/auth";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    [theme.breakpoints.up("sm")]: {
-      border: "1px solid",
-      borderColor: theme.palette.divider,
-      padding: 32,
-      borderRadius: 4,
-      maxWidth: 480,
-      boxSizing: "border-box",
-    },
-  },
-}));
-
 type Props = {
   anonymousUser: User;
 };
 export const SignInForm: FC<Props> = ({ anonymousUser }) => {
   const auth = getAuth();
 
-  const classes = useStyles();
+  const theme = useTheme();
 
   const signIn = (providerId: ProviderId) => {
     const provider = createProvider(providerId);
@@ -79,7 +65,16 @@ export const SignInForm: FC<Props> = ({ anonymousUser }) => {
         rowGap={7}
         width="100%"
         padding={3}
-        className={classes.container}
+        sx={{
+          [theme.breakpoints.up("sm")]: {
+            border: "1px solid",
+            borderColor: theme.palette.divider,
+            padding: 4,
+            borderRadius: 1,
+            maxWidth: 480,
+            boxSizing: "border-box",
+          },
+        }}
       >
         <Box display="flex" justifyContent="center">
           <Typography variant="h4">サインイン</Typography>

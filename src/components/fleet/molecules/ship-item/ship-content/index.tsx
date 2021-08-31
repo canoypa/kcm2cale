@@ -1,21 +1,8 @@
 import { Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import { FC } from "react";
 import { useSelectShip } from "~/components/fleet/hooks/select-ship";
 import { ShipsData } from "../../../../../data/ship";
 import { Ship } from "../../../../../models/ship";
-
-const useStyles = makeStyles(() => ({
-  name: {
-    fontSize: "1.25em",
-    cursor: "pointer",
-
-    ["@media (max-width: 599px)"]: {
-      fontSize: "1em",
-      maxWidth: "8em",
-    },
-  },
-}));
 
 const DUMMY_LEVEL = 99;
 
@@ -28,8 +15,6 @@ export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   const ship = ShipsData.find((v) => v.no === fleetPlace.no);
   if (!ship) throw new Error("Error");
 
-  const classes = useStyles();
-
   const swapShipHandler = () => {
     selectShip(fleetPlace);
   };
@@ -37,9 +22,16 @@ export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   return (
     <Box display="flex" alignItems="center">
       <Box display="flex" alignItems="center" marginLeft={1}>
-        <div className={classes.name} onClick={swapShipHandler}>
+        <Box
+          onClick={swapShipHandler}
+          maxWidth="8em"
+          sx={{
+            fontSize: { xs: "1em", sm: "1.25em" },
+            cursor: "pointer",
+          }}
+        >
           {ship.name || "変更"}
-        </div>
+        </Box>
         <Box marginLeft={2}>{`${DUMMY_LEVEL} Lv`}</Box>
       </Box>
     </Box>

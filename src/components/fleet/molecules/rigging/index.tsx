@@ -1,6 +1,5 @@
 import { Chip, Grid } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
@@ -8,15 +7,6 @@ import { ShipEquip } from "../../../../models/equip";
 import { Ship } from "../../../../models/ship";
 import { useSelectEquip } from "../../hooks/select-equip";
 import { EquipList } from "../equips-list";
-
-const useStyles = makeStyles(() => ({
-  root: {
-    msOverflowStyle: "none",
-    "&::-webkit-scrollbar": {
-      display: "none",
-    },
-  },
-}));
 
 type Props = {
   fleetPlace: Ship;
@@ -27,8 +17,6 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
     useRigging(fleetPlace);
 
   const isOwner = useIsFleetOwner();
-
-  const classes = useStyles();
 
   const handlerAddEquip = (eq: ShipEquip) => {
     selectEquip(eq);
@@ -41,9 +29,10 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
       container
       spacing={1}
       wrap="nowrap"
-      className={classes.root}
-      style={{
+      sx={{
         overflow: "auto",
+        msOverflowStyle: "none",
+        "&::-webkit-scrollbar": { display: "none" },
       }}
     >
       <Grid item>

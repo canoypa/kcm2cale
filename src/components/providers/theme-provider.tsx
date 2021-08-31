@@ -2,7 +2,6 @@ import {
   CssBaseline,
   PaletteMode,
   StyledEngineProvider,
-  Theme as MuiTheme,
   ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core";
 import {
@@ -15,10 +14,6 @@ import {
 } from "react";
 import { createTheme } from "../../core/theme";
 
-declare module "@material-ui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends MuiTheme {}
-}
 const IsDarkMatchMedia = "(prefers-color-scheme:dark)";
 
 type ThemeType = PaletteMode | "system";

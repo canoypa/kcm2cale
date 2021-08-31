@@ -1,22 +1,6 @@
-import {
-  FormControl,
-  OutlinedInput as MuiOutlinedInput,
-} from "@material-ui/core";
-import withStyles from "@material-ui/styles/withStyles";
+import { InputAdornment, OutlinedInput } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import { FC, KeyboardEventHandler } from "react";
-
-const Input = withStyles({
-  root: {
-    borderRadius: 24,
-  },
-
-  input: {
-    padding: 0,
-    paddingLeft: 8,
-    height: 48,
-  },
-})(MuiOutlinedInput);
 
 type Props = {
   onSubmit: (value: string) => void;
@@ -30,8 +14,18 @@ export const SearchBox: FC<Props> = ({ onSubmit }) => {
   };
 
   return (
-    <FormControl variant="outlined" fullWidth>
-      <Input startAdornment={<Search />} onKeyDown={handlerSubmit} />
-    </FormControl>
+    <OutlinedInput
+      fullWidth
+      startAdornment={
+        <InputAdornment position="start">
+          <Search />
+        </InputAdornment>
+      }
+      onKeyDown={handlerSubmit}
+      sx={{
+        borderRadius: 24,
+        input: { p: 0, height: 48 },
+      }}
+    />
   );
 };

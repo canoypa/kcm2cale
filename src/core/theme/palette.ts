@@ -1,4 +1,4 @@
-import { PaletteOptions } from "@material-ui/core/styles";
+import { PaletteOptions } from "@material-ui/core";
 
 const PALETTE_BASE: PaletteOptions = {
   primary: {

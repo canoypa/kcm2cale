@@ -1,16 +1,6 @@
 import { Chip, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import { FC, useState } from "react";
 import { SearchFilters } from "../types";
-
-const useStyles = makeStyles(() => ({
-  root: {
-    msOverflowStyle: "none",
-    "&::-webkit-scrollbar": {
-      display: "none",
-    },
-  },
-}));
 
 type Props = {
   items: SearchFilters;
@@ -18,8 +8,6 @@ type Props = {
 };
 export const Filter: FC<Props> = ({ items, onFilterChange }) => {
   const [state, setState] = useState<number | null>(null);
-
-  const classes = useStyles();
 
   const onChange = (value: number) => {
     const newState = value === state ? null : value;
@@ -32,9 +20,10 @@ export const Filter: FC<Props> = ({ items, onFilterChange }) => {
       container
       spacing={1}
       wrap="nowrap"
-      className={classes.root}
-      style={{
+      sx={{
         overflow: "auto",
+        msOverflowStyle: "none",
+        "&::-webkit-scrollbar": { display: "none" },
       }}
     >
       {items.map(({ label, value }) => {
