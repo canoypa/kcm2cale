@@ -1,4 +1,4 @@
-import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
+import { Box, CircularProgress, Container } from "@material-ui/core";
 import { QuerySnapshot, Unsubscribe } from "firebase/firestore";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { listenUserFleetDocs } from "~/api/fleet";
@@ -7,7 +7,6 @@ import { Fleet } from "../../../models/fleet";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
 import { useFleetList } from "../hooks";
-import { useStyles } from "./styles";
 
 /**
  * 保存されている編成が存在するか
@@ -19,8 +18,6 @@ const checkExistFleetList = (fleets: Fleet[]) => {
 export const FleetListContainer: FC = () => {
   const { data: signInCheckResult } = useSigninCheck();
   const { data: fleetList, mutate: mutateFleetList } = useFleetList();
-
-  const classes = useStyles();
 
   // 現在のリストへの更新検知を避けた参照
   // fleetDocsChangeCallback 内で使用
@@ -78,10 +75,10 @@ export const FleetListContainer: FC = () => {
   if (!fleetList) {
     return (
       <Box
-        container
+        display="flex"
         justifyContent="center"
         alignItems="center"
-        style={{ height: "100%" }}
+        height="100%"
       >
         <CircularProgress size={24} />
       </Box>
@@ -92,19 +89,27 @@ export const FleetListContainer: FC = () => {
   const isExistFleetList = checkExistFleetList(fleetList);
 
   return (
-    <Container maxWidth="md" className={classes.root}>
-      {isExistFleetList ? (
-        <FleetList fleetList={fleetList} />
-      ) : (
-        <Box
-          container
-          justifyContent="center"
-          alignItems="center"
-          style={{ height: "100%" }}
-        >
-          <EmptyState />
-        </Box>
-      )}
+    <Container maxWidth="md" sx={{ height: "100%" }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        paddingTop={3}
+        paddingBottom={3}
+        height="100%"
+      >
+        {isExistFleetList ? (
+          <FleetList fleetList={fleetList} />
+        ) : (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+          >
+            <EmptyState />
+          </Box>
+        )}
+      </Box>
     </Container>
   );
 };

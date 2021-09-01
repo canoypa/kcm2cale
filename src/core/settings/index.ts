@@ -22,7 +22,7 @@ class AppSettingsInstance {
     // 値が存在しない場合デフォルト値を保存して返却
     if (result === null) {
       // Fixme: ??
-      const defaultSetting = (defaultSettings[key] as unknown) as V;
+      const defaultSetting = defaultSettings[key] as unknown as V;
       this.set(key, defaultSetting);
       return defaultSetting;
     }

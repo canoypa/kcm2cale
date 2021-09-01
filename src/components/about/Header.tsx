@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { FC } from "react";
+import { TextLink } from "../common/TextLink";
 
 export const Header: FC = () => {
   return (
     <header>
-      <Link href="/">トップページへ</Link>
+      <TextLink href="/">トップページへ</TextLink>
     </header>
   );
 };

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ExternalLink } from "../common/ExternalLink";
+import { TextLink } from "../common/TextLink";
 
 export const PrivacyAndTerms: FC = () => {
   return (
@@ -18,10 +18,14 @@ export const PrivacyAndTerms: FC = () => {
         </p>
         <p>データの収集, 処理について、詳しくは以下のページをご覧ください。</p>
         <p>
-          <ExternalLink href="https://policies.google.com/technologies/partner-sites">
+          <TextLink
+            href="https://policies.google.com/technologies/partner-sites"
+            ext
+            newTab
+          >
             Google のサービスを使用するサイトやアプリから収集した情報の Google
             による使用
-          </ExternalLink>
+          </TextLink>
         </p>
       </section>
 

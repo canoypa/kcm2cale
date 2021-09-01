@@ -26,13 +26,11 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
         justifyContent="center"
         border={1}
         borderColor="divider"
-        borderRadius={1}
+        borderRadius="1px"
         margin="4px 0"
         height={64}
         color="text.secondary"
-        style={{
-          cursor: "pointer",
-        }}
+        sx={{ cursor: "pointer" }}
         role="button"
         onClick={swapShipHandler}
       >
@@ -42,7 +40,7 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
       <Box
         border={1}
         borderColor="divider"
-        borderRadius={1}
+        borderRadius="1px"
         margin="4px 0"
         height={64}
         role="button"

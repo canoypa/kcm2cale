@@ -28,7 +28,7 @@ export const SignIn: FC = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      style={{ height: "100vh" }}
+      height="100vh"
     >
       <CircularProgress size={24} />
     </Box>

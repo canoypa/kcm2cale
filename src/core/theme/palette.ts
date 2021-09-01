@@ -1,4 +1,4 @@
-import { PaletteOptions } from "@material-ui/core/styles/createPalette";
+import { PaletteOptions } from "@material-ui/core";
 
 const PALETTE_BASE: PaletteOptions = {
   primary: {
@@ -28,7 +28,7 @@ const PALETTE_BASE: PaletteOptions = {
 export const PALETTE_LIGHT: PaletteOptions = {
   ...PALETTE_BASE,
 
-  type: "light",
+  mode: "light",
 
   text: {
     primary: "rgba(0, 0, 0, 0.87)",
@@ -44,7 +44,7 @@ export const PALETTE_LIGHT: PaletteOptions = {
 export const PALETTE_DARK: PaletteOptions = {
   ...PALETTE_BASE,
 
-  type: "dark",
+  mode: "dark",
 
   text: {
     primary: "rgba(255, 255, 255, 0.87)",

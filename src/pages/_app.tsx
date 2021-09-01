@@ -1,15 +1,25 @@
+import createEmotionCache, { EmotionCache } from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { GlobalStyles } from "../components/providers/global-styles";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 const AuthProvider = dynamic(
   () => import("~/components/providers/auth-provider")
 );
 
-const App: NextPage<AppProps> = ({ Component, pageProps }) => {
+const clientSideEmotionCache = createEmotionCache({ key: "css" });
+
+type Props = AppProps & {
+  emotionCache?: EmotionCache;
+};
+const App: NextPage<Props> = ({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}) => {
   return (
     <>
       <Head>
@@ -18,12 +28,14 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <ThemeProvider>
-        <GlobalStyles>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider>
+          {/* <CssBaseline /> */}
           <AuthProvider />
+
           <Component {...pageProps} />
-        </GlobalStyles>
-      </ThemeProvider>
+        </ThemeProvider>
+      </CacheProvider>
     </>
   );
 };

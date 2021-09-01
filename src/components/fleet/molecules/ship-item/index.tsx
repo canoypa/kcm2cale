@@ -17,7 +17,7 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
       alignItems="center"
       border={1}
       borderColor="divider"
-      borderRadius={1}
+      borderRadius="1px"
       padding={`${16 - 1}px 0` /* - border width */}
       margin="4px 0"
       bgcolor="background.default"
@@ -29,9 +29,7 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
           width={24}
           height={24}
           color="text.secondary"
-          style={{
-            cursor: "grab",
-          }}
+          sx={{ cursor: "grab" }}
           data-movable-handle
         >
           <DragIndicator />

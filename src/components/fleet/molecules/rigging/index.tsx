@@ -7,7 +7,6 @@ import { ShipEquip } from "../../../../models/equip";
 import { Ship } from "../../../../models/ship";
 import { useSelectEquip } from "../../hooks/select-equip";
 import { EquipList } from "../equips-list";
-import { useStyles } from "./styles";
 
 type Props = {
   fleetPlace: Ship;
@@ -18,8 +17,6 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
     useRigging(fleetPlace);
 
   const isOwner = useIsFleetOwner();
-
-  const classes = useStyles();
 
   const handlerAddEquip = (eq: ShipEquip) => {
     selectEquip(eq);
@@ -32,9 +29,10 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
       container
       spacing={1}
       wrap="nowrap"
-      className={classes.root}
-      style={{
+      sx={{
         overflow: "auto",
+        msOverflowStyle: "none",
+        "&::-webkit-scrollbar": { display: "none" },
       }}
     >
       <Grid item>
