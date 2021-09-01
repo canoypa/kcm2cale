@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { PageLoadProgress } from "~/components/PageLoadProgress";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 const AuthProvider = dynamic(
@@ -33,6 +34,7 @@ const App: NextPage<Props> = ({
           {/* <CssBaseline /> */}
           <AuthProvider />
 
+          <PageLoadProgress />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>
