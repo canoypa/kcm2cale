@@ -1,3 +1,4 @@
+import { Container } from "@material-ui/core";
 import { NextPage } from "next";
 import Head from "next/head";
 import { FAQ } from "../../components/about/FAQ";
@@ -14,9 +15,11 @@ const HomePage: NextPage = () => {
 
       <main>
         <Header />
-        <MarkdownStyle>
-          <FAQ />
-        </MarkdownStyle>
+        <Container maxWidth="md">
+          <MarkdownStyle>
+            <FAQ />
+          </MarkdownStyle>
+        </Container>
       </main>
     </>
   );
