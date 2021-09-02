@@ -14,8 +14,8 @@ const HomePage: NextPage = () => {
       </Head>
 
       <main>
+        <Header />
         <MarkdownStyle>
-          <Header />
           <Intro />
           <About />
         </MarkdownStyle>

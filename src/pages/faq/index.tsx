@@ -13,8 +13,8 @@ const HomePage: NextPage = () => {
       </Head>
 
       <main>
+        <Header />
         <MarkdownStyle>
-          <Header />
           <FAQ />
         </MarkdownStyle>
       </main>
