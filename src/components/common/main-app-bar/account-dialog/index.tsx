@@ -34,6 +34,13 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
             </Box>
           </Button>
         </Link>
+        <Link href="/privacy-and-terms" passHref>
+          <Button size="small">
+            <Box component="span" color="text.secondary">
+              プライバシーと規約
+            </Box>
+          </Button>
+        </Link>
       </Box>
     </Dialog>
   );

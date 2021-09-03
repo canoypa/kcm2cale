@@ -1,7 +1,7 @@
 import { Container } from "@material-ui/core";
 import { NextPage } from "next";
 import Head from "next/head";
-import { About } from "../../components/about/About";
+import { FAQ } from "../../components/about/FAQ";
 import { Header } from "../../components/about/Header";
 import { MarkdownStyle } from "../../components/about/MarkdownStyle";
 import { APP_NAME } from "../../core/env";
@@ -10,14 +10,14 @@ const HomePage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>About - {APP_NAME}</title>
+        <title>FAQ - {APP_NAME}</title>
       </Head>
 
       <main>
         <Header />
         <Container maxWidth="md">
           <MarkdownStyle>
-            <About />
+            <FAQ />
           </MarkdownStyle>
         </Container>
       </main>

@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 
 export const MarkdownStyle = styled("div")(({ theme }) => ({
-  padding: 24,
+  padding: "24px 0",
 
   "& *": {
     color: theme.palette.text.primary,
