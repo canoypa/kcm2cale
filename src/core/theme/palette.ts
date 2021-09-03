@@ -1,58 +1,26 @@
-import { PaletteOptions } from "@material-ui/core";
+import { alpha, PaletteOptions } from "@material-ui/core";
+import { common, indigo } from "@material-ui/core/colors";
 
-const PALETTE_BASE: PaletteOptions = {
-  primary: {
-    main: "#3f51b5",
-    contrastText: "rgba(255, 255, 255, 0.87)",
-  },
-  info: {
-    main: "#03a9f4",
-    contrastText: "rgba(255, 255, 255, 0.87)",
-  },
-  warning: {
-    main: "#ffc107",
-    contrastText: "rgba(255, 255, 255, 0.87)",
-  },
-  error: {
-    main: "#f44336",
-    contrastText: "rgba(255, 255, 255, 0.87)",
-  },
-  success: {
-    main: "#8bc34a",
-    contrastText: "rgba(255, 255, 255, 0.87)",
-  },
-
-  tonalOffset: 0.1,
-};
-
-export const PALETTE_LIGHT: PaletteOptions = {
-  ...PALETTE_BASE,
-
+export const LightPalette: PaletteOptions = {
   mode: "light",
 
+  primary: { main: indigo[500] },
+
   text: {
-    primary: "rgba(0, 0, 0, 0.87)",
-    secondary: "rgba(0, 0, 0, 0.6)",
-    disabled: "rgba(0, 0, 0, 0.38)",
+    primary: alpha(common.black, 0.87),
+    secondary: alpha(common.black, 0.6),
+    disabled: alpha(common.black, 0.38),
   },
-  background: {
-    default: "#ffffff",
-  },
-  divider: "rgba(0, 0, 0, 0.16)",
 };
 
-export const PALETTE_DARK: PaletteOptions = {
-  ...PALETTE_BASE,
-
+export const DarkPalette: PaletteOptions = {
   mode: "dark",
 
+  primary: { main: indigo[300] },
+
   text: {
-    primary: "rgba(255, 255, 255, 0.87)",
-    secondary: "rgba(255, 255, 255, 0.6)",
-    disabled: "rgba(255, 255, 255, 0.38)",
+    primary: alpha(common.white, 0.87),
+    secondary: alpha(common.white, 0.6),
+    disabled: alpha(common.white, 0.38),
   },
-  background: {
-    default: "#121212",
-  },
-  divider: "rgba(255, 255, 255, 0.16)",
 };
