@@ -30,7 +30,7 @@ export const PageLoadProgress: FC = () => {
 
   return (
     <Box position="fixed" top={0} left={0} zIndex={99999} width="100%">
-      <Collapse in={show}>
+      <Collapse in={show} mountOnEnter unmountOnExit>
         <LinearProgress />
       </Collapse>
     </Box>
