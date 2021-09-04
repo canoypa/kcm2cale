@@ -13,11 +13,7 @@ export const Actions: FC<Props> = ({ startEdit }) => {
   return (
     <Box display="flex" justifyContent="flex-end">
       {isOwner && (
-        <IconButton
-          onClick={editFleetInfo}
-          aria-label="編成情報の編集"
-          size="large"
-        >
+        <IconButton onClick={editFleetInfo} aria-label="編成情報の編集">
           <EditOutlined />
         </IconButton>
       )}

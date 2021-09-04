@@ -87,7 +87,6 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
               edge="start"
               onClick={onEnd}
               aria-label="戻る"
-              size="large"
               sx={{ mr: 1 }}
             >
               <NavigateBefore />

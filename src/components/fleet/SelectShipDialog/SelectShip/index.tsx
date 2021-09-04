@@ -59,7 +59,6 @@ const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
             edge="start"
             onClick={onClose}
             aria-label="戻る"
-            size="large"
             sx={{ mr: 1 }}
           >
             <NavigateBefore />

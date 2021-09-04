@@ -19,5 +19,10 @@ export const createTheme = (mode: PaletteMode) =>
           },
         },
       },
+      MuiIconButton: {
+        defaultProps: {
+          size: "large",
+        },
+      },
     },
   });
