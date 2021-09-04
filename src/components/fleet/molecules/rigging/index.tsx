@@ -1,5 +1,6 @@
-import { Chip, Grid } from "@material-ui/core";
+import { Chip } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
+import { Box } from "@material-ui/system";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";
@@ -25,29 +26,25 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
   const handlerAddNewEquip = () => handlerAddEquip(newEquipPlace);
 
   return (
-    <Grid
-      container
-      spacing={1}
-      wrap="nowrap"
+    <Box
+      display="flex"
+      columnGap={1}
+      flexWrap="nowrap"
       sx={{
         overflow: "auto",
         msOverflowStyle: "none",
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      <Grid item>
-        <EquipList shipEquips={shipEquips} swapEquip={handlerAddEquip} />
-      </Grid>
+      <EquipList shipEquips={shipEquips} swapEquip={handlerAddEquip} />
       {isCanAddNewEquip && isOwner && (
-        <Grid item>
-          <Chip
-            variant="outlined"
-            icon={<Add />}
-            label="装備を追加"
-            onClick={handlerAddNewEquip}
-          />
-        </Grid>
+        <Chip
+          variant="outlined"
+          icon={<Add />}
+          label="装備を追加"
+          onClick={handlerAddNewEquip}
+        />
       )}
-    </Grid>
+    </Box>
   );
 };

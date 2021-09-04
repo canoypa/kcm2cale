@@ -5,11 +5,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   IconButton,
   MenuItem,
   TextField,
   Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
@@ -80,16 +80,22 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
       fullScreen={fullScreenBreakPoint}
       fullWidth
     >
-      {fullScreenBreakPoint && (
-        <AppBar position="static" elevation={0} color="transparent">
-          <Toolbar>
-            <IconButton onClick={onEnd} aria-label="戻る" size="large">
+      <AppBar position="sticky" elevation={0} color="transparent">
+        <Toolbar>
+          {fullScreenBreakPoint && (
+            <IconButton
+              edge="start"
+              onClick={onEnd}
+              aria-label="戻る"
+              sx={{ mr: 1 }}
+            >
               <NavigateBefore />
             </IconButton>
-          </Toolbar>
-        </AppBar>
-      )}
-      <DialogTitle>編成を編集</DialogTitle>
+          )}
+          <Typography variant="h6">編成を編集</Typography>
+        </Toolbar>
+      </AppBar>
+
       <DialogContent>
         <Box mt={1}>
           <TextField
