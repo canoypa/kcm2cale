@@ -1,4 +1,4 @@
-import { Chip, Grid } from "@material-ui/core";
+import { Chip } from "@material-ui/core";
 import { FC } from "react";
 import { EquipsData } from "../../../../data/equip";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
@@ -27,19 +27,18 @@ export const EquipList: FC<Props> = ({ shipEquips, swapEquip }) => {
   });
 
   return (
-    <Grid container spacing={1} wrap="nowrap">
+    <>
       {items.map((v) => {
         const _handlerEquipClick = () => handlerEquipClick(v.value);
         return (
-          <Grid key={v.value.id} item>
-            <Chip
-              variant="outlined"
-              label={v.label}
-              onClick={isOwner ? _handlerEquipClick : undefined}
-            />
-          </Grid>
+          <Chip
+            key={v.value.id}
+            variant="outlined"
+            label={v.label}
+            onClick={isOwner ? _handlerEquipClick : undefined}
+          />
         );
       })}
-    </Grid>
+    </>
   );
 };
