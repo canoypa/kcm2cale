@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AppBar,
   Box,
@@ -16,6 +17,7 @@ import {
 import { NavigateBefore } from "@material-ui/icons";
 import { FC, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { infer as zodInfer, nativeEnum, object, string } from "zod";
 import { updateFleetDoc } from "~/api/fleet";
 import { FleetIdContext } from "~/components/fleet/fleetIdContext";
 import { useFleet } from "~/components/fleet/hooks";
@@ -24,11 +26,16 @@ import { FleetType } from "../../../../../models/fleet";
 const TitleCharCount = 256;
 const DescriptionCharCount = 512;
 
-type FormInput = {
-  title: string;
-  description: string;
-  type: FleetType;
-};
+const FormInput = object({
+  title: string().max(TitleCharCount, {
+    message: `タイトルを ${TitleCharCount} 文字以上に設定できません。`,
+  }),
+  description: string().max(DescriptionCharCount, {
+    message: `説明を ${DescriptionCharCount} 文字以上に設定できません。`,
+  }),
+  type: nativeEnum(FleetType),
+});
+type FormInput = zodInfer<typeof FormInput>;
 
 type Props = {
   open: boolean;
@@ -40,7 +47,10 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     handleSubmit: submitWrap,
     reset,
     formState: { isValid, errors },
-  } = useForm<FormInput>({ mode: "onChange" });
+  } = useForm<FormInput>({
+    mode: "onChange",
+    resolver: zodResolver(FormInput),
+  });
 
   const fleetId = useContext(FleetIdContext);
   const { data: fleet } = useFleet(fleetId);
@@ -94,12 +104,6 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
             <Controller
               name="title"
               control={control}
-              rules={{
-                maxLength: {
-                  value: TitleCharCount,
-                  message: `タイトルを ${TitleCharCount} 文字以上に設定できません。`,
-                },
-              }}
               defaultValue={fleet?.title}
               render={({ field }) => (
                 <TextField
@@ -119,12 +123,6 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
             <Controller
               name="description"
               control={control}
-              rules={{
-                maxLength: {
-                  value: DescriptionCharCount,
-                  message: `説明を ${DescriptionCharCount} 文字以上に設定できません。`,
-                },
-              }}
               defaultValue={fleet?.description}
               render={({ field }) => (
                 <TextField
