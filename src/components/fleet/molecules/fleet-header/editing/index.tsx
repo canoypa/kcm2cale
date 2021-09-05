@@ -128,6 +128,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
                 <TextField
                   variant="outlined"
                   fullWidth
+                  multiline
                   label="説明"
                   error={errors.description !== undefined}
                   helperText={errors.description?.message}
