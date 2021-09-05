@@ -41,3 +41,5 @@ rules:
   "@next/next/no-img-element": 0
   # React のデバッグ用表示名
   react/display-name: off
+  # runtypes
+  new-cap: 0

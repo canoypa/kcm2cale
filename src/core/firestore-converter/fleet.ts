@@ -1,29 +1,20 @@
 import { FirestoreDataConverter } from "firebase/firestore";
-import { Fleet } from "../../models/fleet";
+import { Fleet } from "~/models/fleet/types";
+import { FleetDoc } from "../../models/firestore/fleet";
 
 export const FirestoreFleetConverter: FirestoreDataConverter<Fleet> = {
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
-    // Todo: バリデーション
-    const data = snapshot.data({ serverTimestamps: "estimate" });
+    const data = snapshot.data({ serverTimestamps: "previous" });
 
-    const title = data.title;
-    const description = data.description;
-    const type = data.type;
-
-    const createdAt = data.createdAt.toDate();
-    const updatedAt = data.updatedAt.toDate();
-
-    return {
+    // バリデーション
+    const fleet = FleetDoc.transform((v) => ({
+      ...v,
       id: snapshot.id,
-      owner: data.owner,
+      createdAt: v.createdAt.toDate(),
+      updatedAt: v.updatedAt.toDate(),
+    })).parse(data);
 
-      title,
-      description,
-      type,
-
-      createdAt,
-      updatedAt,
-    };
+    return fleet;
   },
 };
