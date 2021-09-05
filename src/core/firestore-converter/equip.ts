@@ -1,17 +1,18 @@
 import { FirestoreDataConverter } from "firebase/firestore";
+import { EquipDoc } from "~/models/firestore/equipment";
 import { Equip } from "../../models/equip";
 
 export const FirestoreFleetEquipConverter: FirestoreDataConverter<Equip> = {
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
-    // Todo: バリデーション
     const data = snapshot.data();
 
-    return {
+    // バリデーション
+    const equip = EquipDoc.transform((v) => ({
+      ...v,
       id: snapshot.id,
-      shipId: data.shipId,
-      slotNo: data.slotNo,
-      no: data.no,
-    };
+    })).parse(data);
+
+    return equip;
   },
 };
