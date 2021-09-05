@@ -62,9 +62,14 @@ const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
 
   return (
     <>
-      <AppBar position="sticky" color="inherit">
+      <AppBar position="sticky" color="transparent">
         <Toolbar>
-          <IconButton edge="start" onClick={onClose} aria-label="戻る">
+          <IconButton
+            edge="start"
+            onClick={onClose}
+            aria-label="戻る"
+            sx={{ mr: 1 }}
+          >
             <NavigateBefore />
           </IconButton>
           <Typography variant="h6">装備を選択</Typography>

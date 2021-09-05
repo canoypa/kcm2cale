@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, Paper } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
@@ -9,7 +9,7 @@ type Props = {
   fleetPlace: Ship | EmptyShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const selectShip = useSelectShip();
+  const { select: selectShip } = useSelectShip();
 
   const isOwner = useIsFleetOwner();
 
@@ -18,35 +18,22 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
   };
 
   return (
-    // role=button: ドラッグを防止
-    isOwner ? (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        border={1}
-        borderColor="divider"
-        borderRadius={1}
-        margin="4px 0"
-        height={64}
-        color="text.secondary"
-        style={{
-          cursor: "pointer",
-        }}
-        role="button"
-        onClick={swapShipHandler}
-      >
-        <Add />
-      </Box>
-    ) : (
-      <Box
-        border={1}
-        borderColor="divider"
-        borderRadius={1}
-        margin="4px 0"
-        height={64}
-        role="button"
-      />
-    )
+    <Box my={0.5}>
+      <Paper variant="outlined">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={64}
+          color="text.secondary"
+          sx={{ cursor: isOwner ? "pointer" : undefined }}
+          onClick={isOwner ? swapShipHandler : undefined}
+          // ドラッグを防止
+          role="button"
+        >
+          {isOwner && <Add />}
+        </Box>
+      </Paper>
+    </Box>
   );
 };

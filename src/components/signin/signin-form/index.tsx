@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, useTheme } from "@material-ui/core";
 import {
   getRedirectResult,
   linkWithRedirect,
@@ -11,7 +11,6 @@ import { ProviderId } from "../../../core/firebase/auth/types";
 import { getAuth } from "../../../core/firebase/sdk/auth";
 import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
-import { useStyles } from "./styles";
 
 type Props = {
   anonymousUser: User;
@@ -19,7 +18,7 @@ type Props = {
 export const SignInForm: FC<Props> = ({ anonymousUser }) => {
   const auth = getAuth();
 
-  const classes = useStyles();
+  const theme = useTheme();
 
   const signIn = (providerId: ProviderId) => {
     const provider = createProvider(providerId);
@@ -54,16 +53,37 @@ export const SignInForm: FC<Props> = ({ anonymousUser }) => {
   });
 
   return (
-    <div className={classes.root}>
-      <div className={classes.container}>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
+      <Box
+        display="flex"
+        flexDirection="column"
+        rowGap={7}
+        width="100%"
+        padding={3}
+        sx={{
+          [theme.breakpoints.up("sm")]: {
+            border: "1px solid",
+            borderColor: theme.palette.divider,
+            padding: 4,
+            borderRadius: 1,
+            maxWidth: 480,
+            boxSizing: "border-box",
+          },
+        }}
+      >
         <Box display="flex" justifyContent="center">
           <Typography variant="h4">サインイン</Typography>
         </Box>
-        <div className={classes.actions}>
+        <Box display="flex" flexDirection="column" rowGap={2}>
           <SignInButton provider={ProviderId.GOOGLE} onClick={signIn} />
           <SignInButton provider={ProviderId.TWITTER} onClick={signIn} />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };

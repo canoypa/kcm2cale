@@ -8,7 +8,7 @@ type UserState = User | null | undefined;
 export const useUser = () => {
   const auth = getAuth();
 
-  const initialData = auth.currentUser || undefined;
+  const fallbackData = auth.currentUser || undefined;
 
-  return useSWR<UserState>(UserStateKey, { initialData });
+  return useSWR<UserState>(UserStateKey, { fallbackData });
 };

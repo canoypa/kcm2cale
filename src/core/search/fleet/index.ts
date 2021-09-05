@@ -16,8 +16,6 @@ export const searchFleet = (
   fleetDataList: Fleet[],
   request: SearchFleetRequest
 ): Fleet[] => {
-  // Recoil によって値がイミュータブルになっているが、
-  // array.sort が破壊的なため、配列をコピーしミュータブルに
   if (!request.q) return [...fleetDataList].sort(dateSortFn);
 
   // fuse search

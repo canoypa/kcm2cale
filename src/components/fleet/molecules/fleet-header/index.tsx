@@ -1,5 +1,5 @@
 import { Box, Typography } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
+import { Skeleton } from "@material-ui/core";
 import { FC, useContext, useState } from "react";
 import { FleetIdContext } from "../../fleetIdContext";
 import { useFleet } from "../../hooks";
@@ -11,16 +11,16 @@ const FleetHeaderSkeleton: FC = () => {
   return (
     <Box display="flex" flexDirection="column" padding={2}>
       <Typography variant="h4" paragraph>
-        <Skeleton variant="rect" />
+        <Skeleton variant="rectangular" />
       </Typography>
       <Typography variant="body1" paragraph>
-        <Skeleton variant="rect" />
+        <Skeleton variant="rectangular" />
       </Typography>
       <Typography variant="body1" color="textSecondary">
-        <Skeleton variant="rect" width={128} />
+        <Skeleton variant="rectangular" width={128} />
       </Typography>
       <Box display="flex" justifyContent="flex-end">
-        <Skeleton variant="circle" width={48} height={48} />
+        <Skeleton variant="circular" width={48} height={48} />
       </Box>
     </Box>
   );

@@ -1,9 +1,12 @@
-import { Avatar, IconButton, IconButtonProps } from "@material-ui/core";
+import {
+  Avatar,
+  IconButton,
+  IconButtonProps,
+  Skeleton,
+} from "@material-ui/core";
 import { AccountCircleOutlined } from "@material-ui/icons";
-import { Skeleton } from "@material-ui/lab";
 import { FC } from "react";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
-import { useStyles } from "./styles";
 
 type UserAvatarProps = {
   size: number;
@@ -11,14 +14,19 @@ type UserAvatarProps = {
 const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
   const { data: signInCheckResult } = useSigninCheck();
 
-  const classes = useStyles();
-
   if (!signInCheckResult.signedIn) {
-    return <Skeleton variant="circle" width={size} height={size} />;
+    return <Skeleton variant="circular" width={size} height={size} />;
   }
 
   return (
-    <Avatar className={classes.root} style={{ width: size, height: size }}>
+    <Avatar
+      sx={{
+        width: size,
+        height: size,
+        backgroundColor: "unset",
+        color: "inherit",
+      }}
+    >
       <AccountCircleOutlined />
     </Avatar>
   );
@@ -33,7 +41,7 @@ export const UserIcon: FC<UserIconProps> = ({ size = 32 }) => {
 
 export const UserIconButton: FC<IconButtonProps> = ({ ...props }) => {
   return (
-    <IconButton style={{ padding: 8 }} {...props}>
+    <IconButton sx={{ padding: 1 }} {...props}>
       <UserIcon size={32} />
     </IconButton>
   );

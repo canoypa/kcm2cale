@@ -1,11 +1,25 @@
-import { FC, ReactNode } from "react";
-import { useStyles } from "./MarkdownStyle.styles";
+import { styled } from "@material-ui/core";
 
-type Props = {
-  children: ReactNode;
-};
-export const MarkdownStyle: FC<Props> = ({ children }) => {
-  const classes = useStyles();
+export const MarkdownStyle = styled("div")(({ theme }) => ({
+  padding: "24px 0",
 
-  return <div className={classes.root}>{children}</div>;
-};
+  "& *": {
+    color: theme.palette.text.primary,
+  },
+
+  "& a": {
+    color: theme.palette.info.main,
+  },
+
+  "& h1, & h2, & h3, & h4, & h5, & h6": {
+    lineHeight: "2em",
+  },
+
+  "& h1, & h2": {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+
+  "& main section": {
+    marginBottom: "1em",
+  },
+}));

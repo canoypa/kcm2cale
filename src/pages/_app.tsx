@@ -1,13 +1,26 @@
+import createEmotionCache, { EmotionCache } from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import { RecoilRoot } from "recoil";
-import { AuthProvider } from "../components/providers/auth-provider";
-import { GlobalStyles } from "../components/providers/global-styles";
-import { SWRConfig } from "../components/providers/swrConfig";
+import { PageLoadProgress } from "~/components/PageLoadProgress";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
-const App: NextPage<AppProps> = ({ Component, pageProps }) => {
+const AuthProvider = dynamic(
+  () => import("~/components/providers/auth-provider")
+);
+
+const clientSideEmotionCache = createEmotionCache({ key: "css" });
+
+type Props = AppProps & {
+  emotionCache?: EmotionCache;
+};
+const App: NextPage<Props> = ({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}) => {
   return (
     <>
       <Head>
@@ -16,16 +29,15 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <RecoilRoot>
-        <SWRConfig>
-          <ThemeProvider>
-            <GlobalStyles>
-              <AuthProvider />
-              <Component {...pageProps} />
-            </GlobalStyles>
-          </ThemeProvider>
-        </SWRConfig>
-      </RecoilRoot>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider>
+          {/* <CssBaseline /> */}
+          <AuthProvider />
+
+          <PageLoadProgress />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
     </>
   );
 };

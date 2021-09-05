@@ -3,7 +3,7 @@ import { FC } from "react";
 export const FAQ: FC = () => {
   return (
     <section>
-      <h2>FAQ</h2>
+      <p>あるかもしれない質問の答えです。</p>
 
       <section>
         <h3>何ができますか？</h3>
