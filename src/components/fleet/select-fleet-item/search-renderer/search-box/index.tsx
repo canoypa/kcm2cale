@@ -1,5 +1,5 @@
-import { InputAdornment, OutlinedInput } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { InputAdornment, OutlinedInput } from "@mui/material";
+import { Search } from "@mui/icons-material";
 import { FC, KeyboardEventHandler } from "react";
 
 type Props = {

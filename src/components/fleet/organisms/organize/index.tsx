@@ -1,4 +1,4 @@
-import { Box, Container } from "@material-ui/core";
+import { Box, Container } from "@mui/material";
 import { FC } from "react";
 import { FleetHeader } from "../../molecules/fleet-header";
 import { ShipsList } from "../../molecules/ShipsList";

@@ -1,5 +1,5 @@
-import { alpha, PaletteOptions } from "@material-ui/core";
-import { common, indigo } from "@material-ui/core/colors";
+import { alpha, PaletteOptions } from "@mui/material";
+import { common, indigo } from "@mui/material/colors";
 
 export const LightPalette: PaletteOptions = {
   mode: "light",

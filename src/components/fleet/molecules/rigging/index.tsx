@@ -1,6 +1,6 @@
-import { Chip } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import { Box } from "@material-ui/system";
+import { Chip } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Box } from "@mui/system";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { useRigging } from "../../../../hooks/organize/rigging";

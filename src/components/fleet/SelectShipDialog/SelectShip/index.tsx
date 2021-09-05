@@ -1,5 +1,5 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+import { NavigateBefore } from "@mui/icons-material";
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { FC, useCallback } from "react";
 import {
   shipGroupFilter,

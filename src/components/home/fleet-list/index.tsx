@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { ChangeEventHandler, FC, useState } from "react";
 import { searchFleet } from "../../../core/search/fleet";
 import { Fleet } from "../../../models/fleet";

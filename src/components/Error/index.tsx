@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import { FC } from "react";
 
 export const Error: FC = ({ children }) => {

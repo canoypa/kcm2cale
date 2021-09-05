@@ -1,3 +1,4 @@
+import { MoreVert } from "@mui/icons-material";
 import {
   Card,
   CardContent,
@@ -7,8 +8,7 @@ import {
   Menu,
   MenuItem,
   Typography,
-} from "@material-ui/core";
-import { MoreVert } from "@material-ui/icons";
+} from "@mui/material";
 import NextLink from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
 import { Fleet } from "../../../models/fleet";

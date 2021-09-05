@@ -1,3 +1,4 @@
+import { NavigateBefore } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -5,8 +6,7 @@ import {
   Toolbar,
   Tooltip,
   useScrollTrigger,
-} from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useCallback } from "react";
 import { TabList } from "./Tabs";

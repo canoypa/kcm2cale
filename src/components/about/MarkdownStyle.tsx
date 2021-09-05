@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 export const MarkdownStyle = styled("div")(({ theme }) => ({
   padding: "24px 0",

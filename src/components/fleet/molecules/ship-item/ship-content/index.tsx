@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { FC } from "react";
 import { useSelectShip } from "~/components/fleet/hooks/select-ship";
 import { useIsFleetOwner } from "~/hooks/organize/fleet";

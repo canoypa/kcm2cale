@@ -11,7 +11,10 @@ const AuthProvider = dynamic(
   () => import("~/components/providers/auth-provider")
 );
 
-const clientSideEmotionCache = createEmotionCache({ key: "css" });
+const clientSideEmotionCache = createEmotionCache({
+  key: "css",
+  prepend: true,
+});
 
 type Props = AppProps & {
   emotionCache?: EmotionCache;

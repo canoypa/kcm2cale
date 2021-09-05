@@ -1,5 +1,5 @@
-import { Box, Paper } from "@material-ui/core";
-import { DragIndicator } from "@material-ui/icons";
+import { Box, Paper } from "@mui/material";
+import { DragIndicator } from "@mui/icons-material";
 import { FC, memo } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { Ship } from "../../../../models/ship";

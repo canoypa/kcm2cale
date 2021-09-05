@@ -1,5 +1,5 @@
-import { Box, IconButton } from "@material-ui/core";
-import { EditOutlined } from "@material-ui/icons";
+import { EditOutlined } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../../hooks/organize/fleet";
 

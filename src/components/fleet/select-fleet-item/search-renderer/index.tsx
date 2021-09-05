@@ -1,4 +1,4 @@
-import { AppBar, Box, Container } from "@material-ui/core";
+import { AppBar, Box, Container } from "@mui/material";
 import { FC } from "react";
 import { Filter } from "../filter";
 import { SearchFilters } from "../types";

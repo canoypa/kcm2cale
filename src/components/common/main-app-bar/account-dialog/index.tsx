@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, Divider } from "@material-ui/core";
+import { Box, Button, Dialog, Divider } from "@mui/material";
 import Link from "next/link";
 import { FC } from "react";
 import { APP_NAME } from "../../../../core/env";

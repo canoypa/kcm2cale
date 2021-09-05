@@ -1,4 +1,4 @@
-import { createTheme as createMuiTheme, PaletteMode } from "@material-ui/core";
+import { createTheme as createMuiTheme, PaletteMode } from "@mui/material";
 import { DarkPalette, LightPalette } from "./palette";
 
 export const createTheme = (mode: PaletteMode) =>
@@ -17,11 +17,6 @@ export const createTheme = (mode: PaletteMode) =>
           html: {
             WebkitTapHighlightColor: "transparent",
           },
-        },
-      },
-      MuiIconButton: {
-        defaultProps: {
-          size: "large",
         },
       },
     },

@@ -3,7 +3,7 @@ import {
   PaletteMode,
   ThemeProvider as MuiThemeProvider,
   useMediaQuery,
-} from "@material-ui/core";
+} from "@mui/material";
 import { createContext, ReactNode, useMemo, VFC } from "react";
 import { createTheme } from "../../core/theme";
 

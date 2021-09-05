@@ -1,11 +1,11 @@
+import { NavigateBefore } from "@mui/icons-material";
 import {
   AppBar,
   IconButton,
   Toolbar,
   Typography,
   useScrollTrigger,
-} from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+} from "@mui/material";
 import { FC } from "react";
 
 type Props = {

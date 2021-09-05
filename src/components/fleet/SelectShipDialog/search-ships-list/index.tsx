@@ -1,4 +1,4 @@
-import { Box, ListItem, ListItemText } from "@material-ui/core";
+import { Box, ListItem, ListItemText } from "@mui/material";
 import { FC } from "react";
 import { useMeasure } from "react-use";
 import { FixedSizeList } from "react-window";

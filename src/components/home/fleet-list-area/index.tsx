@@ -1,4 +1,4 @@
-import { CircularProgress, Grid as Box } from "@material-ui/core";
+import { CircularProgress, Grid as Box } from "@mui/material";
 import { FC } from "react";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetListContainer } from "../fleet-list-container";

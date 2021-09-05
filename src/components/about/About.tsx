@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { FC } from "react";
 import { APP_NAME, APP_VERSION } from "~/core/env";
 import { TextLink } from "../common/TextLink";

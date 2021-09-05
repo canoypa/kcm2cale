@@ -1,4 +1,4 @@
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { MainAppBar } from "../components/common/main-app-bar";

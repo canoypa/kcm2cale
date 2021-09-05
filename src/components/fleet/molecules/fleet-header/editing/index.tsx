@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { NavigateBefore } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -13,8 +14,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+} from "@mui/material";
 import { FC, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { infer as zodInfer, nativeEnum, object, string } from "zod";

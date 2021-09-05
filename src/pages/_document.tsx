@@ -20,7 +20,10 @@ export default class MyDocument extends Document {
 MyDocument.getInitialProps = async (ctx) => {
   const originalRenderPage = ctx.renderPage;
 
-  const cache = createEmotionCache({ key: "css" });
+  const cache = createEmotionCache({
+    key: "css",
+    prepend: true,
+  });
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
   ctx.renderPage = () =>

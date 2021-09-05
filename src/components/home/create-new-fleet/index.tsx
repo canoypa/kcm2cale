@@ -1,5 +1,5 @@
-import { Box, Fab } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import { Box, Fab } from "@mui/material";
+import { Add } from "@mui/icons-material";
 import Link from "next/link";
 import { FC } from "react";
 

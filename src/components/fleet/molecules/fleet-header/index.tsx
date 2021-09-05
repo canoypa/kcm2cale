@@ -1,5 +1,5 @@
-import { Box, Typography } from "@material-ui/core";
-import { Skeleton } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { FC, useContext, useState } from "react";
 import { FleetIdContext } from "../../fleetIdContext";
 import { useFleet } from "../../hooks";

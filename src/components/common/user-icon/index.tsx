@@ -1,10 +1,5 @@
-import {
-  Avatar,
-  IconButton,
-  IconButtonProps,
-  Skeleton,
-} from "@material-ui/core";
-import { AccountCircleOutlined } from "@material-ui/icons";
+import { AccountCircleOutlined } from "@mui/icons-material";
+import { Avatar, IconButton, IconButtonProps, Skeleton } from "@mui/material";
 import { FC } from "react";
 import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 

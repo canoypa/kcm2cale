@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { FAQ } from "../../components/about/FAQ";

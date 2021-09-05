@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";

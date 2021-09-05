@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, useScrollTrigger } from "@material-ui/core";
+import { AppBar, Box, Toolbar, useScrollTrigger } from "@mui/material";
 import { FC, useState } from "react";
 import { UserIconButton } from "../user-icon";
 import { AccountDialog } from "./account-dialog";

@@ -1,4 +1,4 @@
-import { Box, Collapse, LinearProgress } from "@material-ui/core";
+import { Box, Collapse, LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useCallback, useState } from "react";
 import { useEffectOnce } from "react-use";
