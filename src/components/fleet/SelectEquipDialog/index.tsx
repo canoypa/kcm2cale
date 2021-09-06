@@ -1,4 +1,4 @@
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
 import { FC, useCallback } from "react";
 import { useSelectEquip } from "../hooks/select-equip";

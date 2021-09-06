@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { FC } from "react";
 import {
   ProviderId,
@@ -17,12 +17,7 @@ export const SignInButton: FC<Props> = ({ provider, onClick }) => {
   const handlerClick = () => onClick(provider);
 
   return (
-    <Button
-      variant="outlined"
-      size="large"
-      startIcon={ProviderLogo}
-      onClick={handlerClick}
-    >
+    <Button variant="outlined" startIcon={ProviderLogo} onClick={handlerClick}>
       {providerName} でサインイン
     </Button>
   );

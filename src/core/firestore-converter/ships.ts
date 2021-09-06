@@ -1,17 +1,18 @@
 import { FirestoreDataConverter } from "firebase/firestore";
+import { ShipDoc } from "../../models/firestore/ship";
 import { Ship } from "../../models/ship";
 
 export const FirestoreFleetShipsConverter: FirestoreDataConverter<Ship> = {
   toFirestore: () => ({}),
   fromFirestore: (snapshot) => {
-    // Todo: バリデーション
     const data = snapshot.data();
 
-    return {
+    // バリデーション
+    const ship = ShipDoc.transform((v) => ({
+      ...v,
       id: snapshot.id,
-      fleetNo: data.fleetNo,
-      turnNo: data.turnNo,
-      no: data.no,
-    };
+    })).parse(data);
+
+    return ship;
   },
 };

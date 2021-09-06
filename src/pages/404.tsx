@@ -1,9 +1,8 @@
-import { Box, Divider } from "@material-ui/core";
+import { Button, Typography } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
-import { Message } from "../components/404/Message";
-import { SadFace } from "../components/404/SadFace";
-import { TopPageLink } from "../components/404/TopPageLink";
+import Link from "next/link";
+import { Error, ErrorActions, ErrorContent } from "~/components/Error";
 import { APP_NAME } from "../core/env";
 
 const NotFoundPage: NextPage = () => {
@@ -13,14 +12,18 @@ const NotFoundPage: NextPage = () => {
         <title>404 Not Found - {APP_NAME}</title>
       </Head>
 
-      <Box display="flex" justifyContent="center" padding={3}>
-        <Box maxWidth={599}>
-          <SadFace />
-          <Divider />
-          <Message />
-          <TopPageLink />
-        </Box>
-      </Box>
+      <Error>
+        <ErrorContent>
+          <Typography>
+            リクエストされたページはこのサイトに存在しません。
+          </Typography>
+        </ErrorContent>
+        <ErrorActions>
+          <Link href="/" passHref>
+            <Button variant="outlined">トップページに戻る</Button>
+          </Link>
+        </ErrorActions>
+      </Error>
     </>
   );
 };

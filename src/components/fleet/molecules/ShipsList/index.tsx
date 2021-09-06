@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@material-ui/core";
+import { Box, Skeleton } from "@mui/material";
 import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";

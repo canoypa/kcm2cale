@@ -1,4 +1,4 @@
-import { Chip, Grid } from "@material-ui/core";
+import { Chip, Grid } from "@mui/material";
 import { FC, useState } from "react";
 import { SearchFilters } from "../types";
 

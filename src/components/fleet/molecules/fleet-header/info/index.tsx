@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import { FleetType } from "../../../../../models/fleet";
 import { LineClamp } from "../../../../common/clamp";

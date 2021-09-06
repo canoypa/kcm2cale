@@ -1,5 +1,5 @@
-import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
+import { Search } from "@mui/icons-material";
 import { VFC } from "react";
 
 type Props = TextFieldProps;

@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid } from "@material-ui/core";
+import { Box, Grid } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { MainAppBar } from "../components/common/main-app-bar";
@@ -31,14 +31,7 @@ const HomePage: NextPage = () => {
           <Box flexGrow={1}>
             <FleetListArea />
           </Box>
-          <AppBar
-            position="sticky"
-            elevation={0}
-            color="transparent"
-            sx={{ bottom: 0 }}
-          >
-            <CreateNewFleet />
-          </AppBar>
+          <CreateNewFleet />
         </Grid>
       </main>
     </>

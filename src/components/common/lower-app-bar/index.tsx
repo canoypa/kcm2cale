@@ -1,11 +1,11 @@
+import { NavigateBefore } from "@mui/icons-material";
 import {
   AppBar,
   IconButton,
   Toolbar,
   Typography,
   useScrollTrigger,
-} from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+} from "@mui/material";
 import { FC } from "react";
 
 type Props = {
@@ -22,12 +22,7 @@ export const LowerAppBar: FC<Props> = ({ title, onNavClick }) => {
     <>
       <AppBar color="inherit" elevation={elevateTrigger ? 4 : 0}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            onClick={onNavClick}
-            aria-label="戻る"
-            size="large"
-          >
+          <IconButton edge="start" onClick={onNavClick} aria-label="戻る">
             <NavigateBefore />
           </IconButton>
           {title && <Typography variant="h6">{title}</Typography>}

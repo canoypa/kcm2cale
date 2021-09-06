@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
 import { useUser } from "../../hooks/firebase/auth/useUser";

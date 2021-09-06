@@ -4,7 +4,6 @@ import { TextLink } from "../common/TextLink";
 export const PrivacyAndTerms: FC = () => {
   return (
     <section>
-      <h2>プライバシーと規約</h2>
       <p>最終更新: 2021/05/25</p>
 
       <section>

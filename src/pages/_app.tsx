@@ -4,13 +4,17 @@ import { NextPage } from "next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { PageLoadProgress } from "~/components/PageLoadProgress";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 const AuthProvider = dynamic(
   () => import("~/components/providers/auth-provider")
 );
 
-const clientSideEmotionCache = createEmotionCache({ key: "css" });
+const clientSideEmotionCache = createEmotionCache({
+  key: "css",
+  prepend: true,
+});
 
 type Props = AppProps & {
   emotionCache?: EmotionCache;
@@ -33,6 +37,7 @@ const App: NextPage<Props> = ({
           {/* <CssBaseline /> */}
           <AuthProvider />
 
+          <PageLoadProgress />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>

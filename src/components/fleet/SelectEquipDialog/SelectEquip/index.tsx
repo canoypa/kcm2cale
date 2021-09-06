@@ -1,5 +1,5 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
-import { NavigateBefore } from "@material-ui/icons";
+import { NavigateBefore } from "@mui/icons-material";
+import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { FC, useCallback } from "react";
 import {
   equipGroupFilter,
@@ -62,13 +62,13 @@ const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
 
   return (
     <>
-      <AppBar position="sticky" color="inherit">
+      <AppBar position="sticky" color="transparent">
         <Toolbar>
           <IconButton
             edge="start"
             onClick={onClose}
             aria-label="戻る"
-            size="large"
+            sx={{ mr: 1 }}
           >
             <NavigateBefore />
           </IconButton>

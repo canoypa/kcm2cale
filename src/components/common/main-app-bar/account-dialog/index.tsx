@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, Divider } from "@material-ui/core";
+import { Box, Button, Dialog, Divider } from "@mui/material";
 import Link from "next/link";
 import { FC } from "react";
 import { APP_NAME } from "../../../../core/env";
@@ -31,6 +31,13 @@ export const AccountDialog: FC<Props> = ({ open, onClose }) => {
           <Button size="small">
             <Box component="span" color="text.secondary">
               {APP_NAME} について
+            </Box>
+          </Button>
+        </Link>
+        <Link href="/privacy-and-terms" passHref>
+          <Button size="small">
+            <Box component="span" color="text.secondary">
+              プライバシーと規約
             </Box>
           </Button>
         </Link>

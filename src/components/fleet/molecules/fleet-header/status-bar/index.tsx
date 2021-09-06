@@ -1,5 +1,5 @@
-import { Box, IconButton } from "@material-ui/core";
-import { EditOutlined } from "@material-ui/icons";
+import { EditOutlined } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../../hooks/organize/fleet";
 
@@ -13,11 +13,7 @@ export const Actions: FC<Props> = ({ startEdit }) => {
   return (
     <Box display="flex" justifyContent="flex-end">
       {isOwner && (
-        <IconButton
-          onClick={editFleetInfo}
-          aria-label="編成情報の編集"
-          size="large"
-        >
+        <IconButton onClick={editFleetInfo} aria-label="編成情報の編集">
           <EditOutlined />
         </IconButton>
       )}
