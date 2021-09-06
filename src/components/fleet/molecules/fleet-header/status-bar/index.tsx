@@ -2,6 +2,7 @@ import { EditOutlined } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../../hooks/organize/fleet";
+import { FleetShareButton } from "./ShareFleet";
 
 type Props = {
   startEdit: () => void;
@@ -17,6 +18,7 @@ export const Actions: FC<Props> = ({ startEdit }) => {
           <EditOutlined />
         </IconButton>
       )}
+      <FleetShareButton />
     </Box>
   );
 };
