@@ -15,6 +15,9 @@ const useSortFleetShip = () => {
 
   const sort = useCallback(
     (fleet: FleetShip[], fleetNo: FleetNo, from: TurnNo, to: TurnNo) => {
+      // 入れ替えなくても呼び出される場合があるため
+      if (from === to) return;
+
       const sortedFleet = sortFleet(fleet, fleetNo, from, to);
 
       const batch = writeBatch(firestore);
