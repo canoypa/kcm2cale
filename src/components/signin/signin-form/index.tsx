@@ -6,10 +6,10 @@ import {
   User,
 } from "firebase/auth";
 import { FC } from "react";
+import { useEffectOnce } from "react-use";
 import { createProvider } from "../../../core/firebase/auth";
 import { ProviderId } from "../../../core/firebase/auth/types";
 import { getAuth } from "../../../core/firebase/sdk/auth";
-import { useDidMount } from "../../../util/hooks/lifecycle";
 import { SignInButton } from "../signin-button";
 
 type Props = {
@@ -25,7 +25,7 @@ export const SignInForm: FC<Props> = ({ anonymousUser }) => {
     linkWithRedirect(anonymousUser, provider);
   };
 
-  useDidMount(() => {
+  useEffectOnce(() => {
     getRedirectResult(auth)
       .then((result) => {
         // 正常にリンク完了
