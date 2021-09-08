@@ -14,15 +14,16 @@ export const About: FC = () => {
             newTab
           >
             <img
+            alt={`Release ${APP_VERSION}`}
               src={`https://img.shields.io/badge/Release-v${APP_VERSION}-blue`}
             />
           </TextLink>
           <TextLink href="https://github.com/canoypa/kcm2cale" ext newTab>
-            <img src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github" />
+            <img  alt="アプリの GitHub リポジトリ" src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github" />
           </TextLink>
 
           <TextLink href="https://twitter.com/canoypa" ext newTab>
-            <img src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
+            <img alt="開発者の Twitter" src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
           </TextLink>
         </Box>
         <p>
