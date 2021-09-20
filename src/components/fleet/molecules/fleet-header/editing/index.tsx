@@ -129,6 +129,7 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
                   variant="outlined"
                   fullWidth
                   multiline
+                  minRows={2}
                   label="説明"
                   error={errors.description !== undefined}
                   helperText={errors.description?.message}
