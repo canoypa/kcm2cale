@@ -36,7 +36,7 @@ export const UserIcon: FC<UserIconProps> = ({ size = 32 }) => {
 
 export const UserIconButton: FC<IconButtonProps> = ({ ...props }) => {
   return (
-    <IconButton sx={{ padding: 1 }} {...props}>
+    <IconButton sx={{ padding: 0.5 }} {...props}>
       <UserIcon size={32} />
     </IconButton>
   );
