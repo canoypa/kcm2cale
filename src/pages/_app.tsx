@@ -5,6 +5,7 @@ import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { PageLoadProgress } from "~/components/PageLoadProgress";
+import { ExtendedNextPage } from "~/types/next-page";
 import { ThemeProvider } from "../components/providers/theme-provider";
 
 const AuthProvider = dynamic(
@@ -18,12 +19,15 @@ const clientSideEmotionCache = createEmotionCache({
 
 type Props = AppProps & {
   emotionCache?: EmotionCache;
+  Component: ExtendedNextPage;
 };
 const App: NextPage<Props> = ({
   Component,
   pageProps,
   emotionCache = clientSideEmotionCache,
 }) => {
+  const getSharedLayout = Component.getShearedLayout || ((page) => page);
+
   return (
     <>
       <Head>
@@ -38,7 +42,7 @@ const App: NextPage<Props> = ({
           <AuthProvider />
 
           <PageLoadProgress />
-          <Component {...pageProps} />
+          {getSharedLayout(<Component {...pageProps} />)}
         </ThemeProvider>
       </CacheProvider>
     </>
