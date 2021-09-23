@@ -6,7 +6,7 @@ import { Header } from "../../components/about/Header";
 import { MarkdownStyle } from "../../components/about/MarkdownStyle";
 import { APP_NAME } from "../../core/env";
 
-const HomePage: NextPage = () => {
+const AboutPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -24,4 +24,4 @@ const HomePage: NextPage = () => {
     </>
   );
 };
-export default HomePage;
+export default AboutPage;

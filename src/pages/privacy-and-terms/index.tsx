@@ -6,7 +6,7 @@ import { MarkdownStyle } from "../../components/about/MarkdownStyle";
 import { PrivacyAndTerms } from "../../components/about/PrivacyAndTerms";
 import { APP_NAME } from "../../core/env";
 
-const HomePage: NextPage = () => {
+const PrivacyAndTermsPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -24,4 +24,4 @@ const HomePage: NextPage = () => {
     </>
   );
 };
-export default HomePage;
+export default PrivacyAndTermsPage;
