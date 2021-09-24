@@ -7,7 +7,7 @@ import {
   EquipGroupValues,
 } from "~/core/filters/equip";
 import { EquipSearch } from "~/core/search/equip";
-import { EquipData, ShipEquip } from "~/models/equip/types";
+import { ShipEquip } from "~/models/equip/types";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "../hooks/search-query";
 import { useSetEquip } from "../hooks/set-equip";
@@ -50,8 +50,8 @@ const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
     onSelect: useCallback(
-      (equipData: EquipData) => {
-        setEquip(target, equipData);
+      (equipNoToSet: number) => {
+        setEquip(target, equipNoToSet);
         onClose();
       },
       [onClose, setEquip, target]

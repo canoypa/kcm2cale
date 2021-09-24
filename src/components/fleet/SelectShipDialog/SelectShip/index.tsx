@@ -7,7 +7,7 @@ import {
   ShipSearchGroupValues,
 } from "~/core/filters/ship";
 import { ShipSearch } from "~/core/search/ship";
-import { FleetShip, ShipData } from "~/models/ship";
+import { FleetShip } from "~/models/ship";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "../hooks/search-query";
 import { useSetShip } from "../hooks/set-ship";
@@ -41,8 +41,8 @@ const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
 
     onSelect: useCallback(
-      (shipData: ShipData) => {
-        setShip(target, shipData);
+      (shipNoToSet: string) => {
+        setShip(target, shipNoToSet);
         onClose();
       },
       [onClose, setShip, target]
