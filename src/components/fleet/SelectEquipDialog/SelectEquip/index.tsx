@@ -7,10 +7,8 @@ import {
   EquipGroupValues,
 } from "~/core/filters/equip";
 import { EquipSearch } from "~/core/search/equip";
-import { ShipEquip } from "~/models/equip/types";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "../hooks/search-query";
-import { useSetEquip } from "../hooks/set-equip";
 import { SearchEquipsList } from "../search-equips-list";
 
 /**
@@ -25,13 +23,11 @@ const isEquipGroupValue = (n: number): n is EquipGroupValues =>
   n >= 0 && n <= 21;
 
 type SelectEquipProps = {
-  target: ShipEquip;
+  onSelect: (equipNoToSet: number) => void;
   onClose: () => void;
 };
-const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
+const SelectEquip: FC<SelectEquipProps> = ({ onSelect, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
-
-  const setEquip = useSetEquip();
 
   const handler = {
     filterChange: useCallback(
@@ -48,14 +44,6 @@ const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
     ),
 
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
-
-    onSelect: useCallback(
-      (equipNoToSet: number) => {
-        setEquip(target, equipNoToSet);
-        onClose();
-      },
-      [onClose, setEquip, target]
-    ),
   };
 
   const equipsList = EquipSearch.search(searchQuery);
@@ -75,7 +63,7 @@ const SelectEquip: FC<SelectEquipProps> = ({ target, onClose }) => {
           <Typography variant="h6">装備を選択</Typography>
         </Toolbar>
       </AppBar>
-      <SearchEquipsList equipsList={equipsList} onSelect={handler.onSelect} />
+      <SearchEquipsList equipsList={equipsList} onSelect={onSelect} />
       <OrganizeSelectSearchRenderer
         filterGroup={equipGroupFilter}
         changeFilter={handler.filterChange}

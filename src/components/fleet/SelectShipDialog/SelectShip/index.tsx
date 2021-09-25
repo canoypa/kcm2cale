@@ -7,22 +7,19 @@ import {
   ShipSearchGroupValues,
 } from "~/core/filters/ship";
 import { ShipSearch } from "~/core/search/ship";
-import { FleetShip } from "~/models/ship";
 import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
 import { useSearchQuery } from "../hooks/search-query";
-import { useSetShip } from "../hooks/set-ship";
 import { SearchShipsList } from "../search-ships-list";
 
 const isShipGroupValue = (n: number): n is ShipSearchGroupValues =>
   n >= 0 && n <= 8;
 
 type SelectShipProps = {
-  target: FleetShip;
+  onSelect: (shipNoToSet: string) => void;
   onClose: () => void;
 };
-const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
+const SelectShip: FC<SelectShipProps> = ({ onSelect, onClose }) => {
   const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
-  const setShip = useSetShip();
 
   const handler = {
     filterChange: useCallback(
@@ -39,14 +36,6 @@ const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
     ),
 
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
-
-    onSelect: useCallback(
-      (shipNoToSet: string) => {
-        setShip(target, shipNoToSet);
-        onClose();
-      },
-      [onClose, setShip, target]
-    ),
   };
 
   const shipsList = ShipSearch.search(searchQuery);
@@ -66,7 +55,7 @@ const SelectShip: FC<SelectShipProps> = ({ target, onClose }) => {
           <Typography variant="h6">{"艦娘を選択"}</Typography>
         </Toolbar>
       </AppBar>
-      <SearchShipsList shipsList={shipsList} onSelect={handler.onSelect} />
+      <SearchShipsList shipsList={shipsList} onSelect={onSelect} />
       <OrganizeSelectSearchRenderer
         filterGroup={shipGroupFilter}
         changeFilter={handler.filterChange}
