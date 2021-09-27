@@ -1,30 +1,17 @@
 import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
-import { FC, useCallback } from "react";
-import { useSelectShip } from "../hooks/select-ship";
-import { useSetShip } from "./hooks/set-ship";
+import { FC } from "react";
 
 const SelectShip = dynamic(() => import("./SelectShip"));
 
-export const SelectShipDialog: FC = () => {
-  const setShip = useSetShip();
-
-  const { data: selectState, reset: resetSelectState } = useSelectShip();
-
-  const onClose = useCallback(() => {
-    resetSelectState();
-  }, [resetSelectState]);
-
-  const onSelect = (shipNoToSet: string) => {
-    // assertion
-    if (selectState.target === null) throw new Error("Error");
-
-    setShip(selectState.target, shipNoToSet);
-    onClose();
-  };
-
+type Props = {
+  open: boolean;
+  onSelect: (shipNoToSet: string) => void;
+  onClose: () => void;
+};
+export const SelectShipDialog: FC<Props> = ({ open, onSelect, onClose }) => {
   return (
-    <Dialog fullScreen open={selectState.open} onClose={onClose}>
+    <Dialog fullScreen open={open} onClose={onClose}>
       <SelectShip onSelect={onSelect} onClose={onClose} />
     </Dialog>
   );
