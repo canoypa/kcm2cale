@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import useSWR from "swr";
 import { FleetShip } from "~/models/ship";
+import { useSetShip } from "../SelectShipDialog/hooks/set-ship";
 
 export type SelectShipState =
   | { open: true; target: FleetShip }
@@ -11,26 +12,51 @@ const defaultState: SelectShipState = {
   target: null,
 };
 
-export const useSelectShip = () => {
-  const { data, mutate } = useSWR<SelectShipState>("select-ship", {
+const useSelectShipState = () => {
+  return useSWR<SelectShipState>("select-ship", {
     fallbackData: defaultState,
   });
+};
 
-  const select = useCallback(
+export const useStartSelectShip = () => {
+  const { mutate } = useSelectShipState();
+
+  const start = useCallback(
     (target: FleetShip) => {
       mutate({ open: true, target });
     },
     [mutate]
   );
 
-  const reset = useCallback(() => {
+  return start;
+};
+
+export const useSelectShip = () => {
+  const setShip = useSetShip();
+
+  const { data, mutate } = useSelectShipState();
+
+  const onClose = useCallback(() => {
     mutate(defaultState);
   }, [mutate]);
 
+  const onSelect = useCallback(
+    (shipNoToSet: string) => {
+      // Assertion
+      if (data === undefined || data.target === null) {
+        throw new Error("Error");
+      }
+
+      setShip(data.target, shipNoToSet);
+      onClose();
+    },
+    [onClose, data, setShip]
+  );
+
   return {
     // fallbackData を設定済みのため安全
-    data: data as SelectShipState,
-    select,
-    reset,
+    open: (data as SelectShipState).open,
+    onSelect,
+    onClose,
   };
 };
