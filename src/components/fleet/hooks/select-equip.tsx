@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import useSWR from "swr";
 import { ShipEquip } from "~/models/equip";
+import { useSetEquip } from "../SelectEquipDialog/hooks/set-equip";
 
 export type SelectEquipState =
   | { open: true; target: ShipEquip }
@@ -11,26 +12,50 @@ const defaultState: SelectEquipState = {
   target: null,
 };
 
-export const useSelectEquip = () => {
-  const { data, mutate } = useSWR<SelectEquipState>("select-equip", {
+const useSelectEquipState = () => {
+  return useSWR<SelectEquipState>("select-equip", {
     fallbackData: defaultState,
   });
+};
 
-  const select = useCallback(
+export const useStartSelectEquip = () => {
+  const { mutate } = useSelectEquipState();
+
+  const start = useCallback(
     (target: ShipEquip) => {
       mutate({ open: true, target });
     },
     [mutate]
   );
 
-  const reset = useCallback(() => {
+  return start;
+};
+
+export const useSelectEquip = () => {
+  const setEquip = useSetEquip();
+
+  const { data, mutate } = useSelectEquipState();
+
+  const onClose = useCallback(() => {
     mutate(defaultState);
   }, [mutate]);
 
+  const onSelect = useCallback(
+    (equipNoToSet: number) => {
+      // Assertion
+      if (data === undefined || data.target === null) {
+        throw new Error("Error");
+      }
+
+      setEquip(data.target, equipNoToSet);
+      onClose();
+    },
+    [data, onClose, setEquip]
+  );
+
   return {
-    // fallbackData を設定済みのため安全
-    data: data as SelectEquipState,
-    select,
-    reset,
+    open: (data as SelectEquipState)?.open,
+    onSelect,
+    onClose,
   };
 };

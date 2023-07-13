@@ -4,7 +4,7 @@ import { FC } from "react";
 import { APP_NAME } from "../../../../core/env";
 import { UserIcon } from "../../user-icon";
 
-const AccountHeader: FC = () => {
+const MainMenuHeader: FC = () => {
   return (
     <div>
       <Box display="flex" alignItems="center" columnGap={2}>
@@ -19,11 +19,11 @@ type Props = {
   open: boolean;
   onClose: () => void;
 };
-export const AccountDialog: FC<Props> = ({ open, onClose }) => {
+export const MainMenuDialog: FC<Props> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <Box padding={2}>
-        <AccountHeader />
+        <MainMenuHeader />
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
