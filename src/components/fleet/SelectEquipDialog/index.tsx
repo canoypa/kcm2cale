@@ -1,22 +1,18 @@
 import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
-import { FC, useCallback } from "react";
-import { useSelectEquip } from "../hooks/select-equip";
+import { FC } from "react";
 
 const SelectEquip = dynamic(() => import("./SelectEquip"));
 
-export const SelectEquipDialog: FC = () => {
-  const { data: selectState, reset: resetSelectState } = useSelectEquip();
-
-  const onClose = useCallback(() => {
-    resetSelectState();
-  }, [resetSelectState]);
-
+type Props = {
+  open: boolean;
+  onSelect: (shipNoToSet: number) => void;
+  onClose: () => void;
+};
+export const SelectEquipDialog: FC<Props> = ({ open, onSelect, onClose }) => {
   return (
-    <Dialog fullScreen open={selectState.open} onClose={onClose}>
-      {selectState.open && (
-        <SelectEquip target={selectState.target} onClose={onClose} />
-      )}
+    <Dialog fullScreen open={open} onClose={onClose}>
+      <SelectEquip onSelect={onSelect} onClose={onClose} />
     </Dialog>
   );
 };

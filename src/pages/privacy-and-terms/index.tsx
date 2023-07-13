@@ -6,7 +6,7 @@ import { MarkdownStyle } from "../../components/about/MarkdownStyle";
 import { PrivacyAndTerms } from "../../components/about/PrivacyAndTerms";
 import { APP_NAME } from "../../core/env";
 
-const HomePage: ExtendedNextPage = () => {
+const PrivacyAndTermsPage: ExtendedNextPage = () => {
   return (
     <>
       <Head>
@@ -17,9 +17,9 @@ const HomePage: ExtendedNextPage = () => {
     </>
   );
 };
-export default HomePage;
+export default PrivacyAndTermsPage;
 
-HomePage.getShearedLayout = (page) => {
+PrivacyAndTermsPage.getShearedLayout = (page) => {
   return (
     <main>
       <Header />

@@ -6,16 +6,16 @@ import { ShipData } from "~/models/ship";
 
 type Props = {
   shipsList: ShipData[];
-  onSelect: (shipData: ShipData) => void;
+  onSelect: (shipNoToSet: string) => void;
 };
 export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
   const [measureRef, { width, height }] = useMeasure();
 
-  const handlerOnSelect = (shipData: ShipData) => onSelect(shipData);
+  const handlerOnSelect = (shipNoToSet: string) => onSelect(shipNoToSet);
 
   const items = shipsList.map((shipData) => ({
     key: shipData.no,
-    value: shipData,
+    value: shipData.no,
     label: shipData.name,
   }));
 

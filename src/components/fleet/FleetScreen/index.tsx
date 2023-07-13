@@ -4,6 +4,8 @@ import { FC } from "react";
 import { LowerAppBar } from "~/components/common/lower-app-bar";
 import { APP_NAME } from "~/core/env";
 import { Fleet } from "~/models/fleet";
+import { useSelectEquip } from "../hooks/select-equip";
+import { useSelectShip } from "../hooks/select-ship";
 import { Organize } from "../organisms/organize";
 import { SelectEquipDialog } from "../SelectEquipDialog";
 import { SelectShipDialog } from "../SelectShipDialog";
@@ -16,6 +18,18 @@ type Props = {
  */
 export const FleetScreen: FC<Props> = ({ fleet }) => {
   const { push } = useRouter();
+
+  const {
+    open: isOpenSelectShip,
+    onSelect: onSelectShip,
+    onClose: onCloseSelectShip,
+  } = useSelectShip();
+
+  const {
+    open: isOpenSelectEquip,
+    onSelect: onSelectEquip,
+    onClose: onCloseSelectEquip,
+  } = useSelectEquip();
 
   const backToTopPage = () => {
     push("/");
@@ -30,8 +44,16 @@ export const FleetScreen: FC<Props> = ({ fleet }) => {
       <LowerAppBar onNavClick={backToTopPage} />
       <Organize />
 
-      <SelectShipDialog />
-      <SelectEquipDialog />
+      <SelectShipDialog
+        open={isOpenSelectShip}
+        onSelect={onSelectShip}
+        onClose={onCloseSelectShip}
+      />
+      <SelectEquipDialog
+        open={isOpenSelectEquip}
+        onSelect={onSelectEquip}
+        onClose={onCloseSelectEquip}
+      />
     </>
   );
 };

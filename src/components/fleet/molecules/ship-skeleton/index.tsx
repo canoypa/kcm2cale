@@ -1,15 +1,15 @@
-import { Box, Paper } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { Box, Paper } from "@mui/material";
 import { FC } from "react";
 import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { EmptyShip, Ship } from "../../../../models/ship";
-import { useSelectShip } from "../../hooks/select-ship";
+import { useStartSelectShip } from "../../hooks/select-ship";
 
 type Props = {
   fleetPlace: Ship | EmptyShip;
 };
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const { select: selectShip } = useSelectShip();
+  const selectShip = useStartSelectShip();
 
   const isOwner = useIsFleetOwner();
 

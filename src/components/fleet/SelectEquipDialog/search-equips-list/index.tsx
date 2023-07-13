@@ -6,16 +6,16 @@ import { EquipData } from "../../../../models/equip/types";
 
 type Props = {
   equipsList: EquipData[];
-  onSelect: (equipData: EquipData) => void;
+  onSelect: (equipNoToSet: number) => void;
 };
 export const SearchEquipsList: FC<Props> = ({ equipsList, onSelect }) => {
   const [measureRef, { width, height }] = useMeasure();
 
-  const handlerOnSelect = (equipData: EquipData) => onSelect(equipData);
+  const handlerOnSelect = (equipNoToSet: number) => onSelect(equipNoToSet);
 
   const items = equipsList.map((equipData) => ({
     key: equipData.no,
-    value: equipData,
+    value: equipData.no,
     label: equipData.name,
   }));
 

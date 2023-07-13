@@ -6,7 +6,7 @@ import { Header } from "../../components/about/Header";
 import { MarkdownStyle } from "../../components/about/MarkdownStyle";
 import { APP_NAME } from "../../core/env";
 
-const HomePage: ExtendedNextPage = () => {
+const AboutPage: ExtendedNextPage = () => {
   return (
     <>
       <Head>
@@ -17,9 +17,9 @@ const HomePage: ExtendedNextPage = () => {
     </>
   );
 };
-export default HomePage;
+export default AboutPage;
 
-HomePage.getShearedLayout = (page) => {
+AboutPage.getShearedLayout = (page) => {
   return (
     <main>
       <Header />
