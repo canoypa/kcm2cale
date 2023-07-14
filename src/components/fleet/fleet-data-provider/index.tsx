@@ -1,5 +1,5 @@
 import { DocumentSnapshot, QuerySnapshot } from "firebase/firestore";
-import React, {
+import {
   FC,
   ReactNode,
   useCallback,
@@ -13,7 +13,6 @@ import { listenShipDocs } from "~/api/ship";
 import { Equip } from "~/models/equip";
 import { Fleet } from "~/models/fleet";
 import { Ship } from "~/models/ship";
-import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 import { FleetIdContext } from "../fleetIdContext";
 import { useEquips, useFleet, useShips } from "../hooks";
 
@@ -24,7 +23,7 @@ type Props = {
 export const FleetDataProvider: FC<Props> = ({ children }) => {
   const fleetId = useContext(FleetIdContext);
 
-  const { data: signInCheckResult } = useSigninCheck();
+  // const { data: signInCheckResult } = useSigninCheck();
 
   const { data: fleet, mutate: mutateFleet } = useFleet(fleetId);
   const { data: ships, mutate: mutateShips } = useShips(fleetId);
@@ -141,14 +140,14 @@ export const FleetDataProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     // データが揃った後、作成者でなければリスナを解除
-    if (signInCheckResult.signedIn && fleet && ships && equips) {
-      if (fleet.owner !== signInCheckResult.user.uid) {
-        fleetDocUnsubscribe.current?.();
-        shipDocsUnsubscribe.current?.();
-        equipDocsUnsubscribe.current?.();
-      }
+    if (/* signInCheckResult.signedIn && */ fleet && ships && equips) {
+      // if (fleet.owner !== signInCheckResult.user.uid) {
+      fleetDocUnsubscribe.current?.();
+      shipDocsUnsubscribe.current?.();
+      equipDocsUnsubscribe.current?.();
+      // }
     }
-  }, [equips, fleet, ships, signInCheckResult]);
+  }, [equips, fleet, ships /* signInCheckResult */]);
 
   return <>{children}</>;
 };
