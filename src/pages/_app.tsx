@@ -2,15 +2,10 @@ import createEmotionCache, { EmotionCache } from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import { PageLoadProgress } from "~/components/PageLoadProgress";
 import { ExtendedNextPage } from "~/types/next-page";
 import { ThemeProvider } from "../components/providers/theme-provider";
-
-const AuthProvider = dynamic(
-  () => import("~/components/providers/auth-provider")
-);
 
 const clientSideEmotionCache = createEmotionCache({
   key: "css",
@@ -39,7 +34,6 @@ const App: NextPage<Props> = ({
       <CacheProvider value={emotionCache}>
         <ThemeProvider>
           {/* <CssBaseline /> */}
-          <AuthProvider />
 
           <PageLoadProgress />
           {getSharedLayout(<Component {...pageProps} />)}
