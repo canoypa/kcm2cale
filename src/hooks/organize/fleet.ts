@@ -7,7 +7,6 @@ import { useFleet, useShips } from "../../components/fleet/hooks";
 import { FleetType } from "../../models/fleet";
 import { EmptyShip, FleetNo, FleetShip, Ship, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
-import { useUser } from "../firebase/auth/useUser";
 
 const useSortFleetShip = () => {
   const firestore = getFirestore();
@@ -68,12 +67,12 @@ export const useFleetManager = (fleetNo: FleetNo): Fleet => {
 /**
  * サインインユーザが編成の作成者かどうか
  */
-export const useIsFleetOwner = () => {
-  const { data: user } = useUser();
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+// export const useIsFleetOwner = () => {
+//   const { data: user } = useUser();
+//   const fleetId = useContext(FleetIdContext);
+//   const { data: fleet } = useFleet(fleetId);
 
-  if (fleet === undefined) return undefined;
-  // Fixme
-  return fleet ? fleet.owner === user?.uid : false;
-};
+//   if (fleet === undefined) return undefined;
+//   // Fixme
+//   return fleet ? fleet.owner === user?.uid : false;
+// };

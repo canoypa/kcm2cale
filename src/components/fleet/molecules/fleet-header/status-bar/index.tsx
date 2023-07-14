@@ -1,7 +1,6 @@
 import { EditOutlined } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { FC } from "react";
-import { useIsFleetOwner } from "../../../../../hooks/organize/fleet";
 import { FleetShareButton } from "./ShareFleet";
 
 type Props = {
@@ -9,15 +8,15 @@ type Props = {
 };
 export const Actions: FC<Props> = ({ startEdit }) => {
   const editFleetInfo = startEdit;
-  const isOwner = useIsFleetOwner();
+  // const isOwner = useIsFleetOwner();
 
   return (
     <Box display="flex" justifyContent="flex-end">
-      {isOwner && (
-        <IconButton onClick={editFleetInfo} aria-label="編成情報の編集">
-          <EditOutlined />
-        </IconButton>
-      )}
+      {/* {isOwner && ( */}
+      <IconButton onClick={editFleetInfo} aria-label="編成情報の編集">
+        <EditOutlined />
+      </IconButton>
+      {/* )} */}
       <FleetShareButton />
     </Box>
   );

@@ -3,10 +3,7 @@ import { FC, useContext, useState } from "react";
 import { List } from "react-movable";
 import { isCombinedFleet } from "../../../../core/util/is-combined-fleet";
 import { isShipPlaced } from "../../../../core/util/is-ship-placed";
-import {
-  useFleetManager,
-  useIsFleetOwner,
-} from "../../../../hooks/organize/fleet";
+import { useFleetManager } from "../../../../hooks/organize/fleet";
 import { FleetNo } from "../../../../models/ship";
 import { range } from "../../../../util/range";
 import { FleetIdContext } from "../../fleetIdContext";
@@ -31,7 +28,7 @@ export const ShipsList: FC = () => {
 
   const fleetId = useContext(FleetIdContext);
   const { data: fleetInfo } = useFleet(fleetId);
-  const isOwner = useIsFleetOwner();
+  // const isOwner = useIsFleetOwner();
   const isCombined = fleetInfo ? isCombinedFleet(fleetInfo.type) : false;
 
   const fleet = useFleetManager(isCombined ? activeFleetNo : 0);
@@ -45,41 +42,41 @@ export const ShipsList: FC = () => {
       )}
 
       {fleet ? (
-        isOwner ? (
-          <List
-            values={fleet.fleet}
-            onChange={({ oldIndex, newIndex }) => {
-              fleet.sort(fleet.fleet, activeFleetNo, oldIndex, newIndex);
-            }}
-            renderList={({ children, props }) => (
-              <Box display="flex" flexDirection="column" {...props}>
-                {children}
-              </Box>
-            )}
-            renderItem={({ value: fleetPlace, props }) => (
-              <div {...props}>
-                {isShipPlaced(fleetPlace) ? (
-                  <ShipItem fleetPlace={fleetPlace} />
-                ) : (
-                  <ShipSkeleton fleetPlace={fleetPlace} />
-                )}
-              </div>
-            )}
-          />
-        ) : (
-          <Box display="flex" flexDirection="column">
-            {fleet.fleet.map((fleetPlace) => (
-              <div key={fleetPlace.turnNo}>
-                {isShipPlaced(fleetPlace) ? (
-                  <ShipItem fleetPlace={fleetPlace} />
-                ) : (
-                  <ShipSkeleton fleetPlace={fleetPlace} />
-                )}
-              </div>
-            ))}
-          </Box>
-        )
+        // isOwner ? (
+        <List
+          values={fleet.fleet}
+          onChange={({ oldIndex, newIndex }) => {
+            fleet.sort(fleet.fleet, activeFleetNo, oldIndex, newIndex);
+          }}
+          renderList={({ children, props }) => (
+            <Box display="flex" flexDirection="column" {...props}>
+              {children}
+            </Box>
+          )}
+          renderItem={({ value: fleetPlace, props }) => (
+            <div {...props}>
+              {isShipPlaced(fleetPlace) ? (
+                <ShipItem fleetPlace={fleetPlace} />
+              ) : (
+                <ShipSkeleton fleetPlace={fleetPlace} />
+              )}
+            </div>
+          )}
+        />
       ) : (
+        // ) : (
+        //   <Box display="flex" flexDirection="column">
+        //     {fleet.fleet.map((fleetPlace) => (
+        //       <div key={fleetPlace.turnNo}>
+        //         {isShipPlaced(fleetPlace) ? (
+        //           <ShipItem fleetPlace={fleetPlace} />
+        //         ) : (
+        //           <ShipSkeleton fleetPlace={fleetPlace} />
+        //         )}
+        //       </div>
+        //     ))}
+        //   </Box>
+        // )
         <FleetSkeleton />
       )}
     </div>

@@ -1,7 +1,6 @@
 import { Chip } from "@mui/material";
 import { FC } from "react";
 import { EquipsData } from "../../../../data/equip";
-import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
 import { Equip } from "../../../../models/equip";
 import { CharClamp } from "../../../common/clamp";
 
@@ -10,7 +9,7 @@ type Props = {
   swapEquip: (equip: Equip) => void;
 };
 export const EquipList: FC<Props> = ({ shipEquips, swapEquip }) => {
-  const isOwner = useIsFleetOwner();
+  // const isOwner = useIsFleetOwner();
 
   const handlerEquipClick = (preEq: Equip) => {
     swapEquip(preEq);
@@ -35,7 +34,7 @@ export const EquipList: FC<Props> = ({ shipEquips, swapEquip }) => {
             key={v.value.id}
             variant="outlined"
             label={v.label}
-            onClick={isOwner ? _handlerEquipClick : undefined}
+            onClick={/* isOwner ? */ _handlerEquipClick /* : undefined */}
           />
         );
       })}

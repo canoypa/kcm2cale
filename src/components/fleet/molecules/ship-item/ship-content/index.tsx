@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { FC } from "react";
 import { useStartSelectShip } from "~/components/fleet/hooks/select-ship";
-import { useIsFleetOwner } from "~/hooks/organize/fleet";
 import { ShipsData } from "../../../../../data/ship";
 import { Ship } from "../../../../../models/ship";
 
@@ -12,7 +11,7 @@ type Props = {
 };
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   const selectShip = useStartSelectShip();
-  const isOwner = useIsFleetOwner();
+  // const isOwner = useIsFleetOwner();
 
   const ship = ShipsData.find((v) => v.no === fleetPlace.no);
   if (!ship) throw new Error("Error");
@@ -24,7 +23,7 @@ export const ShipContent: FC<Props> = ({ fleetPlace }) => {
   return (
     <Box display="flex" alignItems="center">
       <Box
-        onClick={isOwner ? swapShipHandler : undefined}
+        onClick={/* isOwner ? */ swapShipHandler /* : undefined */}
         maxWidth="8em"
         mr={2}
         sx={{
