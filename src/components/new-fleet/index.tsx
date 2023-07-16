@@ -13,9 +13,8 @@ export const NewFleet: FC = () => {
     () => {
       // 未認証の場合スキップ
       // if (user) {
-      // FIXME: firebase に依存しない実装に置き換える
-      createNewFleet("").then((fleetRef) => {
-        replace(`/fleet/${fleetRef.id}`);
+      createNewFleet().then((fleetId) => {
+        replace(`/fleet/${fleetId}`);
       });
       // }
     },
