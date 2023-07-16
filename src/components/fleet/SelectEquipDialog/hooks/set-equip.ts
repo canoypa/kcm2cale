@@ -1,25 +1,36 @@
-import { useCallback, useContext } from "react";
-import { addEquipDoc, updateEquipDoc } from "~/api/equip";
-import { ShipEquip } from "../../../../models/equip/types";
-import { FleetIdContext } from "../../fleetIdContext";
+import { useCallback } from "react";
+import { useRecoilState } from "recoil";
+import { FleetPlace } from "~/models/ship";
+import { FleetState } from "~/store/organize/info";
+import { RiggingPlace } from "../../../../models/equip/types";
 
-type UseSetEquip = () => (place: ShipEquip, equipNoToSet: number) => void;
+type UseSetEquip = () => (
+  place: FleetPlace & RiggingPlace,
+  equipNoToSet: number
+) => void;
 export const useSetEquip: UseSetEquip = () => {
-  const fleetId = useContext(FleetIdContext);
+  const [fleet, setFleet] = useRecoilState(FleetState);
 
   const setEquip = useCallback(
-    (place: ShipEquip, equipNoToSet: number) => {
-      const { shipId, slotNo, id: equipId } = place;
+    (place: FleetPlace & RiggingPlace, equipNoToSet: number) => {
+      const { fleetNo, turnNo, slotNo } = place;
 
-      if (equipId) {
-        const data = { no: equipNoToSet };
-        updateEquipDoc(fleetId, equipId, data);
-      } else {
-        const data = { shipId, slotNo, no: equipNoToSet };
-        addEquipDoc(fleetId, data);
-      }
+      const updateShipIndex = fleet!.ships.findIndex(
+        (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
+      );
+      const updateEquipIndex = fleet!.ships[
+        updateShipIndex
+      ].equipments.findIndex((v) => v.slotNo === slotNo);
+
+      const newShips = [...fleet!.ships];
+      const newEquips = [...fleet!.ships[updateShipIndex].equipments];
+
+      newEquips[updateEquipIndex].no = equipNoToSet;
+      newShips[updateShipIndex].equipments = newEquips;
+
+      setFleet({ ...fleet!, ships: newShips });
     },
-    [fleetId]
+    [fleet]
   );
 
   return setEquip;

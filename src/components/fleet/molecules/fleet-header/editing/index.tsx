@@ -17,9 +17,8 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { nativeEnum, object, string, infer as zodInfer } from "zod";
-import { updateFleetDoc } from "~/api/fleet";
 import { FleetState } from "~/store/organize/info";
 import { FleetType } from "../../../../../models/fleet";
 
@@ -52,13 +51,13 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     resolver: zodResolver(FormInput),
   });
 
-  const fleet = useRecoilValue(FleetState);
+  const [fleet, setFleet] = useRecoilState(FleetState);
 
   const theme = useTheme();
   const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSubmit = submitWrap((data) => {
-    updateFleetDoc(fleet!.id, data);
+    setFleet({ ...fleet!, ...data });
     onEnd();
   });
 

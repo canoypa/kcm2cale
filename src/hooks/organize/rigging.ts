@@ -1,14 +1,14 @@
 import { useRecoilValue } from "recoil";
 import { FleetState } from "~/store/organize/info";
-import { EmptyEquip, Equip } from "../../models/equip";
-import { Ship } from "../../models/ship";
+import { Equip, RiggingPlace } from "../../models/equip";
+import { FleetPlace, Ship } from "../../models/ship";
 
 const DUMMY_SLOT_SIZE = 4;
 
 type Rigging = {
   shipEquips: Equip[];
   isCanAddNewEquip: boolean;
-  newEquipPlace: EmptyEquip;
+  newEquipPlace: FleetPlace & RiggingPlace;
 };
 export const useRigging = (fleetPlace: Ship): Rigging => {
   const shipSlotSize = DUMMY_SLOT_SIZE;
@@ -28,9 +28,9 @@ export const useRigging = (fleetPlace: Ship): Rigging => {
   const isCanAddNewEquip = shipSlotSize > equippedLength;
   const newEqSlotNo = equippedLength;
 
-  const newEquipPlace: EmptyEquip = {
+  const newEquipPlace: FleetPlace & RiggingPlace = {
+    ...fleetPlace,
     slotNo: newEqSlotNo,
-    no: null,
   };
 
   return {
