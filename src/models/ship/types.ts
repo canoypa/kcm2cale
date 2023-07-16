@@ -1,4 +1,5 @@
 import { EnumValues } from "../../util/types";
+import { Equip } from "../equip";
 
 export type FleetNo = number;
 export type TurnNo = number;
@@ -16,7 +17,7 @@ export type FleetPlace = {
  * 未配備位置の艦隊データ
  */
 export type EmptyShip = FleetPlace & {
-  id: null;
+  // id: null;
   no: null;
 };
 
@@ -24,8 +25,9 @@ export type EmptyShip = FleetPlace & {
  * 配備済み位置の艦隊データ
  */
 export type Ship = FleetPlace & {
-  id: string;
+  // id: string;
   no: string;
+  equipments: Equip[];
 };
 
 /**

@@ -1,13 +1,13 @@
 import { ShareOutlined } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import { FC, useCallback, useContext, useState } from "react";
+import { FC, useCallback, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { ShareDialog } from "~/components/common/ShareDialog";
-import { FleetIdContext } from "~/components/fleet/fleetIdContext";
-import { useFleet } from "~/components/fleet/hooks";
-import { Fleet } from "~/models/fleet";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
+import { FleetState } from "~/store/organize/info";
 
 type Props = {
-  fleet: Fleet;
+  fleet: LocalFleetDataV1;
 };
 const _FleetShareButton: FC<Props> = ({ fleet }) => {
   const [isOpenShareDialog, setOpenShareDialog] = useState(false);
@@ -46,8 +46,7 @@ const _FleetShareButton: FC<Props> = ({ fleet }) => {
 };
 
 export const FleetShareButton: FC = () => {
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   if (!fleet) return null;
   return <_FleetShareButton fleet={fleet} />;

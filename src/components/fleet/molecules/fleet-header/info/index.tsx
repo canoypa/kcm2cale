@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
-import { FC, useContext } from "react";
+import { FC } from "react";
+import { useRecoilValue } from "recoil";
+import { FleetState } from "~/store/organize/info";
 import { FleetType } from "../../../../../models/fleet";
 import { LineClamp } from "../../../../common/clamp";
-import { FleetIdContext } from "../../../fleetIdContext";
-import { useFleet } from "../../../hooks";
 
 const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
   [FleetType.Normal, "通常艦隊"],
@@ -14,8 +14,7 @@ const fleetTypeToNameMap: ReadonlyMap<FleetType, string> = new Map([
 ]);
 
 export const Info: FC = () => {
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   if (!fleet) return null;
   return (

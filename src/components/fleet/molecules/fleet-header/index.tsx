@@ -1,8 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import { Skeleton } from "@mui/material";
-import { FC, useContext, useState } from "react";
-import { FleetIdContext } from "../../fleetIdContext";
-import { useFleet } from "../../hooks";
+import { Box, Skeleton, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { FleetState } from "~/store/organize/info";
 import { Editing } from "./editing";
 import { Info } from "./info";
 import { Actions } from "./status-bar";
@@ -27,8 +26,7 @@ const FleetHeaderSkeleton: FC = () => {
 };
 
 export const FleetHeader: FC = () => {
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   const [isEditing, setIsEditing] = useState(false);
 

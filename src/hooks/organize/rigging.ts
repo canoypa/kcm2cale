@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { FleetIdContext } from "../../components/fleet/fleetIdContext";
-import { useEquips } from "../../components/fleet/hooks";
+import { useRecoilValue } from "recoil";
+import { FleetState } from "~/store/organize/info";
 import { EmptyEquip, Equip } from "../../models/equip";
 import { Ship } from "../../models/ship";
 
@@ -15,24 +14,22 @@ export const useRigging = (fleetPlace: Ship): Rigging => {
   const shipSlotSize = DUMMY_SLOT_SIZE;
   if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
 
-  const fleetId = useContext(FleetIdContext);
-  const { data: equips } = useEquips(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
-  const shipEquips = equips
-    ? equips
-        .filter((v) => v.shipId === fleetPlace.id)
-        .sort((a, b) => a.slotNo - b.slotNo)
-    : [];
+  const ship = fleet?.ships.find(
+    (v) => v.fleetNo === fleetPlace.fleetNo && v.turnNo === fleetPlace.turnNo
+  );
+  if (!ship) throw new Error("対象の艦船が存在しない");
+
+  const shipEquips = ship.equipments.sort((a, b) => a.slotNo - b.slotNo);
 
   const equippedLength = shipEquips.length;
 
   const isCanAddNewEquip = shipSlotSize > equippedLength;
   const newEqSlotNo = equippedLength;
 
-  const newEquipPlace = {
-    shipId: fleetPlace.id,
+  const newEquipPlace: EmptyEquip = {
     slotNo: newEqSlotNo,
-    id: null,
     no: null,
   };
 

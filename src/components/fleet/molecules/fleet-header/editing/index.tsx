@@ -15,12 +15,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { infer as zodInfer, nativeEnum, object, string } from "zod";
+import { useRecoilValue } from "recoil";
+import { nativeEnum, object, string, infer as zodInfer } from "zod";
 import { updateFleetDoc } from "~/api/fleet";
-import { FleetIdContext } from "~/components/fleet/fleetIdContext";
-import { useFleet } from "~/components/fleet/hooks";
+import { FleetState } from "~/store/organize/info";
 import { FleetType } from "../../../../../models/fleet";
 
 const TitleCharCount = 256;
@@ -52,14 +52,13 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     resolver: zodResolver(FormInput),
   });
 
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   const theme = useTheme();
   const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSubmit = submitWrap((data) => {
-    updateFleetDoc(fleetId, data);
+    updateFleetDoc(fleet!.id, data);
     onEnd();
   });
 

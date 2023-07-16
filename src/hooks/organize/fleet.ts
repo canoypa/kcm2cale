@@ -1,40 +1,32 @@
-import { doc, writeBatch } from "firebase/firestore";
-import { useCallback, useContext } from "react";
-import { getFirestore } from "~/core/firebase/sdk/firestore";
+import { useCallback } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { sortFleet } from "~/core/sort-fleet";
-import { FleetIdContext } from "../../components/fleet/fleetIdContext";
-import { useFleet, useShips } from "../../components/fleet/hooks";
+import { FleetState } from "~/store/organize/info";
 import { FleetType } from "../../models/fleet";
-import { EmptyShip, FleetNo, FleetShip, Ship, TurnNo } from "../../models/ship";
+import { FleetNo, FleetShip, TurnNo } from "../../models/ship";
 import { range } from "../../util/range";
 
 const useSortFleetShip = () => {
-  const firestore = getFirestore();
-  const fleetId = useContext(FleetIdContext);
+  const [fleet, setFleet] = useRecoilState(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
   const sort = useCallback(
-    (fleet: FleetShip[], fleetNo: FleetNo, from: TurnNo, to: TurnNo) => {
+    (curShips: FleetShip[], fleetNo: FleetNo, from: TurnNo, to: TurnNo) => {
       // 入れ替えなくても呼び出される場合があるため
       if (from === to) return;
 
-      const sortedFleet = sortFleet(fleet, fleetNo, from, to);
+      const sortedShips = sortFleet(curShips, fleetNo, from, to);
 
-      const batch = writeBatch(firestore);
-      sortedFleet.forEach((v) => {
-        // Fixme: doc ref を直接取得しない
-        const ref = doc(firestore, `fleets/${fleetId}/ships/${v.id}`);
-        batch.update(ref, { turnNo: v.turnNo });
-      });
-      batch.commit();
+      setFleet({ ...fleet, ships: sortedShips });
     },
-    [firestore, fleetId]
+    [fleet]
   );
 
   return sort;
 };
 
 type Fleet = {
-  fleet: Array<Ship | EmptyShip>;
+  fleet: FleetShip[];
   sort: (
     fleet: FleetShip[],
     fleetNo: FleetNo,
@@ -43,36 +35,21 @@ type Fleet = {
   ) => void;
 } | null;
 export const useFleetManager = (fleetNo: FleetNo): Fleet => {
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleetInfo } = useFleet(fleetId);
-  const { data: ships } = useShips(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   const sortFleetShip = useSortFleetShip();
 
-  if (!fleetInfo || !ships) return null;
+  if (!fleet) return null;
 
-  const fleetLength = fleetInfo.type === FleetType.Striking ? 7 : 6;
-  const fleetTemp = range(fleetLength);
+  const fleetLength = fleet.type === FleetType.Striking ? 7 : 6;
+  const shipsTemp = range(fleetLength);
 
-  const fleet = fleetTemp.map((turnNo) => {
-    const fleetPlace = ships.find(
+  const ships = shipsTemp.map((turnNo) => {
+    const fleetPlace = fleet.ships.find(
       (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
     );
     return fleetPlace ?? { fleetNo, turnNo, id: null, no: null };
   });
 
-  return { fleet, sort: sortFleetShip };
+  return { fleet: ships, sort: sortFleetShip };
 };
-
-/**
- * サインインユーザが編成の作成者かどうか
- */
-// export const useIsFleetOwner = () => {
-//   const { data: user } = useUser();
-//   const fleetId = useContext(FleetIdContext);
-//   const { data: fleet } = useFleet(fleetId);
-
-//   if (fleet === undefined) return undefined;
-//   // Fixme
-//   return fleet ? fleet.owner === user?.uid : false;
-// };
