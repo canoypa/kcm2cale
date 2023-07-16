@@ -10,27 +10,28 @@ type UseSetEquip = () => (
 ) => void;
 export const useSetEquip: UseSetEquip = () => {
   const [fleet, setFleet] = useRecoilState(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
   const setEquip = useCallback(
     (place: FleetPlace & RiggingPlace, equipNoToSet: number) => {
       const { fleetNo, turnNo, slotNo } = place;
 
-      const updateShipIndex = fleet!.ships.findIndex(
+      const updateShipIndex = fleet.ships.findIndex(
         (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
       );
-      const updateEquipIndex = fleet!.ships[
+      const updateEquipIndex = fleet.ships[
         updateShipIndex
       ].equipments.findIndex((v) => v.slotNo === slotNo);
 
-      const newShips = [...fleet!.ships];
-      const newEquips = [...fleet!.ships[updateShipIndex].equipments];
+      const newShips = [...fleet.ships];
+      const newEquips = [...fleet.ships[updateShipIndex].equipments];
 
       newEquips[updateEquipIndex].no = equipNoToSet;
       newShips[updateShipIndex].equipments = newEquips;
 
-      setFleet({ ...fleet!, ships: newShips });
+      setFleet({ ...fleet, ships: newShips });
     },
-    [fleet]
+    [fleet, setFleet]
   );
 
   return setEquip;

@@ -2,9 +2,9 @@ import { sortFleet } from ".";
 import { FleetShip } from "../../models/ship";
 
 const fleetData: FleetShip[] = [
-  { fleetNo: 0, turnNo: 0, id: "0", no: "0" },
-  { fleetNo: 0, turnNo: 1, id: "1", no: "0" },
-  { fleetNo: 0, turnNo: 2, id: "2", no: "0" },
+  { fleetNo: 0, turnNo: 0, no: "0", equipments: [] },
+  { fleetNo: 0, turnNo: 1, no: "0", equipments: [] },
+  { fleetNo: 0, turnNo: 2, no: "0", equipments: [] },
 ];
 
 describe("SortFleet", () => {

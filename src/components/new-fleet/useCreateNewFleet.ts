@@ -35,5 +35,5 @@ export const useCreateNewFleet = () => {
     updateFleet(newFleetData);
 
     return fleetId;
-  }, []);
+  }, [updateFleet]);
 };

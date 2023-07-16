@@ -6,21 +6,22 @@ import { FleetShip } from "../../../../models/ship";
 type UseSetShip = () => (place: FleetShip, ship: string) => void;
 export const useSetShip: UseSetShip = () => {
   const [fleet, setFleet] = useRecoilState(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
   const setShip = useCallback(
     (place: FleetShip, shipNoToSet: string) => {
       const { fleetNo, turnNo } = place;
 
-      const updateIndex = fleet!.ships.findIndex(
+      const updateIndex = fleet.ships.findIndex(
         (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
       );
 
-      const newShips = [...fleet!.ships];
+      const newShips = [...fleet.ships];
       newShips[updateIndex].no = shipNoToSet;
 
-      setFleet({ ...fleet!, ships: newShips });
+      setFleet({ ...fleet, ships: newShips });
     },
-    [fleet]
+    [fleet, setFleet]
   );
 
   return setShip;

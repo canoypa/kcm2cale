@@ -52,12 +52,13 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
   });
 
   const [fleet, setFleet] = useRecoilState(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
   const theme = useTheme();
   const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSubmit = submitWrap((data) => {
-    setFleet({ ...fleet!, ...data });
+    setFleet({ ...fleet, ...data });
     onEnd();
   });
 

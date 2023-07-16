@@ -27,8 +27,9 @@ export const ShipsList: FC = () => {
   const [activeFleetNo, setActiveFleetNo] = useState<FleetNo>(0);
 
   const fleet = useRecoilValue(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
-  const isCombined = isCombinedFleet(fleet!.type);
+  const isCombined = isCombinedFleet(fleet.type);
   const activeFleet = useFleetManager(isCombined ? activeFleetNo : 0);
 
   return (
