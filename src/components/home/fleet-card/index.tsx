@@ -11,14 +11,12 @@ import {
 } from "@mui/material";
 import NextLink from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
+import { LocalDatabase } from "~/core/persistence/local-database";
 import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { LineClamp } from "../../common/clamp";
-import { useDeleteFleet } from "./useDeleteFleet";
 
 type Props = { fleetData: LocalFleetDataV1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const deleteFleet = useDeleteFleet();
-
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
@@ -36,7 +34,7 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
 
   const handlerDeleteFleet = () => {
     closeMenu();
-    deleteFleet(fleetData.id);
+    LocalDatabase.deleteFleet(fleetData.id);
   };
 
   return (
