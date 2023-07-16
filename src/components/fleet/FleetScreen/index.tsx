@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import { LowerAppBar } from "~/components/common/lower-app-bar";
 import { APP_NAME } from "~/core/env";
-import { Fleet } from "~/models/fleet";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
+import { SelectEquipDialog } from "../SelectEquipDialog";
+import { SelectShipDialog } from "../SelectShipDialog";
 import { useSelectEquip } from "../hooks/select-equip";
 import { useSelectShip } from "../hooks/select-ship";
 import { Organize } from "../organisms/organize";
-import { SelectEquipDialog } from "../SelectEquipDialog";
-import { SelectShipDialog } from "../SelectShipDialog";
 
 type Props = {
-  fleet: Fleet | undefined;
+  fleet: LocalFleetDataV1 | undefined;
 };
 /**
  * 編成画面

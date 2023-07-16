@@ -1,13 +1,13 @@
-import { FC, useContext } from "react";
-import { Fleet } from "~/models/fleet";
-import { FleetError } from "../error";
-import { FleetIdContext } from "../fleetIdContext";
+import { FC } from "react";
+import { useRecoilValue } from "recoil";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
+import { FleetState } from "~/store/organize/info";
 import { FleetScreen } from "../FleetScreen";
-import { useFleet } from "../hooks";
+import { FleetError } from "../error";
 
 const existFleet = (
-  fleet: Fleet | null | undefined
-): fleet is Fleet | undefined => {
+  fleet: LocalFleetDataV1 | null | undefined
+): fleet is LocalFleetDataV1 | undefined => {
   return fleet !== null;
 };
 
@@ -15,8 +15,7 @@ const existFleet = (
  * 編成の読み込み状態に応じたコンポーネントの仕分け
  */
 export const FleetExistRoute: FC = () => {
-  const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const fleet = useRecoilValue(FleetState);
 
   return existFleet(fleet) ? <FleetScreen fleet={fleet} /> : <FleetError />;
 };
