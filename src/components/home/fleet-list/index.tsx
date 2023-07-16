@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import { ChangeEventHandler, FC, useState } from "react";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { searchFleet } from "../../../core/search/fleet";
-import { Fleet } from "../../../models/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 
 type Props = {
-  fleetList: Fleet[];
+  fleetList: LocalFleetDataV1[];
 };
 export const FleetList: FC<Props> = ({ fleetList }) => {
   const [query, setQuery] = useState<string>("");

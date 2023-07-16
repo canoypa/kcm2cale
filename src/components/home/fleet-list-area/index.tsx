@@ -1,25 +1,29 @@
 import { Box, CircularProgress, Container } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useEffectOnce } from "react-use";
-import { Fleet } from "~/models/fleet";
+import { LocalDatabase } from "~/core/persistence/local-database";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { EmptyState } from "../empty-state";
 import { FleetList } from "../fleet-list";
-import { useFleetList } from "../hooks";
 
 /**
  * 保存されている編成が存在するか
  */
-const checkExistFleetList = (fleets: Fleet[]) => {
+const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
   return fleets.length !== 0;
 };
 
 export const FleetListArea: FC = () => {
   // const { data: signInCheckResult } = useSigninCheck();
 
-  const { data: fleetList, mutate: mutateFleetList } = useFleetList();
+  // const { data: fleetList, mutate: mutateFleetList } = useFleetList();
+
+  const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null);
 
   useEffectOnce(() => {
-    mutateFleetList([]);
+    LocalDatabase.getAllFleet().then((v) => {
+      setFleetList(v);
+    });
   });
 
   if (!fleetList) {

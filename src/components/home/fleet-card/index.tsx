@@ -4,18 +4,18 @@ import {
   CardContent,
   Grid,
   IconButton,
-  Link as MuiLink,
   Menu,
   MenuItem,
+  Link as MuiLink,
   Typography,
 } from "@mui/material";
 import NextLink from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
-import { Fleet } from "../../../models/fleet";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { LineClamp } from "../../common/clamp";
 import { useDeleteFleet } from "./useDeleteFleet";
 
-type Props = { fleetData: Fleet };
+type Props = { fleetData: LocalFleetDataV1 };
 export const FleetCard: FC<Props> = ({ fleetData }) => {
   const deleteFleet = useDeleteFleet();
 

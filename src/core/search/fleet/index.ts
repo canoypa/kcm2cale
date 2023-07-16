@@ -1,8 +1,8 @@
 import Fuse from "fuse.js";
-import { Fleet } from "../../../models/fleet";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { SearchFleetRequest } from "./types";
 
-const dateSortFn = (a: Fleet, b: Fleet): number => {
+const dateSortFn = (a: LocalFleetDataV1, b: LocalFleetDataV1): number => {
   const [aDate, bDate] = [a.updatedAt, b.updatedAt];
   const dateOrder = aDate < bDate ? 1 : aDate > bDate ? -1 : 0;
   return dateOrder;
@@ -13,13 +13,13 @@ const dateSortFn = (a: Fleet, b: Fleet): number => {
  * 編成リストのフィルタリングとソート
  */
 export const searchFleet = (
-  fleetDataList: Fleet[],
+  fleetDataList: LocalFleetDataV1[],
   request: SearchFleetRequest
-): Fleet[] => {
+): LocalFleetDataV1[] => {
   if (!request.q) return [...fleetDataList].sort(dateSortFn);
 
   // fuse search
-  const options: Fuse.IFuseOptions<Fleet> = {
+  const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
     keys: ["title"],
     sortFn: (a, b) => {
       const [aScore, bScore] = [a.score, b.score];
@@ -31,7 +31,7 @@ export const searchFleet = (
     },
   };
   const fuse = new Fuse(fleetDataList, options);
-  const matchList = fuse.search<Fleet>(request.q || "");
+  const matchList = fuse.search<LocalFleetDataV1>(request.q || "");
 
   const result = matchList.map((v) => v.item);
 
