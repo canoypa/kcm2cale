@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FC } from "react";
+import { useUnmount } from "react-use";
 import { LowerAppBar } from "~/components/common/lower-app-bar";
 import { APP_NAME } from "~/core/env";
+import { useLocalPersistence } from "~/core/persistence/fleet-state-observer";
 import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { SelectEquipDialog } from "../SelectEquipDialog";
 import { SelectShipDialog } from "../SelectShipDialog";
@@ -18,6 +20,7 @@ type Props = {
  */
 export const FleetScreen: FC<Props> = ({ fleet }) => {
   const { push } = useRouter();
+  const { justSaveNow } = useLocalPersistence();
 
   const {
     open: isOpenSelectShip,
@@ -30,6 +33,10 @@ export const FleetScreen: FC<Props> = ({ fleet }) => {
     onSelect: onSelectEquip,
     onClose: onCloseSelectEquip,
   } = useSelectEquip();
+
+  useUnmount(() => {
+    justSaveNow();
+  });
 
   const backToTopPage = () => {
     push("/");
