@@ -14,10 +14,6 @@ const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
 };
 
 export const FleetListArea: FC = () => {
-  // const { data: signInCheckResult } = useSigninCheck();
-
-  // const { data: fleetList, mutate: mutateFleetList } = useFleetList();
-
   const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null);
 
   useEffectOnce(() => {
@@ -41,14 +37,6 @@ export const FleetListArea: FC = () => {
 
   // 保存されている編成が存在するか
   const isExistFleetList = checkExistFleetList(fleetList);
-
-  // if (!signInCheckResult.signedIn) {
-  //   return (
-  //     <Box container justifyContent="center" alignItems="center" height="100%">
-  //       <CircularProgress size={24} />
-  //     </Box>
-  //   );
-  // }
 
   return (
     <Container maxWidth="md" sx={{ height: "100%" }}>

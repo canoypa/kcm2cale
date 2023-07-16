@@ -6,12 +6,6 @@ type UserAvatarProps = {
   size: number;
 };
 const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
-  // const { data: signInCheckResult } = useSigninCheck();
-
-  // if (!signInCheckResult.signedIn) {
-  //   return <Skeleton variant="circular" width={size} height={size} />;
-  // }
-
   return (
     <Avatar
       sx={{

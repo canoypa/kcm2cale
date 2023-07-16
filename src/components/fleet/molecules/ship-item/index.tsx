@@ -9,13 +9,10 @@ type Props = {
   fleetPlace: Ship;
 };
 export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
-  // const isOwner = useIsFleetOwner();
-
   return (
     <Box my={0.5}>
       <Paper variant="outlined">
         <Box display="flex" alignItems="center" py={2}>
-          {/* {isOwner && ( */}
           <Box
             width={24}
             height={24}
@@ -26,7 +23,7 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
           >
             <DragIndicator />
           </Box>
-          {/* )} */}
+
           <Box
             display="flex"
             flexDirection="column"

@@ -11,8 +11,6 @@ type Props = {
   swapEquip: (equip: FleetPlace & RiggingPlace) => void;
 };
 export const EquipList: FC<Props> = ({ fleetPlace, shipEquips, swapEquip }) => {
-  // const isOwner = useIsFleetOwner();
-
   const handlerEquipClick = (preEq: FleetPlace & RiggingPlace) => {
     swapEquip(preEq);
   };
@@ -37,7 +35,7 @@ export const EquipList: FC<Props> = ({ fleetPlace, shipEquips, swapEquip }) => {
             key={v.value.slotNo}
             variant="outlined"
             label={v.label}
-            onClick={/* isOwner ? */ _handlerEquipClick /* : undefined */}
+            onClick={_handlerEquipClick}
           />
         );
       })}

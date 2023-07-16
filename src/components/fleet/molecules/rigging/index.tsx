@@ -16,8 +16,6 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
   const { shipEquips, isCanAddNewEquip, newEquipPlace } =
     useRigging(fleetPlace);
 
-  // const isOwner = useIsFleetOwner();
-
   const handlerAddEquip = (eq: FleetPlace & RiggingPlace) => {
     selectEquip(eq);
   };
@@ -41,7 +39,7 @@ export const Rigging: FC<Props> = ({ fleetPlace }) => {
         swapEquip={handlerAddEquip}
       />
       {isCanAddNewEquip && (
-        /* isOwner && */ <Chip
+        <Chip
           variant="outlined"
           icon={<Add />}
           label="装備を追加"

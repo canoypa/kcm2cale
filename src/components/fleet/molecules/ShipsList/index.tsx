@@ -40,7 +40,6 @@ export const ShipsList: FC = () => {
       )}
 
       {activeFleet ? (
-        // isOwner ? (
         <List
           values={activeFleet.fleet}
           onChange={({ oldIndex, newIndex }) => {
@@ -67,19 +66,6 @@ export const ShipsList: FC = () => {
           )}
         />
       ) : (
-        // ) : (
-        //   <Box display="flex" flexDirection="column">
-        //     {fleet.fleet.map((fleetPlace) => (
-        //       <div key={fleetPlace.turnNo}>
-        //         {isShipPlaced(fleetPlace) ? (
-        //           <ShipItem fleetPlace={fleetPlace} />
-        //         ) : (
-        //           <ShipSkeleton fleetPlace={fleetPlace} />
-        //         )}
-        //       </div>
-        //     ))}
-        //   </Box>
-        // )
         <FleetSkeleton />
       )}
     </div>
