@@ -1,11 +1,10 @@
 import {
-  CallbackInterface,
   Snapshot,
-  useRecoilCallback,
   useRecoilTransactionObserver_UNSTABLE as useRecoilTransactionObserverUNSTABLE,
 } from "recoil";
 import { FleetState } from "~/store/organize/info";
 import { LocalDatabase } from "./local-database";
+import { LocalFleetDataV1 } from "./types";
 
 export const isFleetStateModified = (snapshot: Snapshot) => {
   // 全ての更新された State
@@ -27,27 +26,35 @@ class FleetStateObserver {
 
   private saveFn: (() => void) | null = null;
 
+  private lastPromise: Promise<LocalFleetDataV1 | null> | null = null;
+
   /** atom の変更を受け取り */
-  public observer =
-    ({ snapshot }: CallbackInterface) =>
-    () => {
-      // 対象が更新されて無ければ return
-      if (!isFleetStateModified(snapshot)) return;
+  public observer = ({
+    snapshot,
+  }: {
+    snapshot: Snapshot;
+    previousSnapshot: Snapshot;
+  }) => {
+    // 対象が更新されて無ければ return
+    if (!isFleetStateModified(snapshot)) return;
 
-      // 保存関数を更新
-      this.saveFn = async () => {
-        this.saveFn = null;
+    this.lastPromise = snapshot.getPromise(FleetState);
 
-        const fleet = await snapshot.getPromise(FleetState);
-        await LocalDatabase.setFleet(fleet!.id, fleet!);
+    // 保存関数を更新
+    this.saveFn = async () => {
+      this.saveFn = null;
 
-        this.disablePreventBeforeSaveUnload();
-      };
+      const fleet = await this.lastPromise;
+      if (!fleet) throw new Error("編成が存在しない");
+      await LocalDatabase.setFleet(fleet.id, fleet);
 
-      // 保存をスケジューリング
-      this.enablePreventBeforeSaveUnload();
-      this.resetTimer();
+      this.disablePreventBeforeSaveUnload();
     };
+
+    // 保存をスケジューリング
+    this.enablePreventBeforeSaveUnload();
+    this.resetTimer();
+  };
 
   /** 今すぐに保存 */
   public justSaveNow = () => {
@@ -89,9 +96,7 @@ class FleetStateObserver {
 const fleetStateObserver = new FleetStateObserver();
 
 export const useLocalPersistence = () => {
-  const observer = useRecoilCallback(fleetStateObserver.observer);
-
-  useRecoilTransactionObserverUNSTABLE(observer);
+  useRecoilTransactionObserverUNSTABLE(fleetStateObserver.observer);
 
   return {
     justSaveNow: fleetStateObserver.justSaveNow,
