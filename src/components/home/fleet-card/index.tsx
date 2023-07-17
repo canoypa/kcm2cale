@@ -15,8 +15,12 @@ import { LocalDatabase } from "~/core/persistence/local-database";
 import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { LineClamp } from "../../common/clamp";
 
-type Props = { fleetData: LocalFleetDataV1 };
-export const FleetCard: FC<Props> = ({ fleetData }) => {
+type Props = {
+  fleetData: LocalFleetDataV1;
+
+  refresh: () => void;
+};
+export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
@@ -32,9 +36,10 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const handlerDeleteFleet = () => {
+  const handlerDeleteFleet = async () => {
     closeMenu();
-    LocalDatabase.deleteFleet(fleetData.id);
+    await LocalDatabase.deleteFleet(fleetData.id);
+    refresh();
   };
 
   return (

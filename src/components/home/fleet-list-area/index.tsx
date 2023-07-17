@@ -1,6 +1,5 @@
 import { Box, CircularProgress, Container } from "@mui/material";
-import { FC, useState } from "react";
-import { useEffectOnce } from "react-use";
+import { FC, useEffect, useState } from "react";
 import { LocalDatabase } from "~/core/persistence/local-database";
 import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { EmptyState } from "../empty-state";
@@ -14,13 +13,18 @@ const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
 };
 
 export const FleetListArea: FC = () => {
+  const [_refresh, _setRefresh] = useState(0);
   const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null);
 
-  useEffectOnce(() => {
+  useEffect(() => {
     LocalDatabase.getAllFleet().then((v) => {
       setFleetList(v);
     });
-  });
+  }, [_refresh]);
+
+  const refresh = () => {
+    _setRefresh(_refresh + 1);
+  };
 
   if (!fleetList) {
     return (
@@ -48,7 +52,7 @@ export const FleetListArea: FC = () => {
         height="100%"
       >
         {isExistFleetList ? (
-          <FleetList fleetList={fleetList} />
+          <FleetList fleetList={fleetList} refresh={refresh} />
         ) : (
           <Box
             display="flex"
