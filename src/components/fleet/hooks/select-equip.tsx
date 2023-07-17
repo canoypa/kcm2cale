@@ -1,10 +1,11 @@
 import { useCallback } from "react";
 import useSWR from "swr";
-import { ShipEquip } from "~/models/equip";
+import { RiggingPlace } from "~/models/equip";
+import { FleetPlace } from "~/models/ship";
 import { useSetEquip } from "../SelectEquipDialog/hooks/set-equip";
 
 export type SelectEquipState =
-  | { open: true; target: ShipEquip }
+  | { open: true; target: FleetPlace & RiggingPlace }
   | { open: false; target: null };
 
 const defaultState: SelectEquipState = {
@@ -22,7 +23,7 @@ export const useStartSelectEquip = () => {
   const { mutate } = useSelectEquipState();
 
   const start = useCallback(
-    (target: ShipEquip) => {
+    (target: FleetPlace & RiggingPlace) => {
       mutate({ open: true, target });
     },
     [mutate]

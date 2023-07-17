@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { FleetDataProvider } from "~/components/fleet/fleet-data-provider";
 import { FleetExistRoute } from "~/components/fleet/FleetExistRoute";
 import { FleetIdContext } from "~/components/fleet/fleetIdContext";
 
@@ -14,9 +13,7 @@ const FleetPage: NextPage = () => {
   return (
     <>
       <FleetIdContext.Provider value={fleetId}>
-        <FleetDataProvider>
-          <FleetExistRoute />
-        </FleetDataProvider>
+        <FleetExistRoute />
       </FleetIdContext.Provider>
     </>
   );

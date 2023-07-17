@@ -1,13 +1,16 @@
 import { FC, useContext } from "react";
-import { Fleet } from "~/models/fleet";
+import { useEffectOnce } from "react-use";
+import { useRecoilState } from "recoil";
+import { LocalDatabase } from "~/core/persistence/local-database";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
+import { FleetState } from "~/store/organize/info";
+import { FleetScreen } from "../FleetScreen";
 import { FleetError } from "../error";
 import { FleetIdContext } from "../fleetIdContext";
-import { FleetScreen } from "../FleetScreen";
-import { useFleet } from "../hooks";
 
 const existFleet = (
-  fleet: Fleet | null | undefined
-): fleet is Fleet | undefined => {
+  fleet: LocalFleetDataV1 | null
+): fleet is LocalFleetDataV1 => {
   return fleet !== null;
 };
 
@@ -16,7 +19,13 @@ const existFleet = (
  */
 export const FleetExistRoute: FC = () => {
   const fleetId = useContext(FleetIdContext);
-  const { data: fleet } = useFleet(fleetId);
+  const [fleet, setFleet] = useRecoilState(FleetState);
+
+  useEffectOnce(() => {
+    LocalDatabase.getFleet(fleetId).then((v) => {
+      if (v) setFleet(v);
+    });
+  });
 
   return existFleet(fleet) ? <FleetScreen fleet={fleet} /> : <FleetError />;
 };

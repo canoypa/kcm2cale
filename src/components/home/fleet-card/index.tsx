@@ -4,21 +4,23 @@ import {
   CardContent,
   Grid,
   IconButton,
-  Link as MuiLink,
   Menu,
   MenuItem,
+  Link as MuiLink,
   Typography,
 } from "@mui/material";
 import NextLink from "next/link";
 import { FC, MouseEvent, useRef, useState } from "react";
-import { Fleet } from "../../../models/fleet";
+import { LocalDatabase } from "~/core/persistence/local-database";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { LineClamp } from "../../common/clamp";
-import { useDeleteFleet } from "./useDeleteFleet";
 
-type Props = { fleetData: Fleet };
-export const FleetCard: FC<Props> = ({ fleetData }) => {
-  const deleteFleet = useDeleteFleet();
+type Props = {
+  fleetData: LocalFleetDataV1;
 
+  refresh: () => void;
+};
+export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const menuAnchorEl = useRef<HTMLButtonElement>(null);
@@ -34,9 +36,10 @@ export const FleetCard: FC<Props> = ({ fleetData }) => {
     setMenuOpen(false);
   };
 
-  const handlerDeleteFleet = () => {
+  const handlerDeleteFleet = async () => {
     closeMenu();
-    deleteFleet(fleetData.id);
+    await LocalDatabase.deleteFleet(fleetData.id);
+    refresh();
   };
 
   return (

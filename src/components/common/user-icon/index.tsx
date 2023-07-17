@@ -1,18 +1,11 @@
 import { AccountCircleOutlined } from "@mui/icons-material";
-import { Avatar, IconButton, IconButtonProps, Skeleton } from "@mui/material";
+import { Avatar, IconButton, IconButtonProps } from "@mui/material";
 import { FC } from "react";
-import { useSigninCheck } from "../../../hooks/firebase/auth/useSigninCheck";
 
 type UserAvatarProps = {
   size: number;
 };
 const UserAvatar: FC<UserAvatarProps> = ({ size }) => {
-  const { data: signInCheckResult } = useSigninCheck();
-
-  if (!signInCheckResult.signedIn) {
-    return <Skeleton variant="circular" width={size} height={size} />;
-  }
-
   return (
     <Avatar
       sx={{

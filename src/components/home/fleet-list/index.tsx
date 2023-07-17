@@ -1,14 +1,16 @@
 import { Box } from "@mui/material";
 import { ChangeEventHandler, FC, useState } from "react";
+import { LocalFleetDataV1 } from "~/core/persistence/types";
 import { searchFleet } from "../../../core/search/fleet";
-import { Fleet } from "../../../models/fleet";
 import { SearchBox } from "../../common/search-box";
 import { FleetCard } from "../fleet-card";
 
 type Props = {
-  fleetList: Fleet[];
+  fleetList: LocalFleetDataV1[];
+
+  refresh: () => void;
 };
-export const FleetList: FC<Props> = ({ fleetList }) => {
+export const FleetList: FC<Props> = ({ fleetList, refresh }) => {
   const [query, setQuery] = useState<string>("");
 
   const searchedFleetList = searchFleet(fleetList, { q: query });
@@ -30,7 +32,7 @@ export const FleetList: FC<Props> = ({ fleetList }) => {
 
       <Box display="grid" rowGap={2}>
         {searchedFleetList.map((v) => (
-          <FleetCard key={v.id} fleetData={v} />
+          <FleetCard key={v.id} fleetData={v} refresh={refresh} />
         ))}
       </Box>
     </div>

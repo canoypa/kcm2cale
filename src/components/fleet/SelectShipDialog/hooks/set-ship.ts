@@ -1,30 +1,38 @@
-import { useCallback, useContext } from "react";
-import { deleteShipEquipDocs } from "~/api/equip/delete";
-import { addShipDoc, updateShipDoc } from "~/api/ship";
-import { FleetShip } from "../../../../models/ship";
-import { FleetIdContext } from "../../fleetIdContext";
+import { useCallback } from "react";
+import { useRecoilState } from "recoil";
+import { FleetState } from "~/store/organize/info";
+import { FleetShip, Ship } from "../../../../models/ship";
 
 type UseSetShip = () => (place: FleetShip, ship: string) => void;
 export const useSetShip: UseSetShip = () => {
-  const fleetId = useContext(FleetIdContext);
+  const [fleet, setFleet] = useRecoilState(FleetState);
+  if (!fleet) throw new Error("編成が存在しない");
 
   const setShip = useCallback(
     (place: FleetShip, shipNoToSet: string) => {
-      const { fleetNo, turnNo, id: shipId } = place;
+      const { fleetNo, turnNo } = place;
 
-      if (shipId) {
-        const data = { no: shipNoToSet };
-        updateShipDoc(fleetId, shipId, data);
+      const newShips = [...fleet.ships];
+
+      const updateIndex = fleet.ships.findIndex(
+        (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
+      );
+
+      if (updateIndex !== -1) {
+        newShips[updateIndex].no = shipNoToSet;
       } else {
-        const data = { fleetNo, turnNo, no: shipNoToSet };
-        addShipDoc(fleetId, data);
+        const ship: Ship = {
+          fleetNo,
+          turnNo,
+          no: shipNoToSet,
+          equipments: [],
+        };
+        newShips.push(ship);
       }
 
-      if (shipId) {
-        deleteShipEquipDocs(fleetId, shipId);
-      }
+      setFleet({ ...fleet, ships: newShips });
     },
-    [fleetId]
+    [fleet, setFleet]
   );
 
   return setShip;

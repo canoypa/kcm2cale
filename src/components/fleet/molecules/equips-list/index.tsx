@@ -1,18 +1,17 @@
 import { Chip } from "@mui/material";
 import { FC } from "react";
+import { FleetPlace } from "~/models/ship";
 import { EquipsData } from "../../../../data/equip";
-import { useIsFleetOwner } from "../../../../hooks/organize/fleet";
-import { Equip } from "../../../../models/equip";
+import { Equip, RiggingPlace } from "../../../../models/equip";
 import { CharClamp } from "../../../common/clamp";
 
 type Props = {
+  fleetPlace: FleetPlace;
   shipEquips: Equip[];
-  swapEquip: (equip: Equip) => void;
+  swapEquip: (equip: FleetPlace & RiggingPlace) => void;
 };
-export const EquipList: FC<Props> = ({ shipEquips, swapEquip }) => {
-  const isOwner = useIsFleetOwner();
-
-  const handlerEquipClick = (preEq: Equip) => {
+export const EquipList: FC<Props> = ({ fleetPlace, shipEquips, swapEquip }) => {
+  const handlerEquipClick = (preEq: FleetPlace & RiggingPlace) => {
     swapEquip(preEq);
   };
 
@@ -29,13 +28,14 @@ export const EquipList: FC<Props> = ({ shipEquips, swapEquip }) => {
   return (
     <>
       {items.map((v) => {
-        const _handlerEquipClick = () => handlerEquipClick(v.value);
+        const _handlerEquipClick = () =>
+          handlerEquipClick({ ...fleetPlace, slotNo: v.value.slotNo });
         return (
           <Chip
-            key={v.value.id}
+            key={v.value.slotNo}
             variant="outlined"
             label={v.label}
-            onClick={isOwner ? _handlerEquipClick : undefined}
+            onClick={_handlerEquipClick}
           />
         );
       })}
