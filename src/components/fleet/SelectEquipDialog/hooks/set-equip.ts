@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { FleetPlace } from "~/models/ship";
 import { FleetState } from "~/store/organize/info";
-import { RiggingPlace } from "../../../../models/equip/types";
+import { Equip, RiggingPlace } from "../../../../models/equip/types";
 
 type UseSetEquip = () => (
   place: FleetPlace & RiggingPlace,
@@ -26,7 +26,15 @@ export const useSetEquip: UseSetEquip = () => {
       const newShips = [...fleet.ships];
       const newEquips = [...fleet.ships[updateShipIndex].equipments];
 
-      newEquips[updateEquipIndex].no = equipNoToSet;
+      if (updateEquipIndex !== -1) {
+        newEquips[updateEquipIndex].no = equipNoToSet;
+      } else {
+        const equip: Equip = {
+          slotNo,
+          no: equipNoToSet,
+        };
+        newEquips.push(equip);
+      }
       newShips[updateShipIndex].equipments = newEquips;
 
       setFleet({ ...fleet, ships: newShips });
