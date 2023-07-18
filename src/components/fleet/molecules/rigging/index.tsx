@@ -1,6 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Chip } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Chip } from "@mui/material";
 import { FC } from "react";
 import { useRigging } from "../../../../hooks/organize/rigging";
 import { RiggingPlace } from "../../../../models/equip";
