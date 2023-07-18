@@ -1,11 +1,10 @@
-const withPlugins = require("next-compose-plugins");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
 const { appName, appVersion } = require("./scripts/build/variable.js");
 
-module.exports = withPlugins([withBundleAnalyzer], {
+module.exports = withBundleAnalyzer({
   // React StrictMode
   reactStrictMode: true,
 

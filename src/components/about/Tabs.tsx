@@ -1,13 +1,13 @@
 import { Link as MuiLink, Tab, Tabs, useTheme } from "@mui/material";
 import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
+import { FC, SyntheticEvent, useCallback } from "react";
 
 export const TabList: FC = () => {
   const router = useRouter();
   const theme = useTheme();
 
   const onChangeTab = useCallback(
-    (_, value) => {
+    (_: SyntheticEvent, value: string) => {
       router.push(value);
     },
     [router]

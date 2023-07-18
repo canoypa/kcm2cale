@@ -9,7 +9,7 @@ import { FleetState } from "~/store/organize/info";
 type Props = {
   fleet: LocalFleetDataV1;
 };
-const _FleetShareButton: FC<Props> = ({ fleet }) => {
+const FleetShareButton_: FC<Props> = ({ fleet }) => {
   const [isOpenShareDialog, setOpenShareDialog] = useState(false);
 
   const title = fleet.title || "無題の編成";
@@ -49,5 +49,5 @@ export const FleetShareButton: FC = () => {
   const fleet = useRecoilValue(FleetState);
 
   if (!fleet) return null;
-  return <_FleetShareButton fleet={fleet} />;
+  return <FleetShareButton_ fleet={fleet} />;
 };

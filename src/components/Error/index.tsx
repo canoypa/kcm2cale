@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 
-export const Error: FC = ({ children }) => {
+export const Error: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container maxWidth="md">
       <Box
@@ -23,7 +23,7 @@ export const Error: FC = ({ children }) => {
   );
 };
 
-export const ErrorContent: FC = ({ children }) => {
+export const ErrorContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box p={2} pt={0}>
       {children}
@@ -31,7 +31,7 @@ export const ErrorContent: FC = ({ children }) => {
   );
 };
 
-export const ErrorActions: FC = ({ children }) => {
+export const ErrorActions: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box
       display="flex"
