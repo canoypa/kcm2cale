@@ -1,8 +1,8 @@
-import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
-import { Search } from "@mui/icons-material";
-import { VFC } from "react";
+import { InputAdornment, TextField, TextFieldProps } from '@mui/material'
+import { Search } from '@mui/icons-material'
+import { VFC } from 'react'
 
-type Props = TextFieldProps;
+type Props = TextFieldProps
 export const SearchBox: VFC<Props> = ({ ...props }) => {
   return (
     <TextField
@@ -16,5 +16,5 @@ export const SearchBox: VFC<Props> = ({ ...props }) => {
       }}
       {...props}
     />
-  );
-};
+  )
+}

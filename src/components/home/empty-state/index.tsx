@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { FC } from "react";
+import { Box, Typography } from '@mui/material'
+import { FC } from 'react'
 
 export const EmptyState: FC = () => {
   return (
@@ -14,5 +14,5 @@ export const EmptyState: FC = () => {
         をタップして編成を作成します
       </Typography>
     </Box>
-  );
-};
+  )
+}

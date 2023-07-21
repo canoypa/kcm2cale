@@ -1,30 +1,30 @@
-import { Box, CircularProgress, Container } from "@mui/material";
-import { FC, useEffect, useState } from "react";
-import { LocalDatabase } from "~/core/persistence/local-database";
-import { LocalFleetDataV1 } from "~/core/persistence/types";
-import { EmptyState } from "../empty-state";
-import { FleetList } from "../fleet-list";
+import { Box, CircularProgress, Container } from '@mui/material'
+import { FC, useEffect, useState } from 'react'
+import { LocalDatabase } from '~/core/persistence/local-database'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { EmptyState } from '../empty-state'
+import { FleetList } from '../fleet-list'
 
 /**
  * 保存されている編成が存在するか
  */
 const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
-  return fleets.length !== 0;
-};
+  return fleets.length !== 0
+}
 
 export const FleetListArea: FC = () => {
-  const [_refresh, _setRefresh] = useState(0);
-  const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null);
+  const [_refresh, _setRefresh] = useState(0)
+  const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null)
 
   useEffect(() => {
     LocalDatabase.getAllFleet().then((v) => {
-      setFleetList(v);
-    });
-  }, [_refresh]);
+      setFleetList(v)
+    })
+  }, [_refresh])
 
   const refresh = () => {
-    _setRefresh(_refresh + 1);
-  };
+    _setRefresh(_refresh + 1)
+  }
 
   if (!fleetList) {
     return (
@@ -36,14 +36,14 @@ export const FleetListArea: FC = () => {
       >
         <CircularProgress size={24} />
       </Box>
-    );
+    )
   }
 
   // 保存されている編成が存在するか
-  const isExistFleetList = checkExistFleetList(fleetList);
+  const isExistFleetList = checkExistFleetList(fleetList)
 
   return (
-    <Container maxWidth="md" sx={{ height: "100%" }}>
+    <Container maxWidth="md" sx={{ height: '100%' }}>
       <Box
         display="flex"
         flexDirection="column"
@@ -65,5 +65,5 @@ export const FleetListArea: FC = () => {
         )}
       </Box>
     </Container>
-  );
-};
+  )
+}

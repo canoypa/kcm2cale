@@ -1,17 +1,17 @@
-import { Link as MuiLink, Tab, Tabs, useTheme } from "@mui/material";
-import { useRouter } from "next/router";
-import { FC, SyntheticEvent, useCallback } from "react";
+import { Link as MuiLink, Tab, Tabs, useTheme } from '@mui/material'
+import { useRouter } from 'next/router'
+import { FC, SyntheticEvent, useCallback } from 'react'
 
 export const TabList: FC = () => {
-  const router = useRouter();
-  const theme = useTheme();
+  const router = useRouter()
+  const theme = useTheme()
 
   const onChangeTab = useCallback(
     (_: SyntheticEvent, value: string) => {
-      router.push(value);
+      router.push(value)
     },
-    [router]
-  );
+    [router],
+  )
 
   return (
     <Tabs variant="scrollable" value={router.pathname} onChange={onChangeTab}>
@@ -37,5 +37,5 @@ export const TabList: FC = () => {
         underline="none"
       />
     </Tabs>
-  );
-};
+  )
+}

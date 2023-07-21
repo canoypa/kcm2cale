@@ -1,23 +1,23 @@
-import { Box, ListItem, ListItemText } from "@mui/material";
-import { FC } from "react";
-import { useMeasure } from "react-use";
-import { FixedSizeList } from "react-window";
-import { ShipData } from "~/models/ship";
+import { Box, ListItem, ListItemText } from '@mui/material'
+import { FC } from 'react'
+import { useMeasure } from 'react-use'
+import { FixedSizeList } from 'react-window'
+import { ShipData } from '~/models/ship'
 
 type Props = {
-  shipsList: ShipData[];
-  onSelect: (shipNoToSet: string) => void;
-};
+  shipsList: ShipData[]
+  onSelect: (shipNoToSet: string) => void
+}
 export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
-  const [measureRef, { width, height }] = useMeasure();
+  const [measureRef, { width, height }] = useMeasure()
 
-  const handlerOnSelect = (shipNoToSet: string) => onSelect(shipNoToSet);
+  const handlerOnSelect = (shipNoToSet: string) => onSelect(shipNoToSet)
 
   const items = shipsList.map((shipData) => ({
     key: shipData.no,
     value: shipData.no,
     label: shipData.name,
-  }));
+  }))
 
   return (
     <Box flexGrow={1} ref={measureRef}>
@@ -28,8 +28,8 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
         itemSize={48}
       >
         {({ index, style }) => {
-          const item = items[index];
-          const _handlerOnSelect = () => handlerOnSelect(item.value);
+          const item = items[index]
+          const _handlerOnSelect = () => handlerOnSelect(item.value)
 
           return (
             <ListItem
@@ -40,9 +40,9 @@ export const SearchShipsList: FC<Props> = ({ shipsList, onSelect }) => {
             >
               <ListItemText primary={item.label} />
             </ListItem>
-          );
+          )
         }}
       </FixedSizeList>
     </Box>
-  );
-};
+  )
+}

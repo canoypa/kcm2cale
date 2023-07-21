@@ -1,13 +1,13 @@
-import { DragIndicator } from "@mui/icons-material";
-import { Box, Paper } from "@mui/material";
-import { FC, memo } from "react";
-import { Ship } from "../../../../models/ship";
-import { Rigging } from "../rigging";
-import { ShipContent } from "./ship-content";
+import { DragIndicator } from '@mui/icons-material'
+import { Box, Paper } from '@mui/material'
+import { FC, memo } from 'react'
+import { Ship } from '../../../../models/ship'
+import { Rigging } from '../rigging'
+import { ShipContent } from './ship-content'
 
 type Props = {
-  fleetPlace: Ship;
-};
+  fleetPlace: Ship
+}
 export const ShipItemPresentation: FC<Props> = ({ fleetPlace }) => {
   return (
     <Box my={0.5}>
@@ -17,7 +17,7 @@ export const ShipItemPresentation: FC<Props> = ({ fleetPlace }) => {
             width={24}
             height={24}
             color="text.secondary"
-            sx={{ cursor: "grab" }}
+            sx={{ cursor: 'grab' }}
             // ドラッグハンドルの指定
             data-movable-handle
           >
@@ -41,7 +41,7 @@ export const ShipItemPresentation: FC<Props> = ({ fleetPlace }) => {
         </Box>
       </Paper>
     </Box>
-  );
-};
+  )
+}
 
-export const ShipItem = memo(ShipItemPresentation);
+export const ShipItem = memo(ShipItemPresentation)

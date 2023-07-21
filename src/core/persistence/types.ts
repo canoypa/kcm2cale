@@ -1,28 +1,28 @@
-import { FleetType } from "../../models/fleet";
+import { FleetType } from '../../models/fleet'
 
 /** ローカル保存用データ構造 */
 export type LocalFleetDataV1 = {
   /** Data Version */
-  version: 1;
+  version: 1
   /** Fleet Id */
-  id: string;
+  id: string
   /** Fleet Type */
-  type: FleetType;
+  type: FleetType
   /** Fleet Title */
-  title: string;
+  title: string
   /** Fleet description */
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  description: string
+  createdAt: Date
+  updatedAt: Date
 
   /** Ships */
   ships: Array<{
     /** Fleet No */
-    fleetNo: number;
+    fleetNo: number
     /** Turn No */
-    turnNo: number;
+    turnNo: number
     /** Ship No */
-    no: string;
+    no: string
     /** Ship Status */
     // status: [
     //   level: number,
@@ -36,11 +36,11 @@ export type LocalFleetDataV1 = {
     /** Equipments */
     equipments: Array<{
       /** Slot No */
-      slotNo: number;
+      slotNo: number
       /** Equipment No */
-      no: number;
+      no: number
       /** Equipment Status */
       // status: [proficiency: number, improvement: number];
-    }>;
-  }>;
-};
+    }>
+  }>
+}

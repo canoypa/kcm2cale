@@ -1,6 +1,6 @@
 export type SearchFilter = {
-  label: string;
-  value: number;
-};
+  label: string
+  value: number
+}
 
-export type SearchFilters = SearchFilter[];
+export type SearchFilters = SearchFilter[]

@@ -1,5 +1,5 @@
-import { EquipType, EquipTypeValues } from "../../../models/equip/types";
-import { EnumValues } from "../../../util/types";
+import { EquipType, EquipTypeValues } from '../../../models/equip/types'
+import { EnumValues } from '../../../util/types'
 
 export const EquipGroupMap: Record<EquipGroupValues, EquipTypeValues[]> = {
   /** 主砲 */
@@ -66,7 +66,7 @@ export const EquipGroupMap: Record<EquipGroupValues, EquipTypeValues[]> = {
   20: [EquipType.LandBasedInterceptor, EquipType.LandBasedFighter],
   /** 陸上攻撃機 */
   21: [EquipType.LandBasedAttackAircraft],
-};
+}
 
 // Todo 装備グループ分け見直し 大型飛行艇はいずこ
 /** 装備グループ */
@@ -127,5 +127,5 @@ export const EquipGroup = {
   LandBasedFighter: 20,
   /** 陸上攻撃機 */
   LandBasedAttackAircraft: 21,
-} as const;
-export type EquipGroupValues = EnumValues<typeof EquipGroup>;
+} as const
+export type EquipGroupValues = EnumValues<typeof EquipGroup>

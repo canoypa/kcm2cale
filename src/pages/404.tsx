@@ -1,9 +1,9 @@
-import { Button, Typography } from "@mui/material";
-import { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { Error, ErrorActions, ErrorContent } from "~/components/Error";
-import { APP_NAME } from "../core/env";
+import { Button, Typography } from '@mui/material'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import { Error, ErrorActions, ErrorContent } from '~/components/Error'
+import { APP_NAME } from '../core/env'
 
 const NotFoundPage: NextPage = () => {
   return (
@@ -25,6 +25,6 @@ const NotFoundPage: NextPage = () => {
         </ErrorActions>
       </Error>
     </>
-  );
-};
-export default NotFoundPage;
+  )
+}
+export default NotFoundPage

@@ -1,13 +1,13 @@
-import { createTheme as createMuiTheme, PaletteMode } from "@mui/material";
-import { DarkPalette, LightPalette } from "./palette";
+import { createTheme as createMuiTheme, PaletteMode } from '@mui/material'
+import { DarkPalette, LightPalette } from './palette'
 
 export const createTheme = (mode: PaletteMode) =>
   createMuiTheme({
-    palette: mode === "dark" ? DarkPalette : LightPalette,
+    palette: mode === 'dark' ? DarkPalette : LightPalette,
 
     typography: {
       button: {
-        textTransform: "none",
+        textTransform: 'none',
       },
     },
 
@@ -15,9 +15,9 @@ export const createTheme = (mode: PaletteMode) =>
       MuiCssBaseline: {
         styleOverrides: {
           html: {
-            WebkitTapHighlightColor: "transparent",
+            WebkitTapHighlightColor: 'transparent',
           },
         },
       },
     },
-  });
+  })

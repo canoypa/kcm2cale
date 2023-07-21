@@ -1,15 +1,15 @@
-import { NavigateBefore } from "@mui/icons-material";
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
-import { FC, useCallback } from "react";
+import { NavigateBefore } from '@mui/icons-material'
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
+import { FC, useCallback } from 'react'
 import {
   equipGroupFilter,
   EquipGroupMap,
   EquipGroupValues,
-} from "~/core/filters/equip";
-import { EquipSearch } from "~/core/search/equip";
-import { OrganizeSelectSearchRenderer } from "../../select-fleet-item/search-renderer";
-import { useSearchQuery } from "../hooks/search-query";
-import { SearchEquipsList } from "../search-equips-list";
+} from '~/core/filters/equip'
+import { EquipSearch } from '~/core/search/equip'
+import { OrganizeSelectSearchRenderer } from '../../select-fleet-item/search-renderer'
+import { useSearchQuery } from '../hooks/search-query'
+import { SearchEquipsList } from '../search-equips-list'
 
 /**
  * 原因不明のエラー
@@ -20,33 +20,33 @@ import { SearchEquipsList } from "../search-equips-list";
  */
 
 const isEquipGroupValue = (n: number): n is EquipGroupValues =>
-  n >= 0 && n <= 21;
+  n >= 0 && n <= 21
 
 type SelectEquipProps = {
-  onSelect: (equipNoToSet: number) => void;
-  onClose: () => void;
-};
+  onSelect: (equipNoToSet: number) => void
+  onClose: () => void
+}
 const SelectEquip: FC<SelectEquipProps> = ({ onSelect, onClose }) => {
-  const { query: searchQuery, setQuery, setTypes } = useSearchQuery();
+  const { query: searchQuery, setQuery, setTypes } = useSearchQuery()
 
   const handler = {
     filterChange: useCallback(
       (filter: number | null) => {
         if (filter === null) {
-          setTypes(null);
+          setTypes(null)
         } else {
           if (isEquipGroupValue(filter)) {
-            setTypes(EquipGroupMap[filter]);
+            setTypes(EquipGroupMap[filter])
           }
         }
       },
-      [setTypes]
+      [setTypes],
     ),
 
     onChangeQuery: useCallback((value: string) => setQuery(value), [setQuery]),
-  };
+  }
 
-  const equipsList = EquipSearch.search(searchQuery);
+  const equipsList = EquipSearch.search(searchQuery)
 
   return (
     <>
@@ -70,6 +70,6 @@ const SelectEquip: FC<SelectEquipProps> = ({ onSelect, onClose }) => {
         changeQuery={handler.onChangeQuery}
       />
     </>
-  );
-};
-export default SelectEquip;
+  )
+}
+export default SelectEquip

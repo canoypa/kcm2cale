@@ -1,14 +1,14 @@
-import { ShipTypeValues } from "../../../models/ship";
+import { ShipTypeValues } from '../../../models/ship'
 
 /** 検索クエリ */
-export type SearchShipQuery = string;
+export type SearchShipQuery = string
 /** 種類 */
-export type SearchShipTypes = ShipTypeValues[];
+export type SearchShipTypes = ShipTypeValues[]
 
 export type SearchShipRequest = Partial<{
   /** 検索クエリ */
-  q: SearchShipQuery;
+  q: SearchShipQuery
 
   /** 艦種 */
-  type: SearchShipTypes;
-}>;
+  type: SearchShipTypes
+}>

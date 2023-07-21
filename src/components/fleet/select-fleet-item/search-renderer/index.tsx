@@ -1,15 +1,15 @@
-import { AppBar, Box, Container } from "@mui/material";
-import { FC } from "react";
-import { Filter } from "../filter";
-import { SearchFilters } from "../types";
-import { SearchBox } from "./search-box";
+import { AppBar, Box, Container } from '@mui/material'
+import { FC } from 'react'
+import { Filter } from '../filter'
+import { SearchFilters } from '../types'
+import { SearchBox } from './search-box'
 
 type Props = {
-  filterGroup: SearchFilters;
+  filterGroup: SearchFilters
 
-  changeFilter: (value: number | null) => void;
-  changeQuery: (value: string) => void;
-};
+  changeFilter: (value: number | null) => void
+  changeQuery: (value: string) => void
+}
 export const OrganizeSelectSearchRenderer: FC<Props> = ({
   filterGroup,
   changeFilter,
@@ -25,4 +25,4 @@ export const OrganizeSelectSearchRenderer: FC<Props> = ({
       </Box>
     </Container>
   </AppBar>
-);
+)

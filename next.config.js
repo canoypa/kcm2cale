@@ -1,8 +1,8 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-const { appName, appVersion } = require("./scripts/build/variable.js");
+const { appName, appVersion } = require('./scripts/build/variable.js')
 
 module.exports = withBundleAnalyzer({
   // React StrictMode
@@ -12,4 +12,4 @@ module.exports = withBundleAnalyzer({
     APP_NAME: appName,
     APP_VERSION: appVersion,
   },
-});
+})

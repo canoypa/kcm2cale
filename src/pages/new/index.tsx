@@ -1,7 +1,7 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import NewFleet from "../../components/new-fleet";
-import { APP_NAME } from "../../core/env";
+import { NextPage } from 'next'
+import Head from 'next/head'
+import NewFleet from '../../components/new-fleet'
+import { APP_NAME } from '../../core/env'
 
 const NewFleetPage: NextPage = () => {
   return (
@@ -12,6 +12,6 @@ const NewFleetPage: NextPage = () => {
 
       <NewFleet />
     </>
-  );
-};
-export default NewFleetPage;
+  )
+}
+export default NewFleetPage

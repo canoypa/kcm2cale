@@ -1,22 +1,22 @@
-import { NavigateBefore } from "@mui/icons-material";
+import { NavigateBefore } from '@mui/icons-material'
 import {
   AppBar,
   IconButton,
   Toolbar,
   Typography,
   useScrollTrigger,
-} from "@mui/material";
-import { FC } from "react";
+} from '@mui/material'
+import { FC } from 'react'
 
 type Props = {
-  title?: string;
-  onNavClick: () => void;
-};
+  title?: string
+  onNavClick: () => void
+}
 export const LowerAppBar: FC<Props> = ({ title, onNavClick }) => {
   const elevateTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
-  });
+  })
 
   return (
     <>
@@ -30,5 +30,5 @@ export const LowerAppBar: FC<Props> = ({ title, onNavClick }) => {
       </AppBar>
       <Toolbar />
     </>
-  );
-};
+  )
+}

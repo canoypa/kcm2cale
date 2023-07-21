@@ -1,5 +1,5 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NavigateBefore } from "@mui/icons-material";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { NavigateBefore } from '@mui/icons-material'
 import {
   AppBar,
   Box,
@@ -14,16 +14,16 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import { nativeEnum, object, string, infer as zodInfer } from "zod";
-import { FleetState } from "~/store/organize/info";
-import { FleetType } from "../../../../../models/fleet";
+} from '@mui/material'
+import { FC } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useRecoilState } from 'recoil'
+import { nativeEnum, object, string, infer as zodInfer } from 'zod'
+import { FleetState } from '~/store/organize/info'
+import { FleetType } from '../../../../../models/fleet'
 
-const TitleCharCount = 256;
-const DescriptionCharCount = 512;
+const TitleCharCount = 256
+const DescriptionCharCount = 512
 
 const FormInput = object({
   title: string().max(TitleCharCount, {
@@ -33,13 +33,13 @@ const FormInput = object({
     message: `説明を ${DescriptionCharCount} 文字以上に設定できません。`,
   }),
   type: nativeEnum(FleetType),
-});
-type FormInput = zodInfer<typeof FormInput>;
+})
+type FormInput = zodInfer<typeof FormInput>
 
 type Props = {
-  open: boolean;
-  onEnd: () => void;
-};
+  open: boolean
+  onEnd: () => void
+}
 export const Editing: FC<Props> = ({ open, onEnd }) => {
   const {
     control,
@@ -47,29 +47,29 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
     reset,
     formState: { isValid, errors },
   } = useForm<FormInput>({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: zodResolver(FormInput),
-  });
+  })
 
-  const [fleet, setFleet] = useRecoilState(FleetState);
-  if (!fleet) throw new Error("編成が存在しない");
+  const [fleet, setFleet] = useRecoilState(FleetState)
+  if (!fleet) throw new Error('編成が存在しない')
 
-  const theme = useTheme();
-  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const theme = useTheme()
+  const fullScreenBreakPoint = useMediaQuery(theme.breakpoints.down('sm'))
 
   const handleSubmit = submitWrap((data) => {
-    setFleet({ ...fleet, ...data });
-    onEnd();
-  });
+    setFleet({ ...fleet, ...data })
+    onEnd()
+  })
 
   const handleClose = () => {
     reset({
       title: fleet?.title,
       description: fleet?.description,
       type: fleet?.type,
-    });
-    onEnd();
-  };
+    })
+    onEnd()
+  }
 
   return (
     <Dialog
@@ -170,5 +170,5 @@ export const Editing: FC<Props> = ({ open, onEnd }) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}

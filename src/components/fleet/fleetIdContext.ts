@@ -1,3 +1,3 @@
-import { createContext } from "react";
+import { createContext } from 'react'
 
-export const FleetIdContext = createContext<string>("");
+export const FleetIdContext = createContext<string>('')
