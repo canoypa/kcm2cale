@@ -8,7 +8,7 @@ import { ShipContent } from "./ship-content";
 type Props = {
   fleetPlace: Ship;
 };
-export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
+export const ShipItemPresentation: FC<Props> = ({ fleetPlace }) => {
   return (
     <Box my={0.5}>
       <Paper variant="outlined">
@@ -42,4 +42,6 @@ export const ShipItem: FC<Props> = memo(({ fleetPlace }) => {
       </Paper>
     </Box>
   );
-});
+};
+
+export const ShipItem = memo(ShipItemPresentation);

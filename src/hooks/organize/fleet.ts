@@ -19,7 +19,7 @@ const useSortFleetShip = () => {
 
       setFleet({ ...fleet, ships: sortedShips });
     },
-    [fleet]
+    [fleet, setFleet]
   );
 
   return sort;
