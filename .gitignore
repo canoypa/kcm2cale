@@ -11,6 +11,9 @@
 .vscode/launch.json
 .vscode/tasks.json
 
+# typescript
+*.tsbuildinfo
+
 # Testing coverage
 /coverage/
 
