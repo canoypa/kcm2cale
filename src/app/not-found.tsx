@@ -16,9 +16,9 @@ export default function NotFoundPage() {
         </Typography>
       </ErrorContent>
       <ErrorActions>
-        <Link href="/" passHref>
-          <Button variant="outlined">トップページに戻る</Button>
-        </Link>
+        <Button LinkComponent={Link} href="/" variant="outlined">
+          トップページに戻る
+        </Button>
       </ErrorActions>
     </Error>
   )

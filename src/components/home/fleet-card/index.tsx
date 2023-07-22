@@ -6,9 +6,9 @@ import {
   CardContent,
   Grid,
   IconButton,
+  Link,
   Menu,
   MenuItem,
-  Link as MuiLink,
   Typography,
 } from '@mui/material'
 import NextLink from 'next/link'
@@ -46,39 +46,41 @@ export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
 
   return (
     <>
-      <NextLink href={`/fleet/${fleetData.id}`} passHref>
-        <MuiLink underline="none">
-          <Card variant="outlined">
-            <CardContent>
-              <Grid container>
-                <Grid item xs>
-                  <Typography variant="overline" color="textSecondary">
-                    {fleetData.updatedAt.toLocaleDateString()}
-                  </Typography>
+      <Link
+        component={NextLink}
+        href={`/fleet/${fleetData.id}`}
+        underline="none"
+      >
+        <Card variant="outlined">
+          <CardContent>
+            <Grid container>
+              <Grid item xs>
+                <Typography variant="overline" color="textSecondary">
+                  {fleetData.updatedAt.toLocaleDateString()}
+                </Typography>
 
-                  <Typography variant="h6">
-                    <LineClamp count={1}>
-                      {fleetData.title || '無題の編成'}
-                    </LineClamp>
-                  </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    <LineClamp count={2}>{fleetData.description}</LineClamp>
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    onClick={openMenu}
-                    ref={menuAnchorEl}
-                    aria-label="アクションメニュー"
-                  >
-                    <MoreVert />
-                  </IconButton>
-                </Grid>
+                <Typography variant="h6">
+                  <LineClamp count={1}>
+                    {fleetData.title || '無題の編成'}
+                  </LineClamp>
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  <LineClamp count={2}>{fleetData.description}</LineClamp>
+                </Typography>
               </Grid>
-            </CardContent>
-          </Card>
-        </MuiLink>
-      </NextLink>
+              <Grid item>
+                <IconButton
+                  onClick={openMenu}
+                  ref={menuAnchorEl}
+                  aria-label="アクションメニュー"
+                >
+                  <MoreVert />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Link>
 
       <Menu
         open={isMenuOpen}

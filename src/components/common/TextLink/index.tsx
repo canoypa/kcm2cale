@@ -19,21 +19,15 @@ export const TextLink: FC<Props> = ({
   children,
   ...props
 }) => {
-  if (ext || newTab) {
-    return (
-      <MuiLink
-        href={href}
-        target={newTab && '_blank'}
-        rel={ext && 'noopener noreferrer'}
-      >
-        {children}
-      </MuiLink>
-    )
-  }
-
   return (
-    <NextLink href={href} {...props} passHref>
-      <MuiLink>{children}</MuiLink>
-    </NextLink>
+    <MuiLink
+      component={NextLink}
+      href={href}
+      target={newTab && '_blank'}
+      rel={ext && 'noopener noreferrer'}
+      {...props}
+    >
+      {children}
+    </MuiLink>
   )
 }
