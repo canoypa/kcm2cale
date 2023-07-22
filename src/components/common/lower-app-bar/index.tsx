@@ -1,3 +1,5 @@
+'use client'
+
 import { NavigateBefore } from '@mui/icons-material'
 import {
   AppBar,

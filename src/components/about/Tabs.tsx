@@ -1,3 +1,5 @@
+'use client'
+
 import { Link as MuiLink, Tab, Tabs, useTheme } from '@mui/material'
 import { useRouter } from 'next/router'
 import { FC, SyntheticEvent, useCallback } from 'react'

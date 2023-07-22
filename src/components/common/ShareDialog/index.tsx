@@ -1,3 +1,5 @@
+'use client'
+
 import { FileCopyOutlined } from '@mui/icons-material'
 import {
   Box,

@@ -1,3 +1,5 @@
+'use client'
+
 import { AppBar, Box, Toolbar, useScrollTrigger } from '@mui/material'
 import { FC, useState } from 'react'
 import { UserIconButton } from '../user-icon'

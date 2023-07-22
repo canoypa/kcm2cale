@@ -1,10 +1,12 @@
+'use client'
+
 import { NavigateBefore } from '@mui/icons-material'
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
 import { FC, useCallback } from 'react'
 import {
-  shipGroupFilter,
   ShipSearchGroupMap,
   ShipSearchGroupValues,
+  shipGroupFilter,
 } from '~/core/filters/ship'
 import { ShipSearch } from '~/core/search/ship'
 import { OrganizeSelectSearchRenderer } from '../../select-fleet-item/search-renderer'

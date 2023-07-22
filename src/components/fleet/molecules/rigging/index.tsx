@@ -1,3 +1,5 @@
+'use client'
+
 import { Add } from '@mui/icons-material'
 import { Box, Chip } from '@mui/material'
 import { FC } from 'react'

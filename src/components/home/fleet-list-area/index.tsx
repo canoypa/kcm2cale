@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, CircularProgress, Container } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import { LocalDatabase } from '~/core/persistence/local-database'

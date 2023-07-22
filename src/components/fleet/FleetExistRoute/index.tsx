@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useContext } from 'react'
 import { useEffectOnce } from 'react-use'
 import { useRecoilState } from 'recoil'

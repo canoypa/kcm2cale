@@ -1,3 +1,5 @@
+'use client'
+
 import { MoreVert } from '@mui/icons-material'
 import {
   Card,

@@ -1,3 +1,5 @@
+'use client'
+
 import { Box } from '@mui/material'
 import { ChangeEventHandler, FC, useState } from 'react'
 import { LocalFleetDataV1 } from '~/core/persistence/types'

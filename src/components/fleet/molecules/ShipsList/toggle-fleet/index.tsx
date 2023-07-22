@@ -1,3 +1,5 @@
+'use client'
+
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { FC, MouseEvent } from 'react'
 import { FleetNo } from '../../../../../models/ship'

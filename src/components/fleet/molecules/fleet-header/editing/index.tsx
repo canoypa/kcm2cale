@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NavigateBefore } from '@mui/icons-material'
 import {

@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Skeleton } from '@mui/material'
 import { FC, useState } from 'react'
 import { List } from 'react-movable'

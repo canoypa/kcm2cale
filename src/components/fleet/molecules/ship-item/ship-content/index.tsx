@@ -1,3 +1,5 @@
+'use client'
+
 import { Box } from '@mui/material'
 import { FC } from 'react'
 import { useStartSelectShip } from '~/components/fleet/hooks/select-ship'

@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { useEffectOnce } from 'react-use'
