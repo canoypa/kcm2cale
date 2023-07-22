@@ -58,8 +58,8 @@ export const ShipsList: FC = () => {
               {children}
             </Box>
           )}
-          renderItem={({ value: fleetPlace, props }) => (
-            <div {...props}>
+          renderItem={({ value: fleetPlace, props: { key, ...props } }) => (
+            <div key={key} {...props}>
               {isShipPlaced(fleetPlace) ? (
                 <ShipItem fleetPlace={fleetPlace} />
               ) : (
