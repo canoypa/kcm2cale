@@ -1,11 +1,12 @@
 'use client'
 
 import { Link as MuiLink, Tab, Tabs, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import { FC, SyntheticEvent, useCallback } from 'react'
 
 export const TabList: FC = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const theme = useTheme()
 
   const onChangeTab = useCallback(
@@ -16,7 +17,7 @@ export const TabList: FC = () => {
   )
 
   return (
-    <Tabs variant="scrollable" value={router.pathname} onChange={onChangeTab}>
+    <Tabs variant="scrollable" value={pathname} onChange={onChangeTab}>
       <MuiLink
         component={Tab}
         value="/about"
