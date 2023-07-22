@@ -1,10 +1,10 @@
-import nextJest from "next/jest.js";
+import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
-  dir: "./",
-});
+  dir: './',
+})
 
 /** @type {import('jest').Config} */
-const config = {};
+const config = {}
 
-export default createJestConfig(config);
+export default createJestConfig(config)

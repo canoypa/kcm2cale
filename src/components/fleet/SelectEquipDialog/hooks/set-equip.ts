@@ -1,46 +1,46 @@
-import { useCallback } from "react";
-import { useRecoilState } from "recoil";
-import { FleetPlace } from "~/models/ship";
-import { FleetState } from "~/store/organize/info";
-import { Equip, RiggingPlace } from "../../../../models/equip/types";
+import { useCallback } from 'react'
+import { useRecoilState } from 'recoil'
+import { FleetPlace } from '~/models/ship'
+import { FleetState } from '~/store/organize/info'
+import { Equip, RiggingPlace } from '../../../../models/equip/types'
 
 type UseSetEquip = () => (
   place: FleetPlace & RiggingPlace,
-  equipNoToSet: number
-) => void;
+  equipNoToSet: number,
+) => void
 export const useSetEquip: UseSetEquip = () => {
-  const [fleet, setFleet] = useRecoilState(FleetState);
-  if (!fleet) throw new Error("編成が存在しない");
+  const [fleet, setFleet] = useRecoilState(FleetState)
+  if (!fleet) throw new Error('編成が存在しない')
 
   const setEquip = useCallback(
     (place: FleetPlace & RiggingPlace, equipNoToSet: number) => {
-      const { fleetNo, turnNo, slotNo } = place;
+      const { fleetNo, turnNo, slotNo } = place
 
       const updateShipIndex = fleet.ships.findIndex(
-        (v) => v.fleetNo === fleetNo && v.turnNo === turnNo
-      );
+        (v) => v.fleetNo === fleetNo && v.turnNo === turnNo,
+      )
       const updateEquipIndex = fleet.ships[
         updateShipIndex
-      ].equipments.findIndex((v) => v.slotNo === slotNo);
+      ].equipments.findIndex((v) => v.slotNo === slotNo)
 
-      const newShips = [...fleet.ships];
-      const newEquips = [...fleet.ships[updateShipIndex].equipments];
+      const newShips = [...fleet.ships]
+      const newEquips = [...fleet.ships[updateShipIndex].equipments]
 
       if (updateEquipIndex !== -1) {
-        newEquips[updateEquipIndex].no = equipNoToSet;
+        newEquips[updateEquipIndex].no = equipNoToSet
       } else {
         const equip: Equip = {
           slotNo,
           no: equipNoToSet,
-        };
-        newEquips.push(equip);
+        }
+        newEquips.push(equip)
       }
-      newShips[updateShipIndex].equipments = newEquips;
+      newShips[updateShipIndex].equipments = newEquips
 
-      setFleet({ ...fleet, ships: newShips });
+      setFleet({ ...fleet, ships: newShips })
     },
-    [fleet, setFleet]
-  );
+    [fleet, setFleet],
+  )
 
-  return setEquip;
-};
+  return setEquip
+}

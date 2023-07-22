@@ -1,5 +1,5 @@
-import { AppSettingsScheme } from "./types";
+import { AppSettingsScheme } from './types'
 
 export const defaultSettings: AppSettingsScheme = {
-  theme: "system",
-};
+  theme: 'system',
+}

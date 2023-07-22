@@ -1,7 +1,7 @@
-import { Box, Fab } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import Link from "next/link";
-import { FC } from "react";
+import { Box, Fab } from '@mui/material'
+import { Add } from '@mui/icons-material'
+import Link from 'next/link'
+import { FC } from 'react'
 
 export const CreateNewFleet: FC = () => {
   return (
@@ -9,7 +9,7 @@ export const CreateNewFleet: FC = () => {
       position="sticky"
       bottom={0}
       display="flex"
-      justifyContent={{ xs: "center", lg: "flex-end" }}
+      justifyContent={{ xs: 'center', lg: 'flex-end' }}
       padding={{ xs: 2, sm: 3 }}
     >
       <Link href="/new" passHref>
@@ -19,5 +19,5 @@ export const CreateNewFleet: FC = () => {
         </Fab>
       </Link>
     </Box>
-  );
-};
+  )
+}

@@ -1,36 +1,36 @@
-import { EnumValues } from "../../util/types";
+import { EnumValues } from '../../util/types'
 
-export type SlotNo = number;
-export type EquipId = string;
+export type SlotNo = number
+export type EquipId = string
 
 /**
  * 装備の配備位置
  */
 export type RiggingPlace = {
   // shipId: ShipId;
-  slotNo: SlotNo;
-};
+  slotNo: SlotNo
+}
 
 /**
  * 未配備位置の装備データ
  */
 export type EmptyEquip = RiggingPlace & {
   // id: null;
-  no: null;
-};
+  no: null
+}
 
 /**
  * 配備済み位置の装備データ
  */
 export type Equip = RiggingPlace & {
   // id: string;
-  no: number;
-};
+  no: number
+}
 
 /**
  * 装備データ
  */
-export type ShipEquip = Equip | EmptyEquip;
+export type ShipEquip = Equip | EmptyEquip
 
 /**
  * 装備の種類
@@ -157,11 +157,11 @@ export const EquipType = {
   LandBasedLargeAircraft: 50,
   /** 大型飛行艇 */
   LargeFlyingBoat: 51,
-} as const;
-export type EquipTypeValues = EnumValues<typeof EquipType>;
+} as const
+export type EquipTypeValues = EnumValues<typeof EquipType>
 
 export type EquipData = {
-  no: number;
-  type: EquipTypeValues;
-  name: string;
-};
+  no: number
+  type: EquipTypeValues
+  name: string
+}

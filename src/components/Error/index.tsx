@@ -1,5 +1,5 @@
-import { Box, Container, Typography } from "@mui/material";
-import { FC, PropsWithChildren } from "react";
+import { Box, Container, Typography } from '@mui/material'
+import { FC, PropsWithChildren } from 'react'
 
 export const Error: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -20,16 +20,16 @@ export const Error: FC<PropsWithChildren> = ({ children }) => {
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
 export const ErrorContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box p={2} pt={0}>
       {children}
     </Box>
-  );
-};
+  )
+}
 
 export const ErrorActions: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -43,5 +43,5 @@ export const ErrorActions: FC<PropsWithChildren> = ({ children }) => {
     >
       {children}
     </Box>
-  );
-};
+  )
+}

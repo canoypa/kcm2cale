@@ -1,31 +1,31 @@
-import { ShareOutlined } from "@mui/icons-material";
-import { IconButton, Tooltip } from "@mui/material";
-import { FC, useCallback, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { ShareDialog } from "~/components/common/ShareDialog";
-import { LocalFleetDataV1 } from "~/core/persistence/types";
-import { FleetState } from "~/store/organize/info";
+import { ShareOutlined } from '@mui/icons-material'
+import { IconButton, Tooltip } from '@mui/material'
+import { FC, useCallback, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { ShareDialog } from '~/components/common/ShareDialog'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { FleetState } from '~/store/organize/info'
 
 type Props = {
-  fleet: LocalFleetDataV1;
-};
+  fleet: LocalFleetDataV1
+}
 const FleetShareButton_: FC<Props> = ({ fleet }) => {
-  const [isOpenShareDialog, setOpenShareDialog] = useState(false);
+  const [isOpenShareDialog, setOpenShareDialog] = useState(false)
 
-  const title = fleet.title || "無題の編成";
-  const url = `https://kcm2cale.web.app/fleet/${fleet.id}`;
+  const title = fleet.title || '無題の編成'
+  const url = `https://kcm2cale.web.app/fleet/${fleet.id}`
 
   const shareFleet = useCallback(() => {
     if (window.navigator.share) {
-      window.navigator.share({ title, url });
+      window.navigator.share({ title, url })
     } else {
-      setOpenShareDialog(true);
+      setOpenShareDialog(true)
     }
-  }, [title, url]);
+  }, [title, url])
 
   const onCloseShareDialog = useCallback(() => {
-    setOpenShareDialog(false);
-  }, []);
+    setOpenShareDialog(false)
+  }, [])
 
   return (
     <>
@@ -42,12 +42,12 @@ const FleetShareButton_: FC<Props> = ({ fleet }) => {
         url={url}
       />
     </>
-  );
-};
+  )
+}
 
 export const FleetShareButton: FC = () => {
-  const fleet = useRecoilValue(FleetState);
+  const fleet = useRecoilValue(FleetState)
 
-  if (!fleet) return null;
-  return <FleetShareButton_ fleet={fleet} />;
-};
+  if (!fleet) return null
+  return <FleetShareButton_ fleet={fleet} />
+}

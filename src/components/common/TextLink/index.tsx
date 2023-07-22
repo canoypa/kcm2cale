@@ -1,17 +1,17 @@
-import { Link as MuiLink } from "@mui/material";
-import NextLink, { LinkProps } from "next/link";
-import { FC, PropsWithChildren } from "react";
+import { Link as MuiLink } from '@mui/material'
+import NextLink, { LinkProps } from 'next/link'
+import { FC, PropsWithChildren } from 'react'
 
 type Props = PropsWithChildren<
   LinkProps & {
     /** string 型のみに上書き */
-    href: string;
+    href: string
     /** 外部リンクか */
-    ext?: true;
+    ext?: true
     /** 新しいタブで開くか */
-    newTab?: true;
+    newTab?: true
   }
->;
+>
 export const TextLink: FC<Props> = ({
   href,
   ext,
@@ -23,17 +23,17 @@ export const TextLink: FC<Props> = ({
     return (
       <MuiLink
         href={href}
-        target={newTab && "_blank"}
-        rel={ext && "noopener noreferrer"}
+        target={newTab && '_blank'}
+        rel={ext && 'noopener noreferrer'}
       >
         {children}
       </MuiLink>
-    );
+    )
   }
 
   return (
     <NextLink href={href} {...props} passHref>
       <MuiLink>{children}</MuiLink>
     </NextLink>
-  );
-};
+  )
+}

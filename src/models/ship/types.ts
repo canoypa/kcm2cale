@@ -1,39 +1,39 @@
-import { EnumValues } from "../../util/types";
-import { Equip } from "../equip";
+import { EnumValues } from '../../util/types'
+import { Equip } from '../equip'
 
-export type FleetNo = number;
-export type TurnNo = number;
-export type ShipId = string;
+export type FleetNo = number
+export type TurnNo = number
+export type ShipId = string
 
 /**
  * 艦の配備位置
  */
 export type FleetPlace = {
-  fleetNo: FleetNo;
-  turnNo: TurnNo;
-};
+  fleetNo: FleetNo
+  turnNo: TurnNo
+}
 
 /**
  * 未配備位置の艦隊データ
  */
 export type EmptyShip = FleetPlace & {
   // id: null;
-  no: null;
-};
+  no: null
+}
 
 /**
  * 配備済み位置の艦隊データ
  */
 export type Ship = FleetPlace & {
   // id: string;
-  no: string;
-  equipments: Equip[];
-};
+  no: string
+  equipments: Equip[]
+}
 
 /**
  * 艦隊データ
  */
-export type FleetShip = Ship | EmptyShip;
+export type FleetShip = Ship | EmptyShip
 
 export const ShipType = {
   /** 戦艦 */
@@ -76,11 +76,11 @@ export const ShipType = {
   AmphibiousAssault: 18,
   /** 工作艦 */
   Repair: 19,
-} as const;
-export type ShipTypeValues = EnumValues<typeof ShipType>;
+} as const
+export type ShipTypeValues = EnumValues<typeof ShipType>
 
 export type ShipData = {
-  no: string;
-  type: ShipTypeValues;
-  name: string;
-};
+  no: string
+  type: ShipTypeValues
+  name: string
+}

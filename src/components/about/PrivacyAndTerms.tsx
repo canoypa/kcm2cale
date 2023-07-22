@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { TextLink } from "../common/TextLink";
+import { FC } from 'react'
+import { TextLink } from '../common/TextLink'
 
 export const PrivacyAndTerms: FC = () => {
   return (
@@ -33,5 +33,5 @@ export const PrivacyAndTerms: FC = () => {
         <p>このサイトの利用は自己責任とし、一切の責任を負いません。</p>
       </section>
     </section>
-  );
-};
+  )
+}

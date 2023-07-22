@@ -1,4 +1,4 @@
-import { NavigateBefore } from "@mui/icons-material";
+import { NavigateBefore } from '@mui/icons-material'
 import {
   AppBar,
   Box,
@@ -6,22 +6,22 @@ import {
   Toolbar,
   Tooltip,
   useScrollTrigger,
-} from "@mui/material";
-import { useRouter } from "next/router";
-import { FC, useCallback } from "react";
-import { TabList } from "./Tabs";
+} from '@mui/material'
+import { useRouter } from 'next/router'
+import { FC, useCallback } from 'react'
+import { TabList } from './Tabs'
 
 export const Header: FC = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const elevateTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
-  });
+  })
 
   const onBack = useCallback(() => {
-    router.push("/");
-  }, [router]);
+    router.push('/')
+  }, [router])
 
   return (
     <AppBar
@@ -36,11 +36,11 @@ export const Header: FC = () => {
           </IconButton>
         </Tooltip>
       </Toolbar>
-      <Toolbar sx={{ alignItems: "flex-end" }}>
+      <Toolbar sx={{ alignItems: 'flex-end' }}>
         <Box flexGrow={1} />
         <TabList />
         <Box flexGrow={1} />
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}

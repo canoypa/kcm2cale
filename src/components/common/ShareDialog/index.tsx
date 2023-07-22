@@ -1,4 +1,4 @@
-import { FileCopyOutlined } from "@mui/icons-material";
+import { FileCopyOutlined } from '@mui/icons-material'
 import {
   Box,
   Dialog,
@@ -8,19 +8,19 @@ import {
   InputAdornment,
   OutlinedInput,
   Tooltip,
-} from "@mui/material";
-import { FC, useCallback } from "react";
+} from '@mui/material'
+import { FC, useCallback } from 'react'
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  url: string;
-};
+  open: boolean
+  onClose: () => void
+  title: string
+  url: string
+}
 export const ShareDialog: FC<Props> = ({ open, onClose, title, url }) => {
   const copyUrl = useCallback(() => {
-    window.navigator.clipboard.writeText(url);
-  }, [url]);
+    window.navigator.clipboard.writeText(url)
+  }, [url])
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
@@ -44,5 +44,5 @@ export const ShareDialog: FC<Props> = ({ open, onClose, title, url }) => {
         </Box>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}

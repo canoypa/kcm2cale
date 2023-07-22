@@ -1,4 +1,4 @@
-import { MoreVert } from "@mui/icons-material";
+import { MoreVert } from '@mui/icons-material'
 import {
   Card,
   CardContent,
@@ -8,39 +8,39 @@ import {
   MenuItem,
   Link as MuiLink,
   Typography,
-} from "@mui/material";
-import NextLink from "next/link";
-import { FC, MouseEvent, useRef, useState } from "react";
-import { LocalDatabase } from "~/core/persistence/local-database";
-import { LocalFleetDataV1 } from "~/core/persistence/types";
-import { LineClamp } from "../../common/clamp";
+} from '@mui/material'
+import NextLink from 'next/link'
+import { FC, MouseEvent, useRef, useState } from 'react'
+import { LocalDatabase } from '~/core/persistence/local-database'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { LineClamp } from '../../common/clamp'
 
 type Props = {
-  fleetData: LocalFleetDataV1;
+  fleetData: LocalFleetDataV1
 
-  refresh: () => void;
-};
+  refresh: () => void
+}
 export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false)
 
-  const menuAnchorEl = useRef<HTMLButtonElement>(null);
+  const menuAnchorEl = useRef<HTMLButtonElement>(null)
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     // openFleet の作動を抑制
-    event.stopPropagation();
-    event.preventDefault();
+    event.stopPropagation()
+    event.preventDefault()
 
-    setMenuOpen(true);
-  };
+    setMenuOpen(true)
+  }
   const closeMenu = () => {
-    setMenuOpen(false);
-  };
+    setMenuOpen(false)
+  }
 
   const handlerDeleteFleet = async () => {
-    closeMenu();
-    await LocalDatabase.deleteFleet(fleetData.id);
-    refresh();
-  };
+    closeMenu()
+    await LocalDatabase.deleteFleet(fleetData.id)
+    refresh()
+  }
 
   return (
     <>
@@ -56,7 +56,7 @@ export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
 
                   <Typography variant="h6">
                     <LineClamp count={1}>
-                      {fleetData.title || "無題の編成"}
+                      {fleetData.title || '無題の編成'}
                     </LineClamp>
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
@@ -86,5 +86,5 @@ export const FleetCard: FC<Props> = ({ fleetData, refresh }) => {
         <MenuItem onClick={handlerDeleteFleet}>削除</MenuItem>
       </Menu>
     </>
-  );
-};
+  )
+}

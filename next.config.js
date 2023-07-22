@@ -1,15 +1,16 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-const { appName, appVersion } = require("./scripts/build/variable.js");
+const { version } = require('./package.json')
 
 module.exports = withBundleAnalyzer({
-  // React StrictMode
+  // TODO: remove after migrate to App Router
+  // https://nextjs.org/docs/pages/api-reference/next-config-js/reactStrictMode
   reactStrictMode: true,
 
   env: {
-    APP_NAME: appName,
-    APP_VERSION: appVersion,
+    APP_NAME: 'Kcm2Cale',
+    APP_VERSION: version,
   },
-});
+})

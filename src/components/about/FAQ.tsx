@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 export const FAQ: FC = () => {
   return (
@@ -20,5 +20,5 @@ export const FAQ: FC = () => {
         </p>
       </section>
     </section>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
-import { FC } from "react";
-import { APP_NAME, APP_VERSION } from "~/core/env";
-import { TextLink } from "../common/TextLink";
+import { Box } from '@mui/material'
+import { FC } from 'react'
+import { APP_NAME, APP_VERSION } from '~/core/env'
+import { TextLink } from '../common/TextLink'
 
 export const About: FC = () => {
   return (
@@ -14,16 +14,22 @@ export const About: FC = () => {
             newTab
           >
             <img
-            alt={`Release ${APP_VERSION}`}
+              alt={`Release ${APP_VERSION}`}
               src={`https://img.shields.io/badge/Release-v${APP_VERSION}-blue`}
             />
           </TextLink>
           <TextLink href="https://github.com/canoypa/kcm2cale" ext newTab>
-            <img  alt="アプリの GitHub リポジトリ" src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github" />
+            <img
+              alt="アプリの GitHub リポジトリ"
+              src="https://img.shields.io/badge/GitHub-canoypa/kcm2cale-blue?logo=github"
+            />
           </TextLink>
 
           <TextLink href="https://twitter.com/canoypa" ext newTab>
-            <img alt="開発者の Twitter" src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff" />
+            <img
+              alt="開発者の Twitter"
+              src="https://img.shields.io/badge/Twitter-@canoypa-blue?logo=twitter&logoColor=fff"
+            />
           </TextLink>
         </Box>
         <p>
@@ -61,5 +67,5 @@ export const About: FC = () => {
         </div>
       </section>
     </section>
-  );
-};
+  )
+}

@@ -1,18 +1,18 @@
-import { Add } from "@mui/icons-material";
-import { Box, Paper } from "@mui/material";
-import { FC } from "react";
-import { EmptyShip, Ship } from "../../../../models/ship";
-import { useStartSelectShip } from "../../hooks/select-ship";
+import { Add } from '@mui/icons-material'
+import { Box, Paper } from '@mui/material'
+import { FC } from 'react'
+import { EmptyShip, Ship } from '../../../../models/ship'
+import { useStartSelectShip } from '../../hooks/select-ship'
 
 type Props = {
-  fleetPlace: Ship | EmptyShip;
-};
+  fleetPlace: Ship | EmptyShip
+}
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const selectShip = useStartSelectShip();
+  const selectShip = useStartSelectShip()
 
   const swapShipHandler = () => {
-    selectShip(fleetPlace);
-  };
+    selectShip(fleetPlace)
+  }
 
   return (
     <Box my={0.5}>
@@ -23,7 +23,7 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
           justifyContent="center"
           height={64}
           color="text.secondary"
-          sx={{ cursor: "pointer" }}
+          sx={{ cursor: 'pointer' }}
           onClick={swapShipHandler}
           // ドラッグを防止
           role="button"
@@ -32,5 +32,5 @@ export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
         </Box>
       </Paper>
     </Box>
-  );
-};
+  )
+}

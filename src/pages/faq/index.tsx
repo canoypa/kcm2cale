@@ -1,10 +1,10 @@
-import { Container } from "@mui/material";
-import Head from "next/head";
-import { ExtendedNextPage } from "~/types/next-page";
-import { FAQ } from "../../components/about/FAQ";
-import { Header } from "../../components/about/Header";
-import { MarkdownStyle } from "../../components/about/MarkdownStyle";
-import { APP_NAME } from "../../core/env";
+import { Container } from '@mui/material'
+import Head from 'next/head'
+import { ExtendedNextPage } from '~/types/next-page'
+import { FAQ } from '../../components/about/FAQ'
+import { Header } from '../../components/about/Header'
+import { MarkdownStyle } from '../../components/about/MarkdownStyle'
+import { APP_NAME } from '../../core/env'
 
 const FaqPage: ExtendedNextPage = () => {
   return (
@@ -15,9 +15,9 @@ const FaqPage: ExtendedNextPage = () => {
 
       <FAQ />
     </>
-  );
-};
-export default FaqPage;
+  )
+}
+export default FaqPage
 
 FaqPage.getShearedLayout = (page) => {
   return (
@@ -27,5 +27,5 @@ FaqPage.getShearedLayout = (page) => {
         <MarkdownStyle>{page}</MarkdownStyle>
       </Container>
     </main>
-  );
-};
+  )
+}

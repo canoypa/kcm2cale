@@ -1,9 +1,9 @@
-import { Button, Typography } from "@mui/material";
-import Head from "next/head";
-import Link from "next/link";
-import { FC } from "react";
-import { Error, ErrorActions, ErrorContent } from "~/components/Error";
-import { APP_NAME } from "../../../core/env";
+import { Button, Typography } from '@mui/material'
+import Head from 'next/head'
+import Link from 'next/link'
+import { FC } from 'react'
+import { Error, ErrorActions, ErrorContent } from '~/components/Error'
+import { APP_NAME } from '../../../core/env'
 
 export const FleetError: FC = () => {
   return (
@@ -23,5 +23,5 @@ export const FleetError: FC = () => {
         </ErrorActions>
       </Error>
     </>
-  );
-};
+  )
+}

@@ -1,8 +1,8 @@
-import { Box, Button, Dialog, Divider } from "@mui/material";
-import Link from "next/link";
-import { FC } from "react";
-import { APP_NAME } from "../../../../core/env";
-import { UserIcon } from "../../user-icon";
+import { Box, Button, Dialog, Divider } from '@mui/material'
+import Link from 'next/link'
+import { FC } from 'react'
+import { APP_NAME } from '../../../../core/env'
+import { UserIcon } from '../../user-icon'
 
 const MainMenuHeader: FC = () => {
   return (
@@ -12,13 +12,13 @@ const MainMenuHeader: FC = () => {
         <span>サインインしていません</span>
       </Box>
     </div>
-  );
-};
+  )
+}
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+  open: boolean
+  onClose: () => void
+}
 export const MainMenuDialog: FC<Props> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
@@ -43,5 +43,5 @@ export const MainMenuDialog: FC<Props> = ({ open, onClose }) => {
         </Link>
       </Box>
     </Dialog>
-  );
-};
+  )
+}

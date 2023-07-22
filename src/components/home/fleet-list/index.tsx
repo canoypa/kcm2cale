@@ -1,23 +1,23 @@
-import { Box } from "@mui/material";
-import { ChangeEventHandler, FC, useState } from "react";
-import { LocalFleetDataV1 } from "~/core/persistence/types";
-import { searchFleet } from "../../../core/search/fleet";
-import { SearchBox } from "../../common/search-box";
-import { FleetCard } from "../fleet-card";
+import { Box } from '@mui/material'
+import { ChangeEventHandler, FC, useState } from 'react'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { searchFleet } from '../../../core/search/fleet'
+import { SearchBox } from '../../common/search-box'
+import { FleetCard } from '../fleet-card'
 
 type Props = {
-  fleetList: LocalFleetDataV1[];
+  fleetList: LocalFleetDataV1[]
 
-  refresh: () => void;
-};
+  refresh: () => void
+}
 export const FleetList: FC<Props> = ({ fleetList, refresh }) => {
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>('')
 
-  const searchedFleetList = searchFleet(fleetList, { q: query });
+  const searchedFleetList = searchFleet(fleetList, { q: query })
 
   const changeQuery: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setQuery(event.target.value);
-  };
+    setQuery(event.target.value)
+  }
 
   return (
     <div>
@@ -36,5 +36,5 @@ export const FleetList: FC<Props> = ({ fleetList, refresh }) => {
         ))}
       </Box>
     </div>
-  );
-};
+  )
+}

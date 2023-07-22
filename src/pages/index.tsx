@@ -1,10 +1,10 @@
-import { Box, Grid } from "@mui/material";
-import { NextPage } from "next";
-import Head from "next/head";
-import { MainAppBar } from "../components/common/main-app-bar";
-import { CreateNewFleet } from "../components/home/create-new-fleet";
-import { FleetListArea } from "../components/home/fleet-list-area";
-import { APP_NAME } from "../core/env";
+import { Box, Grid } from '@mui/material'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import { MainAppBar } from '../components/common/main-app-bar'
+import { CreateNewFleet } from '../components/home/create-new-fleet'
+import { FleetListArea } from '../components/home/fleet-list-area'
+import { APP_NAME } from '../core/env'
 
 const HomePage: NextPage = () => {
   return (
@@ -35,6 +35,6 @@ const HomePage: NextPage = () => {
         </Grid>
       </main>
     </>
-  );
-};
-export default HomePage;
+  )
+}
+export default HomePage
