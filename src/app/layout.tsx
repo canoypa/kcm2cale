@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { PropsWithChildren } from 'react'
-import { RecoilRoot } from 'recoil'
 import { APP_NAME } from '~/core/env'
+import { RecoilRoot } from '~/lib/recoil'
 import ThemeRegistry from './theme_registry'
 
 export const metadata: Metadata = {
