@@ -1,37 +1,36 @@
-import { Box } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import { FC, useContext } from "react";
-import { FleetShip } from "../../../../store/organize/ships";
-import { SwapShipContext } from "../fleet/contexts";
+import { Add } from '@mui/icons-material'
+import { Box, Paper } from '@mui/material'
+import { FC } from 'react'
+import { EmptyShip, Ship } from '../../../../models/ship'
+import { useStartSelectShip } from '../../hooks/select-ship'
 
 type Props = {
-  fleetPlace: FleetShip;
-};
+  fleetPlace: Ship | EmptyShip
+}
 export const ShipSkeleton: FC<Props> = ({ fleetPlace }) => {
-  const swapShip = useContext(SwapShipContext);
+  const selectShip = useStartSelectShip()
 
-  const swapShipHandler = () => swapShip(fleetPlace);
+  const swapShipHandler = () => {
+    selectShip(fleetPlace)
+  }
 
   return (
-    // role=button: ドラッグを防止
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      border={1}
-      borderColor="divider"
-      borderRadius={1}
-      margin="4px 0"
-      height="64px"
-      bgcolor="background.default"
-      color="text.secondary"
-      style={{
-        cursor: "pointer",
-      }}
-      role="button"
-      onClick={swapShipHandler}
-    >
-      <Add />
+    <Box my={0.5}>
+      <Paper variant="outlined">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={64}
+          color="text.secondary"
+          sx={{ cursor: 'pointer' }}
+          onClick={swapShipHandler}
+          // ドラッグを防止
+          role="button"
+        >
+          {<Add />}
+        </Box>
+      </Paper>
     </Box>
-  );
-};
+  )
+}

@@ -1,4 +1,39 @@
-import { EnumValues } from "../../util/types";
+import { EnumValues } from '../../util/types'
+import { Equip } from '../equip'
+
+export type FleetNo = number
+export type TurnNo = number
+export type ShipId = string
+
+/**
+ * 艦の配備位置
+ */
+export type FleetPlace = {
+  fleetNo: FleetNo
+  turnNo: TurnNo
+}
+
+/**
+ * 未配備位置の艦隊データ
+ */
+export type EmptyShip = FleetPlace & {
+  // id: null;
+  no: null
+}
+
+/**
+ * 配備済み位置の艦隊データ
+ */
+export type Ship = FleetPlace & {
+  // id: string;
+  no: string
+  equipments: Equip[]
+}
+
+/**
+ * 艦隊データ
+ */
+export type FleetShip = Ship | EmptyShip
 
 export const ShipType = {
   /** 戦艦 */
@@ -41,82 +76,11 @@ export const ShipType = {
   AmphibiousAssault: 18,
   /** 工作艦 */
   Repair: 19,
-} as const;
-export type ShipTypeValues = EnumValues<typeof ShipType>;
-
-export const ShipSpeed = {
-  FastA: 0,
-  FastB1: 1,
-  FastB2: 2,
-  FastC: 3,
-  SlowA: 4,
-  SlowB: 5,
-  SlowC: 6,
-} as const;
-export type ShipSpeedValues = EnumValues<typeof ShipSpeed>;
-
-export const ShipRange = { VeryLong: 0, Long: 1, Medium: 2, Short: 3 };
-export type ShipRangeValues = EnumValues<typeof ShipRange>;
-
-/**
- * 現在のステータス / 表示用のステータス
- * 計算結果で書き換えられる
- */
-export type CurrentShipStatus = {
-  level: number; // レベル
-
-  slotSize: number; // 装備スロット数
-
-  hp: number; // 耐久
-  power: number; // 火力
-  torpedo: number; // 雷装
-  aa: number; // 対空
-  asw: number; // 対潜
-
-  armor: number; // 装甲
-  evasion: number; // 回避
-  los: number; // 索敵
-  luck: number; // 運
-  aircraft: number[]; // 搭載数 slotに応じ
-
-  speed: ShipSpeedValues; // 速力
-  range: ShipRangeValues; // 射程
-
-  consumption: { fuel: number; ammo: number }; // 消費
-};
-
-type StatusRange = { min: number; max: number };
-
-/**
- * 不変ステータス
- * ステの変動範囲などを表す
- */
-export type ShipStatus = {
-  minLevel: number; // 最低レベル
-
-  slotSize: number; // 装備スロット数 増設を除く
-
-  hp: StatusRange; // 耐久 // 特殊改修により固定で +2 ただし上限まで
-
-  power: StatusRange; // 火力
-  torpedo: StatusRange; // 雷装
-  aa: StatusRange; // 対空
-  asw: StatusRange; // 対潜 特殊改修により固定で +9 ただし min:0 は改修不可？
-
-  armor: StatusRange; // 装甲
-  evasion: StatusRange; // 回避
-  los: StatusRange; // 索敵
-  luck: StatusRange; // 運
-  aircraft: number[]; // 搭載数 slotに応じ
-
-  speed: ShipSpeedValues; // 速力
-  range: ShipRangeValues; // 射程
-
-  consumption: { fuel: number; ammo: number }; // 消費
-};
+} as const
+export type ShipTypeValues = EnumValues<typeof ShipType>
 
 export type ShipData = {
-  no: string;
-  type: ShipTypeValues;
-  name: string;
-};
+  no: string
+  type: ShipTypeValues
+  name: string
+}

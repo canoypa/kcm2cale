@@ -1,13 +1,23 @@
-import { createMuiTheme, PaletteType } from "@material-ui/core";
-import { PALETTE_DARK, PALETTE_LIGHT } from "./palette";
+import { createTheme as createMuiTheme, PaletteMode } from '@mui/material'
+import { DarkPalette, LightPalette } from './palette'
 
-export const createTheme = (mode: PaletteType) =>
+export const createTheme = (mode: PaletteMode) =>
   createMuiTheme({
-    palette: mode === "dark" ? PALETTE_DARK : PALETTE_LIGHT,
+    palette: mode === 'dark' ? DarkPalette : LightPalette,
 
     typography: {
       button: {
-        textTransform: "none",
+        textTransform: 'none',
       },
     },
-  });
+
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          html: {
+            WebkitTapHighlightColor: 'transparent',
+          },
+        },
+      },
+    },
+  })

@@ -1,16 +1,20 @@
-import { OutlinedInput, OutlinedInputProps } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
-import { VFC } from "react";
-import { useStyles } from "./styles";
+import { InputAdornment, TextField, TextFieldProps } from '@mui/material'
+import { Search } from '@mui/icons-material'
+import { VFC } from 'react'
 
-type Props = OutlinedInputProps;
+type Props = TextFieldProps
 export const SearchBox: VFC<Props> = ({ ...props }) => {
-  const classes = useStyles();
   return (
-    <OutlinedInput
-      startAdornment={<Search />}
-      classes={{ input: classes.input }}
+    <TextField
+      variant="outlined"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <Search />
+          </InputAdornment>
+        ),
+      }}
       {...props}
     />
-  );
-};
+  )
+}

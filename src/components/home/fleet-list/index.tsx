@@ -1,71 +1,40 @@
-import { Box, CircularProgress, Grid } from "@material-ui/core";
-import { ChangeEventHandler, createContext, FC, Suspense, useRef } from "react";
-import {
-  useFleetList,
-  useRefreshFleetList,
-  useSearchFleetQuery,
-} from "../../../core/search/fleet";
-import { SearchBox } from "../../common/search-box";
-import { FleetCard } from "../fleet-card";
-import { useStyles } from "./styles";
+import { Box } from '@mui/material'
+import { ChangeEventHandler, FC, useState } from 'react'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { searchFleet } from '../../../core/search/fleet'
+import { SearchBox } from '../../common/search-box'
+import { FleetCard } from '../fleet-card'
 
-export const FleetListContext = createContext({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  reloadFleet: () => {},
-});
+type Props = {
+  fleetList: LocalFleetDataV1[]
 
-export const FleetListView: FC = () => {
-  const fleetList = useFleetList();
-  const reloadFleet = useRefreshFleetList();
+  refresh: () => void
+}
+export const FleetList: FC<Props> = ({ fleetList, refresh }) => {
+  const [query, setQuery] = useState<string>('')
 
-  // 編成削除時のリロード用 context value
-  const contextValue = useRef({ reloadFleet });
-
-  return (
-    <FleetListContext.Provider value={contextValue.current}>
-      <Box display="grid" gridRowGap={16}>
-        {fleetList.map((v) => (
-          <FleetCard key={v.id} fleetData={v} />
-        ))}
-      </Box>
-    </FleetListContext.Provider>
-  );
-};
-
-export const FleetList: FC = () => {
-  const [query, setQuery] = useSearchFleetQuery();
-
-  const classes = useStyles();
+  const searchedFleetList = searchFleet(fleetList, { q: query })
 
   const changeQuery: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setQuery(event.target.value);
-  };
+    setQuery(event.target.value)
+  }
 
   return (
     <div>
-      <div className={classes.searchBoxArea}>
+      <Box mb={2}>
         <SearchBox
           fullWidth
           placeholder="編成を検索"
           value={query}
           onChange={changeQuery}
         />
-      </div>
+      </Box>
 
-      <Suspense
-        fallback={
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            style={{ height: "100%" }}
-          >
-            <CircularProgress size={24} />
-          </Grid>
-        }
-      >
-        <FleetListView />
-      </Suspense>
+      <Box display="grid" rowGap={2}>
+        {searchedFleetList.map((v) => (
+          <FleetCard key={v.id} fleetData={v} refresh={refresh} />
+        ))}
+      </Box>
     </div>
-  );
-};
+  )
+}

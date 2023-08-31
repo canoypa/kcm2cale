@@ -1,46 +1,9 @@
-import { atom } from "recoil";
+import { atom } from 'recoil'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
 
-export const FleetType = {
-  Normal: "Normal",
-  Carrier: "Carrier",
-  Surface: "Surface",
-  Transport: "Transport",
-  StrikingForce: "StrikingForce",
-} as const;
-export type FleetType = typeof FleetType[keyof typeof FleetType];
+export const FleetState = atom<LocalFleetDataV1 | null>({
+  key: '_fleet',
+  default: null,
 
-type ActiveFleetNoState = number;
-export const ActiveFleetNoState = atom<ActiveFleetNoState>({
-  key: "ActiveFleetNo",
-  default: 0,
-});
-
-export type FleetIdState = string;
-export const FleetIdState = atom<FleetIdState>({
-  key: "FleetId",
-  default: "",
-});
-
-export type FleetNameState = string;
-export const FleetNameState = atom<FleetNameState>({
-  key: "FleetName",
-  default: "",
-});
-
-export type FleetDescriptionState = string;
-export const FleetDescriptionState = atom<FleetNameState>({
-  key: "FleetDescription",
-  default: "",
-});
-
-export type FleetTypeState = FleetType;
-export const FleetTypeState = atom<FleetTypeState>({
-  key: "FleetType",
-  default: FleetType.Normal,
-});
-
-export type IsNewFleetState = boolean;
-export const IsNewFleetState = atom<IsNewFleetState>({
-  key: "IsNewFleetState",
-  default: true,
-});
+  dangerouslyAllowMutability: true, // FIXME
+})

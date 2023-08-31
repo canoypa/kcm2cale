@@ -1,30 +1,38 @@
-import { FC, useContext } from "react";
-import { DeployedFleetShip } from "../../../../../store/organize/ships";
-import { SwapShipContext } from "../../fleet/contexts";
-import { useShip } from "../hook";
-import { useStyles } from "./styles";
+import { Box } from '@mui/material'
+import { FC } from 'react'
+import { useStartSelectShip } from '~/components/fleet/hooks/select-ship'
+import { ShipsData } from '../../../../../data/ship'
+import { Ship } from '../../../../../models/ship'
 
-const DUMMY_LEVEL = 99;
+const DUMMY_LEVEL = 99
 
 type Props = {
-  fleetPlace: DeployedFleetShip;
-};
+  fleetPlace: Ship
+}
 export const ShipContent: FC<Props> = ({ fleetPlace }) => {
-  const swapShip = useContext(SwapShipContext);
-  const ship = useShip(fleetPlace);
+  const selectShip = useStartSelectShip()
 
-  const classes = useStyles();
+  const ship = ShipsData.find((v) => v.no === fleetPlace.no)
+  if (!ship) throw new Error('Error')
 
-  const swapShipHandler = () => swapShip(fleetPlace);
+  const swapShipHandler = () => {
+    selectShip(fleetPlace)
+  }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.actions}>
-        <div className={classes.name} onClick={swapShipHandler}>
-          {ship.name || "変更"}
-        </div>
-        <div className={classes.level}>{`${DUMMY_LEVEL} Lv`}</div>
-      </div>
-    </div>
-  );
-};
+    <Box display="flex" alignItems="center">
+      <Box
+        onClick={swapShipHandler}
+        maxWidth="8em"
+        mr={2}
+        sx={{
+          fontSize: { xs: '1em', sm: '1.25em' },
+          cursor: 'pointer',
+        }}
+      >
+        {ship.name || '変更'}
+      </Box>
+      <div>{`${DUMMY_LEVEL} Lv`}</div>
+    </Box>
+  )
+}

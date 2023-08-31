@@ -1,5 +1,5 @@
-import { ShipType, ShipTypeValues } from "../../../models/ship";
-import { EnumValues } from "../../../util/types";
+import { ShipType, ShipTypeValues } from '../../../models/ship'
+import { EnumValues } from '../../../util/types'
 
 export const ShipSearchGroup = {
   /** 戦艦 */
@@ -28,8 +28,8 @@ export const ShipSearchGroup = {
 
   /** その他 */
   Auxiliary: 8,
-} as const;
-export type ShipSearchGroupValues = EnumValues<typeof ShipSearchGroup>;
+} as const
+export type ShipSearchGroupValues = EnumValues<typeof ShipSearchGroup>
 
 export const ShipSearchGroupMap: Record<
   ShipSearchGroupValues,
@@ -74,4 +74,4 @@ export const ShipSearchGroupMap: Record<
     ShipType.AmphibiousAssault,
     ShipType.Repair,
   ],
-};
+}

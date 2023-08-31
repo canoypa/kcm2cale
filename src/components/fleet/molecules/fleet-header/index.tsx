@@ -1,16 +1,39 @@
-import { Box } from "@material-ui/core";
-import { FC, useState } from "react";
-import { Editing } from "./editing";
-import { Info } from "./info";
-import { Actions } from "./status-bar";
+import { Box, Skeleton, Typography } from '@mui/material'
+import { FC, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { FleetState } from '~/store/organize/info'
+import { Editing } from './editing'
+import { Info } from './info'
+import { Actions } from './status-bar'
+
+const FleetHeaderSkeleton: FC = () => {
+  return (
+    <Box display="flex" flexDirection="column" padding={2}>
+      <Typography variant="h4" paragraph>
+        <Skeleton variant="rectangular" />
+      </Typography>
+      <Typography variant="body1" paragraph>
+        <Skeleton variant="rectangular" />
+      </Typography>
+      <Typography variant="body1" color="textSecondary">
+        <Skeleton variant="rectangular" width={128} />
+      </Typography>
+      <Box display="flex" justifyContent="flex-end">
+        <Skeleton variant="circular" width={48} height={48} />
+      </Box>
+    </Box>
+  )
+}
 
 export const FleetHeader: FC = () => {
-  const [isEditing, setIsEditing] = useState(false);
+  const fleet = useRecoilValue(FleetState)
 
-  const startEdit = () => setIsEditing(true);
-  const endEdit = () => setIsEditing(false);
+  const [isEditing, setIsEditing] = useState(false)
 
-  return (
+  const startEdit = () => setIsEditing(true)
+  const endEdit = () => setIsEditing(false)
+
+  return fleet ? (
     <>
       <Box padding={2}>
         <Info />
@@ -19,5 +42,7 @@ export const FleetHeader: FC = () => {
 
       <Editing open={isEditing} onEnd={endEdit} />
     </>
-  );
-};
+  ) : (
+    <FleetHeaderSkeleton />
+  )
+}

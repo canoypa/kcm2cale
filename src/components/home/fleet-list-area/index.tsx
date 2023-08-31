@@ -1,52 +1,69 @@
-import { CircularProgress, Container, Grid as Box } from "@material-ui/core";
-import { FC, Suspense } from "react";
-import {
-  useIsExistFleet,
-  useRefreshFleetList,
-} from "../../../core/search/fleet";
-import { useDidMount } from "../../../util/hooks/lifecycle";
-import { EmptyState } from "../empty-state";
-import { FleetList } from "../fleet-list";
-import { useStyles } from "./styles";
+import { Box, CircularProgress, Container } from '@mui/material'
+import { FC, useEffect, useState } from 'react'
+import { LocalDatabase } from '~/core/persistence/local-database'
+import { LocalFleetDataV1 } from '~/core/persistence/types'
+import { EmptyState } from '../empty-state'
+import { FleetList } from '../fleet-list'
+
+/**
+ * 保存されている編成が存在するか
+ */
+const checkExistFleetList = (fleets: LocalFleetDataV1[]) => {
+  return fleets.length !== 0
+}
 
 export const FleetListArea: FC = () => {
-  const isExistFleetList = useIsExistFleet();
-  const refreshFleet = useRefreshFleetList();
+  const [_refresh, _setRefresh] = useState(0)
+  const [fleetList, setFleetList] = useState<LocalFleetDataV1[] | null>(null)
 
-  const classes = useStyles();
+  useEffect(() => {
+    LocalDatabase.getAllFleet().then((v) => {
+      setFleetList(v)
+    })
+  }, [_refresh])
 
-  // 初回リフレッシュ
-  useDidMount(() => {
-    refreshFleet();
-  });
+  const refresh = () => {
+    _setRefresh(_refresh + 1)
+  }
+
+  if (!fleetList) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+      >
+        <CircularProgress size={24} />
+      </Box>
+    )
+  }
+
+  // 保存されている編成が存在するか
+  const isExistFleetList = checkExistFleetList(fleetList)
 
   return (
-    <Suspense
-      fallback={
-        <Box
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: "100%" }}
-        >
-          <CircularProgress size={24} />
-        </Box>
-      }
-    >
-      <Container maxWidth="md" className={classes.root}>
+    <Container maxWidth="md" sx={{ height: '100%' }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        paddingTop={3}
+        paddingBottom={3}
+        height="100%"
+      >
         {isExistFleetList ? (
-          <FleetList />
+          <FleetList fleetList={fleetList} refresh={refresh} />
         ) : (
           <Box
-            container
-            justify="center"
+            display="flex"
+            justifyContent="center"
             alignItems="center"
-            style={{ height: "100%" }}
+            height="100%"
           >
             <EmptyState />
           </Box>
         )}
-      </Container>
-    </Suspense>
-  );
-};
+      </Box>
+    </Container>
+  )
+}

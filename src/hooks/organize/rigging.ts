@@ -1,45 +1,41 @@
-import { selectorFamily, useRecoilValue } from "recoil";
-import {
-  EquipmentId,
-  RiggingState,
-  SlotNo,
-} from "../../store/organize/equipments";
-import { DeployedFleetShip, ShipId } from "../../store/organize/ships";
+import { useRecoilValue } from 'recoil'
+import { FleetState } from '~/store/organize/info'
+import { Equip, RiggingPlace } from '../../models/equip'
+import { FleetPlace, Ship } from '../../models/ship'
 
-const DUMMY_SLOT_SIZE = 4;
-
-const slotSizeSelector = selectorFamily({
-  key: "ShipSlotSize",
-  get: (_fleetPlace: DeployedFleetShip) => () => DUMMY_SLOT_SIZE,
-  // get(ShipsState).get(fleetPlace)?.status.slotSize,
-});
+const DUMMY_SLOT_SIZE = 4
 
 type Rigging = {
-  shipEquipments: Array<{
-    shipId: ShipId;
-    slotNo: SlotNo;
-    equipmentId: EquipmentId;
-  }>;
-  isCanAddNewEquipment: boolean;
-  newEquipmentSlotNo: number;
-};
-export const useRigging = (fleetPlace: DeployedFleetShip): Rigging => {
-  const shipSlotSize = useRecoilValue(slotSizeSelector(fleetPlace));
-  if (!shipSlotSize) throw new Error("Error: ship status が取得できない");
+  shipEquips: Equip[]
+  isCanAddNewEquip: boolean
+  newEquipPlace: FleetPlace & RiggingPlace
+}
+export const useRigging = (fleetPlace: Ship): Rigging => {
+  const shipSlotSize = DUMMY_SLOT_SIZE
+  if (!shipSlotSize) throw new Error('Error: ship status が取得できない')
 
-  const shipEquipmentsState = useRecoilValue(RiggingState);
-  const shipEquipments = shipEquipmentsState
-    .filter((v) => v.shipId === fleetPlace.shipId)
-    .sort((a, b) => a.slotNo - b.slotNo);
+  const fleet = useRecoilValue(FleetState)
 
-  const equippedLength = shipEquipments.length;
+  const ship = fleet?.ships.find(
+    (v) => v.fleetNo === fleetPlace.fleetNo && v.turnNo === fleetPlace.turnNo,
+  )
+  if (!ship) throw new Error('対象の艦船が存在しない')
 
-  const isCanAddNewEquipment = shipSlotSize > equippedLength;
-  const newEquipmentSlotNo = equippedLength;
+  const shipEquips = ship.equipments.sort((a, b) => a.slotNo - b.slotNo)
+
+  const equippedLength = shipEquips.length
+
+  const isCanAddNewEquip = shipSlotSize > equippedLength
+  const newEqSlotNo = equippedLength
+
+  const newEquipPlace: FleetPlace & RiggingPlace = {
+    ...fleetPlace,
+    slotNo: newEqSlotNo,
+  }
 
   return {
-    shipEquipments,
-    isCanAddNewEquipment,
-    newEquipmentSlotNo,
-  };
-};
+    shipEquips: shipEquips,
+    isCanAddNewEquip: isCanAddNewEquip,
+    newEquipPlace: newEquipPlace,
+  }
+}

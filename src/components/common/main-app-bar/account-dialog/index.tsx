@@ -1,62 +1,47 @@
-import { Box, Button, Dialog, Divider } from "@material-ui/core";
-import firebase from "firebase/app";
-import { FC } from "react";
-import { useHistory, useLocation } from "react-router";
-import { Link } from "react-router-dom";
-import { firebaseAuth } from "../../../../core/firebase/auth";
-import { UserIcon } from "../../user-icon";
-import { useStyles } from "./styles";
+import { Box, Button, Dialog, Divider } from '@mui/material'
+import Link from 'next/link'
+import { FC } from 'react'
+import { APP_NAME } from '../../../../core/env'
+import { UserIcon } from '../../user-icon'
 
-type AccountHeaderProps = {
-  user: firebase.User | null;
-  onClose: () => void;
-};
-const AccountHeader: FC<AccountHeaderProps> = ({ user, onClose }) => {
-  const { push } = useHistory();
-  const { pathname } = useLocation();
-
-  const classes = useStyles();
-
-  const _singIn = () => {
-    push("/sign-in", { continue: pathname });
-  };
-  const _signOut = async () => {
-    await firebaseAuth().signOut();
-    onClose();
-  };
-
+const MainMenuHeader: FC = () => {
   return (
-    <>
-      <div className={classes.accountHeader}>
-        <UserIcon user={user} />
+    <div>
+      <Box display="flex" alignItems="center" columnGap={2}>
+        <UserIcon />
         <span>サインインしていません</span>
-      </div>
-      {/* <div className={styles.promoteSignIn}>
-        <Button type="outline" label="サインイン" onClick={singIn} />
-      </div> */}
-    </>
-  );
-};
+      </Box>
+    </div>
+  )
+}
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
-};
-export const AccountDialog: FC<Props> = ({ open, onClose }) => {
-  // const userLoadable = useUser();
-  const classes = useStyles();
-
+  open: boolean
+  onClose: () => void
+}
+export const MainMenuDialog: FC<Props> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <Box padding={2}>
-        <AccountHeader user={null} onClose={onClose} />
+        <MainMenuHeader />
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
-        <Link to="/about" className={classes.link}>
-          <Button size="small">{__APP_NAME__} について</Button>
+        <Link href="/about" passHref>
+          <Button size="small">
+            <Box component="span" color="text.secondary">
+              {APP_NAME} について
+            </Box>
+          </Button>
+        </Link>
+        <Link href="/privacy-and-terms" passHref>
+          <Button size="small">
+            <Box component="span" color="text.secondary">
+              プライバシーと規約
+            </Box>
+          </Button>
         </Link>
       </Box>
     </Dialog>
-  );
-};
+  )
+}

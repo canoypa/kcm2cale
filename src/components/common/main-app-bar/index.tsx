@@ -1,21 +1,17 @@
-import { AppBar, Toolbar, useScrollTrigger } from "@material-ui/core";
-import { FC, useState } from "react";
-import { UserIconButton } from "../user-icon";
-import { AccountDialog } from "./account-dialog";
+import { AppBar, Box, Toolbar, useScrollTrigger } from '@mui/material'
+import { FC, useState } from 'react'
+import { UserIconButton } from '../user-icon'
+import { MainMenuDialog } from './account-dialog'
 
 export const MainAppBar: FC = () => {
-  // const userLoadable = useUser();
-
   const elevateTrigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
-  });
+  })
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const openDialog = () => setIsDialogOpen(true);
-  const closeDialog = () => setIsDialogOpen(false);
-
-  // const user = userLoadable.state === "hasValue" ? userLoadable.contents : null;
+  const [isMainMenuOpen, setMainMenuOpen] = useState(false)
+  const openMainMenu = () => setMainMenuOpen(true)
+  const closeMainMenu = () => setMainMenuOpen(false)
 
   return (
     <>
@@ -25,17 +21,16 @@ export const MainAppBar: FC = () => {
         elevation={elevateTrigger ? 4 : 0}
       >
         <Toolbar>
-          <div style={{ flexGrow: 1 }}></div>
+          <Box flexGrow={1} />
           <UserIconButton
             edge="end"
-            user={null}
-            onClick={openDialog}
+            onClick={openMainMenu}
             aria-label="アカウントメニュー"
           />
         </Toolbar>
       </AppBar>
 
-      <AccountDialog open={isDialogOpen} onClose={closeDialog} />
+      <MainMenuDialog open={isMainMenuOpen} onClose={closeMainMenu} />
     </>
-  );
-};
+  )
+}

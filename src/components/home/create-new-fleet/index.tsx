@@ -1,21 +1,23 @@
-import { Fab, Grid } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import { FC } from "react";
-import { useHistory } from "react-router";
-import { useStyles } from "./styles";
+import { Box, Fab } from '@mui/material'
+import { Add } from '@mui/icons-material'
+import Link from 'next/link'
+import { FC } from 'react'
 
 export const CreateNewFleet: FC = () => {
-  const { push } = useHistory();
-  const classes = useStyles();
-
-  const linkToFleet = () => push("/new");
-
   return (
-    <Grid container justify="center" className={classes.container}>
-      <Fab variant="extended" color="primary" onClick={linkToFleet}>
-        <Add className={classes.extendedIcon} />
-        編成を作成
-      </Fab>
-    </Grid>
-  );
-};
+    <Box
+      position="sticky"
+      bottom={0}
+      display="flex"
+      justifyContent={{ xs: 'center', lg: 'flex-end' }}
+      padding={{ xs: 2, sm: 3 }}
+    >
+      <Link href="/new" passHref>
+        <Fab variant="extended" color="primary">
+          <Add sx={{ mr: 1 }} />
+          編成を作成
+        </Fab>
+      </Link>
+    </Box>
+  )
+}

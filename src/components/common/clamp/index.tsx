@@ -1,20 +1,30 @@
-import { VFC } from "react";
-import { useCharClampStyles, useLineClampStyles } from "./styles";
+import { styled } from '@mui/material'
+import { FC } from 'react'
 
-type LineClampProps = {
-  count: number;
-  children: string;
-};
-export const LineClamp: VFC<LineClampProps> = ({ count, children }) => {
-  const classes = useLineClampStyles({ count });
-  return <span className={classes.root}>{children}</span>;
-};
+type Props = {
+  count: number
+  children: string
+}
 
-type CharClampProps = {
-  count: number;
-  children: string;
-};
-export const CharClamp: VFC<CharClampProps> = ({ count, children }) => {
-  const classes = useCharClampStyles({ count });
-  return <span className={classes.root}>{children}</span>;
-};
+export const LineClamp = styled<FC<Props>>((props) => <span {...props} />)(
+  ({ count }) => ({
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+
+    WebkitLineClamp: count,
+  }),
+)
+
+export const CharClamp = styled<FC<Props>>((props) => <span {...props} />)(
+  ({ count }) => ({
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+
+    maxWidth: `${count}em`,
+  }),
+)
