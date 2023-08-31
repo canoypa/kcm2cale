@@ -9,6 +9,8 @@ module.exports = withBundleAnalyzer({
   // https://nextjs.org/docs/pages/api-reference/next-config-js/reactStrictMode
   reactStrictMode: true,
 
+  output: 'export',
+
   env: {
     APP_NAME: 'Kcm2Cale',
     APP_VERSION: version,
