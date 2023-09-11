@@ -1,6 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { ExportFleetDialog } from '~/components/export/fleet_export_dialog'
 import { MainAppBar } from '../components/common/main-app-bar'
 import { CreateNewFleet } from '../components/home/create-new-fleet'
 import { FleetListArea } from '../components/home/fleet-list-area'
@@ -32,6 +33,8 @@ const HomePage: NextPage = () => {
             <FleetListArea />
           </Box>
           <CreateNewFleet />
+
+          <ExportFleetDialog />
         </Grid>
       </main>
     </>
