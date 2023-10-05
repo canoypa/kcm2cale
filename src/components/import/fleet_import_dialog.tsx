@@ -39,8 +39,6 @@ export const ImportFleetDialog: FC = () => {
       setHasError(false)
       onClose()
     } else {
-      console.log(parseResult.error)
-
       setHasError(true)
     }
   }
