@@ -2,13 +2,12 @@ import { array, coerce, literal, number, object, string, union } from 'zod'
 
 export const FleetSchema = object({
   version: literal(1),
-  id: string().length(16),
   type: union([
-    literal('normal'),
-    literal('carrier'),
-    literal('surface'),
-    literal('transport'),
-    literal('striking'),
+    literal('Normal'),
+    literal('Carrier'),
+    literal('Surface'),
+    literal('Transport'),
+    literal('StrikingForce'),
   ]),
   title: string(),
   description: string(),
