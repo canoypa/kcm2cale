@@ -1,6 +1,6 @@
 import { array, coerce, literal, number, object, string, union } from 'zod'
 
-export const FleetSchema = object({
+export const ExportedFleetSchema = object({
   version: literal(1),
   type: union([
     literal('Normal'),
