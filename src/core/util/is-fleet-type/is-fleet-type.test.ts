@@ -10,5 +10,5 @@ test('isFleetType', () => {
 
   expect(isFleetType('')).toBe(false)
   expect(isFleetType('NORMAL')).toBe(false)
-  expect(isFleetType('Normal')).toBe(false)
+  expect(isFleetType('normal')).toBe(false)
 })
