@@ -1,12 +1,5 @@
 import { FileDownloadOutlined, FileUploadOutlined } from '@mui/icons-material'
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  Tooltip,
-  useScrollTrigger,
-} from '@mui/material'
+import { AppBar, Box, Button, Toolbar, useScrollTrigger } from '@mui/material'
 import { FC, useState } from 'react'
 import { useExportFleet } from '~/components/export/hooks'
 import { useImportFleet } from '~/components/import/hooks'
@@ -26,6 +19,10 @@ export const MainAppBar: FC = () => {
   const requestExportFleet = useExportFleet()
   const requestImportFleet = useImportFleet()
 
+  const isNewSite =
+    typeof window !== 'undefined' &&
+    window.location.hostname === 'kcm2cale.tepbyte.dev'
+
   return (
     <>
       <AppBar
@@ -37,25 +34,27 @@ export const MainAppBar: FC = () => {
           <Box flexGrow={1} />
 
           <Box display="flex" columnGap={1}>
-            <Button
-              startIcon={<FileUploadOutlined />}
-              onClick={() => requestImportFleet()}
-            >
-              編成をインポート
-            </Button>
+            {isNewSite ? (
+              <Button
+                startIcon={<FileUploadOutlined />}
+                onClick={() => requestImportFleet()}
+              >
+                編成をインポート
+              </Button>
+            ) : (
+              <Button
+                startIcon={<FileDownloadOutlined />}
+                onClick={() => requestExportFleet({ mode: 'all' })}
+              >
+                編成をエクスポート
+              </Button>
+            )}
 
-            <Button
-              startIcon={<FileDownloadOutlined />}
-              onClick={() => requestExportFleet({ mode: 'all' })}
-            >
-              編成をエクスポート
-            </Button>
-
-          <UserIconButton
-            edge="end"
-            onClick={openMainMenu}
-            aria-label="アカウントメニュー"
-          />
+            <UserIconButton
+              edge="end"
+              onClick={openMainMenu}
+              aria-label="アカウントメニュー"
+            />
           </Box>
         </Toolbar>
       </AppBar>
