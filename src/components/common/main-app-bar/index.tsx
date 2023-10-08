@@ -35,21 +35,28 @@ export const MainAppBar: FC = () => {
       >
         <Toolbar>
           <Box flexGrow={1} />
-          <Tooltip title="編成をインポート">
-            <IconButton onClick={() => requestImportFleet()}>
-              <FileUploadOutlined />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="編成をエクスポート">
-            <IconButton onClick={() => requestExportFleet({ mode: 'all' })}>
-              <FileDownloadOutlined />
-            </IconButton>
-          </Tooltip>
+
+          <Box display="flex" columnGap={1}>
+            <Button
+              startIcon={<FileUploadOutlined />}
+              onClick={() => requestImportFleet()}
+            >
+              編成をインポート
+            </Button>
+
+            <Button
+              startIcon={<FileDownloadOutlined />}
+              onClick={() => requestExportFleet({ mode: 'all' })}
+            >
+              編成をエクスポート
+            </Button>
+
           <UserIconButton
             edge="end"
             onClick={openMainMenu}
             aria-label="アカウントメニュー"
           />
+          </Box>
         </Toolbar>
       </AppBar>
 
