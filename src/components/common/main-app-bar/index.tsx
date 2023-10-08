@@ -1,6 +1,7 @@
 import { FileDownloadOutlined, FileUploadOutlined } from '@mui/icons-material'
 import { AppBar, Box, Button, Toolbar, useScrollTrigger } from '@mui/material'
 import { FC, useState } from 'react'
+import { useEffectOnce } from 'react-use'
 import { useExportFleet } from '~/components/export/hooks'
 import { useImportFleet } from '~/components/import/hooks'
 import { UserIconButton } from '../user-icon'
@@ -19,9 +20,10 @@ export const MainAppBar: FC = () => {
   const requestExportFleet = useExportFleet()
   const requestImportFleet = useImportFleet()
 
-  const isNewSite =
-    typeof window !== 'undefined' &&
-    window.location.hostname === 'kcm2cale.tepbyte.dev'
+  const [isNewSite, setIsNewSite] = useState(true)
+  useEffectOnce(() => {
+    setIsNewSite(window.location.hostname === 'kcm2cale.tepbyte.dev')
+  })
 
   return (
     <>

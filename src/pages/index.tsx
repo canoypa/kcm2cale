@@ -1,6 +1,8 @@
 import { Alert, AlertTitle, Box, Container, Grid } from '@mui/material'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
+import { useEffectOnce } from 'react-use'
 import { TextLink } from '~/components/common/TextLink'
 import { ExportFleetDialog } from '~/components/export/fleet_export_dialog'
 import { ImportFleetDialog } from '~/components/import/fleet_import_dialog'
@@ -10,9 +12,10 @@ import { FleetListArea } from '../components/home/fleet-list-area'
 import { APP_NAME } from '../core/env'
 
 const HomePage: NextPage = () => {
-  const isOldSite =
-    typeof window !== 'undefined' &&
-    window.location.hostname !== 'kcm2cale.tepbyte.dev'
+  const [isOldSite, setIsOldSite] = useState(false)
+  useEffectOnce(() => {
+    setIsOldSite(window.location.hostname !== 'kcm2cale.tepbyte.dev')
+  })
 
   return (
     <>
