@@ -43,13 +43,13 @@ const HomePage: NextPage = () => {
               <Container maxWidth="md">
                 <Alert severity="warning" variant="outlined">
                   <AlertTitle>
-                    このサイトは{' '}
+                    このアプリは{' '}
                     <TextLink ext href="https://kcm2cale.tepbyte.dev">
                       kcm2cale.tepbyte.dev
                     </TextLink>{' '}
-                    に移転しました。
+                    に移転されます。
                   </AlertTitle>
-                  右上のメニューから編成のエクスポート/インポートを行い、新しいサイトをご利用ください。
+                  今後は新しいサイトをご利用ください。このサイトで保存された編成は、右上のメニューからエクスポート/インポート出来ます。
                 </Alert>
               </Container>
             )}
