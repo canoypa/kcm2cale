@@ -20,9 +20,9 @@ export const MainAppBar: FC = () => {
   const requestExportFleet = useExportFleet()
   const requestImportFleet = useImportFleet()
 
-  const [isNewSite, setIsNewSite] = useState(true)
+  const [isOldSite, setIsOldSite] = useState(false)
   useEffectOnce(() => {
-    setIsNewSite(window.location.hostname === 'kcm2cale.tepbyte.dev')
+    setIsOldSite(window.location.hostname !== 'kcm2cale.tepbyte.dev')
   })
 
   return (
@@ -36,19 +36,19 @@ export const MainAppBar: FC = () => {
           <Box flexGrow={1} />
 
           <Box display="flex" columnGap={1}>
-            {isNewSite ? (
-              <Button
-                startIcon={<FileUploadOutlined />}
-                onClick={() => requestImportFleet()}
-              >
-                編成をインポート
-              </Button>
-            ) : (
+            {isOldSite ? (
               <Button
                 startIcon={<FileDownloadOutlined />}
                 onClick={() => requestExportFleet({ mode: 'all' })}
               >
                 編成をエクスポート
+              </Button>
+            ) : (
+              <Button
+                startIcon={<FileUploadOutlined />}
+                onClick={() => requestImportFleet()}
+              >
+                編成をインポート
               </Button>
             )}
 
