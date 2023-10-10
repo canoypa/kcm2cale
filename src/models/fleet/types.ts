@@ -1,8 +1,8 @@
 export const FleetType = {
-  Normal: 'normal',
-  Carrier: 'carrier',
-  Surface: 'surface',
-  Transport: 'transport',
-  Striking: 'striking',
+  Normal: 'Normal',
+  Carrier: 'Carrier',
+  Surface: 'Surface',
+  Transport: 'Transport',
+  Striking: 'StrikingForce',
 } as const
 export type FleetType = (typeof FleetType)[keyof typeof FleetType]

@@ -1,5 +1,9 @@
-import { AppBar, Box, Toolbar, useScrollTrigger } from '@mui/material'
+import { FileDownloadOutlined, FileUploadOutlined } from '@mui/icons-material'
+import { AppBar, Box, Button, Toolbar, useScrollTrigger } from '@mui/material'
 import { FC, useState } from 'react'
+import { useEffectOnce } from 'react-use'
+import { useExportFleet } from '~/components/export/hooks'
+import { useImportFleet } from '~/components/import/hooks'
 import { UserIconButton } from '../user-icon'
 import { MainMenuDialog } from './account-dialog'
 
@@ -13,6 +17,14 @@ export const MainAppBar: FC = () => {
   const openMainMenu = () => setMainMenuOpen(true)
   const closeMainMenu = () => setMainMenuOpen(false)
 
+  const requestExportFleet = useExportFleet()
+  const requestImportFleet = useImportFleet()
+
+  const [isOldSite, setIsOldSite] = useState(false)
+  useEffectOnce(() => {
+    setIsOldSite(window.location.hostname !== 'kcm2cale.tepbyte.dev')
+  })
+
   return (
     <>
       <AppBar
@@ -22,11 +34,30 @@ export const MainAppBar: FC = () => {
       >
         <Toolbar>
           <Box flexGrow={1} />
-          <UserIconButton
-            edge="end"
-            onClick={openMainMenu}
-            aria-label="アカウントメニュー"
-          />
+
+          <Box display="flex" columnGap={1}>
+            {isOldSite ? (
+              <Button
+                startIcon={<FileDownloadOutlined />}
+                onClick={() => requestExportFleet({ mode: 'all' })}
+              >
+                編成をエクスポート
+              </Button>
+            ) : (
+              <Button
+                startIcon={<FileUploadOutlined />}
+                onClick={() => requestImportFleet()}
+              >
+                編成をインポート
+              </Button>
+            )}
+
+            <UserIconButton
+              edge="end"
+              onClick={openMainMenu}
+              aria-label="アカウントメニュー"
+            />
+          </Box>
         </Toolbar>
       </AppBar>
 
