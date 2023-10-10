@@ -33,7 +33,7 @@
     "react-window": "^1.8.9",
     "recoil": "^0.7.7",
     "swr": "^2.2.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.10",
