@@ -1,29 +1,6 @@
 import type * as zod from 'zod'
-import {
-  NEVER,
-  any,
-  array,
-  coerce,
-  literal,
-  number,
-  object,
-  string,
-  union,
-} from 'zod'
-
-// util
-const coerceJson = union([
-  // 文字列なら json としてパースする
-  string().transform((str, ctx) => {
-    try {
-      return JSON.parse(str)
-    } catch (e) {
-      ctx.addIssue({ code: 'custom', message: 'Invalid JSON' })
-      return NEVER
-    }
-  }),
-  any(),
-])
+import { array, coerce, literal, number, object, string, union } from 'zod'
+import { coerceJson } from '~/util/zod'
 
 export const FleetSchema = object({
   id: string().length(16),

@@ -1,4 +1,6 @@
 import { createInstance } from 'localforage'
+import { coerceJson } from '~/util/zod'
+import { FleetSchema } from './schema'
 import { LocalFleetDataV1 } from './types'
 
 type FleetDataOmitDate = Omit<
@@ -27,7 +29,11 @@ class LocalDatabaseClass implements LocalDatabase {
   public getAllFleet = async () => {
     const result: LocalFleetDataV1[] = []
     await this.fleetStore.iterate<LocalFleetDataV1, unknown>((v) => {
-      result.push(v)
+      // 正常に保存されてれば正常にパースできるので、とりあえず良しとする
+      const parsed = coerceJson.pipe(FleetSchema).safeParse(v)
+      if (parsed.success) {
+        result.push(parsed.data)
+      }
     })
     return result
   }
@@ -36,9 +42,14 @@ class LocalDatabaseClass implements LocalDatabase {
   // 変換するので LocalFleetData は圧縮か？
   public getFleet = async (key: string) => {
     const fleetData = await this.fleetStore.getItem<LocalFleetDataV1>(key)
-    if (!fleetData) return null
 
-    return fleetData
+    // 正常に保存されてれば正常にパースできるので、とりあえず良しとする
+    const parsed = coerceJson.pipe(FleetSchema).safeParse(fleetData)
+    if (parsed.success) {
+      return parsed.data
+    }
+
+    return null
   }
 
   public setFleet = async (key: string, data: FleetDataOmitDate) => {
