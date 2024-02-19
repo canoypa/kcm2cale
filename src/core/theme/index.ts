@@ -1,9 +1,12 @@
-import { createTheme as createMuiTheme, PaletteMode } from '@mui/material'
+import { experimental_extendTheme as extendTheme } from '@mui/material'
 import { DarkPalette, LightPalette } from './palette'
 
-export const createTheme = (mode: PaletteMode) =>
-  createMuiTheme({
-    palette: mode === 'dark' ? DarkPalette : LightPalette,
+export const createTheme = () =>
+  extendTheme({
+    colorSchemes: {
+      light: { palette: LightPalette },
+      dark: { palette: DarkPalette },
+    },
 
     typography: {
       button: {
