@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js'
+import Fuse, { type IFuseOptions } from 'fuse.js'
 import { LocalFleetDataV1 } from '~/core/persistence/types'
 import { SearchFleetRequest } from './types'
 
@@ -19,7 +19,7 @@ export const searchFleet = (
   if (!request.q) return [...fleetDataList].sort(dateSortFn)
 
   // fuse search
-  const options: Fuse.IFuseOptions<LocalFleetDataV1> = {
+  const options: IFuseOptions<LocalFleetDataV1> = {
     keys: ['title'],
     sortFn: (a, b) => {
       const [aScore, bScore] = [a.score, b.score]

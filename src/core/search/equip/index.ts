@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js'
+import Fuse, { type FuseResult } from 'fuse.js'
 import { EquipsData } from '../../../data/equip'
 import { EquipData, EquipTypeValues } from '../../../models/equip/types'
 import { SearchEquipRequest } from './types'
@@ -9,7 +9,7 @@ class FuseSearch {
   private options = { keys: ['name'], includeScore: true }
   private index = Fuse.createIndex(this.options.keys, EquipsData)
 
-  private matchList: Array<Fuse.FuseResult<EquipData>> | null = null
+  private matchList: Array<FuseResult<EquipData>> | null = null
 
   public setQuery = (query: string | undefined) => {
     if (query) {
