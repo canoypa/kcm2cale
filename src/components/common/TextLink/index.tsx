@@ -32,8 +32,8 @@ export const TextLink: FC<Props> = ({
   }
 
   return (
-    <NextLink href={href} {...props} passHref>
-      <MuiLink>{children}</MuiLink>
-    </NextLink>
+    <MuiLink component={NextLink} href={href} {...props}>
+      {children}
+    </MuiLink>
   )
 }
