@@ -27,20 +27,16 @@ export const MainMenuDialog: FC<Props> = ({ open, onClose }) => {
       </Box>
       <Divider variant="middle" />
       <Box paddingY={1} paddingX={2}>
-        <Link href="/about" passHref>
-          <Button size="small">
-            <Box component="span" color="text.secondary">
-              {APP_NAME} について
-            </Box>
-          </Button>
-        </Link>
-        <Link href="/privacy-and-terms" passHref>
-          <Button size="small">
-            <Box component="span" color="text.secondary">
-              プライバシーと規約
-            </Box>
-          </Button>
-        </Link>
+        <Button LinkComponent={Link} href="/about" size="small">
+          <Box component="span" color="text.secondary">
+            {APP_NAME} について
+          </Box>
+        </Button>
+        <Button LinkComponent={Link} href="/privacy-and-terms" size="small">
+          <Box component="span" color="text.secondary">
+            プライバシーと規約
+          </Box>
+        </Button>
       </Box>
     </Dialog>
   )

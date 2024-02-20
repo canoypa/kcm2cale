@@ -17,9 +17,9 @@ export const FleetError: FC = () => {
           <Typography>リクエストされた編成は存在しません。</Typography>
         </ErrorContent>
         <ErrorActions>
-          <Link href="/" passHref>
-            <Button variant="outlined">トップページに戻る</Button>
-          </Link>
+          <Button LinkComponent={Link} href="/" variant="outlined">
+            トップページに戻る
+          </Button>
         </ErrorActions>
       </Error>
     </>
