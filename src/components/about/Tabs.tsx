@@ -21,7 +21,6 @@ export const TabList: FC = () => {
         href="/about"
         value="/about"
         label="About"
-        color={theme.palette.text.secondary}
         onClick={(e) => e.preventDefault()}
       />
       <Tab
@@ -29,7 +28,6 @@ export const TabList: FC = () => {
         href="/faq"
         value="/faq"
         label="FAQ"
-        color={theme.palette.text.secondary}
         onClick={(e) => e.preventDefault()}
       />
       <Tab
@@ -37,7 +35,6 @@ export const TabList: FC = () => {
         href="/privacy-and-terms"
         value="/privacy-and-terms"
         label="Privacy And Terms"
-        color={theme.palette.text.secondary}
         onClick={(e) => e.preventDefault()}
       />
     </Tabs>

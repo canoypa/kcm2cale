@@ -1,4 +1,5 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material'
+import type {} from '@mui/material/themeCssVarsAugmentation'
 import { DarkPalette, LightPalette } from './palette'
 
 export const createTheme = () =>

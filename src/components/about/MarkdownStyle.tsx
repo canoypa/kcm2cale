@@ -4,11 +4,11 @@ export const MarkdownStyle = styled('div')(({ theme }) => ({
   padding: '24px 0',
 
   '& *': {
-    color: theme.palette.text.primary,
+    color: theme.vars.palette.text.primary,
   },
 
   '& a': {
-    color: theme.palette.info.main,
+    color: theme.vars.palette.info.main,
   },
 
   '& h1, & h2, & h3, & h4, & h5, & h6': {
@@ -16,7 +16,7 @@ export const MarkdownStyle = styled('div')(({ theme }) => ({
   },
 
   '& h1, & h2': {
-    borderBottom: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.vars.palette.divider}`,
   },
 
   '& main section': {
